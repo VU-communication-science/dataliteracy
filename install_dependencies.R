@@ -1,6 +1,8 @@
 args <- commandArgs(trailingOnly = TRUE)
 
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+if (is.null(getOption("repos")) || identical(unname(getOption("repos")["CRAN"]), "@CRAN@")) {
+  options(repos = c(CRAN = "https://cloud.r-project.org"))
+}
 options(pak.sysreqs = TRUE)
 Sys.setenv(PKG_SYSREQS = "true")
 
