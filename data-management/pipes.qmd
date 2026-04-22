@@ -1,7 +1,6 @@
 ---
 title: "Using the pipe syntax"
 subtitle: "How to make your code more readable"
-order: 6
 editor_options: 
   chunk_output_type: console
 ---

@@ -1,6 +1,5 @@
 ---
 title: R in Action (demo)
-order: 10
 ---
 
 R is a very powerful tool, but it takes some time to learn how to use it before you get to fully appreciate what you can use it for.

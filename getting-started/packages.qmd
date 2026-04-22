@@ -1,6 +1,5 @@
 ---
 title: Packages
-order: 5
 ---
 
 # What is a package? {#what-is-a-package}

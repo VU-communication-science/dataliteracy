@@ -1,6 +1,5 @@
 ---
 title: Data management
-order: 2
 format:
     html:
         df-print: paged

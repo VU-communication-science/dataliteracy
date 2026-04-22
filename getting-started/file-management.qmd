@@ -1,7 +1,6 @@
 ---
 title: File management
 subtitle: Reading and writing files in R
-order: 6
 ---
 
 

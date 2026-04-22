@@ -1,6 +1,5 @@
 ---
 title: Techniques
-order: 1
 listing:
   - template: ../../listing_template.ejs
 --- 

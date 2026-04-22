@@ -1,7 +1,6 @@
 ---
 title: Hypotheses
 subtitle: From theories to testable statements
-order: 1
 ---
 
 # Deriving hypotheses from theories

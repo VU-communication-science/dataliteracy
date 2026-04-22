@@ -4,7 +4,6 @@ subtitle: Analysis of variance
 format:
   html:
     df-print: paged
-order: 4
 editor: 
   markdown: 
     wrap: sentence

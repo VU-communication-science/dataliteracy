@@ -1,6 +1,5 @@
 ---
 title: Read and write
-order: 1
 subtitle: How to get data into R, and how to store it
 ---
 
@@ -18,7 +17,7 @@ Once you know how to read a CSV file, you can easily read other file formats as 
 It is a simple text file, that you can open in any text editor.
 In order to store a data frame (i.e. data in rows and colums), it simply read every line as a row, and separates the columns by a comma (or sometimes another symbol, like a semicolon).
 
-For example, the following CSV file contains a data frame with three columns: `resp_id`, `gender`, and `height`. 
+For example, the following CSV file contains a data frame with three columns: `resp_id`, `gender`, and `height`.
 The first row contains the column names, and the following rows contain the data.
 
 ```{r, eval=F}
@@ -29,7 +28,7 @@ resp_id,gender,height
 4,F,160
 ```
 
-The benefit of this simplicity is that any respectable spreadsheet or statistical software (e.g., Excel, Google sheets, SPSS, Stata) can read it. 
+The benefit of this simplicity is that any respectable spreadsheet or statistical software (e.g., Excel, Google sheets, SPSS, Stata) can read it.
 This makes CSV files a great way to share and store data.
 
 And just in case you're worried, yes, CSV can also handle textual data.
@@ -61,12 +60,11 @@ d
 You can also view the data in a larger spreadsheet-like view using the `View` function.
 Either click on the name (`d`) in the **Environment** tab in RStudio (top right panel), or use the `View` function:
 
-```{r}
+```{r, eval=F}
 View(d)
-
 ```
 
-This will open a new tab in RStudio that shows all the data. 
+This will open a new tab in RStudio that shows all the data.
 In the top menu bar you can also `filter` the data and `search` for specific values, or click on column names to sort the data.
 
 
@@ -96,15 +94,15 @@ There are two important pitfalls to avoid when working with CSV files:
 
 ### Pitfall 1: Corrupting the file by opening it in Excel
 
-When you download a CSV file from the internet, some computers might immediately ask you whether you want to open it in your default spreadsheet program (e.g., Excel, Numbers). 
-Do not do this, but instead download the file directly to your computer. If you open the file and accidentally save it, it can overwrite the CSV file with a different format. 
-Excel in particular has a habit of breaking CSV files this way. 
+When you download a CSV file from the internet, some computers might immediately ask you whether you want to open it in your default spreadsheet program (e.g., Excel, Numbers).
+Do not do this, but instead download the file directly to your computer. If you open the file and accidentally save it, it can overwrite the CSV file with a different format.
+Excel in particular has a habit of breaking CSV files this way.
 
 ### Pitfall 2: Different flavours of CSV files
 
-There are different flavours of CSV files (for historic reasons). 
-Even though we call them "comma separated values", the separator is sometimes a semicolon or a tab. 
-And depending on language, the decimal separator can be a comma or a dot. In particular, there are two most common versions of the CSV file. 
+There are different flavours of CSV files (for historic reasons).
+Even though we call them "comma separated values", the separator is sometimes a semicolon or a tab.
+And depending on language, the decimal separator can be a comma or a dot. In particular, there are two most common versions of the CSV file.
 This is why tidyverse has two `read_csv` functions: `read_csv` and `read_csv2`. In general, you can just try `read_csv` first, and if it doesn't work, try `read_csv2`.
 :::
 
@@ -113,8 +111,7 @@ This is why tidyverse has two `read_csv` functions: `read_csv` and `read_csv2`. 
 Now that you know how to read and write CSV files, reading other file formats is a piece of cake.
 It works almost the same way, but you just need to download a package that can read the file format.
 
-For instance, to read an Excel file, you can use the `readxl` package, which provides the `read_excel` function. 
+For instance, to read an Excel file, you can use the `readxl` package, which provides the `read_excel` function.
 To read an SPSS file, you can use the `haven` package, which provides the `read_sav` function.
 You might have to take care of some additional details, such as the sheet name in the Excel file, or the variable labels in the SPSS file.
 But once you've got the hang of managing your data with the tidyverse, you'll be able to handle any data frames formats that come your way.
-

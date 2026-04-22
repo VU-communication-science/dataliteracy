@@ -1,0 +1,155 @@
+---
+title: "3.3. Transformations"
+---
+
+## 3.3.1. What is standardization?
+
+Standardization is a technique for transforming data into a consistent scale. It involves two key components: **centering** and **scaling**.
+
+* Centering shifts the data so that its mean becomes zero.
+* Scaling adjusts the data's range by dividing it by the standard deviation.
+
+The result is that the data is transformed to have a mean of zero and a standard deviation of one. 
+We then also refer to the values of the transformed data as **z-scoreds**.
+Standardizing a variable to z-scores has a number of benefits, and you'll see that we use standardization in different contexts throughout this book:
+
+* **Interpretability**: Standardized variables can be interpreted in the same way. Since zero is the mean, positive values indicate that the observation is above average, and negative values indicate that it is below average. 
+A value of 1 means that the observation is one standard deviation above the mean.
+* **Comparability**: Standardization allows you to compare variables that have different units or scales. 
+It allows us to compare *age* and *income*, even if one is measured in years and the other in euros.
+* **Correlation analysis**: If you calculate the covariance of two standardized variables, you get the [correlation coefficient](17-correlation.qmd), which is a useful measure of the strength and direction of the relationship between two variables.
+* **Multiple regression**: Standardization can help you compare the strength of the effects of different independent variables in a [multiple regression model](18-linear-regression.qmd).
+
+
+## 3.3.2. How to standardize variables
+
+Let's first create a simple numeric variable `x` with some values, and calculate its mean and standard deviation.
+
+```{r how-to-standardize-variables-1, message=F}
+x <- c(4, 9, 6, 3, 9, 10)
+
+mean(x)
+sd(x)
+```
+
+To standardize it, we subtract the mean ($\bar{x}$) from each value, and then divide by the standard deviation ($S_x$):
+$$ z = \frac{x - \bar{x}}{S_x} $$
+
+You can think of this process as **shifting the center** and **stretching the scale** of the data.
+By subtracting the mean, we shift the center so that the mean becomes zero.
+By dividing by the standard deviation, we stretch (or squeeze) the scale so that the standard deviation becomes one.
+Try changing the mean and standard deviation in this widget to see this shifting and stretching in action:
+
+
+```{ojs}
+//| echo: false
+viewof numberLine = Inputs.range(
+  [0, 6.83], 
+  {value: 6.83, step: 0.01, label: "MEAN"}
+)
+viewof standardDeviation = Inputs.range(
+  [1, 2.93], 
+  {value: 2.93, step: 0.01, label: "SD"}
+)
+
+ {
+  const width = 600;
+  const height = 150;
+  const margin = { left: 50, right: 50, top: 20, bottom: 20 };
+  
+  const meanValue = numberLine;
+  const stddevValue = standardDeviation;
+  
+  // Scale based on mean and standard deviation
+  const scaleX = d3.scaleLinear()
+      .domain([meanValue-10 * stddevValue/5, meanValue+10 * stddevValue/5])
+      .range([margin.left, width - margin.right]);
+
+  const axis = d3.axisBottom(scaleX)
+      .ticks(10);
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+  // Draw the number line axis
+  svg.append("g")
+      .attr("transform", `translate(0, ${height / 2})`)
+      .call(axis);
+  
+  // Add some data points centered around the mean
+  const dataPoints = [meanValue - stddevValue, meanValue, meanValue + stddevValue];
+  const labels  = ["-1 SD", "Mean", "+1 SD"];
+
+  svg.selectAll(".dot")
+      .data(dataPoints)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("cx", d => scaleX(d))  // Position based on scaled value
+      .attr("cy", height / 2)      // Place them on the number line
+      .attr("r", 5)
+      .attr("fill", "red");
+
+  // Label the points
+  svg.selectAll(".label")
+      .data(dataPoints)
+    .enter().append("text")
+      .attr("x", d => scaleX(d))
+      .attr("y", height / 2 - 10)
+      .attr("text-anchor", "middle")
+      .text((d,i) => labels[i]);
+
+  return svg.node();
+}
+```
+
+Now let's do this in R.
+
+```{r how-to-standardize-variables-2}
+z <- (x - mean(x)) / sd(x)
+
+mean(z)
+sd(z)
+```
+
+
+As you can see, the mean and standard deviation are now zero[^almostzero]
+and one, respectively.
+But other than that, the distribution of the data is the same!
+You can see that they're perfectly correlated:
+
+[^almostzero]: Note that instead of a clean zero, you might see a weird number like `9.253666e-16`. This is because computer's have limited precision, and in this case the best it could to is to get *reaaaaally* close to zero.
+The number is in **scientific notation**, which is used to express really small or really large numbers. The notation can be read as: $9.253666 \times 10^{-17}$. 
+
+
+```{r how-to-standardize-variables-3}
+cor(x, z)
+```
+
+
+### 3.3.2.1. Alternative: use the `scale()` function
+
+There is also a built-in function in R that standardizes variables for you.
+This function is called `scale()`.
+
+```{r alternative-use-the-scale-function-1}
+scale(x)
+```
+
+This actually gives us a bit more than we need[^asvector].
+To just get a vector of z-scores, we can wrap the `scale()` function in `as.vector()`.
+
+[^asvector]: The `scale()` function doesn't just return the z-scores, but also the mean and standard deviation. Also, the z-scores are returned as a matrix, which is similar but different from a vector. This can cause issues in some functions. Wrapping it in `as.vector()` ensures that we only get a vector with the z-scores.
+
+```{r alternative-use-the-scale-function-2}
+as.vector(scale(x))
+```
+
+We can use this as follows to standardize a variable in a tibble:
+
+```{r alternative-use-the-scale-function-3, message=F}
+library(tidyverse)
+
+tibble(x=x) |>
+  mutate(x_z = as.vector(scale(x)))
+```

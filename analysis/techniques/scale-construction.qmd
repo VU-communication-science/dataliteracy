@@ -1,7 +1,6 @@
 ---
 title: Scale construction
 subtitle: How to create and validate scales
-order: 2
 ---
 
 

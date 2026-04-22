@@ -1,6 +1,5 @@
 ---
 title: Functions
-order: 4
 ---
 
 # What is a function? {#what-is-a-function}

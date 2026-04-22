@@ -1,7 +1,6 @@
 ---
 title: Data cleaning
 subtitle: garbage in, data out
-order: 2
 format:
     html:
         df-print: paged

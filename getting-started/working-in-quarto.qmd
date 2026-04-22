@@ -1,6 +1,5 @@
 ---
 title: Working in Quarto
-order: 10
 ---
 
 # Integrating code and text

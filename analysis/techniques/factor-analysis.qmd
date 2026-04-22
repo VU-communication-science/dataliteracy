@@ -2,7 +2,6 @@
 title: "Factor Analysis"
 subtitle: "Identifying latent dimensions in scales"
 format: html
-order: 3
 ---
 
 ## Why Factor Analysis?

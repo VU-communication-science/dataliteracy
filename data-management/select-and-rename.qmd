@@ -1,6 +1,5 @@
 ---
 title: 'Select and rename'
-order: 1
 ---
 
 ::: {.callout-note title="Required packages and data for this tutorial"}

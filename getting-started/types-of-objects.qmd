@@ -1,7 +1,6 @@
 ---
 title: Types of Objects
 subtitle: From single values to large datasets
-order: 3
 ---
 
 # Common types of objects in R

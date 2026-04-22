@@ -1,6 +1,5 @@
 ---
 title: Analysis
-order: 3
 ---
 
 #

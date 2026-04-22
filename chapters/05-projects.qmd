@@ -1,0 +1,173 @@
+---
+title: "2.2. Projects"
+---
+
+## 2.2.1. Keeping track of your data {#file-management}
+
+If you're working with data you need to be able to keep track of where you store it, especially if it concerns sensitive data such as personal information.
+In this section we'll first explain and demonstrate a simple, recommended approach to managing files in R.
+Secondly, we provide some optional material that goes more in-depth on how your computer's file system works, and we provide some additional techniques that give you more flexibility in managing files.
+This second part is optional, and if you're just starting out with R we recommend skipping it for now.
+
+
+## 2.2.2. Recommended approach: stick to your working directory
+
+When you read or write files in R, you need to two things:
+
+* **The file name**: This is the name of the file you want to read or write.
+* **The file path**: This is the location of the file on your computer.
+
+The file name is easy to understand, but to find the file path you need to know a bit about how your computer organizes files.
+In addition, it's inconvenient to always provide the exact location of a file.
+
+Luckily, there is an alternative. 
+When you are working in R, you are always working in a specific directory on your computer, called your **working directory**.
+You can check the current working directory with the `getwd()` (*get working directory*) function:
+
+```{r recommended-approach-stick-to-your-working-directory-1, eval=F}
+getwd()
+```
+```{r recommended-approach-stick-to-your-working-directory-2}
+print("/home/kasper/projects")
+```
+
+Your working directory will be different from the one shown above, but the general structure is the same.
+In our case it tells us that the working directory is the `projects` directory in the `home` directory of the user `kasper`.
+
+If I now write a files and I *only* provide the file name (e.g., `file.csv`), R will create (over overwrite) it in this directory (`/home/kasper/projects/file.csv`).
+We also refer to this as a **relative path**: by providing just the file name, R will look for it relative to the working directory.
+Let's try this out! 
+
+### 2.2.2.1. Writing a file to your working directory
+
+The following code writes a plain text file name `hello_world.txt` to your current working directory.
+
+```{r writing-a-file-to-your-working-directory-1, eval=F}
+writeLines("Hello world!", "hello_world.txt")
+```
+
+If you now open your file explorer and navigate to your working directory, you should see the file `hello_world.txt` there.
+Note that there is also a file explorer inside of RStudio, under the `Files` tab in the bottom-right window.
+If you click on the `gear` (settings) icon there, you can click `Go To Working Directory`.
+
+You can also ask R to list all the files in your working directory.
+
+```{r writing-a-file-to-your-working-directory-2, results=F}
+list.files()                    ## show all files
+list.files(pattern="*.txt")     ## show files with .txt extension
+```
+
+### 2.2.2.2. Reading a file from your working directory
+
+Reading files works the same way.
+Since there is now a file `hello_world.txt` in your working directory, you can read it with the following code:
+
+```{r reading-a-file-from-your-working-directory-1, eval=F}
+readLines("hello_world.txt")
+```
+
+::: {.callout-note title="Directories inside your working directory" collapse="true"}
+In this tutorial we only show you how to work with files directly in your working directory, but you can also access directories.
+For example, if you have a directory called `data` inside your working directory, with a file called `survey.csv` in it, you can access it via the relative path `data/survey.csv`.
+This is very convenient in bigger projects, where you might want to organize things like data, results and visualizations in different directories.
+:::
+
+### 2.2.2.3. Choosing your working directory {#choosing-working-directory}
+
+We highly recommend to always set your working directory to a specific location on your computer. For instance, in a directory called `R_projects,` or even a specific directory for your current project or assignment.
+
+**If you are working in a regular R script**, you can set the working directory with the `setwd()` function.
+For example, to set the working directory to `/home/you/R_projects`, you can run `setwd("/home/you/R_projects")`.
+If you prefer using a menu, you can also use **RStudio**: click on `Session` in the menu bar, then `Set Working Directory`, and then `Choose Directory`.
+
+**If you are working in a Quarto file**, ([as we explain here](06-quarto.qmd)), the working directory is always the directory where the Quarto file is located (and you cannot change it).
+This is convenient, because it means that you just need to put the Quarto file and your data together in the directory that you want to work in.
+
+Finally, you can also create an **RStudio project**.
+In the top-right corner of your RStudio window, you can see a button labeled **Project: (None)**.
+If you click it, you can create a new project, in a new or existing directory on your computer.
+RStudio will automatically set the working directory to this project directory, and in the top-right corner you will now see the name of the project instead of **Project: (None)**.
+
+
+
+## 2.2.3. Optional: working with absolute paths
+
+In the previous section we showed you the easiest way to manage files in R: by sticking to your working directory.
+This will get you through most situations, but sometimes it's convenient to be able to read files from other locations on your computer.
+You can achieve this by specifying the complete path to the file, also called the **absolute path** (as opposed to the **relative path** we used before).
+If we know that the path to our Desktop is `/home/kasper/Desktop`, we can write a file directly to the Desktop with the following code:
+
+```{r optional-working-with-absolute-paths-1, eval=F}
+writeLines("Hello desktop!", "/home/kasper/Desktop/hello_desktop.txt")
+```
+
+Notice that the absolute path **must** start with the root directory, which is `/` on Linux and Mac, and `C:\` (or another drive) on Windows.
+
+Off course, if *you* run the above line of code it will throw an error saying that there is `No such file or directory` (unless you happen to be another user named `kasper` working on a Linux machine).
+So in order to work with absolute paths, you'll need to know how to find the path to a file or directory on your computer.
+
+::: {.callout-note title="How does your computer organize files?" collapse="true"}
+
+Computers organize files and directories (or folders) in a hierarchical structure that resembles a tree, called the **file system**.
+This tree-like structure starts from a single **root directory** and branches out into subdirectories, which can contain more subdirectories or files.
+It looks a bit different on Windows and Mac (or Linux), but the basic idea is the same.
+Here is a simplified example (normally there are more layers, such as your user directory):
+
+
+```{r optional-working-with-absolute-paths-2, eval=FALSE}
+/ (Root Directory) 
+│
+├── Documents
+│   ├── Work
+│   │   ├── survey.csv
+│   │   └──  
+│   └── Personal
+│       ├── Resume.pdf
+│       └── Budget.xlsx
+│
+├── Downloads
+│   ├── Report.docx
+│   └── image.jpg
+```
+
+Because of this structure, any file on your computer has a unique **path** that describes its location in the file system.
+For example, the path to the `Report.docx` file in the `Work` directory would be `/Documents/Work/survey.csv`, or `C:\Documents\Work\survey.csv` on Windows.
+
+:::
+
+### 2.2.3.1. Finding the absolute path    
+
+So how do you find the absolute path to the file? 
+Here are several options.
+
+#### 2.2.3.1.1. Using file.choose()
+
+If you run the code `file.choose()`, R will open a file explorer window.
+
+```{r using-file-choose-1, eval=F}
+file.choose()              ## find path of existing file
+file.choose(new = TRUE)    ## create a path for a new file
+```
+
+Here you can browse to the file, and when you select it, R will print the file path in the console window.
+This is easy, because you get a nice menu to browse through your files.
+But it's also a bit cumbersome, because you have to do it every time you want to read a file.
+Also, you can't select folder, only existing files.
+
+#### 2.2.3.1.2. Using the file explorer
+
+You can also use your own file explorer (outside of RStudio).
+Navigate to a file or folder, and right click on it. 
+You should then be able to select something like *Properties* (this depends on your operating system).
+Here you should be able to find the absolute path.
+
+#### 2.2.3.1.3. Using tab completion 
+
+There is one other nice trick that you can use to find files on your computer: **tab completion**.
+Whenever you are writing something in a code editor, you can often use the **Tab** key (above caps lock) to automatically complete it (like auto-complete on your phone).
+If you've ever seen programmers work really fast, it's because they're using tab completion all the time.
+
+To use tab completion for file paths, put your text cursor between the quotes in `readLines("")` (or any function for reading/writing files), and then press the `Tab` key.
+If there are multiple files that match the characters you've typed so far, RStudio will show you all the options.
+Keep typing to narrow down the options, and once you see the file or directory you want, press tab again to complete it.
+This takes some time to get used to, but it's a very powerful trick.

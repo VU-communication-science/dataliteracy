@@ -1,0 +1,475 @@
+---
+title: "2.1. Working with R"
+---
+
+## 2.1.1. Installation
+
+To work with R, you will need to install two pieces of software.
+
+* **R**. This is the actual R software, that is used to run R code.
+* **RStudio**. This is a graphical user interface (GUI) that makes working with R much easier and prettier.
+
+Both programs can be downloaded for free, and are available for all main operating systems (Windows, macOS and Linux).
+
+### 2.1.1.1. Installing R
+
+To install R, you can download it from the [CRAN (comprehensive R Archive Network) website](https://cran.r-project.org/). Do not be alarmed by the website's 90's aesthetics. The website is legit.
+
+### 2.1.1.2. Installing RStudio
+
+RStudio can be downloaded from the [posit.co website](https://posit.co/download/rstudio-desktop), which is the developer of RStudio. Make sure to pick the latest version available for your operating system.
+
+Once you have [installed R and RStudio](04-working-with-r.qmd), you can start by launching RStudio. If everything was installed correctly, RStudio will automatically launch R as well.
+
+The first time you open RStudio, you will likely see three separate windows. The first thing you want to do is **open an R Script (!!)** to work in. To do so, go to the toolbar and select **File -\> New File -\> R Script**.
+
+You will now see four windows split evenly over the four corners of your screen:
+
+-   In the **top-left** you have the text editor for the file that you are working in. This will most of the time be an R script or RMarkdown file.
+-   In the **top-right** you can see the data and values that you are currently working with (environment) or view your history of input.
+-   In the **bottom-left** you have the console, which is where you can enter and run code, and view the output. If you run code from your R script, it will also be executed in this console.
+-   In the **bottom-right** you can browse through files on your computer, view help for functions, or view visualizations.
+
+While you can directly enter code into your console (bottom-left), you should always work with R scripts (top-left). This allows you to keep track of what you are doing and save every step.
+
+## 2.1.2. Using RStudio
+
+### 2.1.2.1. Running code
+
+Copy and paste the following example code into your R Script. For now, don't bother understanding the syntax itself. Just focus on running it.
+
+```{r running-code-from-the-r-script-1, eval=F}
+3 + 3
+2 * 5
+6 / 2
+"some text"
+"some more text"
+sum(1,2,3,4,5)
+```
+
+You can **run** code by selecting the code and clicking on the **Run** button in the toolbar. However, we highly recommend getting used to using the keyboard shortcut, because this will greatly speed up your process. On Windows (and Linux) the shortcut is **Ctrl + Enter**. On Mac it's **Command + Enter**.
+
+There are two ways to run code:
+
+-   If you select a specific piece of code (so that it is highlighted) you can run this specific selection. For example, select the first three lines (the three mathematical operations) and press Ctrl + Enter. This should then print the results for these three mathematical expressions. Note that you can also select a specific part on a line. Try selecting just the second `3` on the first line. This should just print the number 3.
+-   If you haven't made a selection, but your text cursor is somewhere on a line in your editor, you can press Ctrl + Enter to run the line where the cursor is at. This will also move the cursor to the next line, so you can *walk* through the code from top to bottom, running each line. Try starting on the first line, and pressing Ctrl + Enter six times, to run each line separately.
+
+
+### 2.1.2.2. Using RStudio projects
+
+It is best to put all your code in an RStudio *project*. This is essentially a folder on your computer in which you can store the R files and data for a project that you are working on. While you do not necessarily need a project to work with R, they are very convenient, and we strongly recommend using them.
+
+To create a new project, go to the top-right corner of your RStudio window. Look for the button labeled **Project: (None)**. Click on this button, and select New Project. Follow the instructions to create a new directory with a new project. Name the project "R introduction".
+
+Now, open a new R script and immediately save it (select File -\> Save in the toolbar, or press ctrl-s). Name the file **my_first_r_script.r**. In the bottom-right corner, under the **Files** tab, you'll now see the file added to the project. The extension **.r** indicates that the file is an R script.
+
+
+## 2.1.3. Names and objects
+
+### 2.1.3.1. The power of assignment
+
+In R, and in computer programming in general, the most essential operation is to assign **objects** to **names**.
+By **object**, we then broadly mean any piece of information. a single number, a text, a list of numbers, and even an entire data set.
+
+In plain terms, **assignment** is how you make R remember things by assigning them to a name. To assign an object to a name, we use the **arrow notation**: `name <- value`. For example:
+
+```{r the-power-of-assignment-1}
+x <- 2
+```
+
+::: {.callout-note title="Good to know: you can also use `x = 2`" collapse="true"}
+Instead of using the **arrow** notation, you can also use the **equal sign** notation: `name = object`.
+
+```{r the-power-of-assignment-2}
+x = 2
+```
+
+We will in general always use the **arrow** notation. But if you encounter the **equal sign** notation, just remember that it's the same thing.
+:::
+
+By **running** the code `x <- 2`, you are saying: **Assign the value `2` to the name `x`**.
+Any objects that you assigned to names are stored in your **Environment**. You can see this environment in the top-right window, under the **Environment** tab.
+If you assigned `2` to `x`, you should see a table with in the left column the names (`x`) and in the right column a description of the object.
+For simply objects like numbers, this will just be the value (`2`).
+
+From hereon, when you use the name `x` in your code, it will **refer** to the value `2`. So when we run the code `x * 5` (x times 5) it will print the number `10`
+
+```{r the-power-of-assignment-3}
+x * 5
+```
+
+::: {.callout-note title="Why does R print a [1] before the result?" collapse="true"}
+When running `x * 5`, R correctly prints the value 10. But why does it say `[1] 10`?
+The reason is that R always thinks of a number (or string) as a **vector** (i.e. list of values), that can have 1 or multiple values.
+The `[1]` indicates that 10 is the first (and only) value.
+
+If you print a longer **vector**, you can see that R prints `[...]` at the start of each line, just to help you see the position of individual values.
+The following code generates a vector with numbers from 1 to 50
+
+```{r the-power-of-assignment-4}
+1:50
+```
+:::
+
+
+
+#### 2.1.3.1.1. Assigning versus printing
+
+Notice that when you ran the code `x <- 2`, R didn't print any values to the console (the bottom-left window).
+But when you ran `x * 5`, R did print the value `10`.
+Basically, when you run code, and you DO NOT assign the result to a name, R will print the result to the console.
+
+So the following code will NOT print the object (`"I will not be printed"`) to the console, but will store it (you can see the name pop up in the **Environment** tab)
+
+```{r assigning-versus-printing-1}
+i_will_be_remembered <- "I will not be printed"
+```
+
+And the following object (`"I will be printed"`) will be printed to the console, but not stored in the **Environment**.
+
+```{r assigning-versus-printing-2}
+"I will be printed"
+```
+
+
+
+#### 2.1.3.1.2. Assigning different types of objects
+
+You can assign any type of object to a name, and you can use any name, as long as it starts with a letter and doesn't contain spaces or symbols (but underscores are OK)
+
+```{r assigning-different-types-of-objects-1}
+a_number = 5
+my_cats_name = "Hobbes"
+```
+
+If you run this code and check you **Environment** (top-right), you should now see these name-object pairs added.
+
+
+#### 2.1.3.1.3. Assigning results
+
+Till now we only directly assigned objects to names. This is convenient, but the power of assignment really shines when you use it to store **results**.
+For example, we can also do this.
+
+```{r assigning-results-1}
+x = 5 + 10
+```
+
+This a very simple example, but just think for a second what this allows us to do.
+Since we can assign anything to a name, we can break down any complicated procedure into multiple steps!
+For now, the key lesson is just to wrap your head around the syntax for assigning objects to names.
+This is fundamental to everything you will be doing in R (and in programming in general).
+
+## 2.1.4. Types of objects
+
+### 2.1.4.1. Common types of objects
+
+You can work with many types of data in R.
+Here are some of the most common types of objects you'll encounter:
+
+- **Numeric**: Numbers, like `5`, `3.14`, or `-0.5`.
+- **Character**: Text, like `"Hello, world!"`.
+- **Factor**: Categorical data, like `education_level` or `country`.
+
+Let's see how these types of objects work in practice.
+
+```{r common-types-of-objects-in-r-1, results='hide'}
+number <- 5
+number
+
+character <- "Hello, world!"
+character
+
+factor <- factor(c(1,2,2,3), labels = c("A", "B", "C"))
+factor
+```
+
+#### 2.1.4.1.1. Types determine what you can do with an object
+
+The type of an object determines what you can do with it.
+For example, you can perform mathematical operations on numeric objects, but not on character objects.
+
+```{r types-determine-what-you-can-do-with-an-object-1, eval=F}
+10 + 10    # returns 20
+"10" + 10  # throws an error
+```
+
+#### 2.1.4.1.2. You can coerce objects to different types
+
+Sometimes you have an object of the wrong type. For instance, your numeric data might have been read in as a character object.
+
+```{r you-can-coerce-objects-to-different-types-1}
+number <- "5"
+```
+
+If I want to perform mathematical operations on `number`, I need to first convert it to a numeric object.
+You can do this using the `as.numeric` function.
+
+```{r you-can-coerce-objects-to-different-types-2, results='hide'}
+number <- as.numeric(number)
+number
+class(number)    # numeric
+```
+
+Note that you cannot always convert objects to a different type.
+Just use your common sense here.
+
+```{r you-can-coerce-objects-to-different-types-3, results='hide', warning=FALSE}
+as.numeric("I am not a number")
+```
+
+When coercion is not possible, R will return `NA` (missing value) and give you a warning.
+
+
+### 2.1.4.2. Vectors and Data Frames
+
+In practice, you'll rarely work with single values alone.
+However, many operations you can perform on a single value can also be applied to multiple values at once.
+Understanding how individual values combine to form larger data structures is key to working effectively with data.
+
+#### 2.1.4.2.1. From Single Values to Vectors
+
+A vector is a collection of values of the same type (e.g., all numeric or all character). You create a vector by combining individual values using the `c()` (combine) function.
+Just like with single numbers, a vector has a type.
+
+```{r from-single-values-to-vectors-1}
+numbers <- c(1, 2, 3, 4, 5)
+class(numbers)
+```
+
+Now, you can perform operations on the entire vector at once:
+
+```{r from-single-values-to-vectors-2}
+numbers * 10
+sum(numbers)
+```
+
+
+
+
+#### 2.1.4.2.2. From Vectors to Data Frames
+
+Single vectors are still not very usefull for data analysis, since we're often interested in relations between variables.
+This is where data frames come in.
+
+A data frame is a table with rows and columns, where each row is an observation and each column is a variable.
+You can think of a data frame as a collection of vectors, where each vector represents a column in the dataset.
+We can create a data frame by combining vectors using the `data.frame()` function.[^1]
+
+[^1]: Throughout this book we will actually be using the `tibble` data structure from the `tidyverse` package, which is an improved version of the `data.frame`.
+
+```{r from-vectors-to-data-frames-1}
+country <- c("NL", "NL", "BE", "BE", "DE", "DE", "FR", "FR", "UK", "UK")
+height  <- c(176 , 165 , 172 , 160 , 180 , 170 , 175 , 165 , 185 , 175 )
+
+d <- data.frame(country, height)
+```
+
+Now, you can perform operations on the entire data frame at once!
+You can for instance perform a statistical test to see if the average height of people differs between countries.
+Just like with single values and vectors, we need to take the type of each column into account.
+For instance, we can't perform a correlation analysis using the `country` column, because it's a character vector.
+
+## 2.1.5. Functions
+
+### 2.1.5.1. What is a function? {#what-is-a-function}
+99% of what you do in R will involve using functions.
+A function in R is like a mini-program that you can use to perform specific tasks.
+It takes *input*, processes it, and gives you an *output*.
+For example, there are functions for:
+
+* importing data
+* computing descriptive statistics
+* performing statistical tests
+* visualizing data
+
+A function in R has the form:
+
+```{r what-is-a-function-1, eval=F}
+output <- function_name(argument1, argument2, ...)`
+```
+
+* **function_name** is a name to indicate which function you want to use. It is followed by parentheses.
+* **arguments** are the input of the function, and are inserted within the parentheses.
+* **output** is anything that is returned by the function.
+
+For example, the function `c` *c*ombines multiple values into a *vector*.
+
+```{r what-is-a-function-2}
+x = c(1,2,3,4)
+```
+
+Now, we can use the `mean` function to calculate the mean of these numbers:
+
+```{r what-is-a-function-3}
+m <- mean(x)
+```
+
+The calculated mean, `2.5`, is now assigned to the name `m`:
+
+```{r what-is-a-function-4}
+m
+```
+
+#### 2.1.5.1.1. Optional arguments {#optional-arguments}
+
+In the `c` and `mean` functions above, all the arguments were **required**.
+To **c**ombine numbers into a vector, we *needed* to provide a list of numbers.
+To calculate a **mean**, we *needed* to provide a numeric vector.
+
+In addition to the **required** arguments, a function can also have **optional** arguments, that give you more control over what a function does.
+For example, suppose we have a range of numbers that also contains a missing value. In R a missing value is called `NA`, which stands for `Not Available`:
+
+```{r optional-arguments-1}
+x_with_missing <- c(1, 2, 3, NA, 4)
+```
+
+Now, if we call the `mean` function, R will say that the mean is unknown, since the third value is unknown:
+
+```{r optional-arguments-2}
+mean(x_with_missing)
+```
+
+This is statistically a very correct answer.
+But often, if some values happen to be missing in your data, you want to be able to calculate the mean just for the numbers that are not missing.
+Fortunately, the mean function has an **optional argument** `na.rm` (remove NAs) that you can set to `TRUE` (or to `T`, which is short for `TRUE`) to ignore the NAs:
+
+```{r optional-arguments-3}
+mean(x, na.rm=TRUE)
+```
+
+Notice that for the **required** argument, we directly provide the input `x`, but for the **optional** argument we include the argument name `na.rm = TRUE`.
+The reason is simply that there are other optional arguments, so we need to specify which one we're using.
+
+::: {.callout-note title="How do I know what arguments a function has?" collapse="true"}
+
+To learn more about what a function does and what arguments it has, you can look it up in the 'Help' pane in the bottom right,
+or run `?function_name` in R.
+
+```{r optional-arguments-4, eval=F}
+?mean
+```
+
+Here you can learn about the `na.rm` argument that we just used!
+
+If you are just getting to know R, we recommend first finishing the rest of the `Getting Started` section.
+Then once you get the hang of things, have a look at the [Use ?function help page](04-working-with-r.qmd) tutorial.
+:::
+
+
+#### 2.1.5.1.2. Using the pipe syntax {#pipe-syntax}
+
+There is another common way to use functions in R using the **pipe** syntax.
+With the pipe syntax, you can *pipe* the first argument into the function, instead of putting it inside the parentheses.
+As you will see below, this allows you to create a pipeline of functions, which is often easier to read.
+<!-- The pipe syntax uses the `|>` operator, which is used as follows: -->
+
+```{r using-the-pipe-syntax-1, eval=F}
+argument1 |> function_name(argument2, ...)
+```
+
+For example, the following two lines of code give identical output:
+
+```{r using-the-pipe-syntax-2}
+mean(x_with_missing, na.rm=T)
+
+x_with_missing |> mean(na.rm=T)
+```
+
+Notice how our first argument, the **required** argument `x_with_missing`, is *piped* into the mean function.
+Inside the mean function, we only specify the second argument, the **optional** argument `na.rm`.
+
+So why do we need this alternative way of doing the same thing?
+The reason is that when writing code, you shouldn't just think about **what the code does**, but also about **how easy the code is to read**.
+This not only helps you prevent mistakes, but also makes your analysis **transparent**.
+As you'll see later, you'll encounter many cases where your analysis requires you to string together multiple functions.
+In these cases, pipes make your code much easier to read.
+
+For example, imagine we would want to round the result (`2.5`) up to a round number (`3`).
+With the pipe syntax we can just add the round function to our pipeline.
+
+```{r using-the-pipe-syntax-3, results=F}
+x_with_missing |>
+  mean(na.rm=T) |>
+  round()
+```
+
+You'll see how powerful this can be later on, especially in the [Data Management](07-data-frames.qmd) chapter.
+In order to prepare and clean up your data, you'll often need to perform a series of functions in a specific order.
+The pipe syntax allows you to do this in a very readable way.
+
+### 2.1.5.2. Mastering functions
+
+There are some usefull tricks for using functions in R that are good to know about.
+We do not discuss these here, because if you're just starting out, there are more important things to learn first.
+But once you get the hang of things, you can learn more about these tricks in the [Good to Know](04-working-with-r.qmd) tutorial.
+
+## 2.1.6. Packages
+
+### 2.1.6.1. What is a package? {#what-is-a-package}
+
+
+In R, a package is a collection of functions, data, and documentation that extends the capabilities of R.
+You can think of packages kind of like apps on your phone: they provide additional functionality that you can use to perform specific tasks.
+Also, like apps, you can install and uninstall packages as needed, directly from within R.
+
+There are thousands of R packages available, which enables you to use almost any existing data analysis technique.
+R is not just a tool for statistical analysis, but also for data visualization, data collection, articifial intelligence, and much more.
+If there is anything you need to do, there is a good chance that someone has already written a package for it.
+
+### 2.1.6.2. How to install
+
+To use a package, you first need to install it. **Installing a package only needs to be done once** per system (unless you need to update it).
+
+#### 2.1.6.2.1. 1. Install a package
+
+Most packages are available on the Comprehensive R Archive Network (CRAN), which is the main repository for R packages.
+To install these packages, all you need to know is their name.
+
+For example, there is a package called `lubridate` that makes it easier to work with dates and times in your data.
+To install this package, you can use the `install.packages()` function:
+
+```{r 1-install-a-package-1, eval=F}
+install.packages("lubridate")
+```
+
+::: {.callout-warning title="What if R asks tot 'install from source'?" collapse="true"}
+
+When running `install.packages()` You sometimes get the message that `There is a binary version available but the source version is later` (we're mainly seen this on Mac). You then get the question whether you want to `install from source` the package which needs compilation `(Yes/no)`.
+To answer this question, you have to type "yes" or "no" in your R console.
+
+It is then usually **best to say NO**.
+This will install a slightly older version of the package, but it will be much faster and easier to install.
+You often don't need the latest version, so it's not worth the extra hassle.
+
+In case you're curious, the reason for this is that the newest version has not been *prepared* for your system yet.
+They do have the **source code**, but it has not yet been compiled into a **binary** version that is ready to use.
+Think of the source code as a recipe, and the binary version as the ready-made dish.
+If you really want to have the newest version you can say "yes", but you'll have to cook it yourself!
+The main problem is that you will often need to install some extra software to do this, which can be a hassle.
+So unless you really need the newest version, it's usually best to say "no", and just install the older version that has already been prepared for your system.
+:::
+
+#### 2.1.6.2.2. 2. Load a package
+
+Once you have installed a package, it is not yet loaded into your current R session.
+Similar to when you install a new app on your phone, you need to open it every time you want to use it.
+
+To use a package in your current R session, you can load it with the `library()` function:
+
+```{r 2-load-a-package-1, message=FALSE}
+library(lubridate)
+```
+
+### 2.1.6.3. Package documentation
+
+Most packages come with good documentation that explains how to use the functions in the package.
+For individual functions you can use the `?` operator to open the help page for that function, as we explain in [here](04-working-with-r.qmd).
+But there is often also a more general documentation that explains the package as a whole.
+This is called a **vignette**, and if a package has one, you can open it with the `vignette()` function.
+
+```{r how-do-i-know-how-to-use-a-package-1, eval=F}
+vignette("lubridate")
+```
+
+You can look up vignettes and function documentation [online](https://www.rdocumentation.org/).
+This is also a good way to find new packages for whatever you're trying to do.

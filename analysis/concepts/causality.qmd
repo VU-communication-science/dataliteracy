@@ -1,7 +1,6 @@
 ---
 title: Causality
 subtitle: How to find evidence for causal relations?
-order: 3
 ---
 
 ![xkcd: correlation](https://imgs.xkcd.com/comics/correlation.png)

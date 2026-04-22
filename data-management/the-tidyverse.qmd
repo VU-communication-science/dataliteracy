@@ -1,7 +1,6 @@
 ---
 title: The tidyverse
 subtitle: A swiss army knife for data management
-order: 0
 ---
 
 # Installing the tidyverse {#installing-the-tidyverse}

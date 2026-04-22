@@ -1,6 +1,5 @@
 ---
 title: Getting Started
-order: 1
 ---
 
 In the VU Communication Science track, you'll be using the **R statistical software** as a tool for learning quantitative methods and data analysis techniques. 

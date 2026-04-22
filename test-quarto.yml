@@ -1,0 +1,16 @@
+project:
+  type: book
+book:
+  title: "Test"
+  chapters:
+    - index.qmd
+    - part: "Part 1"
+      chapters:
+        - chapters/01-purpose.qmd
+        - chapters/02-curriculum.qmd
+    - part: "Part 2"
+      chapters:
+        - chapters/04-working-with-r.qmd
+format:
+  html:
+    number-sections: true

@@ -1,0 +1,13 @@
+project:
+  type: book
+book:
+  title: "Test"
+  chapters:
+    - index.qmd
+    - chapter: chapters/04-working-with-r.qmd
+      chapters:
+        - chapters/05-projects.qmd
+        - chapters/06-quarto.qmd
+format:
+  html:
+    number-sections: true

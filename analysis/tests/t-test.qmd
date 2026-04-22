@@ -5,7 +5,6 @@ subtitle: Comparing two means
 format:
   html:
     df-print: paged
-order: 1
 ---
 
 

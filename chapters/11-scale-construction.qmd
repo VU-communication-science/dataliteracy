@@ -1,0 +1,243 @@
+---
+title: "3.5. Scale construction"
+---
+
+## 3.5.1. What is a scale?
+
+A scale is a composite measure that combines multiple items into a single score.
+For example, in order to measure the complex construct "happiness", you could ask people multiple questions related to happiness, such as "How often do you feel happy?", "How satisfied are you with your life?", and "How often do you feel joy?".
+
+The idea is that by combining multiple items into a single score, you can get a more reliable and valid measure of the underlying construct.
+If we would just ask people the single question "How happy are you?", we might not get a very accurate measure of their happiness, because happiness is a complex and multi-faceted construct.
+By breaking it down into a multi-item scale, we can get a more nuanced and accurate measure.
+
+If you've ever taken a survey, you've probably encountered scales before.
+For example, you might have been asked to rate your agreement with a series of statements on a scale from 1 to 5, where 1 means "strongly disagree" and 5 means "strongly agree".
+This is also called a **Likert scale**, and it's a common way to gather data on multiple items, with the goal of combining them into a single score for a complex construct.
+
+You will also hear scales referred to as **latent variables**.
+The word **latent** means hidden or concealed, and it refers here to the fact that the construct we are trying to measure is not directly observable.
+We can only measure it properly by looking at multiple observable indicators (items) that are related to the construct.
+
+### 3.5.1.1. How to create a scale {#create-scale}
+
+To create a scale, we combine multiple columns in your data (i.e. the variables for the scale items) into a single score.
+For instance, by taking the average of the values in these columns.
+However, before we can do that, we need to make sure that the scale is reliable and valid.
+This requires a few steps:
+
+#### 3.5.1.1.1. 1. Choose the items based on theory
+
+First, you need to think carefully about which items to include in your scale, and this needs to be grounded in theory.
+There might also already be existing scales that you can use.
+
+For example, in our [practice data](07-data-frames.qmd#practice-data) we have a construct called "trust in journalism", which we measure with five items, based on the items proposed by @stromback20. Participants were asked to rate their agreement with the following items on a scale from 1 to 10:
+
+1. Journalists are fair when covering the news
+2. Journalists are unbiased when covering the news
+3. Journalists do not tell the whole story when covering the news
+4. Journalists are accurate when covering the news
+5. Journalists separate facts from opinion when covering the news
+
+Note that **item 3 is inversed**, so that higher values indicate lower trust.
+Keep this in mind, because to create the scale we 
+
+#### 3.5.1.1.2. 2. Inspect your data
+
+Once you have collected your data, always check whether everything is in order. 
+In the [Inspect and clean](08-data-cleaning.qmd) chapter we looked at how to do this.
+Here we just use the `dfSummary` function from the `summarytools` package to get a quick overview of our data.
+
+First though, let's load our data and select the columns that we're interested in. 
+
+```{r 2-inspect-your-data-1, message=F}
+library(tidyverse)
+d = read_csv('https://data.dataliteracy.cc/simulated/practice_data.csv')
+```
+
+In the practice data we have two scales: `trust_t1` and `trust_t2`, with each having five items (`trust_t1_item1` to `trust_t1_item5` and `trust_t2_item1` to `trust_t2_item5`).
+For this tutorial we'll just focus on `trust_t1`.
+The following code selects the five items for `trust_t1`, and then uses the `dfSummary` function to get a summary of these columns.
+
+```{r 2-inspect-your-data-2, eval=F}
+library(summarytools)
+
+d |> 
+    select(trust_t1_item1:trust_t1_item5) |> 
+    dfSummary() |>
+    view()
+```
+
+This looks good. 
+There are no missing values, all values are within the expected range (1-10), and the distributions look reasonable.
+
+#### 3.5.1.1.3. 3. Look at the correlations
+
+The idea behind a scale is that the items are related to each other, because they all measure the same underlying construct.
+A good way to check this is by looking at the correlations between the items.
+
+For this we'll be using the `sjPlot` package, which has a function `tab_corr` (tabulate correlations) that creates a nice table with the correlations between all columns in a data frame. 
+We again use this on the five items for `trust_t1`.
+In `tab_corr` we also set `p.numeric=TRUE` to show the p-values for the correlations as numbers (instead of stars).
+
+```{r 3-look-at-the-correlations-1, message=F}
+library(sjPlot)
+d |> 
+    select(trust_t1_item1:trust_t1_item5) |> 
+    tab_corr(p.numeric=TRUE)
+```
+
+Here we see that the correlations between the items is mostly quite strong, and all significant at the 0.001 level.
+The only notable exception in terms of strength is that the correlations of `item2` to the other items is much lower.
+This suggests that our items indeed measure are common underlying construct, but `item2` (about *bias*) might measure a somewhat different aspect of trust in journalism.
+
+One **very important thing** to notice is that the correlation of `trust_t1_item3` with the other items is **negative**! 
+So when the score on `trust_t1_item3` goes up, the scores on the other items tend to go down.
+This makes complete sense if we remember that `trust_t1_item3` is inversed, so that higher values indicate lower trust.
+
+
+::: {.callout-note title="Factor analysis" collapse="true"}
+
+Another common way to check whether the items in your scale are related is by using **factor analysis**.
+This is a statistical technique that can help you identify the underlying factors that explain the correlations between the items.
+We'll cover factor analysis in a later tutorial.
+
+:::
+
+#### 3.5.1.1.4. 4. Invert items if necessary
+
+In the correlation analysis we saw that the third item (`trust_t1_item3`) is negatively correlated with the other items.
+This is all according to plan, since we inversed the scale for this item.
+But to create a single construct, we need to make sure that all items have the same directionality.
+So we need to invert the values for `trust_t1_item3`. 
+
+Since we have a scale from 1 to 10, we can inverse the value by subtracking it from `11` (11 - 1 = 10, 11 - 2 = 9, ..., 11 - 10 = 1).
+
+```{r 4-invert-items-if-necessary-1}
+d <- d |> 
+    mutate(trust_t1_item3_inv = 11 - trust_t1_item3)
+```
+
+Notice that we **do not** overwrite the original column, but create a new column `trust_t1_item3_inv` (inversed). 
+Overwriting the original column is possible, but dangerous and not transparent. 
+Creating a new column prevents you from accidentally running the inversion multiple times, and messing up your analysis.
+
+::: {.callout-note title="General formula for inversing" collapse="true"}
+
+Since we had a scale from 1 to 10, we could invert the values by subtracting from 11.
+Similarly, if you have a scale from 1 to 7, you could invert the values by subtracting from 8.
+So for any scale starting from 1, the formula you can use is:
+
+$$ \text{new value} = \text{max value} + 1 - \text{old value} $$
+
+However, if your scale does not start from 1, this doesn't work!
+(try it out for a scale from 0 to 10, and you'll see why).
+The more general formula therefore is:
+
+$$ \text{new value} = \text{max value} + \text{min value} - \text{old value} $$
+
+Note that in this case you need to use the minimum and maximum **possible** values of your scale, and NOT the actual minimum and maximum values in your data!
+So if your scale goes from 1 to 7, you would use 1 and 7 in the formula, even if the minimum and maximum values in your data are 1.5 and 6.5.
+
+:::
+
+#### 3.5.1.1.5. 5. Calculate the reliability
+
+The reliability of a scale is a measure of how consistent the items in the scale are.
+There are different ways to calculate reliability, but one of the most common is **Cronbach's alpha**.
+
+Cronbach's alpha ranges from 0 to 1, where higher values indicate higher reliability.
+A common rule of thumb is that a value of 0.7 or higher is acceptable, but this can vary depending on the context.
+As with any *rule of thumb*, don't blindly follow it, but think about what makes sense in your specific situation.
+
+To calculate Cronbach's alpha, we can use the `psych` package, which has a function `alpha` that calculates the alpha for the columns on an input data frame.
+So we'll do the same thing as above, but note that this time our select statement looks different, because we need to include the inversed item.
+
+```{r 5-calculate-the-reliability-1, message=F}
+library(psych)
+
+d |> 
+    select(trust_t1_item1,  
+           trust_t1_item2, 
+           trust_t1_item3_inv, 
+           trust_t1_item4, 
+           trust_t1_item5) |> 
+    alpha()
+```
+
+::: {.callout-note title="Cronbach's alpha with 3 digits" collapse="true"}
+
+By default, `alpha` only shows two digits for Cronbach's alpha.
+If you want to see more digits, you can use the `print` function with the `digits` argument.
+
+```{r 5-calculate-the-reliability-2}
+d |> 
+    select(trust_t1_item1, trust_t1_item2, trust_t1_item3_inv, trust_t1_item4, trust_t1_item5) |> 
+    alpha() |>
+    print(digits=3)
+```
+
+Note that this way of setting the nr of digits is specific to the `psych` package.
+
+:::
+
+
+```{r 5-calculate-the-reliability-3, echo=F, results=F}
+alpha = d |> 
+    select(trust_t1_item1, trust_t1_item2, trust_t1_item3_inv, trust_t1_item4, trust_t1_item5) |> 
+    alpha()
+ca = sprintf("%.2f", alpha$total$raw_alpha)
+ca_drop = sprintf("%.2f", alpha$alpha.drop[2,1])
+```
+
+This gives quite a lot of output. These are the most important parts to consider:
+
+1. **Cronbach's alpha**: At the top we have a row that says `raw_alpha`, `std.alpha`, etc. Here we are just interested in the `raw_alpha`, which is the value of Cronbach's alpha. In this case it's `r ca`, which is already very good. 
+3. **Reliability if an item is dropped**: This part shows you what would happen to the `raw_alpha` (and the other reliability measures) if you would drop one of the items from the scale. In our data we see that if `item2` would be dropped, the `raw_alpha` would go up to `r ca_drop` (from `r ca`). In other words, if we would use a 4-item scale with `item2` dropped, the scale would be more reliable.  
+4. **Item statistics**: This part shows you some usefull statistics about the items, like the mean and standard deviation (sd). More importantly, it also shows several scores for `item-total correlation` (the `r` in `raw.r`, `std.r`, `r.cor` and `r.drop` stands for correlation). This indicate how strongly the item is correlated to the total scale (i.e. the combination of the other items). The recommended correlation measure to look at is the `r.cor` (correlation corrected for item overlap). In our data we see that `item5` has the strongest correlation with the total scale, whereas `item2` has the weakets. Notice how this is in line with the `Reliability if an item is dropped` part: if we would drop `item2`, the scale would become more reliable. (Think about why that makes sense!)
+
+#### 3.5.1.1.6. 6. Remove items if necessary
+
+If the reliability of your scale is too low, you might want to consider removing some items (if you have enough items to spare).
+Above we saw that if we would drop `item2`, the reliability of the scale would go up to `r ca_drop`.
+You can verify that this is indeed what happens:
+
+```{r 6-remove-items-if-necessary-1, results='hide'}
+d |> 
+    select(trust_t1_item1, 
+           trust_t1_item3_inv, 
+           trust_t1_item4, 
+           trust_t1_item5) |> 
+    alpha()
+```
+
+You can verify that the `raw_alpha` is now `r ca_drop`.
+So now we can choose between either using the 4-item scale with an alpha of `r ca_drop`, or keeping the 5-item scale with an alpha of `r ca`.
+This is a judgement call, and depends on the context of your research.
+Generally speaking, if you have sufficient items left and the improvement in the alpha is not very small, it's a good idea to remove items to increase the reliability.
+
+If you decide to remove an item, you should test the scale again, because it is possible that you could further improve the reliability by removing another item.
+In the output of `alpha()` for our four item scale we see that this is not the case.
+
+#### 3.5.1.1.7. 7. Calculate the scale score
+
+Finally, once you have a reliable scale, you can calculate the scale score.
+This is usually done by taking the average of the items in the scale.
+The simplest way to do so is to just add up the items and divide by the number of items.
+Let's do this for the 4-item scale ($\alpha = `r ca_drop`$) that we tested above (mind the parentheses!):
+
+```{r 7-calculate-the-scale-score-1}
+d <- d |> 
+    mutate(trust_t1_scale = (trust_t1_item1 + trust_t1_item3_inv + trust_t1_item4 + trust_t1_item5) / 4)
+```
+
+So now we have a new column `trust_t1_scale` that contains the scale score.
+
+Remember that in the practice data we already had a column `trust_t1` for the scale.
+This is how that column was created.
+You can verify this by correlating the new scale with the old one.
+If you did everything correctly, the correlation should be 1.
+
+```{r 7-calculate-the-scale-score-2, results=F}
+cor.test(d$trust_t1, d$trust_t1_scale)
+```

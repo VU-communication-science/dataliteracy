@@ -1,27 +1,48 @@
 project:
-  type: website
+  type: book
   output-dir: docs
-  render:
-    - "*.qmd"
-    - "!*WIP*"
 
-website:
+book:
   title: "Communication Science R Book"
-  sidebar:
-    title: "Communication Science R Book"
-    allignment: center
-    logo: "static/logo.png"
-    logo-href: "https://vu.nl/en/about-vu/faculties/faculty-of-social-sciences/departments/communication-science"
-    search: true
-    style: "docked"
-    collapse-level: 1
-    contents: auto
-
-  page-footer:
-    background: primary
-    left: ""
-  back-to-top-navigation: true
-  page-navigation: true
+  author: "Communication Science Department"
+  references: references/references.bib
+  llms-txt: true
+  chapters:
+    - part: "1. Introduction"
+      chapters:
+        - index.qmd
+        - chapters/01-purpose.qmd
+        - chapters/02-curriculum.qmd
+        - chapters/03-research-traditions.qmd
+    - part: "2. Digital Literacy"
+      chapters:
+        - chapters/04-working-with-r.qmd
+        - chapters/05-projects.qmd
+        - chapters/06-quarto.qmd
+    - part: "3. Data Management"
+      chapters:
+        - chapters/07-data-frames.qmd
+        - chapters/08-data-cleaning.qmd
+        - chapters/09-transformations.qmd
+        - chapters/10-factor-analysis.qmd
+        - chapters/11-scale-construction.qmd
+    - part: "4. Data Analysis"
+      chapters:
+        - chapters/12-descriptive-statistics.qmd
+        - chapters/13-visualization.qmd
+        - chapters/14-statistical-tests-overview.qmd
+    - part: "5. Statistical Tests"
+      chapters:
+        - chapters/15-chi-square.qmd
+        - chapters/16-t-test.qmd
+        - chapters/17-correlation.qmd
+        - chapters/18-linear-regression.qmd
+        - chapters/19-anova.qmd
+        - chapters/20-ancova.qmd
+    - part: "6. Statistical Foundations"
+      chapters:
+        - chapters/21-hypothesis-testing.qmd
+        - chapters/22-causality.qmd
 
 bibliography: references/references.bib
 cls: references/apa7.cls
@@ -32,9 +53,7 @@ format:
       - cerulean
       - style.scss
     toc: true
+    number-sections: false
 
 execute:
   freeze: auto
-
-resources:
-  - "data/*"

@@ -1,7 +1,6 @@
 ---
 title: Covariance and correlation
 subtitle: measuring the relationship between variables
-order: 2
 format:
     html:
         df-print: paged

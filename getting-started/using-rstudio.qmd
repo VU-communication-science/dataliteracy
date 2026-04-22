@@ -1,6 +1,5 @@
 ---
 title: How to use RStudio
-order: 1
 ---
 
 

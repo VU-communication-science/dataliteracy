@@ -1,7 +1,6 @@
 ---
 title: Names and Objects
 subtitle: Remember information by giving it a name
-order: 2
 ---
 
 # The power of assignment 

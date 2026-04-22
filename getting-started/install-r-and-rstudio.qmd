@@ -1,6 +1,5 @@
 ---
 title: 'Install R and RStudio'
-order: 0
 ---
 
 To work with R, you will need to install two pieces of software.
