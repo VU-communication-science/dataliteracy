@@ -13,3 +13,5 @@
 
 # Ignore weird r-canon github stuff
 /r-canon/
+
+**/*.quarto_ipynb
