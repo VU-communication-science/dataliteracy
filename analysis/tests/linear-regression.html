@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Linear regression – Communication Science R Book</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../analysis/tests/t-test.html" rel="next">
+<link href="../../analysis/tests/correlation.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2b335dbd2b27b8bbea54aadd783ba135.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script type="ojs-define">
+{"contents":[{"name":"x","value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]},{"name":"y","value":[-0.681426939656638,1.30946753155016,7.67612494244737,4.21152517427373,5.38786320548284,11.1451949606498,8.38274861796761,4.2048162961804,6.93944144431942,8.66301408970013,14.6722453923184,13.0794414811721,14.2023143517822,14.3320481478354,13.3324765957378,21.3607394104092,18.4935514346877,12.1001485301111,21.1040677046911,18.5816257768162]}]}
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../analysis/index.html">Analysis</a></li><li class="breadcrumb-item"><a href="../../analysis/tests/index.html">Statistical tests</a></li><li class="breadcrumb-item"><a href="../../analysis/tests/linear-regression.html">Linear regression</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="https://vu.nl/en/about-vu/faculties/faculty-of-social-sciences/departments/communication-science" class="sidebar-logo-link">
+      <img src="../../static/logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../../static/logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Communication Science R Book</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Good to Know</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../good-to-know/function-documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Function Documentation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../analysis/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../analysis/concepts/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Key concepts</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/concepts/causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Causality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/concepts/covariance-and-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Covariance and correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/concepts/hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hypotheses</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../analysis/techniques/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Techniques</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/techniques/controlling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Controlling for confounders</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/techniques/data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data cleaning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/techniques/factor-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factor Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/techniques/mediation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mediation Analyses</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/techniques/scale-construction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scale construction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/techniques/standardization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Standardization</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../analysis/tests/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical tests</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/tests/ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ANCOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/tests/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ANOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/tests/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlation test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/tests/linear-regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Linear regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../analysis/tests/t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The t-test</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../data-management/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data management</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-management/filter-and-arrange.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filter and Arrange</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-management/mutate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mutate and recode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-management/pipes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using the pipe syntax</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-management/read-and-write.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Read and write</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-management/select-and-rename.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Select and rename</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-management/the-tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The tidyverse</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../getting-started/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting Started</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/file-management.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">File management</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/install-r-and-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install R and RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/names-and-objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Names and Objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/types-of-objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Types of Objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/using-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How to use RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../getting-started/working-in-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working in Quarto</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-regression-analysis" id="toc-what-is-regression-analysis" class="nav-link active" data-scroll-target="#what-is-regression-analysis"><span class="header-section-number">1</span> What is regression analysis?</a></li>
+  <li><a href="#how-does-it-work" id="toc-how-does-it-work" class="nav-link" data-scroll-target="#how-does-it-work"><span class="header-section-number">2</span> How does it work?</a>
+  <ul class="collapse">
+  <li><a href="#the-effect-of-x-on-y" id="toc-the-effect-of-x-on-y" class="nav-link" data-scroll-target="#the-effect-of-x-on-y"><span class="header-section-number">2.0.1</span> The effect of X on Y</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="header-section-number">2.0.2</span> Model fit</a></li>
+  </ul></li>
+  <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link" data-scroll-target="#how-to-use"><span class="header-section-number">3</span> How to use</a>
+  <ul class="collapse">
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">3.1</span> Simple linear regression</a></li>
+  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression"><span class="header-section-number">3.2</span> Multiple regression</a></li>
+  <li><a href="#categorical-ivs" id="toc-categorical-ivs" class="nav-link" data-scroll-target="#categorical-ivs"><span class="header-section-number">3.3</span> Categorical IVs</a>
+  <ul class="collapse">
+  <li><a href="#categories-with-more-than-two-levels" id="toc-categories-with-more-than-two-levels" class="nav-link" data-scroll-target="#categories-with-more-than-two-levels"><span class="header-section-number">3.3.1</span> Categories with more than two levels</a></li>
+  </ul></li>
+  <li><a href="#interaction-effects" id="toc-interaction-effects" class="nav-link" data-scroll-target="#interaction-effects"><span class="header-section-number">3.4</span> Interaction effects</a></li>
+  </ul></li>
+  <li><a href="#conditions-and-assumptions" id="toc-conditions-and-assumptions" class="nav-link" data-scroll-target="#conditions-and-assumptions"><span class="header-section-number">4</span> Conditions and assumptions</a>
+  <ul class="collapse">
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">4.0.1</span> Linearity</a></li>
+  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality"><span class="header-section-number">4.0.2</span> Normality</a></li>
+  <li><a href="#no-outliers-in-the-residuals" id="toc-no-outliers-in-the-residuals" class="nav-link" data-scroll-target="#no-outliers-in-the-residuals"><span class="header-section-number">4.0.3</span> No outliers in the residuals</a></li>
+  <li><a href="#homoscedasticity" id="toc-homoscedasticity" class="nav-link" data-scroll-target="#homoscedasticity"><span class="header-section-number">4.0.4</span> Homoscedasticity</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">4.0.5</span> Independence</a></li>
+  <li><a href="#no-multicolinearity" id="toc-no-multicolinearity" class="nav-link" data-scroll-target="#no-multicolinearity"><span class="header-section-number">4.0.6</span> No multicolinearity</a></li>
+  </ul></li>
+  <li><a href="#how-to-report" id="toc-how-to-report" class="nav-link" data-scroll-target="#how-to-report"><span class="header-section-number">5</span> How to report</a>
+  <ul class="collapse">
+  <li><a href="#reporting-the-coefficients" id="toc-reporting-the-coefficients" class="nav-link" data-scroll-target="#reporting-the-coefficients"><span class="header-section-number">5.1</span> Reporting the coefficients</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../analysis/index.html">Analysis</a></li><li class="breadcrumb-item"><a href="../../analysis/tests/index.html">Statistical tests</a></li><li class="breadcrumb-item"><a href="../../analysis/tests/linear-regression.html">Linear regression</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Linear regression</h1>
+<p class="subtitle lead">Predicting one variable from another</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-regression-analysis" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> What is regression analysis?</h1>
+<p>Regression analysis is a statistical technique for <em>predicting</em> a <code>dependent variable</code> (DV) based on one or more <code>independent variables</code> (IVs). We use <em>predict</em> in a statistical sense, meaning that we are estimating how well we can guess the dependent variable given knowledge of the independent variable(s). The reason we want to do this is usually not to make actual predictions, but to understand the world better. If we can model how a variable is predicted by one or more other variables, we can make inferences about the relationship between these variables. Specifically, regression analysis allows us to test hypotheses of the sort:</p>
+<ul>
+<li>Older people have more trust in journalists</li>
+<li>People on the political left have more trust in journalists than people on the political right</li>
+</ul>
+<p>You <em>could</em> test these hypotheses one-by-one with a correlation test and a t-test, respectively. The benefit of regression analysis is that you can test these hypotheses in the same model, and thereby also <strong>controlling</strong> for the relations between the independent variables. This allows us to deal with <strong>confounding</strong>, which can be critical when working with observational data. For instance, if younger people are more likely to be on the political left, then in order to test the effect of political orientation on trust, we need to somehow control for age.</p>
+<p>This is a long tutorial, split up in three parts. We first discuss how regression analysis works under the hood. We won’t go deep into the math, but a basic understanding of the regression equation and the <span class="math inline">\(R^2\)</span> value is helpful for understanding when and how to use regression analysis. If you already familiar with regression, and are just here to learn how to do it in R, you can safely skip this part. Second, we’ll show you how to use regression analysis in practice, where we go over a number of examples. If you’re new to regression, but you’re the learning by doing type, you might want to start here. Finally, we’ll talk about when you can use regression analysis, and what the assumptions are that you need to meet. Understanding the assumptions is important, but requires a good understanding of the basics. So we advice first getting comfortable with the previous parts before diving in.</p>
+</section>
+<section id="how-does-it-work" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> How does it work?</h1>
+<p>In <strong>simple linear regression</strong> we have a dependent variable <code>Y</code> and an independent variable <code>X</code>, and we want to predict <code>Y</code> based on <code>X</code>. The goal is to find a mathematical formula that best describes their relationship. You can visually think of this as a scatterplot, where we draw a <code>regression line</code> such that the distance between the line and the data points is as small as possible.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This visualization corresponds to the <strong>regression equation</strong>. We’ve coloured the different parts of the equation according to the colours used in the visualization.</p>
+<p><span class="math display">\[ \Large  \color{Green} Y_i = \color{Blue} b_0 + b_1 X_i + \color{Red} \epsilon_i \]</span></p>
+<ul>
+<li><span class="math inline">\(\color{Green} Y_i\)</span> represents the real values of the dependent variable (<span class="math inline">\(Y_1, Y_2, ... Y_n\)</span>) that we want to predict.</li>
+<li><span class="math inline">\(\color{Blue} b_0 + b_1 X_i\)</span> represents our prediction of y. It has two coefficients:
+<ul>
+<li><strong>intercept</strong> <span class="math inline">\(\color{Blue} b_0\)</span>: The value of Y when X is zero.</li>
+<li><strong>slope</strong> <span class="math inline">\(\color{Blue} b_1\)</span>: How much Y changes for every unit increase in X.</li>
+</ul></li>
+<li><span class="math inline">\(\color{Red} \epsilon_i\)</span> represents the <strong>residual</strong>. This is the distance between the <span style="color:blue;">predicted</span> and the <span style="color:green">real</span> value of Y.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+</ul>
+<p>Based on this equation, we can learn two important things about the relationship between X and Y:</p>
+<ol type="1">
+<li><strong>The effect of X on Y</strong>: The slope <span class="math inline">\(b_1\)</span> tells us how much Y changes for every unit increase in X.</li>
+<li><strong>The model fit</strong>: Based on the residual <span class="math inline">\(\epsilon_i\)</span> we can calculate how well the model fits the data.</li>
+</ol>
+<section id="the-effect-of-x-on-y" class="level3" data-number="2.0.1">
+<h3 data-number="2.0.1" class="anchored" data-anchor-id="the-effect-of-x-on-y"><span class="header-section-number">2.0.1</span> The effect of X on Y</h3>
+<p>Based on the coefficients of the regression model, we can make inferences about the relationship between the variables. In the example, we see that there is a positive relationship between <code>X</code> and <code>Y</code>, because the slope is positive. If X goes up, then Y tends to go up as well. This relation is expressed by the coefficient <span class="math inline">\(b_1\)</span>, which in our example is 0.95. For every unit increase in X, Y increases by 0.95.</p>
+<p>We can also interpret the intercept (<span class="math inline">\(b_0\)</span>), which is the value of Y when X is zero. However, this is not always meaningful. For example, if the independent variable is <code>age</code>, then the intercept would be the predicted value of Y for a person that is 0 years old. This is why the intercept is often not interpreted.</p>
+</section>
+<section id="model-fit" class="level3" data-number="2.0.2">
+<h3 data-number="2.0.2" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">2.0.2</span> Model fit</h3>
+<p>Based on the coefficient of the independent variable we can say something about the relation between X and Y. However, this is not the full story. Based on the coefficients we can make a prediction of Y, but we don’t yet know how good this prediction is. This is why we also need the <strong>coefficent of determination</strong> (<span class="math inline">\(R^2\)</span>), which tells us how well the model fits the data.</p>
+<p>We can calculate this based on the residual <span class="math inline">\(\epsilon_i\)</span>. The residuals tell us how bad our prediction is for each data point. To get a single score for how bad our prediction is for all data points, we can calculate the <strong>residual sum of squares</strong> (<span class="math inline">\(SS_R\)</span>). As the name implies, we take the sum of the squared residuals.</p>
+<p><span class="math display">\[  SS_R = \large \sum_{i=1}^{n} {\color{red} \epsilon_i^2} \]</span></p>
+<p>You can think of the <span class="math inline">\(SS_R\)</span> as the variance of the real values of Y around the predicted values of Y. If our model is perfect, then the <span class="math inline">\(SS_R\)</span> would be zero. But how do we know how not-perfect our model is? how high is too high? For this, we can look at the <strong>total sum of squares</strong> (<span class="math inline">\(SS_T\)</span>), which is the sum of the squared differences between the real values of Y and the mean of Y.</p>
+<p><span class="math display">\[ SS_T = \sum_{i=1}^{n} (Y_i - \bar{Y})^2 \]</span></p>
+<p>The <span class="math inline">\(SS_T\)</span> is the <strong>total variance</strong> in Y. Notice that the calculation is similar to the <span class="math inline">\(SS_R\)</span>, but instead of the predicted values of Y, we use the mean of Y. So now we can use this to see how much better our prediction is than just using the mean of Y. By subtracting the variance that we did not explain (<span class="math inline">\(SS_R\)</span>) from the total variance (<span class="math inline">\(SS_T\)</span>), we get the variance that we did explain, called the <strong>model sum of squares</strong> (<span class="math inline">\(SS_M\)</span>). <span class="math display">\[ SS_M = SS_T - SS_R \]</span></p>
+<p>And now we can calculate the <span class="math inline">\(R^2\)</span> value: the proportion of the total variance that has been explained by our model. <span class="math display">\[ R^2 = \frac{SS_M}{SS_T} \]</span></p>
+<p>The <span class="math inline">\(R^2\)</span> is a value between 0 and 1, that tells us how much of the variance in the dependent variable is explained by the independent variable(s). In our example the <span class="math inline">\(R^2\)</span> is 0.79, which means that 79% of the variance in Y can be explained by the variance in X. This is <strong>very high</strong>, especially for social science data. When we’re trying to predict human behaviour, we’re usually already happy if we can explain a few percent of the variance.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Interactive widget for building intuition">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Interactive widget for building intuition
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Try for yourself how the regression line changes when you change the values of the intercept and slope! The goal is to get the lowest possible SSE (and the highest possible R2), which means that the line is as close as possible to the data points.</p>
+<p>Note that because you’re manually tweaking the intercept and slope, you might actually create a model that is worse than the mean of Y, which is why you can get a negative <span class="math inline">\(R^2\)</span>. In a regression model this is not possible, because it will always find a model that is at least as good as the mean of Y.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="175" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 174;"><span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>viewof intercept <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>(</span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>  [<span class="op">-</span><span class="dv">8</span><span class="op">,</span> <span class="dv">6</span>]<span class="op">,</span></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.001</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"b0 Intercept"</span>}</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>viewof slope <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>(</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>  [<span class="fl">0.5</span><span class="op">,</span><span class="fl">1.8</span>]<span class="op">,</span></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.001</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"b1 Slope"</span>}</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="187" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 186;"><span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a>x_line <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({ <span class="dt">length</span><span class="op">:</span> <span class="dv">100</span> }<span class="op">,</span> (_<span class="op">,</span> i) <span class="kw">=&gt;</span> i<span class="op">-</span><span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>y_line <span class="op">=</span> x_line<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> slope <span class="op">*</span> x <span class="op">+</span> intercept)<span class="op">;</span></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>mutable SSR <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>mutable R2 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>SST <span class="op">=</span> {</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> sst <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> mean <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>  y<span class="op">.</span><span class="fu">forEach</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">+=</span> y[i] <span class="op">/</span> y<span class="op">.</span><span class="at">length</span></span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>  y<span class="op">.</span><span class="fu">forEach</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>    sst <span class="op">+=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(y[i] <span class="op">-</span> mean<span class="op">,</span> <span class="dv">2</span>)</span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(<span class="bu">Number</span>(sst<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)))</span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>update_SSR <span class="op">=</span> {</span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> ssr <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a>  x<span class="op">.</span><span class="fu">forEach</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>    ssr <span class="op">+=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(y[i] <span class="op">-</span> (slope <span class="op">*</span> x[i] <span class="op">+</span> intercept)<span class="op">,</span> <span class="dv">2</span>)</span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>  mutable SSR <span class="op">=</span> <span class="bu">Number</span>(ssr<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>))</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>  mutable R2 <span class="op">=</span> <span class="bu">Number</span>((<span class="dv">1</span> <span class="op">-</span> SSR <span class="op">/</span> SST)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>))</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="co">// Now, plot the regression line</span></span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">lineY</span>(y_line<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> x_line<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"blue"</span>})<span class="op">,</span></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(x<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"darkgreen"</span>})<span class="op">,</span></span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{intercept<span class="op">,</span>slope}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="vs">`prediction = </span><span class="sc">${</span>d<span class="op">.</span><span class="at">intercept</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs"> + </span><span class="sc">${</span>d<span class="op">.</span><span class="at">slope</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs"> * X`</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"blue"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"start"</span>})<span class="op">,</span></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{SSR<span class="op">,</span> R2}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="vs">`R2 = </span><span class="sc">${</span>d<span class="op">.</span><span class="at">R2</span><span class="sc">}</span><span class="vs"> = </span><span class="sc">${</span>(SST <span class="op">-</span> d<span class="op">.</span><span class="at">SSR</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs"> / </span><span class="sc">${</span>SST<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"black"</span><span class="op">,</span> <span class="dt">textAnchor</span><span class="op">:</span> <span class="st">"start"</span>})</span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"X"</span><span class="op">,</span></span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a>    <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">5</span><span class="op">,</span> <span class="dv">20</span>]</span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Y"</span><span class="op">,</span></span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>    <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">5</span><span class="op">,</span><span class="dv">22</span>]</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span></span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Spoiler">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Spoiler
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The optimal values for the intercept and slope are <span class="math inline">\(b_0 = 0.930\)</span> and <span class="math inline">\(b_1 = 0.952\)</span>. This should give you an <span class="math inline">\(R^2\)</span> of <span class="math inline">\(0.79\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="how-to-use" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> How to use</h1>
+<p>We’ll show you how to use regression analysis in several steps:</p>
+<ul>
+<li>First, we’ll look at <strong>simple linear regression</strong> with a single numeric independent variable.</li>
+<li>Then, we’ll perform a <strong>multiple regression</strong> with two numeric independent variables, and show you how this allows you to <strong>control</strong> for the relations between the independent variables.</li>
+<li>In the third step we’ll show you how to use a <strong>categorical independent variable</strong> in the regression model.</li>
+<li>Finally, we’ll show you how to use <strong>interaction effects</strong> in the regression model, and how you can use this to test <strong>moderation</strong>.</li>
+</ul>
+<p>We’ll be using our standard (simulated) practice data, and a bit of <code>tidyverse</code> to load and clean the data. We’ll also be using the <code>sjPlot</code> package, which can create nice tables and plots of regression models.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://data.dataliteracy.cc/simulated/practice_data.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">if_else</span>(age <span class="sc">&gt;</span> <span class="dv">100</span>, <span class="dv">2024</span> <span class="sc">-</span> age, age)) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(age, political_orientation, political_interest, trust_t1,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">news_consumption =</span> <span class="st">`</span><span class="at">news consumption</span><span class="st">`</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>d</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="simple-linear-regression" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">3.1</span> Simple linear regression</h2>
+<p>We start with the example of predicting <code>trust</code> in journalists based on <code>age</code>. For this we’ll be using the <code>trust_t1</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> variable as the dependent variable, and the <code>age</code> variable as the independent variable. We can use the <code>lm()</code> function to create a linear regression model. Inside the <code>lm()</code> function we specify the formula for the regression, which has the format <code>dependent ~ independent</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> age, <span class="at">data =</span> d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <em>standard</em> way to inspect the results is using the <code>summary(m)</code> function. This gives you all the information you need, but not in a very nice and readable format. We will therefore be using the <code>tab_model()</code> function from the <code>sjPlot</code> package to get a nice table of the results with some additional statistics (like the confidence intervals for regression coefficients).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.20</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.93&nbsp;–&nbsp;3.46</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">age</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.03</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.02&nbsp;–&nbsp;0.03</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">595</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.114 / 0.112</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled" title="Backup plan if tab_model doesn't work">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Backup plan if tab_model doesn’t work
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>tab_model</code> function by default shows the regression table in your <code>viewer</code> pane. If this for some reason doesn’t work, you can also use the <code>use.viewer=F</code> argument to show the table in your default web browser.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m, <span class="at">use.viewer=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Confidence intervalls without tab_model">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Confidence intervalls without tab_model
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In case you want to calculate the confidence intervals yourself, instead of using the <code>tab_model</code> function, you can use the <code>confint()</code> function. Here you provide the model as an argument, and you can also specify the level of the confidence interval (default is 95%).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>The output of the regression analysis gives us values for two coefficients: the <strong>(intercept)</strong> and the <strong>age</strong> variable (like <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> in the regression equation). We get the coefficient <strong>estimates</strong> and <strong>p-values</strong> that tell us if these coefficients are statistically significant. With <code>tab_model</code> we also get the <strong>confidence interval</strong>.</p>
+<ul>
+<li>The coefficient for the <code>intercept</code> tells us the predicted value of <code>trust_t1</code> when <code>age</code> is zero. This is not very meaningful in this case, because we don’t have any people with an age of zero in our data.</li>
+<li>The coefficient for <code>age</code> tells us how much <code>trust_t1</code> changes for every <em>unit increase</em> in <code>age</code>.
+<ul>
+<li>Our <code>age</code> variable is in years, so the coefficient 0.03 tells us that for every year of age, trust in journalists increases on average by 0.03 points.</li>
+<li>The p-value &lt; 0.001 tells us that this effect is statistically significant.</li>
+<li>The confidence interval tells us that we are 95% confident that the true effect of <code>age</code> on <code>trust_t1</code> is between 0.02 and 0.03.</li>
+</ul></li>
+</ul>
+<p>We also get the <span class="math inline">\(R^2\)</span> value, which tells us how well the model fits the data. Here we see that the <span class="math inline">\(R^2\)</span> is 0.114, which means that 11.4% of the variance in <code>trust_t1</code> can be explained by the variance in <code>age</code>.</p>
+<p>In conclusion, this model shows that (in our simulated data) there is no significant effect of <code>age</code> on <code>trust_t1</code>.</p>
+</section>
+<section id="multiple-regression" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="multiple-regression"><span class="header-section-number">3.2</span> Multiple regression</h2>
+<p>In the previous example we used a single independent variable (<code>age</code>) to predict the dependent variable. Now we’ll add a second numeric independent variable (<code>news_consumption</code>) to the model. This is called <strong>multiple regression</strong>, and it allows us to test the effect of multiple variables on the dependent variable at the same time. The formula for using multiple independent variables is: <code>dependent ~ independent1 + independent2 + ...</code>.</p>
+<p>As we mentioned earlier, by including both variables in the model we can test the effect of <code>news_consumption</code> on <code>trust</code> while <em>controlling</em> for <code>age</code>, and vice versa. To better investigate the effects of controlling, it is good practise to show multiple versions of the model side by side, which we can do by passing multiple models to the <code>tab_model()</code> function. To better compare effect sizes, we also include the <strong>standardized coefficients</strong>, which we can do with <code>show.std = T</code> in the <code>tab_model()</code> function. To keep the table simple, we won’t show the confidence intervalls this time (<code>show.ci = F</code>).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Standardized coefficients">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Standardized coefficients
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <strong>standardized coefficients</strong> are the coefficients of the model if all variables are standardized. This means that the variables are transformed to have a mean of 0 and a standard deviation of 1. This makes the coefficients comparable, because they are now in terms of standard deviations.</p>
+<p>Think for a second why this makes sense. If you have a variable that goes from 0 to 100, and another variable that goes from 0 to 1, then the coefficients of these variables will be on completely different scales. Recall that the coefficient tells us how much the dependent variable changes for every <strong>unit increase</strong> in the independent variable. A <strong>unit increase</strong> of 1 on a scale from 0 to 100 is very different from a <strong>unit increase</strong> of 1 on a scale from 0 to 1. And even if two variables are both on a scale from 0 to 1, the effect of a unit increase can still be different if the variables have a different standard deviation. By standardizing the variables, a <strong>unit increase</strong> is now an increase of one <strong>standard deviation</strong>, which is the same for all variables.</p>
+<p>You can request the standardized coefficients with the <code>show.std = T</code> argument in the <code>tab_model()</code> function. This will report the standardized coefficients (<code>std. Beta</code>) next to the regular coefficients (<code>Estimates</code>).</p>
+<p>Alternatively, you can also use the <code>rockchalk</code> package to standardize the entire model. This will give you a new model with standardized coefficients, which you can then use to interpret the effect sizes. Using <code>show.std = T</code> in the <code>tab_model()</code> function actually does the same thing behind the scenes, so in practice this is often easier. But when first learning about regression analysis, it can be helpful to perform this step yourself to better understand what’s going on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rockchalk)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m_std <span class="ot">&lt;-</span> <span class="fu">standardize</span>(m)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m_std)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> news_consumption, <span class="at">data =</span> d)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> news_consumption <span class="sc">+</span> age, <span class="at">data =</span> d)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m1, m2, <span class="at">show.std =</span> T, <span class="at">show.ci=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.35</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.96</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">news consumption</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.23</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.03</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>0.040</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">age</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.29</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">595</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.055 / 0.053</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.120 / 0.117</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>If we look at the first model (on the left), we see a significant effect of <code>news_consumption</code> on <code>trust_t1</code> (<span class="math inline">\(b = 0.07\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>). However, when we include the <code>age</code> variable in the model, we see that the effect of <code>news_consumption</code> becomes much smaller (<span class="math inline">\(b = 0.03\)</span>, <span class="math inline">\(p &lt; 0.05\)</span>). This suggests that the effect of <code>news_consumption</code> on <code>trust_t1</code> we saw in the first model is for a large part <em>explained</em> by <code>age</code>.</p>
+<p>What we’re witnessing here is a form of <strong>confounding</strong>. There is a relation between the <code>news_consumption</code> and <code>trust_t1</code> variables, but a part of this relation is <strong>spurious</strong>. <code>age</code> has an effect on both <code>news_consumption</code> and <code>trust_t1</code>: older people consume more news, and have more trust in journalists. By controlling for <code>age</code>, we can see the real effect of <code>news_consumption</code> on <code>trust_t1</code> (though we can never be sure that we’ve controlled for all possible confounders). For a more detailed explanation of confounding, see the <a href="../../analysis/techniques/controlling.html">confounding tutorial</a>.</p>
+<section id="standardized-coefficients" class="level4" data-number="3.2.0.1">
+<h4 data-number="3.2.0.1" class="anchored" data-anchor-id="standardized-coefficients"><span class="header-section-number">3.2.0.1</span> Standardized coefficients</h4>
+<p>In the second model we now have two significant effects: <code>age</code> and <code>news_consumption</code>. So how can we tell which effect is stronger? If we look at the regular coefficients, we see that <code>age</code> (0.02) is quite similar to <code>news_consumption</code> (0.03). However, this is not a good way to compare the effects, because the variables are on different scales. A 1 unit increase in <code>age</code> is not the same as a 1 unit increase in <code>news_consumption</code>. By standardizing the variables, we can compare the effects in terms of standard deviations instead. For every standard deviation increase in <code>age</code>, <code>trust_t1</code> increases by 0.29 standard deviations. For every standard deviation increase in <code>news_consumption</code>, <code>trust_t1</code> increases by 0.09 standard deviations. So this suggests that the effect of <code>age</code> is stronger.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+</section>
+<section id="adjusted-r2" class="level4" data-number="3.2.0.2">
+<h4 data-number="3.2.0.2" class="anchored" data-anchor-id="adjusted-r2"><span class="header-section-number">3.2.0.2</span> Adjusted <span class="math inline">\(R^2\)</span></h4>
+<p>This is also a good time to talk about the <strong><span class="math inline">\(R^2\)</span> adjusted</strong> value. This is the <span class="math inline">\(R^2\)</span> value, but corrected for the number of independent variables in the model. This is important, because the <span class="math inline">\(R^2\)</span> value will always increase when you add more independent variables (i.e.&nbsp;more information) to the model. The <span class="math inline">\(R^2\)</span> adjusted value corrects for this, which is why it’s slightly lower. So when you’re adding more independent variables to the model, you can use the <span class="math inline">\(R^2\)</span> adjusted value to see if you’re not just adding noise.</p>
+</section>
+</section>
+<section id="categorical-ivs" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="categorical-ivs"><span class="header-section-number">3.3</span> Categorical IVs</h2>
+<p>The <strong>independent variable</strong> in a regression model can also be categorical. This allows us to include categorical variables in the model, similar to the t-test and ANOVA. Let’s see what this looks like when we predict <code>trust_t1</code> based on the <code>political_orientation</code> variable, which has the values <code>left</code>, <code>right</code> and <code>center</code>.</p>
+<p>We cannot directly use the values “left”, “right” and “center” in the regression equation, but we create so-called <strong>dummy variables</strong>. A dummy variable is a <em>binary</em> variable (i.e., it can only take the values <code>0</code> and <code>1</code>) that represents whether something is the case or not. So if we want to test whether people that lean to the left have more trust in journalists, we can create a dummy variable that is <code>1</code> for people with orientation <code>left</code>, and <code>0</code> for all other people (i.e., <code>right</code> and <code>center</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">mutate</span>(d, <span class="at">political_left =</span> <span class="fu">if_else</span>(political_orientation <span class="sc">==</span> <span class="st">"left"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(d, political_orientation, political_left) <span class="do">## check the result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can use this variable in the regression model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> political_left, <span class="at">data =</span> d)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.10</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.00&nbsp;–&nbsp;4.19</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political left</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.83</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.65&nbsp;–&nbsp;1.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.120 / 0.119</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>The interpretation of the results is almost identical to the previous example with the <code>age</code> variable. The only thing we need to keep in mind is that the <code>political_left</code> variable is binary, so it can only take the values <code>0</code> and <code>1</code>. Accordingly, we don’t say that the trust in journalists increases by 0.83 points for every unit increase in <code>political_left</code>. Instead, we just say that people on the political left (<code>political_left = 1</code>) have on average a trust score that is 0.83 points higher than people that are not on the political left (<code>political_left = 0</code>).</p>
+<!-- Note that in this case we can actually interpret the **intercept**.
+The intercept is the predicted value of the dependent variable when the independent variable is zero.
+So in this case, the intercept (`3.83`) is the predicted trust in journalists for people that are NOT `political_left`. -->
+<section id="categories-with-more-than-two-levels" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="categories-with-more-than-two-levels"><span class="header-section-number">3.3.1</span> Categories with more than two levels</h3>
+<p>In the previous example we created the dummy variable ourselves, but we can also let R do this for us. This is especially convenient if we have more than two categories. In addition, this also has the benefit that <code>lm</code> <em>knows</em> that the variable is categorical, which enables us (among other things) to visualize the model propertly.</p>
+<p>We first need to make sure that our variable is of the <code>factor</code> type<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The difference between a <code>character</code> and a <code>factor</code> is that in a <code>factor</code> we explicitly tell R what the categories are, and what the <em>order</em> of the categories is. The order is important, because the first category will be the <strong>reference category</strong> (more on this later) in the regression model. To transform our <code>political_orientation</code> variable to a <code>factor</code> we can use the <code>factor()</code> function, and provide the <code>levels</code> argument to specify the order of the categories.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">mutate</span>(d, <span class="at">political_orientation =</span> <span class="fu">factor</span>(political_orientation, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">'center'</span>,<span class="st">'left'</span>,<span class="st">'right'</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now, when we use the <code>political_orientation</code> variable in the regression model, R will automatically create the dummy variables for us.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> political_orientation, <span class="at">data =</span> d)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.42</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.30&nbsp;–&nbsp;4.54</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[left]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.31&nbsp;–&nbsp;0.69</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[right]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.71</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.89&nbsp;–&nbsp;-0.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.198 / 0.196</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>Notice that there are now two coefficients for the <code>political_orientation</code> variable: one for <code>left</code> and one for <code>right</code>. Why 2, and not 3? This is because we only need two dummy variables to represent three categories. You can see how this works in the following table:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>political_orientation</th>
+<th>is_left</th>
+<th>is_right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>left</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>right</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>center</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>center</code> category is now the <strong>reference category</strong>. Recall that the intercept is the predicted value of the dependent variable when the independent variables are zero. In this model, the intercept therefore represents the predicted value of <code>trust_t1</code> for people in the <code>center</code> category.</p>
+<p>The effects of the <code>left</code> and <code>right</code> categories only tell us how much the trust in journalists changes for people in these categories <strong>compared to people in the reference category</strong>. So the <code>political_orientation [left]</code> coefficient tells us that <code>trust</code> is for people in the <code>left</code> category is 0.5 points higher than for people in the <code>center</code> category. The <code>political_orientation [right]</code> coefficient tells us that <code>trust</code> is for people in the <code>right</code> category is -0.71 points lower than for people in the <code>center</code> category. Based on this model, we cannot directly compare the <code>left</code> and <code>right</code> categories, because the <code>center</code> category is the reference category.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Determining what reference category to use">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Determining what reference category to use
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Depending on your hypotheses, you might want to use a specific category as the reference category. You can do this by changing the order of the levels in the <code>factor()</code> function. The first level will always be the reference category. So in the following example, the <code>left</code> category is the reference category.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(d, <span class="at">political_orientation =</span> <span class="fu">factor</span>(political_orientation, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">'left'</span>,<span class="st">'center'</span>,<span class="st">'right'</span>)))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(trust_t1 <span class="sc">~</span> political_orientation, <span class="at">data =</span> d2) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tab_model</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.92</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.78&nbsp;–&nbsp;5.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[center]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.69&nbsp;–&nbsp;-0.31</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[right]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-1.21</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-1.41&nbsp;–&nbsp;-1.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.198 / 0.196</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interaction-effects" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="interaction-effects"><span class="header-section-number">3.4</span> Interaction effects</h2>
+<p>One of the strengths of regression analysis is that it allows you to test <strong>interaction effects</strong>. This is when the effect of one independent variable depends on the value of another independent variable.</p>
+<p>For example, in the previous model we saw that <code>political_orientation</code> has an effect on <code>trust_t1</code>. But we might theorize that this effect depends on a person’s overall <code>political_interest</code>. If people are not really interested in politics, then their political orientation might not have a big effect on their trust in journalists. In other words, we expect that <code>political_interest</code> <strong>moderates</strong> the effect of <code>political_orientation</code> on <code>trust_t1</code>.</p>
+<p>To test this, we can include an <strong>interaction term</strong> in the regression model. That is, we add an extra term to the formula in which we <strong>multiply</strong> the two independent variables. Here we fit two models: one without the interaction term, and one with the interaction term. To keep the table readable, we’ll first rename the variables to shorter names.</p>
+<div class="cell" data-tab.width="100%">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> <span class="fu">rename</span>(d, <span class="at">pol_ori =</span> political_orientation,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">pol_int =</span> political_interest)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> pol_ori <span class="sc">+</span> pol_int, <span class="at">data =</span> ds)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> pol_ori <span class="sc">+</span> pol_int <span class="sc">+</span> pol_ori<span class="sc">*</span>pol_int, <span class="at">data =</span> ds)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m1, m2, <span class="at">show.std=</span>T, <span class="at">show.ci=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+<th colspan="4" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8">std. p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.71</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.108</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [left]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.47</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.14</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.47</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.692</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [right]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.73</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.68</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.55</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.66</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.122</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol int</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.11</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.11</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>0.004</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.19</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.18</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>0.002</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>0.002</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [left] × pol int</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.299</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.299</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [right] × pol int</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.33</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.32</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="4">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.209 / 0.205</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="4">0.238 / 0.232</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>In the first model we see roughly the same effects as before for <code>political_orientation</code>. We also see that <code>political_interest</code> has a significant effect on <code>trust_t1</code> (<span class="math inline">\(b = 0.11\)</span>, <span class="math inline">\(p &lt; 0.01\)</span>).</p>
+<p>In the second model we added the interaction terms. One important thing to note is that this changes the interpretation of the main effects. When you add an interaction term, the main effects of the variables are now the effect of the variable <strong>when the other variable is zero</strong>. This doesn’t always make sense. For instance, the effect of <code>pol ori [left]</code> now tells us the effect of <code>political_orientation</code> when <code>political_interest</code> is zero, but this is impossible because <code>political_interest</code> is measured on a scale from 1 to 7. Often, we therefore don’t report the main effects when we have an interaction term. We’ll also skip this for now (but see the optional block if you’re interested)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpreting main effects with interaction terms">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpreting main effects with interaction terms
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When you add an interaction term, the main effects of the variables used in this term are now the effect of the variable <strong>when the other variable is zero</strong>. As we mentioned, sometimes this doesn’t make sense. However, we can <strong>make it make sense</strong>, if we rescale the variables so that the value zero is meaningful. We could for instance <strong>center</strong> the variables. This way, zero is the mean of the variable, and the main effects are the effect of the variable at the mean of the other variable.</p>
+<p>This is also why in the model we see very different results for the <strong>unstandardized</strong> and <strong>standardized</strong> coefficients. Standardized coefficients are centered, so they are the effect of the variable at the mean of the other variable. This is also why we now get an additional <code>std. p</code> column, which gives us the p-value of the standardized coefficients. In our model, the unstandardized coefficients are not significant, but the standardized coefficients are. Let’s separately interpret the unstandardized and standardized coefficients for the <code>political_orientation</code> effects.</p>
+<ul>
+<li>Unstandardized coefficients:
+<ul>
+<li><code>pol_ori [left]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> when <code>political_interest</code> is zero is not significant.</li>
+<li><code>pol_ori [right]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> when <code>political_interest</code> is zero is not significant.</li>
+</ul></li>
+</ul>
+<p>These effects should not be interpreted, because <code>political_interest</code> is a scale from 1 to 7, so a value of zero is not meaningful. It just <em>happens</em> to be the case that as you extrapolate to a <code>political_interest</code> of zero (i.e.&nbsp;go to the left on the plot below) there is no expected difference in <code>trust_t1</code> between people with different <code>political_orientation</code>.</p>
+<ul>
+<li>Standardized coefficients:
+<ul>
+<li><code>pol_ori [left]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> at the mean of <code>political_interest</code> is significant.</li>
+<li><code>pol_ori [right]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> at the mean of <code>political_interest</code> is not significant.</li>
+</ul></li>
+</ul>
+<p>These coefficients do have a meaningful interpretation. Based on our analysis we can see that for people with low <code>political_interest</code>, there is no significant effect of <code>political_orientation</code> on <code>trust_t1</code>. If you look at the plot below, you see that the lines overlap at the left. As <code>political_interest</code> increases (towards the right), the lines start diverging, indicating that the effect becomes significant at some point. The main effect simply tells us that for the average value of <code>political_interest</code>, the effect is already significant.</p>
+</div>
+</div>
+</div>
+<p>Our main interest is in the interaction terms. The <code>pol ori [left] x pol int</code> coefficient tells us how much the <strong>effect</strong> of <code>political_orientation</code> on <code>trust_t1</code> changes for every unit increase in <code>political_interest</code>. This is positive, which means that the effect of <code>political_orientation</code> on <code>trust_t1</code> becomes stronger as <code>political_interest</code> increases. We see the opposite effect for the <code>pol ori [right] x pol int</code> coefficient, which is negative.</p>
+<p>This is notoriously difficult to interpret, so a good technique for interpreting interaction effects is to <strong>plot</strong> the interaction. The <code>sjPlot</code> package has the <code>plot_model()</code> function, which can plot the predicted values (<code>type = "pred"</code>) for a selection of terms (<code>terms = c('pol_int','pol_ori')</code>). This will show you how the effect of <code>political_orientation</code> on <code>trust_t1</code> changes as <code>political_interest</code> increases.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m2, <span class="at">type=</span><span class="st">'pred'</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">'pol_int'</span>,<span class="st">'pol_ori'</span>),</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.data =</span> T, <span class="at">jitter =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On the left side of the plot, where political interest is low, we see that there is not yet a significant effect of political orientation on trust in journalists. This makes sense: if you’re not interested in politics, then your political orientation might not matter that much. However, as political interest increases, we see that the line diverge, indicating an increasingly large effect of political orientation. We can thus conclude that <strong>the effect of political orientation on trust in journalists is <em>moderated</em> by (i.e.&nbsp;depends on) political interest</strong>.</p>
+</section>
+</section>
+<section id="conditions-and-assumptions" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conditions and assumptions</h1>
+<p>Regression analysis is a very versatile tool that can be used in many different situations. However, there are some assumptions that need to be met in order to use it correctly. The most important assumptions are:</p>
+<ol type="1">
+<li><strong>Linearity</strong>: The relationship between the independent and dependent variable(s) should be linear.</li>
+<li><strong>Normality</strong>: The residuals should be normally distributed.</li>
+<li><strong>No outliers</strong>: Extreme values can have a large effect on the model.</li>
+<li><strong>Homoscedasticity</strong>: The variance of the residuals should be constant.</li>
+<li><strong>Independence</strong>: The observations should be independent of each other.</li>
+<li><strong>No multicollinearity</strong>: In <strong>multiple regression</strong>, the independent variables should not be too highly correlated with each other.</li>
+</ol>
+<p>Whether these assumptions are met is generally a grey area. It’s not a matter of “yes” or “no”, but rather a matter of “to what extent”. Let’s discuss some strategies for checking these assumptions.</p>
+<section id="linearity" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="linearity"><span class="header-section-number">4.0.1</span> Linearity</h3>
+<p>Remember that we are trying to fit a straight line through the data. If the relationship between the independent and dependent variable is not linear, then the model will not fit the data well. To check this assumption, you can plot the data and see if a straight line is a good fit. With the <code>plot_model()</code> function from the <code>sjPlot</code> package you can plot the predicted (<code>type = "pred"</code>) values for an independent variable (<code>terms = "age"</code>) on top of the data points (<code>show.data = T, jitter = T</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> age, <span class="at">data =</span> d)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m, <span class="at">type =</span> <span class="st">"pred"</span>, <span class="at">terms =</span> <span class="st">"age"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">show.data =</span> T, <span class="at">jitter =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If you check this plot for our practice data, you’ll see that the relationship between <code>age</code> and <code>trust_t1</code> is indeed linear. Let’s instead look at an example where the relationship is not linear. In the following plot the relation between <code>age</code> and <code>happiness</code> is quadratic, following a u-shape. Younger and older people tend to be happier than middle-aged people. A regular linear model (left) will not be able to capture this relationship well, and will therefore not fit the data well. On the right we fit a regression line to the actual relation.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="normality" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="normality"><span class="header-section-number">4.0.2</span> Normality</h3>
+<p>The residuals of the model should be normally distributed. If you look at the figure of the regression model at the top of this tutorial, you can see how the residuals (the red lines) are distributed around the regression line. This distribution should be normal.</p>
+<p>You can to some extend see whether this is the case using the same plot as above. But there are also special diagnostics plots that can help you with this. With the <code>plot_model()</code> function you can plot the residuals (<code>type = "diag"</code>) of the model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>diag_plots <span class="ot">&lt;-</span> <span class="fu">plot_model</span>(m, <span class="at">type =</span> <span class="st">"diag"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'car':
+  method           from
+  na.action.merMod lme4</code></pre>
+</div>
+</div>
+<p>This creates a series of plots that show the residuals in different ways. What diagnostics plots are produced depends on the type of model you have. For regression we get three plots:</p>
+<ul>
+<li><code>diag_plots[[1]]</code>: Non-normality of residuals and outliers</li>
+<li><code>diag_plots[[2]]</code>: Non-normality of outliers</li>
+<li><code>diag_plots[[3]]:</code> Homoscedasticity</li>
+</ul>
+<p>Let’s first focus on the second plot, which shows just the distribution of the residuals. The coloured area is a smoothed density plot of the residuals, and the blue line shows a proper bell curve for reference. If there is a clear difference between the two, then the residuals are not normally distributed.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>diag_plots <span class="ot">=</span> <span class="fu">plot_model</span>(m, <span class="at">type=</span><span class="st">"diag"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>diag_plots[[<span class="dv">2</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="no-outliers-in-the-residuals" class="level3" data-number="4.0.3">
+<h3 data-number="4.0.3" class="anchored" data-anchor-id="no-outliers-in-the-residuals"><span class="header-section-number">4.0.3</span> No outliers in the residuals</h3>
+<p>Outliers can have a large effect on the model. Usually outliers in the residuals are related to outliers in the variables, which can be detected when <a href="../../analysis/techniques/data-cleaning.html">inspecting and cleaning</a> the data. For detecting outliers in the residuals, the <strong>Non-normality of residuals and outliers</strong> plot can be helpful. If there are outliers, they will show up as points that are far away from the line.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>diag_plots[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="homoscedasticity" class="level3" data-number="4.0.4">
+<h3 data-number="4.0.4" class="anchored" data-anchor-id="homoscedasticity"><span class="header-section-number">4.0.4</span> Homoscedasticity</h3>
+<p>The residuals should have a constant variance. What we mean by this is that among the fitted values in the model, the variance of the residuals should not systematically increase or decrease. For instance, if in our model of <strong>age</strong> predicting <strong>trust</strong> the residuals are very small for young people, and very large for old people, then the model is not homoscedastic.</p>
+<p>This can be checked with the <strong>Homoscedasticity</strong> plot. If the residuals are homoscedastic, then the residuals should be randomly distributed around the horizontal line.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>diag_plots[[<span class="dv">3</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now let’s look at an example where the variance of the residuals systematically increases with the fitted values. So the higher our prediction of <code>trust_t1</code>, the larger the residuals. We then say that the residuals are <strong>heteroscedastic</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear-regression_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="independence" class="level3" data-number="4.0.5">
+<h3 data-number="4.0.5" class="anchored" data-anchor-id="independence"><span class="header-section-number">4.0.5</span> Independence</h3>
+<p>Independence means that the residuals should not be related to each other. There are many ways in which this assumption can be violated.</p>
+<p>One common case is data over time. If you’re measuring something over time, like a person’s number of social media followers, then it is very common that every observations is highly dependent on the previous observation. This is called <strong>autocorrelation</strong> (the variable correlates with itself). In order to use these data in a regression model, you need to use special techniques that take this autocorrelation into account. This area of statistics is called <strong>time series analysis</strong>.</p>
+<p>Another common case is that your observations are nested within groups. For example, say your measuring the relation between social media use and happiness, and you gathered data from multiple countries. Observations nested in countries are not independent, because people within the same country tend to be more similar to each other than people from different countries. Some countries are overall happier, and some countries have more social media use. Country therefore could act as a <strong>confounder</strong>. To reduce the dependency between the residuals, you could control for countries using dummy variables, or use more advanced techniques like <strong>multilevel models</strong>.</p>
+</section>
+<section id="no-multicolinearity" class="level3" data-number="4.0.6">
+<h3 data-number="4.0.6" class="anchored" data-anchor-id="no-multicolinearity"><span class="header-section-number">4.0.6</span> No multicolinearity</h3>
+<p>Multicolinearity is a situation where two or more independent variables are highly correlated with each other. This can cause problems in the model, because the model cannot distinguish between the effects of the two variables. To check for multicolinearity, you can look at the <strong>correlation matrix</strong> of the independent variables (see the <a href="../../analysis/tests/correlation.html">correlation tutorial</a>). A rough rule of thumb is that if the correlation between two variables is higher than 0.5 you should be cautious, and if it’s higher than 0.8 you should be very worried.</p>
+<p>You should try to avoid high correlations between independent variables where possible. If you have multiple variables that are highly correlated, they might be measuring a common factor, so you could consider combining them into a single variable (see the <a href="../../analysis/techniques/scale-construction.html">scale construction</a> tutorial).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="The variance inflation factor">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The variance inflation factor
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A more appropriate way to check for multicolinearity is to use the <strong>variance inflation factor</strong> (VIF). Looking just at correlations is actually not good enough. The more accurate definition of multicolinearity is that one independent variable can be predicted by the other independent variables in the model. So looking at bi-variate correlations is not enough, because the prediction of one variable can be spread out over multiple other variables.</p>
+<p>In R we can calculate the VIF of the variables in a model with the <code>vif()</code> function from the <code>car</code> package. This returns the VIF score for each independent variable. If the VIF is 1 or lower, we don’t have to worry about multicolinearity. If it’s higher than 5, we very likely have a problem. If it’s between 1 and 5, it’s a grey area, and you (as always) have to use your judgement.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> age <span class="sc">+</span> news_consumption, <span class="at">data =</span> d)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             age news_consumption 
+         1.31206          1.31206 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="how-to-report" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> How to report</h1>
+<p>For APA style reporting of regression analysis, we generally report two things:</p>
+<ul>
+<li>The <strong>coefficients</strong> that we’re interested in</li>
+<li>The <strong>model fit</strong></li>
+</ul>
+<section id="reporting-the-coefficients" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="reporting-the-coefficients"><span class="header-section-number">5.1</span> Reporting the coefficients</h2>
+<ol type="1">
+<li>The <strong>coefficients</strong> of the model, which tell us the effect of the independent variables on the dependent variable.</li>
+<li>The <strong>model fit</strong>, which tells us how well the model fits the data.</li>
+</ol>
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>For example, at <span class="math inline">\(X = 10\)</span>, the blue line predicting Y passes through the point <span class="math inline">\(Y = 10.45\)</span>. However, the real value of Y at this point is 8.66. So the residual <span class="math inline">\(\epsilon_i\)</span> at this point is <span class="math inline">\(8.66 - 10.45 = -1.79\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>We use the <code>trust_t1</code> variable here, because for the current analysis we are not interested in the effect of the experimental group. Since <code>trust_t1</code> is measured before the experiment, it is not influenced by the experiment.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note that we have not tested if the difference between the two coefficients is significant. We will not go into this here, but note that the confidence intervalls of the standardized coefficients can provide more confidence in this comparison.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>You <em>can</em> also use a <code>character</code> variable directly, but the <code>factor</code> type is more appropriate for categorical variables. It also let’s you specify the order of the categories, which is important for regression analysis because it let’s you specify the reference category.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Jitter is a small amount of noise that is added to the data points to prevent them from overlapping in case their values are the same.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBpbnRlcmNlcHQgPSBJbnB1dHMucmFuZ2UoXG4gIFstOCwgNl0sXG4gIHt2YWx1ZTogMywgc3RlcDogMC4wMDEsIGxhYmVsOiBcImIwIEludGVyY2VwdFwifVxuKVxudmlld29mIHNsb3BlID0gSW5wdXRzLnJhbmdlKFxuICBbMC41LDEuOF0sXG4gIHt2YWx1ZTogMC41LCBzdGVwOiAwLjAwMSwgbGFiZWw6IFwiYjEgU2xvcGVcIn1cbilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InhfbGluZSA9IEFycmF5LmZyb20oeyBsZW5ndGg6IDEwMCB9LCAoXywgaSkgPT4gaS01KTtcbnlfbGluZSA9IHhfbGluZS5tYXAoeCA9PiBzbG9wZSAqIHggKyBpbnRlcmNlcHQpO1xubXV0YWJsZSBTU1IgPSAwXG5tdXRhYmxlIFIyID0gMFxuXG5TU1QgPSB7XG4gIGxldCBzc3QgPSAwXG4gIGxldCBtZWFuID0gMFxuICB5LmZvckVhY2goKGQsIGkpID0+IHtcbiAgICBtZWFuICs9IHlbaV0gLyB5Lmxlbmd0aFxuICB9KVxuICB5LmZvckVhY2goKGQsIGkpID0+IHtcbiAgICBzc3QgKz0gTWF0aC5wb3coeVtpXSAtIG1lYW4sIDIpXG4gIH0pXG4gIHJldHVybihOdW1iZXIoc3N0LnRvRml4ZWQoMikpKVxufVxuXG51cGRhdGVfU1NSID0ge1xuICBsZXQgc3NyID0gMFxuICB4LmZvckVhY2goKGQsIGkpID0+IHtcbiAgICBzc3IgKz0gTWF0aC5wb3coeVtpXSAtIChzbG9wZSAqIHhbaV0gKyBpbnRlcmNlcHQpLCAyKVxuICB9KVxuICBtdXRhYmxlIFNTUiA9IE51bWJlcihzc3IudG9GaXhlZCgyKSlcbiAgbXV0YWJsZSBSMiA9IE51bWJlcigoMSAtIFNTUiAvIFNTVCkudG9GaXhlZCgyKSlcbn1cblxuLy8gTm93LCBwbG90IHRoZSByZWdyZXNzaW9uIGxpbmVcblBsb3QucGxvdCh7XG4gIG1hcmtzOiBbXG4gICAgUGxvdC5saW5lWSh5X2xpbmUsIHt4OiB4X2xpbmUsIHN0cm9rZTogXCJibHVlXCJ9KSxcbiAgICBQbG90LmRvdCh4LCB7eDogeCwgeTogeSwgZmlsbDogXCJkYXJrZ3JlZW5cIn0pLFxuICAgIFBsb3QudGV4dChbe2ludGVyY2VwdCxzbG9wZX1dLCB7eDogMTAsIHk6IDMsIHRleHQ6IGQgPT4gYHByZWRpY3Rpb24gPSAke2QuaW50ZXJjZXB0LnRvRml4ZWQoMil9ICsgJHtkLnNsb3BlLnRvRml4ZWQoMil9ICogWGAsIGZpbGw6IFwiYmxhY2tcIiwgZm9udFNpemU6IDE2LCBmaWxsOiBcImJsdWVcIiwgdGV4dEFuY2hvcjogXCJzdGFydFwifSksXG4gICAgUGxvdC50ZXh0KFt7U1NSLCBSMn1dLCB7eDogMTAsIHk6IDAsIHRleHQ6IGQgPT4gYFIyID0gJHtkLlIyfSA9ICR7KFNTVCAtIGQuU1NSKS50b0ZpeGVkKDIpfSAvICR7U1NUfWAsIGZpbGw6IFwiYmxhY2tcIiwgZm9udFNpemU6IDE2LCBmaWxsOiBcImJsYWNrXCIsIHRleHRBbmNob3I6IFwic3RhcnRcIn0pXG4gIF0sXG4gIHg6IHtcbiAgICBsYWJlbDogXCJYXCIsXG4gICAgZG9tYWluOiBbLTUsIDIwXVxuICB9LFxuICB5OiB7XG4gICAgbGFiZWw6IFwiWVwiLFxuICAgIGRvbWFpbjogWy01LDIyXVxuICB9LFxuICBoZWlnaHQ6IDMwMFxufSlcblxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdpbnRlcmNlcHQnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc2xvcGUnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../analysis/tests";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../analysis/tests/correlation.html" class="pagination-link" aria-label="Correlation test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Correlation test</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../analysis/tests/t-test.html" class="pagination-link" aria-label="The t-test">
+        <span class="nav-page-text">The t-test</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

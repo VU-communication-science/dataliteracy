@@ -54,6 +54,7 @@ format:
       - style.scss
     toc: true
     number-sections: true
+    number-depth: 2
 
 execute:
   freeze: auto
