@@ -36,10 +36,10 @@ jobs:
 
       - name: Restore _freeze from dedicated branch
         run: |
-          git fetch origin _freeze-cache || true
           if git ls-remote --heads origin _freeze-cache | grep -q _freeze-cache; then
+            git fetch origin _freeze-cache
             echo "Restoring _freeze directory from _freeze-cache branch..."
-            git checkout origin/_freeze-cache -- _freeze || true
+            git checkout FETCH_HEAD -- _freeze || true
           else
             echo "Branch _freeze-cache does not exist yet. Starting fresh."
           fi
@@ -53,7 +53,11 @@ jobs:
             CHANGED_FILES=$(find . -name "*.qmd")
           fi
 
-          Rscript install_dependencies.R $CHANGED_FILES
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "$CHANGED_FILES" | tr '\n' '\0' | xargs -0 -r Rscript install_dependencies.R
+          else
+            echo "No .qmd files changed, skipping dependencies installation."
+          fi
 
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
@@ -86,15 +90,17 @@ jobs:
           fi
 
           # Copy the updated _freeze folder from the build workspace
-          mkdir -p _freeze
-          cp -r ../_freeze/* _freeze/ || true
-
-          git add _freeze
-          if git diff --staged --quiet; then
-            echo "No changes to freeze cache."
+          if [ -d "../_freeze" ]; then
+            cp -r ../_freeze .
+            git add _freeze
+            if git diff --staged --quiet; then
+              echo "No changes to freeze cache."
+            else
+              git commit -m "Update freeze cache for ${{ github.sha }}"
+              git push origin _freeze-cache
+            fi
           else
-            git commit -m "Update freeze cache for ${{ github.sha }}"
-            git push origin _freeze-cache
+            echo "No _freeze directory found."
           fi
 
       - name: Deploy to GitHub Pages
