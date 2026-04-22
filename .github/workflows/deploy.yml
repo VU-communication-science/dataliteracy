@@ -1,0 +1,75 @@
+name: Deploy Quarto site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Need full history for git diff
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Restore _freeze directory
+        uses: actions/cache@v4
+        with:
+          path: _freeze
+          key: quarto-freeze-${{ github.sha }}
+          restore-keys: |
+            quarto-freeze-
+
+      - name: Get changed files and install dependencies
+        run: |
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.qmd$' || true)
+          else
+            # Fallback for manual dispatch or first commit
+            CHANGED_FILES=$(find . -name "*.qmd")
+          fi
+          
+          Rscript install_dependencies.R $CHANGED_FILES
+
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html
+
+      - name: Save _freeze directory
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: _freeze
+          key: quarto-freeze-${{ github.sha }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

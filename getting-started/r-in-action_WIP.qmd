@@ -1,0 +1,75 @@
+---
+title: R in Action (demo)
+order: 10
+---
+
+R is a very powerful tool, but it takes some time to learn how to use it before you get to fully appreciate what you can use it for.
+On this page we show you a **quick example of some of the things you will learn here**.
+
+All the code that you see here will be explained in the rest of this online book. 
+**For now, don't worry about understanding the code**, and focus on thinking how the techniques we'll be using fit into your tool belt as a communication scientist.
+
+## Loading the packages we'll use
+
+One of the things that makes R so versatile, is that anyone can extend it by writing new *packages*. 
+You can think of packages kind of like apps in an app-store. 
+For this demo, we'll need two packages, that you'll first need to install.
+
+```{r, eval=F}
+install.packages('tidyverse')
+install.packages('sjPlot')
+```
+
+You only need to install packages once, just like apps on you mobile phone.
+Once downloaded, they are stored in your R *library*.
+When you then use the packages in an R script, you just *open* them like this:
+
+```{r, message=F}
+library(tidyverse)
+library(sjPlot)
+```
+
+## Example 1: Importing and cleaning data
+
+The first step for any analysis is to import data and clean it up.
+In the [Data Management](../data-management/index.qmd) chapter, you will learn how to use the `tidyverse` and `pipe` syntax to create clear and transparent data cleaning pipelines.
+
+In this example we show a pipeline that performs the following steps:
+
+* Import a data set from the internet
+* Select the columns that we need, and rename one inconvenient name
+* Correct that some participants entered their birth year instead of their age
+* Filter out rows where the age is below 18 or missing (`NA`)
+
+```{r}
+library(tidyverse)
+
+d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") |>
+  select(age, np_subscription, news_consumption = `news consumption`) |>
+  mutate(age = ifelse(age > 200, 2024 - age, age)) |>
+  filter(!is.na(age) & age >= 18)
+```
+
+## Example 2: Visualizing data
+
+```{r}
+ggplot(d, aes(x = age, y = news_consumption, color = np_subscription)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Trust in T1 by age",
+       x = "Age",
+       y = "Trust in T1")
+```
+
+
+## Import data
+
+The first step for any analysis is to import your data. 
+Using the `read_csv` function from the `tidyverse` package, we can directly download this information from the internet and import it into R.
+
+
+
+
+# TO DO
+
+We'll show a nice example here of how tidyverse allows us to import and clean a data set nice and quick, how we can visualize it, perform a statistical test, and create an APA ready table and visualizations

@@ -1,0 +1,12 @@
+<div style="margin-top:1.5em">
+  <ul style="display:flex;flex-direction:column;gap:0.3em">
+    <% for (const item of items) { %>
+      <li style="padding:0.2em;border:1px;border-radius:5px">
+        <a href="<%- item.path %>"><%= item.title %></a>
+        <br/>
+        <i><%- item.subtitle %></i>
+      </li>
+    <% } %>
+  </ul>
+</div>
+

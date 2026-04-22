@@ -1,0 +1,120 @@
+---
+title: Read and write
+order: 1
+subtitle: How to get data into R, and how to store it
+---
+
+
+# Reading and writing data {#importing-data}
+
+R can read files from many types of file formats.
+Here we will focus on the **csv** format, which is one of the most common formats for storing and sharing rectangular data (i.e., data in rows and columns).
+Once you know how to read a CSV file, you can easily read other file formats as well (e.g., **Excel**, **SPSS**).
+
+## CSV files
+
+::: {.callout-note title="What is a CSV file?" collapse="true"}
+`CSV` stands for Comma Separated Values.
+It is a simple text file, that you can open in any text editor.
+In order to store a data frame (i.e. data in rows and colums), it simply read every line as a row, and separates the columns by a comma (or sometimes another symbol, like a semicolon).
+
+For example, the following CSV file contains a data frame with three columns: `resp_id`, `gender`, and `height`. 
+The first row contains the column names, and the following rows contain the data.
+
+```{r, eval=F}
+resp_id,gender,height
+1,M,176
+2,M,165
+3,F,172
+4,F,160
+```
+
+The benefit of this simplicity is that any respectable spreadsheet or statistical software (e.g., Excel, Google sheets, SPSS, Stata) can read it. 
+This makes CSV files a great way to share and store data.
+
+And just in case you're worried, yes, CSV can also handle textual data.
+It uses some tricks to make sure that commas inside the text are not interpreted as column separators.
+:::
+
+
+To show you how to work with CSV files, we'll first import a dataset from the internet. Then we'll show how to write this data to a CSV file on your computer, and how to read it back into R.
+
+### Importing data from a URL
+
+To read CSV files into R, you can use the `read_csv` from the tidyverse (more specifically from the `readr` package).
+If you provide a URL, it will download the file from the internet.
+Here we read the data and assign it to the name `d` (short for data).
+You can use any name you like, but since you'll be referring to this data a lot, it's convenient to keep it short.
+
+```{r, message=FALSE}
+library(tidyverse)
+
+d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv")
+```
+
+Make sure to always check whether the data was imported correctly:
+
+```{r, results=FALSE}
+d
+```
+
+You can also view the data in a larger spreadsheet-like view using the `View` function.
+Either click on the name (`d`) in the **Environment** tab in RStudio (top right panel), or use the `View` function:
+
+```{r}
+View(d)
+
+```
+
+This will open a new tab in RStudio that shows all the data. 
+In the top menu bar you can also `filter` the data and `search` for specific values, or click on column names to sort the data.
+
+
+### Writing data to a CSV file on your computer
+
+You can use the `write_csv` function to write a tibble to a CSV file on your computer.
+If you just provide a file name, it will be saved in your current [working directory](../getting-started/file-management.qmd#working-directory).
+
+```{r, eval=FALSE}
+write_csv(d, "practice_data.csv")
+```
+
+
+### Reading data from a CSV file on your computer
+
+Now let's read this file back into R.
+Since the file is in your working directory, you can just specify the file name:
+
+```{r, eval=FALSE}
+d2 <- read_csv("practice_data.csv")
+```
+
+You can check and verify that the data (d2) is indeed identical to the original data (d).
+
+::: {.callout-warning title="CSV pitfalls to avoid" collapse="true"}
+There are two important pitfalls to avoid when working with CSV files:
+
+### Pitfall 1: Corrupting the file by opening it in Excel
+
+When you download a CSV file from the internet, some computers might immediately ask you whether you want to open it in your default spreadsheet program (e.g., Excel, Numbers). 
+Do not do this, but instead download the file directly to your computer. If you open the file and accidentally save it, it can overwrite the CSV file with a different format. 
+Excel in particular has a habit of breaking CSV files this way. 
+
+### Pitfall 2: Different flavours of CSV files
+
+There are different flavours of CSV files (for historic reasons). 
+Even though we call them "comma separated values", the separator is sometimes a semicolon or a tab. 
+And depending on language, the decimal separator can be a comma or a dot. In particular, there are two most common versions of the CSV file. 
+This is why tidyverse has two `read_csv` functions: `read_csv` and `read_csv2`. In general, you can just try `read_csv` first, and if it doesn't work, try `read_csv2`.
+:::
+
+## Reading other file formats, like Excel and SPSS
+
+Now that you know how to read and write CSV files, reading other file formats is a piece of cake.
+It works almost the same way, but you just need to download a package that can read the file format.
+
+For instance, to read an Excel file, you can use the `readxl` package, which provides the `read_excel` function. 
+To read an SPSS file, you can use the `haven` package, which provides the `read_sav` function.
+You might have to take care of some additional details, such as the sheet name in the Excel file, or the variable labels in the SPSS file.
+But once you've got the hang of managing your data with the tidyverse, you'll be able to handle any data frames formats that come your way.
+

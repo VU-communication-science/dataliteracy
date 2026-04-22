@@ -1,0 +1,246 @@
+---
+title: Data cleaning
+subtitle: garbage in, data out
+order: 2
+format:
+    html:
+        df-print: paged
+---
+
+
+::: {.callout-note title="Required packages and data for this tutorial"}
+
+In this tutorial we use the `tidyverse` and `summarytools` packages, and the simulated [practice data](../../data-management/index.qmd#practice-data)
+
+```{r, message=FALSE}
+library(tidyverse)
+library(summarytools)
+d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv")
+```
+:::
+
+# Inspect and clean your data
+
+An wise saying in data science is "garbage in, garbage out".[^1]
+If you don't take the time to inspect your data, and clean it up if necessary, you run the risk of ending up with incorrect results.
+
+[^1]: Or the more common version: "Sh\*t in, sh\*t out".
+
+In this section we'll show you some techniques for inspecting your data, and how you can *tidy* it up using the data management techniques we've learned so far.
+
+
+
+## First, get to know your data
+
+When you start working with a new dataset, the first thing you should do is get to know it.
+What columns are in there? What is the data type? How many rows are there? 
+
+If you're tibble doesn't have a huge number of columns, you can just print it to the console to get a quick overview.
+
+```{r, results="hide"}
+d
+```
+
+Another nice way to look at the data is to use the `View` function in RStudio (or clicking on the name of the tibble in the Environment tab in the top-right corner of RStudio).
+This will open a new tab in RStudio where you can see the data in a nice table.
+Here you can also filter and sort on columns, and search for specific values.
+Do note that if there are many columns, RStudio might not show them all at once, but you can click to see more.
+
+```{r, eval=FALSE}
+View(d)
+```
+```{r, echo=FALSE}
+d
+```
+
+
+## Viewing a summary of every column
+
+Viewing the top of your data is a good start, but there are many things that can go wrong that you won't be able to spot. 
+There can be missing values, incorrect data types, or outliers that are hard to spot just by looking at the data.
+So in addition you will want to view summaries of all the columns that you intend to use in your analysis.[^2]
+
+[^2]: If you have a very large dataset, you might first want to select only the columns that you need for your analysis. We'll show you how to do this in the next section.
+
+One way to get a quick summary is by just using the `summary` function in R.
+This is a generic function that you can use on many types of objects, and when you use it on a tibble (or regular data frame) it will give you a summary of each column.
+
+```{r, results="hide"}
+summary(d)
+```
+
+The summary includes various usefull statistics, like the minimum and maximum values, the median, and the number of missing values (`NA`). 
+However, this output can be a bit hard to read, especially when you have many columns.
+A great alternative is to use the `summarytools` package, which can create summaries in a nice table, including small graphs for each column to get a quick impression of the distribution.
+
+```{r, output=FALSE, message=FALSE}
+library(summarytools)
+dfSummary(d)
+```
+
+This will print the summary in your console, but you can also render it in a more readable format with the `view` (With a small `v`) function.
+
+```{r, eval=FALSE}
+dfSummary(d) |> view()
+```
+
+```{r, echo=FALSE}
+print(dfSummary(d), 
+      method='render', 
+      max.tbl.height = 500)
+```
+
+::: {.callout-note title="Using summarytools in Quarto or RMarkdown" collapse="true"}
+
+If you're working in Quarto or RMarkdown, the normal way of using `summarytools` doesn't create a nice table. Instead, what you need to do is tell Quarto to render the output as HTML. You can do this by setting the `method` argument to `render`.
+
+```{r, eval=FALSE}
+print(dfSummary(iris), 
+      method='render', 
+      max.tbl.height = 500)
+```
+
+Note that we also set the `max.tbl.height` argument to 500, to make sure that very large tables are put inside a scrollable window.
+:::
+
+### What to look for in the summary
+
+There are a few things in particular that you should look out for:
+
+* **Missing values**: Are there any columns with a lot of missing values? If so, you might need to think about how to deal with these.
+* **Data types**: Are the data types of the columns correct? For example, are numbers stored as numbers, and not as text?
+* **Outliers**: Are there any columns with very high or very low values? These might be errors in the data.
+* **Distribution**: Are the values in the columns distributed in a way that you would expect? For example, if you have a column with ages, are there any values that are negative, or over 100?
+
+Taking this into account, most of the columns in our data look pretty good.
+Our trust variables (`trust_t1` and `trust_t2`) are on a scale from 1 to 10, with a pretty normal distribution.
+We have a completely balanced distribution over the three experimental groups.
+The `news consumption` variable is a bit skewed, but nobody's perfect.
+However, there is one column that stands out sorely: `age`.
+
+The first sign that something is off is the histogram, which shows a very strange distribution where pretty much all observations are in the same bin on the left side.
+The reason for this becomes clear when we look at the maximum value, which is 1987.
+This is clearly an error in the data, as it is very unlikely that someone in our study is 1987 years old.
+What is much more likely is that at least one person entered their birth year instead of their age.
+
+To see if this is the case, we can look at the `unique` values in the `age` column.
+Recall that we can refer to a vector in a data frame using the `$` operator, like `d$age`.
+When we run the `unique` function on this vector, we see multiple several cases that indeed look like birth years.
+
+```{r}
+unique(d$age)
+```
+
+Finally, one thing to look out for when inspecting the data is *missing values*, which are often coded as `NA` (not available) in R.
+In the summary we see that there are 5 missing values in the `age` column.
+This isn't too bad, but we do need to be transparent about how we deal with these missing values in our analysis.
+
+# Cleaning up our data
+
+Now that we've identified some issues in our data, we need to clean it up.
+For this we can use the techniques you learned in the `Data Management` chapter.
+
+## Selecting columns
+
+The first thing we can do is to select only the columns that we need for our analysis, and where needed rename them.
+For the current example, let's say that we just need the columns `id`, `age` and `news consumption`.
+While selecting them, we'll immediately also rename the `news consumption` column to `news_consumption`, because spaces in column names can be a bit annoying to work with.
+
+```{r}
+d_clean <- select(d, id, age, news_consumption = `news consumption`)
+```
+
+Note that we assigned the result to a new tibble called `d_clean`.
+This is a good practice, because it keeps the original data frame intact, and you can always go back to it if you need to.
+
+## Mutating columns
+
+Next, we need to deal with the `age` column.
+When inspecting the data we saw that there were some birth years in there.
+Let's consider some ways to address this.
+
+### Option 1: Subtract the birth year from the year of the study
+
+The easiest (and in this case best) way is to **subtract** the **birth year** from the **year in which the study took place**.
+We need to do this only for the birth years, and not for the actual ages, so we'll use the `if_else` function.
+This let's us say: **if** some condition is met, do this, **else** do that.
+The format is: `if_else(condition, if_true, if_false)`.
+
+In this case, our condition is that the number is a birth year, which we can do by checking if it's unrealistically high, like over 200.
+When we can say: if the age is greater than 200, subtract it from the year of the study, otherwise just return the age.
+
+```{r}
+d_clean <- mutate(d_clean, age = if_else(age > 200, 2024 - age, age))
+```
+
+Notice that this time we also used the `d_clean` tibble as input, and assigned the result back to `d_clean` to overwrite it.
+A common mistake would be to use `d` as input, but then we'd lose our previous clean up steps.
+
+### Option 2: Recode specific values
+
+Another option would be to recode the specific values that are wrong.
+This is more work, but it is a versatile technique that you can use in many situations.
+
+Using the `recode` function, we can say what values we want to recode into what. 
+The syntax is `recode(column, current_value = new_value, ...)`.
+
+```{r}
+d_clean = mutate(d_clean, age = recode(age, `1987` = 37, `1970` = 51, `1967` = 54))
+```
+
+
+## Removing missing values
+
+It is often a good idea to explicitly remove missing values from your data.
+If you run any statistical analyses using variables with missing data, R will often just ignore these cases.
+But it's better to remove them yourself, and be transparent about this in your report.
+
+In R we refer to missing values as `NA` (Not Available).
+Let's look at two ways to remove rows with missing values.
+The first one is to use the `drop_na` function from the `tidyverse`, which will remove **any rows** that have missing values in at least one column.
+To demonstrate that this works, we use the `nrow` function to count the number of rows before and after removing missing values.
+
+```{r}
+nrow(d_clean)
+drop_na(d_clean) |> nrow()
+```
+
+The `drop_na` function works well if you only have columns in your tibble that you want to use in your analysis. 
+But note it will remove the entire row even if only one column has a missing value.
+So sometimes you want to remove rows only if a specific column has a missing value.
+
+In the current data, we know that only the `age` column has missing values.
+We can then use the `filter` function with the expression: `!is.na(age)`.
+This means: select all rows where it is **not** (`!`) the case that the value of the `age` column is missing (`is.na(age)`).
+
+
+```{r}
+d_clean <- filter(d_clean, !is.na(age))
+```
+
+## Filtering rows
+
+Next to missing values, there might also be other conditions for removing rows from your data.
+For example, you might only want to include participants that at least 18 years old.
+We can do this with the `filter` function, where we specify the condition in which we want to select the rows.
+
+```{r}
+d_clean <- filter(d_clean, age >= 18)
+```
+
+# Check again!
+
+After cleaning your data, it's always a good idea to check if everything went as planned.
+So just use the same tricks to inspect your data:
+
+```{r, eval=FALSE}
+dfSummary(d_clean) |> view()
+```
+
+```{r, echo=FALSE}
+print(dfSummary(d_clean), 
+      method='render', 
+      max.tbl.height = 500)
+```
+
+If done right, your age column should now have a more reasonable distribution,  the missing values should be gone, and the minimum age should be 18.

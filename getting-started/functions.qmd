@@ -1,0 +1,136 @@
+---
+title: Functions
+order: 4
+---
+
+# What is a function? {#what-is-a-function}
+99% of what you do in R will involve using functions. 
+A function in R is like a mini-program that you can use to perform specific tasks. 
+It takes *input*, processes it, and gives you an *output*. 
+For example, there are functions for:
+
+* importing data 
+* computing descriptive statistics
+* performing statistical tests
+* visualizing data
+
+A function in R has the form: 
+
+```{r, eval=F}
+output <- function_name(argument1, argument2, ...)`
+```
+
+* **function_name** is a name to indicate which function you want to use. It is followed by parentheses.
+* **arguments** are the input of the function, and are inserted within the parentheses. 
+* **output** is anything that is returned by the function. 
+
+For example, the function `c` *c*ombines multiple values into a *vector*.
+
+```{r}
+x = c(1,2,3,4)
+```
+
+Now, we can use the `mean` function to calculate the mean of these numbers:
+
+```{r}
+m <- mean(x)
+```
+
+The calculated mean, `2.5`, is now assigned to the name `m`:
+
+```{r}
+m
+```
+
+## Optional arguments {#optional-arguments}
+
+In the `c` and `mean` functions above, all the arguments were **required**. 
+To **c**ombine numbers into a vector, we *needed* to provide a list of numbers.
+To calculate a **mean**, we *needed* to provide a numeric vector.
+
+In addition to the **required** arguments, a function can also have **optional** arguments, that give you more control over what a function does.
+For example, suppose we have a range of numbers that also contains a missing value. In R a missing value is called `NA`, which stands for `Not Available`:
+
+```{r}
+x_with_missing <- c(1, 2, 3, NA, 4)
+```
+
+Now, if we call the `mean` function, R will say that the mean is unknown, since the third value is unknown:
+
+```{r}
+mean(x_with_missing)
+```
+
+This is statistically a very correct answer.
+But often, if some values happen to be missing in your data, you want to be able to calculate the mean just for the numbers that are not missing.
+Fortunately, the mean function has an **optional argument** `na.rm` (remove NAs) that you can set to `TRUE` (or to `T`, which is short for `TRUE`) to ignore the NAs:
+
+```{r}
+mean(x, na.rm=TRUE)
+```
+
+Notice that for the **required** argument, we directly provide the input `x`, but for the **optional** argument we include the argument name `na.rm = TRUE`.
+The reason is simply that there are other optional arguments, so we need to specify which one we're using.
+
+::: {.callout-note title="How do I know what arguments a function has?" collapse="true"}
+
+To learn more about what a function does and what arguments it has, you can look it up in the 'Help' pane in the bottom right, 
+or run `?function_name` in R. 
+
+```{r, eval=F}
+?mean
+```
+
+Here you can learn about the `na.rm` argument that we just used!
+
+If you are just getting to know R, we recommend first finishing the rest of the `Getting Started` section. 
+Then once you get the hang of things, have a look at the [Use ?function help page](../good-to-know/function-documentation.qmd) tutorial.
+:::
+
+
+## Using the pipe syntax {#pipe-syntax}
+
+There is another common way to use functions in R using the **pipe** syntax.
+With the pipe syntax, you can *pipe* the first argument into the function, instead of putting it inside the parentheses.
+As you will see below, this allows you to create a pipeline of functions, which is often easier to read.
+<!-- The pipe syntax uses the `|>` operator, which is used as follows: -->
+
+```{r, eval=F}
+argument1 |> function_name(argument2, ...)
+```
+
+For example, the following two lines of code give identical output:
+
+```{r}
+mean(x_with_missing, na.rm=T)
+
+x_with_missing |> mean(na.rm=T)
+```
+
+Notice how our first argument, the **required** argument `x_with_missing`, is *piped* into the mean function.
+Inside the mean function, we only specify the second argument, the **optional** argument `na.rm`.
+
+So why do we need this alternative way of doing the same thing?
+The reason is that when writing code, you shouldn't just think about **what the code does**, but also about **how easy the code is to read**.
+This not only helps you prevent mistakes, but also makes your analysis **transparent**.
+As you'll see later, you'll encounter many cases where your analysis requires you to string together multiple functions.
+In these cases, pipes make your code much easier to read.
+
+For example, imagine we would want to round the result (`2.5`) up to a round number (`3`). 
+With the pipe syntax we can just add the round function to our pipeline.
+
+```{r results=F}
+x_with_missing |> 
+  mean(na.rm=T) |> 
+  round()
+```
+
+You'll see how powerful this can be later on, especially in the [Data Management](../data-management/index.qmd) chapter.
+In order to prepare and clean up your data, you'll often need to perform a series of functions in a specific order.
+The pipe syntax allows you to do this in a very readable way.
+
+# Mastering functions
+
+There are some usefull tricks for using functions in R that are good to know about.
+We do not discuss these here, because if you're just starting out, there are more important things to learn first.
+But once you get the hang of things, you can learn more about these tricks in the [Good to Know](../good-to-know/function-documentation.qmd) tutorial.

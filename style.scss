@@ -1,0 +1,21 @@
+/*-- scss:defaults --*/
+
+.continue {
+  @extend .btn;
+  @extend .btn-outline-primary;
+  margin-top: 2rem;
+}
+
+.sidebar-header {
+  text-align: center;
+}
+
+.sidebar-logo {
+  margin: 0 auto;
+
+  border-radius: 5%;
+  .link {
+    width: 100%;
+  }
+}
+

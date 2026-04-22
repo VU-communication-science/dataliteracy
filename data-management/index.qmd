@@ -1,0 +1,86 @@
+---
+title: Data management
+order: 2
+format:
+    html:
+        df-print: paged
+---
+
+# An essential set of skills for data analysis {#introduction}
+
+In this chapter we will introduce you to the basics of data management in R, using the powerful `tidyverse` framework.
+Data management is the process of importing, cleaning, transforming, and exporting data.
+This is an essential part of any data analysis project, where you will often have to deal with data that is messy, incomplete, or in the wrong format.
+Knowing your way around data management will save you a lot of time and frustration, and opens up new possibilities for analysis and visualization.
+
+One of the greatest benefits of learning how to manage data in R is that it allows you to work with data in a structured and reproducible way.
+All the steps from importing the raw data to analyzing the final results are written in your script.
+If you made a mistake anywhere in the process, you can easily go back to fix it, and then rerun the script from the start.
+It is also common that you will need to rerun your analysis at a later time, for example when you get new data, or when someone (e.g., a client, a reviewer) asks you to make some changes.
+By the end of this chapter, you will be able to manage your data in a way that is transparent, reproducible, and efficient.
+
+# Practice data {#practice-data} 
+
+Throughout this chapter, and further throughout this book, we'll use a practice data set that contains **simulated data**.
+The data looks like real data used in communication science, but it's entirely made up. 
+
+The benefit of using simulated data is that it's **tailored to give you the best learning experience**. 
+We can the re-use the same data across the learning material, so that you can focus on learning the concepts, rather than spending energy on getting acquainted with new data all the time.
+Just do keep in mind that **this data is not real**, and should not be used for any real-world analysis.
+
+## Description of the data
+
+The practice data describes a fictional study about how entertainment media might influence people's attitudes.
+In an experiment, **600** participants were shown Hollywood movies with a **positive**, **negative** or **neutral** portrayal of journalists, and we measure whether this affects the participants' trust in journalists before (`trust_t1`) and after (`trust_t2`) the experiment.[^1]
+
+[^1]: The `t1` in `trust_t1` stands for "time 1". This is a common notation in studies where you measure the same construct at different points in time. Here `t1` and `t2` refer to the time before and after the experiment, respectively.
+
+There were three types of movies (`experiment_group`): a control group that watched a **neutral movie**, a group that watched a movie with a **positive portrayal** of journalism, and a group that watched a movie with a **negative portrayal** of journalism.
+Participants were **randomly assigned** to one of these groups, with **balanced group sizes** (i.e., 200 participants per group).
+We also collected some demographic information (`age`), asked whether they have a newspaper subscription (`np_subscription`), and how much hours of news they consume per week (`news consumption`).
+
+Since trust is a complex construct, we measured it with **five items** that participants rated on a scale from 1 to 10.
+These items are based on the questions proposed by @stromback20, but with some modifications.
+For example, we **inversed** the scale for one of the items, so that higher values indicate lower trust.
+The items are:
+
+1. Journalists are fair when covering the news
+2. Journalists are unbiased when covering the news
+3. (**inversed**) Journalists do not tell the whole story when covering the news
+4. Journalists are accurate when covering the news
+5. Journalists separate facts from opinion when covering the news
+
+
+
+### Variables
+
+| Variable name | Type | Description |
+|---------------|------|-------------|
+| **id** | `numeric` | Unique identifier for each participant |
+| **age** | `numeric` | Age of the participant in years |
+| **political_orientation** | `character` | Political orientation of the participant (`left`, `center`, `right`) |
+| **np_subscription** | `factor` | Whether the participant has a newspaper subscription (`yes`, `no`) |
+| **news consumption** | `numeric` | Average number of hours per week the participant consumes news |
+| **experiment_group** | `factor` | Type of movie shown: `neutral` (control group), `positive` (positive portrayal of journalism), `negative` (negative portrayal of journalism) |
+| **trust_t1** | `numeric` | Trust in journalists before the experiment (range: 1-10) |
+| **trust_t2** | `numeric` | Trust in journalists after the experiment (range: 1-10) |
+| **trust_t1_item[1-5]** | `numeric` | Scale items for trust_t1 |
+| **trust_t2_item[1-5]** | `numeric` | Scale items for trust_t2 |
+
+    
+## Reading the data into R
+
+The following code reads the practice data into R.
+We will explain this code in the next tutorials, and include it at the top of every tutorial that uses it.
+Note that in order to run this code, you need to have installed the `tidyverse` package.
+
+```{r, message=FALSE}
+library(tidyverse)
+d <- read_csv('https://data.dataliteracy.cc/simulated/practice_data.csv')
+```
+
+This is what the full data looks like:
+
+```{r, echo=FALSE}
+d
+```

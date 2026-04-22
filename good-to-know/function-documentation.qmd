@@ -1,0 +1,192 @@
+---
+title: Function Documentation
+---
+
+# Viewing Function Documentation in R
+
+One of the things that can new users in R can find overwhelming, is that they think they need to learn all functions by heart.
+This is not the case!
+Aside from a handfull of functions that you will use all the time, you will often need to look up how to use a function.
+Rather than learning everything by heart, you therefore need to learn some tricks for how to quickly look up information about functions.
+
+One of the most important tricks is to use the built-in help system in R.
+You can quickly access documentation for any function using the `?` symbol. 
+This is a powerful tool that can help you understand how to use functions, what arguments they require, and what they return.
+
+## How to Use the `?` Symbol
+
+To view the documentation for a specific function, you simply need to type `?` followed by the function name. For example, if you want to learn more about the `mean()` function, you would type:
+
+```{r, eval=F}
+?mean
+```
+
+This will open the help page, often in the bottom right pane of RStudio.
+
+## How to read the help page
+
+The help page for a function is divided into several sections. 
+The most important sections are:
+
+### Description
+
+A brief description of what the function does.
+For the `mean()` function, the description is: *Generic Function for the (Arithmetic) Mean*.
+
+By generic function, they mean that the function can have multiple implementations.
+When you think of the mean, you are probably thinking of the mean of a vector of numbers.
+
+```{r}
+x = c(1,2,3,4)
+mean(x)
+```
+
+But you can do more!
+For example, you can also calculate the mean of a vector of `Date` values:
+
+```{r}
+dates = as.Date(c("2021-01-01", "2021-01-03"))
+mean(dates)
+```
+
+
+### Usage
+
+The syntax of the function, including all the arguments it takes.
+For example, the `mean()` function has the following usage:
+
+```{r, eval=F}
+mean(x, ...)
+
+## Default S3 method:
+mean(x, trim = 0, na.rm = FALSE, ...)
+```
+
+The first part tells you that the most basic way to use the function is to provide an argument called `x`. What `x` is, is explained in the *arguments* section that we discuss below.
+
+The `...` at the end means that the function can take additional arguments. 
+This is because the mean function is a *generic function*.
+Depending on the type of input you provide (e.g., numbers, dates), some arguments might not be relevant.
+
+The second part tells you that the default method for the mean function has two additional arguments in addition to `x`: `trim`, and `na.rm`.
+Note an important difference with the `x` argument: these arguments have default values (0 and FALSE, respectively).
+This means that these arguments are **optional**.
+If you don't specify them, the function will use these default values.
+
+For example, notice that the `na.rm` argument is set to `FALSE` by default. 
+As we can see in the Arguments section, this means that the function will not remove missing values by default.
+(`NA` stands for `Not Available`, and is used in R to indicate missing values, so `na.rm` is short for `remove NAs`).
+
+```{r}
+x_with_missing <- c(1, 2, 3, NA, 4)
+mean(x_with_missing)
+```
+
+If we want to remove missing values, we can set `na.rm` to `TRUE`:
+
+```{r}
+mean(x_with_missing, na.rm=TRUE)
+```
+
+::: {.callout-note title="To name or not to name your arguments" collapse="true"}
+
+Notice how in the code above we specify the argument name `na.rm = TRUE` to indicate that we want to use this optional argument.
+For the `x` argument we don't need to specify the argument name, because it's the first argument and the function knows that the first argument is `x`.
+Generally speaking, if you don't specify the argument name, R will assume that you are providing the arguments in the order that they are listed in the usage section.
+Let's think a bit about when we should and should not use argument names!
+
+You *could* decide to always use argument names:
+
+```{r}
+mean(x=x_with_missing, na.rm=TRUE)
+```
+
+This is fine, and sometimes you might want to do this for sake of clarity.
+But it's also often unnecessary.
+For the `mean` function, it is obvious that the first argument is the input over which you want to calculate the mean, so you don't need to specify the argument name.
+
+On the opposite end of the spectrum, you could decide to never use argument names:
+
+```{r}
+mean(x_with_missing, 0, TRUE)
+```
+
+Here the three arguments follow the order in the usage section: `x`, `trim`, `na.rm`.
+
+This has two obvious downsides:
+
+* It is not obvious what the `0` and `TRUE` arguments are. The reader might thus have to look up the function documentation.
+* We now also need to specify the `trim` argument, because it comes before `na.rm` in the usage section.
+
+So in general, it is often good to use argument names for optional arguments, like `na.rm`.
+For required arguments, like `x`, it is often not necessary.
+Arguably the *best* way to use the `mean` function with `na.rm` is therefore:
+
+```{r}
+mean(x_with_missing, na.rm=TRUE)
+```
+
+:::
+
+### Arguments
+
+A description of all the arguments that the function takes.
+This should cover all the arguments that are listed in the usage section.
+
+For example, the `mean()` function explains that the `x` argument is can be a numeric vector, but also something like a `logical` or `date` vector.
+For the `na.rm` argument it explains that if set to `TRUE`, missing values will be removed before calculating the mean.
+
+### Value
+
+The value section explains what the function returns (i.e. the output).
+
+### Examples
+
+The examples section shows you how to use the function.
+Honestly, this is often the most useful part of the help page.
+If you are not sure how to use a function, a great way to learn is to look at the examples.
+Usually, you can directly copy-paste these examples into your script and run them to see how the function works.
+
+
+# Using tab completion
+
+
+A very usefull trick in RStudio, and in programming in general, is to use tab completion.
+The tab key on your keyboard (the one above the caps lock key) can be used to complete the name of a function or variable.
+And if there are multiple ways in which the name can be completed, R will show you all the options.
+(On some devices you might need to press `Tab` twice, or it might not work at all).
+
+For example, type the following code in your R script:
+
+```{r, eval=F}
+mean()
+```
+
+Now place your cursor between the parentheses and press the `Tab` key.
+This should now list all the arguments for the `mean` function, including their descriptions!
+
+Since the mean function is empty, you should only have seen the `x` argument (and the `...` argument).
+But you can also use tab completion when adding additional arguments.
+Type the following code in your R script:
+
+```{r, eval=F}
+x = c(1,2,3,4)
+mean(x, )
+```
+
+Now place your cursor between the parentheses after the comma, and press the `Tab` key.
+Now you should see the `trim` and `na.rm` arguments, because RStudio knows that these arguments apply to a `mean` function with a numeric input!
+
+## Try using tab completion everywhere
+
+Well ok, not everywhere. But you might be surprised how often it can help you.
+It can even help you find files on your computer.
+If you use tab completion between quotes, RStudio will show you all the files in your working directory that match the characters you've typed so far.
+So you can use this inside functions like `read_csv` to quickly find the file you want to read.
+
+```{r, eval=F}  
+library(tidyverse)
+read_csv("")
+```
+
+Try it out!

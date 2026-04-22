@@ -1,0 +1,15 @@
+# Quarto build files
+/.quarto/
+/_site/
+/_book/
+/_freeze/
+/docs/
+
+# R files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Ignore weird r-canon github stuff
+/r-canon/

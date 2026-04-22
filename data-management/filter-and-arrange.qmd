@@ -1,0 +1,173 @@
+---
+title: "Filter and Arrange"
+subtitle: Filter rows and arrange them in a specific order
+order: 2
+format:
+    html:
+        df-print: paged
+---
+
+::: {.callout-note title="Required packages and data for this tutorial"}
+
+In this tutorial we use the `tidyverse` package and the simulated [practice data](../../data-management/index.qmd#practice-data).
+
+```{r, message=FALSE}
+library(tidyverse)
+d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv")
+```
+:::
+
+# Subsetting rows with filter() {#filter} 
+
+The `filter` function can be used to select a subset of rows. 
+The first argument of the `filter` function is the tibble you want to filter.
+The second argument is the condition that should be met for a row to be included in the result.
+Let's say we want to select only the rows where the `experiment_group` column is equal to `control`.
+We can then use the `==` (is equal to) operator.
+
+```{r}
+filter(d, experiment_group == 'control')
+```
+
+This gives us the 200 rows (out of 600) where the `experiment_group` is `control`.
+
+We can use other common operators as well, such as `>`, `<`, `>=`, `<=`, and `!=` (not equal).
+And we can also combine multiple conditions with the `&` (and) and `|` (or) operators. 
+
+For example, here we select all rows where the `experiment_group` is `control` and the `age` is greater than 30:
+
+```{r, output=FALSE}
+filter(d, experiment_group == 'control' & age > 30)
+```
+
+A less common operator that is usefull to know about is `%in%`, which is used to check if a value is in a list of values.
+For example, to select all rows where the `experiment_group` is either `positive` or `negative`:
+
+```{r, output=FALSE}
+filter(d, experiment_group %in% c('positive', 'negative'))
+```
+
+You an also *invert* any condition by putting a `!` (NOT) in front of it.
+So the following code selects all rows where the `experiment_group` is NOT in the list `positive` or `negative`:
+
+```{r, output=FALSE}
+filter(d, !experiment_group %in% c('positive', 'negative'))
+```
+
+::: {.callout-note title="A deeper understanding of the filter condition" collapse="true"}
+
+Based on the examples given you probably already have a good enough understanding of how the `filter` function works to use it in your own code.
+In this optional information block we'll go a bit deeper into how the filter condition works, and what operators you can use.
+
+## The condition is a logical expression
+
+The condition in `filter` can be any **logical expression**.
+A logical expression is simply a statement that is either `TRUE` or `FALSE`.
+When we use a logical expression in the `filter` function, we are asking R to evaluate this expression for each row in the tibble. 
+Each row for which the expression evaluates to `TRUE` is then included in the subset.
+
+If you know a bit about how logical expressions work, you will have great control over what rows are included in your subset.
+Here is an overview of the most important operators for logical expressions.
+
+### Comparison operators
+
+Comparison operators are used to compare two values.
+
+- `==`   equal to
+- `!=`   not equal to
+- `>`    greater than
+- `>=`   greater than or equal to
+- `<`    less than
+- `<=`   less than or equal to
+- `%in%` is in a list of values (second value must be a list or vector) 
+
+Example: 
+
+```{r}
+5 > 1    # TRUE:  5 is greater than 1
+5 < 1    # FALSE: 5 is less than 1
+"A" %in% c("A", "B", "C")  # TRUE: "A" is in the list
+"A" %in% c("B", "C", "D")  # FALSE: "A" is not in the list
+```
+
+### Logical operators
+
+Logical operators are used to combine multiple conditions.
+
+- `&` and
+- `|` or
+- `!` not
+
+Example:
+```{r}
+5 > 1 | 5 < 1   # TRUE: 5 is greater than 1 OR 5 is less than 1
+5 > 1 & 5 < 1   # FALSE: 5 is greater than 1 AND 5 is less than 1
+!5 < 1          # TRUE: it is not the case that 5 is smaller than 1
+```
+
+### Using equations
+
+You can also use equations in your conditions.
+For example, to select all rows where the absolute difference between `trust_t1` and `trust_t2` is greater than 2:
+
+```{r, output=FALSE}
+filter(d, abs(trust_t2 - trust_t1) > 2)
+```
+
+### Parentheses
+
+For complex conditions, you can use parentheses to group conditions, similar to how you would in a mathematical expression.
+For example, say that you want to inspect *surprising* cases where trust in journalists decreased after watching the positive movie, or increased after watching the negative movie.
+
+```{r, output=FALSE}
+filter(d, (experiment_group == 'positive' & trust_t2 < trust_t1) |
+          (experiment_group == 'negative' & trust_t2 > trust_t1))
+```
+:::
+
+# Filtering out missing values
+
+Filtering out cases with missing values works a bit differently.
+Missing values in R are represented by `NA`, but you **cannot (!!)** use something like `filter(d, age != NA)`.
+Instead, you can use the `is.na` function to check if a value is missing.
+
+```{r}
+filter(d, is.na(age))     ## rows where age IS missing
+```
+```{r, results='hide'}
+filter(d, !is.na(age))    ## rows where age IS NOT missing
+```
+
+In addition, there is a special function in the `tidyverse` for removing rows if ANY column in the data is missing.
+This is the `drop_na` function.
+
+```{r, results='hide'}
+drop_na(d)
+```
+
+This returns 595 rows (out of 600) because 5 rows had missing values in the `age` column.
+
+# Sorting rows with arrange() {#arrange}
+
+The `arrange` function can be used to sort the rows of a tibble.
+For example, if we want to sort the data by the `age` column:
+
+```{r}
+arrange(d, age)
+```
+
+By default, the rows are sorted in ascending order.
+If you want to sort in descending order, you can put a minus in front of the variable name.
+
+```{r, output=FALSE}
+arrange(d, -age)
+```
+
+If you want to sort on multiple columns, you can simply add them to the `arrange` function.
+For example, to sort first on `experiment_group` (ascending) and then on `age` (descending):
+
+```{r, output=FALSE}
+arrange(d, experiment_group, -age)
+```
+
+

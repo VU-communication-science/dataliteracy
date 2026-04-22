@@ -1,0 +1,20 @@
+---
+title: 'Install R and RStudio'
+order: 0
+---
+
+To work with R, you will need to install two pieces of software.
+
+* **R**. This is the actual R software, that is used to run R code. 
+* **RStudio**. This is a graphical user interface (GUI) that makes working with R much easier and prettier.
+
+Both programs can be downloaded for free, and are available for all main operating systems (Windows, macOS and Linux).
+
+## Installing R
+
+To install R, you can download it from the [CRAN (comprehensive R Archive Network) website](https://cran.r-project.org/). Do not be alarmed by the website's 90's aesthetics. The website is legit. 
+
+## Installing RStudio
+
+RStudio can be downloaded from the [posit.co website](https://posit.co/download/rstudio-desktop), which is the developer of RStudio. Make sure to pick the latest version available for your operating system.
+

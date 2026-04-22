@@ -1,0 +1,13 @@
+---
+title: Communication Science R Book
+---
+
+This is the website of the Communication Science R Book. 
+We are currently developing this book along with the methods courses of the program.
+If you were directed to specific chapters by your instructor, these chapters will be ready for you to read.
+
+
+* [Getting started](/getting-started/)
+* [Data management](/data-management/)
+* [Analysis](/analysis/)
+* [Good to know](/good-to-know/)

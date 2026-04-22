@@ -1,0 +1,40 @@
+---
+title: Hypotheses
+subtitle: From theories to testable statements
+order: 1
+---
+
+# Deriving hypotheses from theories
+
+In order to use statistical methods to test theories, we first need to **derive hypotheses** from them.
+A hypothesis is a **testable statement**, that when tested empirically provides evidence for or against the theory.
+
+For example, consider the theory that *playing violent video games leads to increased aggression in children*.
+There is much disagreement about whether this theory is correct [@griffiths99], so it's important to test it empirically.
+In order to do so, we need to derive hypotheses that we can conduct to rigorous statistical tests.
+Some examples of hypotheses are:
+
+- There is a relation "between arcade game use and teachers' ratings of impulsiveness and aggresiveness". [@lin87, p. 81]
+- Playing violent video games leads to higher levels of heart rate and blood pressure compared to playing non-violent video games. [@lynch94]
+- There will be a "linear increase in aggressive affect after playing nonaggressive, moderately aggresive, and highly aggressive games". [@scott95, p. 125]
+
+Notice that these hypotheses are more specific than the theory they are derived from.
+Where the theory talks about concepts, the hypotheses talk about specific relations between variables.
+Sometimes these variables are only proxies for the concepts in the theory, such as "heart rate" and "blood pressure" are proxies for "aggression".
+To provide evidence for causal mechanisms in theories, hypotheses can formulate relations between variables in such a way that a causal order is implied (e.g., increase "after playing"; hearth rate being unlikely to be a cause of playing video games).
+
+
+## Evidence $\neq$ proof
+
+If an hypothesis is confirmed, it **provides evidence** in support of the theory.
+However, note that it does **not necessarily prove** the theory.
+
+For example, if we find that children who play violent video games are more aggressive, it does not yet prove that the games caused the aggression, because there are other possible explanations for finding this relation.
+Perhaps people who are already aggressive are more likely to play violent video games, or there could be a confounding variable that causes both aggression and video game playing (e.g., gender, socioeconomic status, or parental involvement).
+To build stronger evidence, we therefore need to design our studies in such a way that we can rule out these alternative explanations, for instanced by conducting **randomized controlled trials**, or by **statistically controlling** for confounders [Also see the tutorial on causality](../concepts/causality.qmd).
+And more generally speaking, a theory is not proven by a single empirical test. 
+Sometimes results only occur in a specific context or sample, or are sheer coincidence. 
+Studies therefore need to be replicated in other contexts or samples to gradually build a stronger case for a theory.
+
+Hypotheses are thus the bridge between theory and statistical methods, and are essential for conducting rigorous research in communication science. They need to be specific enough to be testable, but close enough to the theory they are derived from to allow for meaningful conclusions.
+

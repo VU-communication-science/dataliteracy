@@ -1,0 +1,115 @@
+---
+title: Types of Objects
+subtitle: From single values to large datasets
+order: 3
+---
+
+# Common types of objects in R
+
+You can work with many types of data in R.
+Here are some of the most common types of objects you'll encounter:
+
+- **Numeric**: Numbers, like `5`, `3.14`, or `-0.5`.
+- **Character**: Text, like `"Hello, world!"`.
+- **Factor**: Categorical data, like `education_level` or `country`.
+
+Let's see how these types of objects work in practice.
+
+```{r results='hide'}
+number <- 5
+number
+
+character <- "Hello, world!"
+character
+
+factor <- factor(c(1,2,2,3), labels = c("A", "B", "C"))
+factor
+```
+
+## Types determine what you can do with an object
+
+The type of an object determines what you can do with it.
+For example, you can perform mathematical operations on numeric objects, but not on character objects.
+
+```{r, eval=F}
+10 + 10    # returns 20
+"10" + 10  # throws an error
+```
+
+## You can coerce objects to different types
+
+Sometimes you have an object of the wrong type. For instance, your numeric data might have been read in as a character object.
+
+```{r}
+number <- "5"    
+```
+
+If I want to perform mathematical operations on `number`, I need to first convert it to a numeric object.
+You can do this using the `as.numeric` function.
+
+```{r, results='hide'}
+number <- as.numeric(number)
+number
+class(number)    # numeric
+```
+
+Note that you cannot always convert objects to a different type.
+Just use your common sense here.
+
+```{r, results='hide', warning=FALSE}
+as.numeric("I am not a number") 
+```
+
+When coercion is not possible, R will return `NA` (missing value) and give you a warning.
+
+
+# From single values to large data set
+
+In practice, you'll rarely work with single values alone. 
+However, many operations you can perform on a single value can also be applied to multiple values at once. 
+Understanding how individual values combine to form larger data structures is key to working effectively with data.
+
+## From Single Values to Vectors
+
+A vector is a collection of values of the same type (e.g., all numeric or all character). You create a vector by combining individual values using the `c()` (combine) function.
+Just like with single numbers, a vector has a type.
+
+```{r}
+numbers <- c(1, 2, 3, 4, 5)
+class(numbers)
+```
+
+Now, you can perform operations on the entire vector at once:
+
+```{r}
+numbers * 10
+sum(numbers)
+```
+
+
+
+
+## From Vectors to Data Frames
+
+Single vectors are still not very usefull for data analysis, since we're often interested in relations between variables.
+This is where data frames come in.
+
+A data frame is a table with rows and columns, where each row is an observation and each column is a variable.
+You can think of a data frame as a collection of vectors, where each vector represents a column in the dataset.
+We can create a data frame by combining vectors using the `data.frame()` function.[^1]
+
+[^1]: Throughout this book we will actually be using the `tibble` data structure from the `tidyverse` package, which is an improved version of the `data.frame`. 
+
+```{r}
+country <- c("NL", "NL", "BE", "BE", "DE", "DE", "FR", "FR", "UK", "UK")
+height  <- c(176 , 165 , 172 , 160 , 180 , 170 , 175 , 165 , 185 , 175 )
+
+d <- data.frame(country, height)
+```
+
+Now, you can perform operations on the entire data frame at once!
+You can for instance perform a statistical test to see if the average height of people differs between countries.
+Just like with single values and vectors, we need to take the type of each column into account.
+For instance, we can't perform a correlation analysis using the `country` column, because it's a character vector.
+
+

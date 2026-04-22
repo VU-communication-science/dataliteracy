@@ -1,0 +1,74 @@
+---
+title: Packages
+order: 5
+---
+
+# What is a package? {#what-is-a-package}
+
+
+In R, a package is a collection of functions, data, and documentation that extends the capabilities of R. 
+You can think of packages kind of like apps on your phone: they provide additional functionality that you can use to perform specific tasks.
+Also, like apps, you can install and uninstall packages as needed, directly from within R.
+
+There are thousands of R packages available, which enables you to use almost any existing data analysis technique.
+R is not just a tool for statistical analysis, but also for data visualization, data collection, articifial intelligence, and much more.
+If there is anything you need to do, there is a good chance that someone has already written a package for it.
+
+# How to install and use a package
+
+To use a package, you first need to install it. **Installing a package only needs to be done once** per system (unless you need to update it).
+
+## 1. Install a package
+
+Most packages are available on the Comprehensive R Archive Network (CRAN), which is the main repository for R packages.
+To install these packages, all you need to know is their name.
+
+For example, there is a package called `lubridate` that makes it easier to work with dates and times in your data.
+To install this package, you can use the `install.packages()` function:
+
+```{r, eval=F}
+install.packages("lubridate")
+```
+
+::: {.callout-warning title="What if R asks tot 'install from source'?" collapse="true"}
+
+When running `install.packages()` You sometimes get the message that `There is a binary version available but the source version is later` (we're mainly seen this on Mac). You then get the question whether you want to `install from source` the package which needs compilation `(Yes/no)`. 
+To answer this question, you have to type "yes" or "no" in your R console. 
+
+It is then usually **best to say NO**. 
+This will install a slightly older version of the package, but it will be much faster and easier to install.
+You often don't need the latest version, so it's not worth the extra hassle.
+
+In case you're curious, the reason for this is that the newest version has not been *prepared* for your system yet.
+They do have the **source code**, but it has not yet been compiled into a **binary** version that is ready to use.
+Think of the source code as a recipe, and the binary version as the ready-made dish.
+If you really want to have the newest version you can say "yes", but you'll have to cook it yourself! 
+The main problem is that you will often need to install some extra software to do this, which can be a hassle.
+So unless you really need the newest version, it's usually best to say "no", and just install the older version that has already been prepared for your system.
+:::
+
+## 2. Load a package
+
+Once you have installed a package, it is not yet loaded into your current R session.
+Similar to when you install a new app on your phone, you need to open it every time you want to use it.
+
+To use a package in your current R session, you can load it with the `library()` function:
+
+```{r, message=FALSE}
+library(lubridate)
+```
+
+# How do I know how to use a package?
+
+Most packages come with good documentation that explains how to use the functions in the package.
+For individual functions you can use the `?` operator to open the help page for that function, as we explain in [here](../good-to-know/function-documentation.qmd).
+But there is often also a more general documentation that explains the package as a whole.
+This is called a **vignette**, and if a package has one, you can open it with the `vignette()` function.
+
+```{r, eval=F}
+vignette("lubridate")
+```
+
+You can look up vignettes and function documentation [online](https://www.rdocumentation.org/). 
+This is also a good way to find new packages for whatever you're trying to do.
+

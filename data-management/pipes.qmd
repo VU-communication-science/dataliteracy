@@ -1,0 +1,71 @@
+---
+title: "Using the pipe syntax"
+subtitle: "How to make your code more readable"
+order: 6
+editor_options: 
+  chunk_output_type: console
+---
+
+
+# Working with Pipes
+
+In the [Functions](../getting-started/functions.qmd#using-the-pipe-syntax) tutorial we already mentioned that R also has a `pipe` syntax. 
+This is a way to chain functions together, where the output of one function is the input of the next function.
+The syntax for the pipe is `|>`, and it is used like this:
+
+```{r, eval=F}
+argument1 |> function(argument2)
+```
+
+The first argument of a funtion can also be *piped into it*. 
+Between the parentheses of the function we then only need to specify any additional arguments (if needed).
+Often the first argument of a function is the input data, which allows you to chain functions together.
+
+```{r, eval=F}
+data |> 
+   do_this() |> 
+   then_this() |>
+   finally_this()
+```
+
+
+## Using pipes with the tidyverse
+
+The tidyverse is designed to work really well with pipes.
+All of the functions for working with a tibble (like `select`, `filter`, `arrange`, etc.) have the first argument as the tibble itself, and the output is also a tibble.
+This means that you can chain these functions together to create a single pipeline for cleaning and preparing your data.
+
+For example, the following code reads a csv file, selects columns, filters rows and finally arranges the data:
+
+```{r, message=F}
+library(tidyverse)
+
+practice_data = read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv")
+practice_data = select(practice_data, age, experiment_group, trust_t1)
+practice_data = filter(practice_data, age >= 18)
+practice_data = arrange(practice_data, trust_t1)
+```
+
+With pipes, we can write the same code in a more readable way:
+
+```{r, message=F}
+practice_data = read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") %>%
+  select(age, experiment_group, trust_t1) %>%
+  filter(age >= 18) %>%
+  arrange(trust_t1)
+```
+
+::: {.callout-note title="The alternative pipe symbol `%>%`" collapse="true"}
+
+
+There is another pipe symbol in R: `%>%`.
+In this book we will always use `|>`, but it's good to know about the existence of `%>%`, because you might encounter it in other resources.
+
+Both functions work almost in the same way.
+So why have two?
+The reason is simply that R keeps evolving, and the `|>` pipe was only recently introduced.
+
+The `%>%` pipe was introduced in the `magrittr` package, and was made popular by the `tidyverse`. 
+Because of this popularity, R decided that it would be a good idea to have a *native* pipe in the language itself, meaning that you don't need to install a package to use it. 
+This is why they introduced the `|>` pipe.
+:::
