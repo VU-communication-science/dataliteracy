@@ -1,11 +1,11 @@
 ---
-title: "6.2. Causality"
+title: "Causality"
 ---
 
 ![xkcd: correlation](https://imgs.xkcd.com/comics/correlation.png)
 
 
-## 6.2.1. Testing causal relations
+## Testing causal relations
 
 In communication science we are often concerned with **causal relations**.
 Consider the following two examples:
@@ -25,7 +25,7 @@ Even if we find strong evidence that people that have more screen time also have
 There is a famous saying in statistics: **correlation does not imply causation**.
 In this tutorial you will learn why this is the case, and what we can do go to beyond correlation to build evidence for causal relationships.
 
-## 6.2.2. Why correlation does not imply causation
+## Why correlation does not imply causation
 
 **Causation** implies a cause-effect relationship, where a change in one variable (the cause) leads to a change in the other (the effect).
 The cause does not need to be the *only* cause of the effect (there are many things that affect well-being), nor does it *always* need to lead to the effect (some people with high screen time will be happier than other with low screen time).
@@ -54,7 +54,7 @@ There is also a website called [Spurious Correlations](https://www.tylervigen.co
 Some of these correlations are due to confounding variables, but many are also just coincidences.
 :::
 
-### 6.2.2.1. Visualizing causation
+### Visualizing causation
 
 To develop a good intuition for the difference between correlation and causation, it helps to have a good mental model of what a causal relationship looks like.
 A good way to do this is to use **Directed Acyclic Graphs** (DAGs), which are a visual way to represent causal relationships.
@@ -99,14 +99,14 @@ This shows why a correlation between X and Y is not enough to establish causatio
 Each of these DAGs shows a different reason for the correlation between X and Y, but only the first one supports our hypothesis that X causes Y.
 Our job as researchers is to figure out which of these DAGs is best supported by empirical evidence.
 
-## 6.2.3. How to (better) establish causation
+## How to (better) establish causation
 
 Let's first acknowledge that establishing causation is hard (see @pearl09).
 But this should not deter us from doing our best to build evidence for causal relationships!
 Luckily, we have a number of strategies at our disposal to build evidence for causation.
 
 
-### 6.2.3.1. Theoretical foundation
+### Theoretical foundation
 
 The most important thing is to have a **theoretical foundation** for a causal relationship.
 This means that we have a good reason to believe that that a change in one variable will lead to a change in the other.
@@ -126,7 +126,7 @@ If you have time for a tangent, try reading [this Slate Magazine article](https:
  -->
 
 
-### 6.2.3.2. If possible, conduct an experiment
+### If possible, conduct an experiment
 
 The gold standard for establishing causation is the **randomized controlled experiment**, in which the researcher *manipulates the cause* and observes the effect, while keeping all other variables constant.
 In order to manipulate the cause, the researcher creates different experimental conditions.
@@ -146,7 +146,7 @@ This ability to eliminate the influence of confounders makes experiments a power
 However, in the field of communication science it is often not possible (or ethical) to conduct valid experiments.
 For many of the causes that we are interested in, it is simply not possible to manipulate it in a controlled setting that is still sufficiently similar to the real world.
 
-### 6.2.3.3. For observational data, control for confounders
+### For observational data, control for confounders
 
 If we cannot conduct an experiment, we can to some extend control for confounding variables using **statistical methods**.
 This is not as powerful as an experiment, but it does allow us to establish some level of evidence for causation from observational data.
@@ -162,7 +162,7 @@ We also call this **controlling for** the confounder.
 The main limitation of this approach is that we can only control for the variables that we have measured.
 This puts an even greater burden on having a solid theoretical foundation for the relationships we test.
 
-### 6.2.3.4. Triangulation
+### Triangulation
 
 Triangulation means using multiple methods to study the same phenomenon.
 It is generally the case that we cannot determine causality from a single study, and need to build a body of evidence by looking at the same relationship from different angles.

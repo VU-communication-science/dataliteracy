@@ -1,8 +1,8 @@
 ---
-title: "2.3. Quarto"
+title: "Quarto"
 ---
 
-## 2.3.1. Integrating code and text
+## Integrating code and text
 
 The classic way of working in R is to write your code in a script file.
 This is still a very common way of working, and it has many advantages.
@@ -20,7 +20,7 @@ In some ways it is even a more convenient way of working.
 In some courses in this program, you will be asked to write your assignments in Quarto.
 This section therefore provides a brief introduction to working in Quarto.
 
-### 2.3.1.1. Creating a Quarto file
+### Creating a Quarto file
 
 You can create and work with Quarto directly in RStudio. 
 For assignments, you will often be given a template Quarto file, but here we'll create one from scratch.
@@ -34,7 +34,7 @@ Just name it something like *My First Quarto Document*, and click `Create`.
 The new file will open in the editor, and you'll see that it already contains some text and code, that also doubles as a quick tutorial.
 Roughly speaking, there are three general components.
 
-#### 2.3.1.1.1. 1. The Header
+#### 1. The Header
 
 At the top of the file there is a header, which is enclosed by three dashes `---`.
 Here you can specify some general settings for the document, such as the title, the author, and the output format.
@@ -64,13 +64,13 @@ If not, we recommend sticking with `visual` mode for now, and maybe forever.
 :::
 
 
-#### 2.3.1.1.2. 2. The textual content
+#### 2. The textual content
 
 After the header, you can start writing your text.
 This works like a light version of Word. 
 You can add heading, lists, tables, images, and more.
 
-#### 2.3.1.1.3. 3. The code chunks
+#### 3. The code chunks
 
 At some point you see a code chunk, which looks like:
 
@@ -90,7 +90,7 @@ Here you also find a button to run all the chunks above the current one.
 To add a new block, you can click on the `Insert` button in the toolbar, and select `Executable Cell` -> `R`.
 
 
-### 2.3.1.2. Rendering the document
+### Rendering the document
 
 When you're done writing your document, or if you want to see a preview, you can `render` the document by clicking the `Render` button in the toolbar (or hitting `Ctrl/Cmd + Shift + K`).
 Try it now!
@@ -112,19 +112,19 @@ For example, if you use a certain column on line 10, but you only create that co
 This might not pose a problem while you're working on it, but it will bite you when for whatever reason you need to rerun the entire script.
 Quarto forces you to write your code in a way that if you run the entire script from scratch, it will work.
 
-## 2.3.2. Some tips and warnings
+## Some tips and warnings
 
-### 2.3.2.1. Turn on `'Render on save'`
+### Turn on `'Render on save'`
 
 In the toolbar you can turn on `Render on Save`. This way, any time you save the document, it will try to render. Now make sure to save often (get used to using `Ctrl/Cmd + s`). This way you can catch any rendering errors early on.
 
-#### 2.3.2.1.1. The working directory is the folder where the Quarto file is located
+#### The working directory is the folder where the Quarto file is located
 
 A Quarto file will always use it's own location as the [working directory](05-projects.qmd#choosing-working-directory)
 This is actually quite convenient. 
 Just make sure to put your Quarto file in the same directory as your data, and you're good to go.
 
-#### 2.3.2.1.2. Use code block parameters
+#### Use code block parameters
 
 You can add parameters to the code chunks.
 For example, the following code chunk will only show the code, but not the output:

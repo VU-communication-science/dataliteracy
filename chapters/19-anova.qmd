@@ -1,8 +1,8 @@
 ---
-title: "5.5. ANOVA"
+title: "ANOVA"
 ---
 
-## 5.5.1. What is an ANOVA?
+## What is an ANOVA?
 
 Analysis of Variance, or ANOVA, is a statistical technique used to compare the means of several groups at once.
 ANOVA tests whether any of the group means differ more than would be expected by random variation alone.
@@ -17,19 +17,19 @@ Because of the random assignment, all possible confounding variables should be e
 There are different types of ANOVA to cover a wide range of research designs.
 The most common ones are:
 
-### 5.5.1.1. One-way ANOVA
+### One-way ANOVA
 
 -   **Purpose**. Compare means *between-subjects* in different groups.[^2]
 -   **Example**. We want to know how the design of a health care robot affects how *comfortable* people feel about interacting with the robot. To test this we *randomly* asign participants to three experimental groups, that are shown three different robot designs ([Alice, Nao](https://vu.nl/nl/onderzoek/meer-over/sociale-robots-voor-de-samenleving-mediapsychologie), and RoboCop). They then answer multiple questions based on which we measure a *comfort rating* [scale](11-scale-construction.qmd). We can now use One-way ANOVA to compare the mean comfort rating between the three groups.
 
 [^2]: This is similar to an independent samples t-test, but can be used for more than two groups.
 
-#### 5.5.1.1.1. Two-way ANOVA
+#### Two-way ANOVA
 
 -   **Purpose**. Compare means *between-subjects* in different groups, for two independent variables.
 -   **Example**. In addition to comparing three different designs of a health care robot, we could also compare between using a *male* or *female* voice. We then randomly assign participants to six groups (3 designs \* 2 voices), and use two-way ANOVA to test whether the design and voice have an effect on the perceived attractiveness. We can then also test whether there is an *interaction* between the two variables, to see if specific combinations of design and voice are particularly comforting.
 
-#### 5.5.1.1.2. Repeated measures ANOVA
+#### Repeated measures ANOVA
 
 -   **Purpose**. Compare means *within-subjects* measured at different timepoints.[^3]
 -   **Example**. Instead of the self-reporting comfort rating, we could measure how people react to interacting with a health care robot by measuring their *heart rate*. We could then measure the *heart rate* of participants *before*, *during*, and *after* interacting with the robot. We can then use repeated measures ANOVA to compare the *heart rate* at each stage.
@@ -37,7 +37,7 @@ The most common ones are:
 [^3]: This is similar to a paired samples t-test, but can be used for more than two groups.
     This is primarily used for within-subjects designs, where the same participants are measured multiple times.
 
-#### 5.5.1.1.3. Mixed-design ANOVA
+#### Mixed-design ANOVA
 
 -   **Purpose**. Combine *between-subjects* and *within-subjects* factors.
 -   **Example**. This allows us to measure simultaneously the effect of the design of a health care robot (one-way anova example) on the change in *heart rate* (repeated measures example). We divide participants into three groups that are shown the three different designs, and measure the *heart rate* of participants *before*, *during*, and *after* interacting with the robot. We can then use mixed-design ANOVA to test whether the three designs of a health care robot affect the change in hearthrate differently.
@@ -67,7 +67,7 @@ In this tutorial we will also stick to this default.
 But as you'll see in the code, we do need to specify ourselves that we want to use Type II sums of squares and effect coding (specifically we'll use Helmert coding). -->
 ```
 
-## 5.5.2. How to use it
+## How to use it
 
 We'll use the `afex` and `emmeans` packages to perform ANOVA tests and compare means, and we'll use the `sjPlot` package to visualize the results.
 
@@ -98,7 +98,7 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") |>
 d
 ```
 
-### 5.5.2.1. One-way ANOVA
+### One-way ANOVA
 
 In one-way ANOVA we compare the means of a dependent variable between two or more groups in a single independent variable.
 We can use this to test the main question of our experiment: whether the movie (*experimental_group*) has an effect on the trust in journalists (*trust_t2*).[^4]
@@ -168,7 +168,7 @@ plot_model(m$lm, type='pred', terms='experiment_group')
 ```
 :::
 
-#### 5.5.2.1.1. *Experimental* versus *observed* factors
+#### *Experimental* versus *observed* factors
 
 In the previous example our independent variable was *experimentally manipulated*: we randomly assigned participants to the three groups.
 Accordingly, any effects that we find are likely to represent causal relationships.
@@ -193,7 +193,7 @@ In this case our results only tell us that there is a significant difference bet
 We cannot conclude that this is because having a newspaper subscription causes people to trust journalists more.
 We are no longer certain about the order of the effect (trust in journalists might also cause people to get a newspaper subscription), and there can be confounding variables that influence both (e.g., education level, socio-economic status).
 
-### 5.5.2.2. Two-way ANOVA
+### Two-way ANOVA
 
 In a two-way ANOVA we compare the means of a dependent variable between two or more groups in two independent variables.
 To demonstrate this we'll use the `np_subscription` variable as a second independent variable.
@@ -250,7 +250,7 @@ pairs(means)
 ```
 :::
 
-## 5.5.3. Conditions and assumptions
+## Conditions and assumptions
 
 ANOVA is a parametric test, which means that it makes assumptions about the data.
 If these assumptions are violated, the results of the ANOVA can be unreliable.
@@ -264,7 +264,7 @@ Here we will only discuss the assumption of **homogeneity of variance**, because
 For the other assumptions, which are more general to linear models, we refer to the [regression tutorial](18-linear-regression.qmd).
 If you have not yet learned about regression, you can ignore the details of these other assumptions for now.
 
-### 5.5.3.1. Homogeneity of variance
+### Homogeneity of variance
 
 Homogeneity of variance means that the variance of the dependent variable should be (approximately) equal in each group.
 In our one-way ANOVA example, this means that the variance of the trust score should be equal in the *control*, *positive*, and *negative* groups.
@@ -289,7 +289,7 @@ For two-way anova, we can also perform the Levene's test for each combination of
 leveneTest(trust_t2 ~ experiment_group*np_subscription, data=d)
 ```
 
-#### 5.5.3.1.1. What if the variance is not equal?
+#### What if the variance is not equal?
 
 If Levene's test is significant, we would need to look more carefully into the variance across groups.
 ANOVA is fairly robust to violations of the assumption of homogeneity of variance, but if the variance is very different between groups, the results of the ANOVA can be unreliable.

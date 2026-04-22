@@ -1,5 +1,5 @@
 ---
-title: "3.1. Data Frames"
+title: "Data Frames"
 ---
 
 ::: {.callout-note title="Required packages and data for this chapter"}
@@ -11,9 +11,9 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv")
 :::
 
 
-## 3.1.1. Introducing the tidyverse
+## Introducing the tidyverse
 
-### 3.1.1.1. Installing the tidyverse {#installing-the-tidyverse}
+### Installing the tidyverse {#installing-the-tidyverse}
 
 The [tidyverse](https://www.tidyverse.org) is collection of R packages that makes it much easier to import, manage and visualize data.
 To use the tidyverse, you only need to open the `tidyverse` package, and it will automatically open all of the tidyverse R packages.
@@ -80,7 +80,7 @@ But for our Communication Science program, and for many data science application
 :::
 
 
-### 3.1.1.2. Data management with the tidyverse {#data-management-with-the-tidyverse}
+### Data management with the tidyverse {#data-management-with-the-tidyverse}
 
 The tidyverse is built around the concept of *tidy data* [@wickham14].
 The main principles of tidy data are:
@@ -115,15 +115,15 @@ We need to be able to `select` columns, `filter` rows, `mutate` values, and `sum
 Sometimes we also need to `pivot` the data, or `join` it with other data.
 In this chapter you will learn how to do all of this with the tidyverse.
 
-## 3.1.2. Read and write
+## Read and write
 
-### 3.1.2.1. Reading and writing data {#importing-data}
+### Reading and writing data {#importing-data}
 
 R can read files from many types of file formats.
 Here we will focus on the **csv** format, which is one of the most common formats for storing and sharing rectangular data (i.e., data in rows and columns).
 Once you know how to read a CSV file, you can easily read other file formats as well (e.g., **Excel**, **SPSS**).
 
-#### 3.1.2.1.1. CSV files
+#### CSV files
 
 ::: {.callout-note title="What is a CSV file?" collapse="true"}
 `CSV` stands for Comma Separated Values.
@@ -151,7 +151,7 @@ It uses some tricks to make sure that commas inside the text are not interpreted
 
 To show you how to work with CSV files, we'll first import a dataset from the internet. Then we'll show how to write this data to a CSV file on your computer, and how to read it back into R.
 
-#### 3.1.2.1.2. Importing data from a URL
+#### Importing data from a URL
 
 To read CSV files into R, you can use the `read_csv` from the tidyverse (more specifically from the `readr` package).
 If you provide a URL, it will download the file from the internet.
@@ -181,7 +181,7 @@ This will open a new tab in RStudio that shows all the data.
 In the top menu bar you can also `filter` the data and `search` for specific values, or click on column names to sort the data.
 
 
-#### 3.1.2.1.3. Writing data to a CSV file on your computer
+#### Writing data to a CSV file on your computer
 
 You can use the `write_csv` function to write a tibble to a CSV file on your computer.
 If you just provide a file name, it will be saved in your current [working directory](05-projects.qmd#working-directory).
@@ -191,7 +191,7 @@ write_csv(d, "practice_data.csv")
 ```
 
 
-#### 3.1.2.1.4. Reading data from a CSV file on your computer
+#### Reading data from a CSV file on your computer
 
 Now let's read this file back into R.
 Since the file is in your working directory, you can just specify the file name:
@@ -205,13 +205,13 @@ You can check and verify that the data (d2) is indeed identical to the original 
 ::: {.callout-warning title="CSV pitfalls to avoid" collapse="true"}
 There are two important pitfalls to avoid when working with CSV files:
 
-#### 3.1.2.1.5. Pitfall 1: Corrupting the file by opening it in Excel
+#### Pitfall 1: Corrupting the file by opening it in Excel
 
 When you download a CSV file from the internet, some computers might immediately ask you whether you want to open it in your default spreadsheet program (e.g., Excel, Numbers).
 Do not do this, but instead download the file directly to your computer. If you open the file and accidentally save it, it can overwrite the CSV file with a different format.
 Excel in particular has a habit of breaking CSV files this way.
 
-#### 3.1.2.1.6. Pitfall 2: Different flavours of CSV files
+#### Pitfall 2: Different flavours of CSV files
 
 There are different flavours of CSV files (for historic reasons).
 Even though we call them "comma separated values", the separator is sometimes a semicolon or a tab.
@@ -219,7 +219,7 @@ And depending on language, the decimal separator can be a comma or a dot. In par
 This is why tidyverse has two `read_csv` functions: `read_csv` and `read_csv2`. In general, you can just try `read_csv` first, and if it doesn't work, try `read_csv2`.
 :::
 
-#### 3.1.2.1.7. Reading other file formats, like Excel and SPSS
+#### Reading other file formats, like Excel and SPSS
 
 Now that you know how to read and write CSV files, reading other file formats is a piece of cake.
 It works almost the same way, but you just need to download a package that can read the file format.
@@ -229,9 +229,9 @@ To read an SPSS file, you can use the `haven` package, which provides the `read_
 You might have to take care of some additional details, such as the sheet name in the Excel file, or the variable labels in the SPSS file.
 But once you've got the hang of managing your data with the tidyverse, you'll be able to handle any data frames formats that come your way.
 
-## 3.1.3. Select and rename
+## Select and rename
 
-### 3.1.3.1. Selecting columns with `select`
+### Selecting columns with `select`
 
 Often you do not need to use all columns in your data, or you only need a subset of the columns for a specific analysis.
 You can do this with the `select` function.
@@ -242,7 +242,7 @@ First, let's see what columns are in our data using the `colnames` function, whi
 colnames(d)
 ```
 
-#### 3.1.3.1.1. Selecting specific columns
+#### Selecting specific columns
 
 The simplest way of using `select` is to explicitly specify the columns you want to keep.
 The first argument is the tibble (data frame) you want to select from, and the following arguments are the columns you want to keep.
@@ -263,7 +263,7 @@ Whenever you import data into R, it is often a good idea to first select only th
 While you could also overwrite the original tibble (`d <- select(d, ...)`) it is usually better to create a new tibble.
 There is no harm in having multiple tibbles in your environment, and if you give clear names to your tibbles, it will make your code more readable.
 
-##### 3.1.3.1.1.1. Selecting a range of columns
+##### Selecting a range of columns
 
 You can also specify a range of columns using the syntax `first_column:last_column`.
 For example, to select all columns from `experiment_group` to `trust_t2`:
@@ -277,7 +277,7 @@ This will return a new tibble with only the columns `experiment_group`, `trust_t
 Note that here we did not assign the result to anything.
 So in this case R will just print the result to the console, but not store it in a variable.
 
-##### 3.1.3.1.1.2. Selecting and renaming columns
+##### Selecting and renaming columns
 
 When you select a column, you can also rename it using the syntax `new_name = old_name`. 
 The following code selects the columns `experiment_group`, `trust_t1`, and `trust_t2`, and renames them to `group`, `trust_before`, and `trust_after`:
@@ -289,7 +289,7 @@ select(d, group = experiment_group,
 ```
 
 
-##### 3.1.3.1.1.3. Selecting columns that have spaces in the name  
+##### Selecting columns that have spaces in the name  
 
 Sometimes columns names have spaces in them.
 This is a bit annoying to work with in R, because you need to then tell R where a name starts and ends.
@@ -301,7 +301,7 @@ It is then often smart to immediately rename the column to something without spa
 select(d, news_consumption = `news consumption`)
 ```
 
-##### 3.1.3.1.1.4. Dropping columns
+##### Dropping columns
 
 Instead of selecting which column to keep, you can also specify which columns to drop.
 You can do this by adding a minus sign in front of the column name.
@@ -314,7 +314,7 @@ select(d, -np_subscription, -trust_t1)
 This will return a new tibble with all columns except `np_subscription` and `trust_t1`.
 
 
-### 3.1.3.2. Renaming columns with `rename`
+### Renaming columns with `rename`
 
 Sometimes you only want to rename columns without selecting or dropping any.
 You can do this with the `rename` function, which works similarly to how you rename columns with `select`:
@@ -327,9 +327,9 @@ rename(d, group = experiment_group,
 
 In this case, we do rename the columns, but without dropping all the other columns.
 
-## 3.1.4. Filter and arrange
+## Filter and arrange
 
-### 3.1.4.1. Subsetting rows with filter() {#filter} 
+### Subsetting rows with filter() {#filter} 
 
 The `filter` function can be used to select a subset of rows. 
 The first argument of the `filter` function is the tibble you want to filter.
@@ -371,7 +371,7 @@ filter(d, !experiment_group %in% c('positive', 'negative'))
 Based on the examples given you probably already have a good enough understanding of how the `filter` function works to use it in your own code.
 In this optional information block we'll go a bit deeper into how the filter condition works, and what operators you can use.
 
-#### 3.1.4.1.1. The condition is a logical expression
+#### The condition is a logical expression
 
 The condition in `filter` can be any **logical expression**.
 A logical expression is simply a statement that is either `TRUE` or `FALSE`.
@@ -381,7 +381,7 @@ Each row for which the expression evaluates to `TRUE` is then included in the su
 If you know a bit about how logical expressions work, you will have great control over what rows are included in your subset.
 Here is an overview of the most important operators for logical expressions.
 
-##### 3.1.4.1.1.1. Comparison operators
+##### Comparison operators
 
 Comparison operators are used to compare two values.
 
@@ -402,7 +402,7 @@ Example:
 "A" %in% c("B", "C", "D")  # FALSE: "A" is not in the list
 ```
 
-##### 3.1.4.1.1.2. Logical operators
+##### Logical operators
 
 Logical operators are used to combine multiple conditions.
 
@@ -417,7 +417,7 @@ Example:
 !5 < 1          # TRUE: it is not the case that 5 is smaller than 1
 ```
 
-##### 3.1.4.1.1.3. Using equations
+##### Using equations
 
 You can also use equations in your conditions.
 For example, to select all rows where the absolute difference between `trust_t1` and `trust_t2` is greater than 2:
@@ -426,7 +426,7 @@ For example, to select all rows where the absolute difference between `trust_t1`
 filter(d, abs(trust_t2 - trust_t1) > 2)
 ```
 
-##### 3.1.4.1.1.4. Parentheses
+##### Parentheses
 
 For complex conditions, you can use parentheses to group conditions, similar to how you would in a mathematical expression.
 For example, say that you want to inspect *surprising* cases where trust in journalists decreased after watching the positive movie, or increased after watching the negative movie.
@@ -437,7 +437,7 @@ filter(d, (experiment_group == 'positive' & trust_t2 < trust_t1) |
 ```
 :::
 
-### 3.1.4.2. Filtering out missing values
+### Filtering out missing values
 
 Filtering out cases with missing values works a bit differently.
 Missing values in R are represented by `NA`, but you **cannot (!!)** use something like `filter(d, age != NA)`.
@@ -459,7 +459,7 @@ drop_na(d)
 
 This returns 595 rows (out of 600) because 5 rows had missing values in the `age` column.
 
-### 3.1.4.3. Sorting rows with arrange() {#arrange}
+### Sorting rows with arrange() {#arrange}
 
 The `arrange` function can be used to sort the rows of a tibble.
 For example, if we want to sort the data by the `age` column:
@@ -482,15 +482,15 @@ For example, to sort first on `experiment_group` (ascending) and then on `age` (
 arrange(d, experiment_group, -age)
 ```
 
-## 3.1.5. Mutate and recode
+## Mutate and recode
 
-### 3.1.5.1. Creating and modifying columns with mutate() {#mutate}
+### Creating and modifying columns with mutate() {#mutate}
 
 The `mutate` function allows you to create or modify columns in a data frame.
 You just specify which columns you want to create or modify, and then provide an expression for how to compute the new values.
 In this expression you can refer to other columns in the table, and use any R functions you like, which makes `mutate` a very powerful tool.
 
-#### 3.1.5.1.1. Creating new variables
+#### Creating new variables
 
 To create a new variable you use the following syntax:
 
@@ -509,7 +509,7 @@ select(d, trust_t1, trust_t2, trust_change)
 ```
 
 
-#### 3.1.5.1.2. Mutate existing variables
+#### Mutate existing variables
 
 To mutate an existing variable, you can simply overwrite the column with the same name.
 For example, let's say that we want to standardize the `trust_change` variable that we just made.
@@ -527,7 +527,7 @@ hist(d$trust_change)
 ```
 
 
-### 3.1.5.2. Recoding variables {#recode}
+### Recoding variables {#recode}
 
 Recoding variables means changing the values of a variable based on some condition.
 This is a common operation in data management, because often you want to change the values of a variable to make them more interpretable, correct errors, or prepare the data for analysis.
@@ -535,7 +535,7 @@ To recode variables in R, you can use the `mutate` function in combination with 
 
 
 
-#### 3.1.5.2.1. Recode with `case_match`
+#### Recode with `case_match`
 
 The `case_match` function is a simple way to recode specific values into new values.
 For example, in our practice data we have a column with the experimental groups, which are `control`, `positive`, and `negative`.
@@ -564,7 +564,7 @@ If you check the unique values of the `experiment_group` column, you will see th
 unique(d$experiment_group)
 ```
 
-#### 3.1.5.2.2. More flexible recoding with `case_when`
+#### More flexible recoding with `case_when`
 
 The `case_match` function is great if you need to recode many values, but sometimes you need more flexibility.
 For example, if we want to recode the `age` variable into categories (e.g., `<= 20`, `20-30`), it would be really tiresome to recode every individual age value.
@@ -584,7 +584,7 @@ d <- mutate(d, age_category = case_when(
 table(d$age_category)
 ```
 
-#### 3.1.5.2.3. Binary cases with `if_else`
+#### Binary cases with `if_else`
 
 If you only have two categories, you can use the `if_else` function.
 You could technically also use `case_when` for this, but `if_else` is more concise and easier to read.
@@ -604,9 +604,9 @@ d <- mutate(d, age = if_else(age > 1000, 2024 - age, age))
 
 So this reads: if the age is above 1000, return `2024 - age`, otherwise return the current age.
 
-## 3.1.6. Using the pipe syntax
+## Using the pipe syntax
 
-### 3.1.6.1. Working with Pipes
+### Working with Pipes
 
 In the [Functions](04-working-with-r.qmd#using-the-pipe-syntax) tutorial we already mentioned that R also has a `pipe` syntax. 
 This is a way to chain functions together, where the output of one function is the input of the next function.
@@ -628,7 +628,7 @@ data |>
 ```
 
 
-#### 3.1.6.1.1. Using pipes with the tidyverse
+#### Using pipes with the tidyverse
 
 The tidyverse is designed to work really well with pipes.
 All of the functions for working with a tibble (like `select`, `filter`, `arrange`, etc.) have the first argument as the tibble itself, and the output is also a tibble.

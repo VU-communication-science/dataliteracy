@@ -1,8 +1,8 @@
 ---
-title: "2.1. Working with R"
+title: "Working with R"
 ---
 
-## 2.1.1. Installation
+## Installation
 
 To work with R, you will need to install two pieces of software.
 
@@ -11,11 +11,11 @@ To work with R, you will need to install two pieces of software.
 
 Both programs can be downloaded for free, and are available for all main operating systems (Windows, macOS and Linux).
 
-### 2.1.1.1. Installing R
+### Installing R
 
 To install R, you can download it from the [CRAN (comprehensive R Archive Network) website](https://cran.r-project.org/). Do not be alarmed by the website's 90's aesthetics. The website is legit.
 
-### 2.1.1.2. Installing RStudio
+### Installing RStudio
 
 RStudio can be downloaded from the [posit.co website](https://posit.co/download/rstudio-desktop), which is the developer of RStudio. Make sure to pick the latest version available for your operating system.
 
@@ -32,9 +32,9 @@ You will now see four windows split evenly over the four corners of your screen:
 
 While you can directly enter code into your console (bottom-left), you should always work with R scripts (top-left). This allows you to keep track of what you are doing and save every step.
 
-## 2.1.2. Using RStudio
+## Using RStudio
 
-### 2.1.2.1. Running code
+### Running code
 
 Copy and paste the following example code into your R Script. For now, don't bother understanding the syntax itself. Just focus on running it.
 
@@ -55,7 +55,7 @@ There are two ways to run code:
 -   If you haven't made a selection, but your text cursor is somewhere on a line in your editor, you can press Ctrl + Enter to run the line where the cursor is at. This will also move the cursor to the next line, so you can *walk* through the code from top to bottom, running each line. Try starting on the first line, and pressing Ctrl + Enter six times, to run each line separately.
 
 
-### 2.1.2.2. Using RStudio projects
+### Using RStudio projects
 
 It is best to put all your code in an RStudio *project*. This is essentially a folder on your computer in which you can store the R files and data for a project that you are working on. While you do not necessarily need a project to work with R, they are very convenient, and we strongly recommend using them.
 
@@ -64,9 +64,9 @@ To create a new project, go to the top-right corner of your RStudio window. Look
 Now, open a new R script and immediately save it (select File -\> Save in the toolbar, or press ctrl-s). Name the file **my_first_r_script.r**. In the bottom-right corner, under the **Files** tab, you'll now see the file added to the project. The extension **.r** indicates that the file is an R script.
 
 
-## 2.1.3. Names and objects
+## Names and objects
 
-### 2.1.3.1. The power of assignment
+### The power of assignment
 
 In R, and in computer programming in general, the most essential operation is to assign **objects** to **names**.
 By **object**, we then broadly mean any piece of information. a single number, a text, a list of numbers, and even an entire data set.
@@ -113,7 +113,7 @@ The following code generates a vector with numbers from 1 to 50
 
 
 
-#### 2.1.3.1.1. Assigning versus printing
+#### Assigning versus printing
 
 Notice that when you ran the code `x <- 2`, R didn't print any values to the console (the bottom-left window).
 But when you ran `x * 5`, R did print the value `10`.
@@ -133,7 +133,7 @@ And the following object (`"I will be printed"`) will be printed to the console,
 
 
 
-#### 2.1.3.1.2. Assigning different types of objects
+#### Assigning different types of objects
 
 You can assign any type of object to a name, and you can use any name, as long as it starts with a letter and doesn't contain spaces or symbols (but underscores are OK)
 
@@ -145,7 +145,7 @@ my_cats_name = "Hobbes"
 If you run this code and check you **Environment** (top-right), you should now see these name-object pairs added.
 
 
-#### 2.1.3.1.3. Assigning results
+#### Assigning results
 
 Till now we only directly assigned objects to names. This is convenient, but the power of assignment really shines when you use it to store **results**.
 For example, we can also do this.
@@ -159,9 +159,9 @@ Since we can assign anything to a name, we can break down any complicated proced
 For now, the key lesson is just to wrap your head around the syntax for assigning objects to names.
 This is fundamental to everything you will be doing in R (and in programming in general).
 
-## 2.1.4. Types of objects
+## Types of objects
 
-### 2.1.4.1. Common types of objects
+### Common types of objects
 
 You can work with many types of data in R.
 Here are some of the most common types of objects you'll encounter:
@@ -183,7 +183,7 @@ factor <- factor(c(1,2,2,3), labels = c("A", "B", "C"))
 factor
 ```
 
-#### 2.1.4.1.1. Types determine what you can do with an object
+#### Types determine what you can do with an object
 
 The type of an object determines what you can do with it.
 For example, you can perform mathematical operations on numeric objects, but not on character objects.
@@ -193,7 +193,7 @@ For example, you can perform mathematical operations on numeric objects, but not
 "10" + 10  # throws an error
 ```
 
-#### 2.1.4.1.2. You can coerce objects to different types
+#### You can coerce objects to different types
 
 Sometimes you have an object of the wrong type. For instance, your numeric data might have been read in as a character object.
 
@@ -220,13 +220,13 @@ as.numeric("I am not a number")
 When coercion is not possible, R will return `NA` (missing value) and give you a warning.
 
 
-### 2.1.4.2. Vectors and Data Frames
+### Vectors and Data Frames
 
 In practice, you'll rarely work with single values alone.
 However, many operations you can perform on a single value can also be applied to multiple values at once.
 Understanding how individual values combine to form larger data structures is key to working effectively with data.
 
-#### 2.1.4.2.1. From Single Values to Vectors
+#### From Single Values to Vectors
 
 A vector is a collection of values of the same type (e.g., all numeric or all character). You create a vector by combining individual values using the `c()` (combine) function.
 Just like with single numbers, a vector has a type.
@@ -246,7 +246,7 @@ sum(numbers)
 
 
 
-#### 2.1.4.2.2. From Vectors to Data Frames
+#### From Vectors to Data Frames
 
 Single vectors are still not very usefull for data analysis, since we're often interested in relations between variables.
 This is where data frames come in.
@@ -269,9 +269,9 @@ You can for instance perform a statistical test to see if the average height of 
 Just like with single values and vectors, we need to take the type of each column into account.
 For instance, we can't perform a correlation analysis using the `country` column, because it's a character vector.
 
-## 2.1.5. Functions
+## Functions
 
-### 2.1.5.1. What is a function? {#what-is-a-function}
+### What is a function? {#what-is-a-function}
 99% of what you do in R will involve using functions.
 A function in R is like a mini-program that you can use to perform specific tasks.
 It takes *input*, processes it, and gives you an *output*.
@@ -310,7 +310,7 @@ The calculated mean, `2.5`, is now assigned to the name `m`:
 m
 ```
 
-#### 2.1.5.1.1. Optional arguments {#optional-arguments}
+#### Optional arguments {#optional-arguments}
 
 In the `c` and `mean` functions above, all the arguments were **required**.
 To **c**ombine numbers into a vector, we *needed* to provide a list of numbers.
@@ -356,7 +356,7 @@ Then once you get the hang of things, have a look at the [Use ?function help pag
 :::
 
 
-#### 2.1.5.1.2. Using the pipe syntax {#pipe-syntax}
+#### Using the pipe syntax {#pipe-syntax}
 
 There is another common way to use functions in R using the **pipe** syntax.
 With the pipe syntax, you can *pipe* the first argument into the function, instead of putting it inside the parentheses.
@@ -397,15 +397,15 @@ You'll see how powerful this can be later on, especially in the [Data Management
 In order to prepare and clean up your data, you'll often need to perform a series of functions in a specific order.
 The pipe syntax allows you to do this in a very readable way.
 
-### 2.1.5.2. Mastering functions
+### Mastering functions
 
 There are some usefull tricks for using functions in R that are good to know about.
 We do not discuss these here, because if you're just starting out, there are more important things to learn first.
 But once you get the hang of things, you can learn more about these tricks in the [Good to Know](04-working-with-r.qmd) tutorial.
 
-## 2.1.6. Packages
+## Packages
 
-### 2.1.6.1. What is a package? {#what-is-a-package}
+### What is a package? {#what-is-a-package}
 
 
 In R, a package is a collection of functions, data, and documentation that extends the capabilities of R.
@@ -416,11 +416,11 @@ There are thousands of R packages available, which enables you to use almost any
 R is not just a tool for statistical analysis, but also for data visualization, data collection, articifial intelligence, and much more.
 If there is anything you need to do, there is a good chance that someone has already written a package for it.
 
-### 2.1.6.2. How to install
+### How to install
 
 To use a package, you first need to install it. **Installing a package only needs to be done once** per system (unless you need to update it).
 
-#### 2.1.6.2.1. 1. Install a package
+#### 1. Install a package
 
 Most packages are available on the Comprehensive R Archive Network (CRAN), which is the main repository for R packages.
 To install these packages, all you need to know is their name.
@@ -449,7 +449,7 @@ The main problem is that you will often need to install some extra software to d
 So unless you really need the newest version, it's usually best to say "no", and just install the older version that has already been prepared for your system.
 :::
 
-#### 2.1.6.2.2. 2. Load a package
+#### 2. Load a package
 
 Once you have installed a package, it is not yet loaded into your current R session.
 Similar to when you install a new app on your phone, you need to open it every time you want to use it.
@@ -460,7 +460,7 @@ To use a package in your current R session, you can load it with the `library()`
 library(lubridate)
 ```
 
-### 2.1.6.3. Package documentation
+### Package documentation
 
 Most packages come with good documentation that explains how to use the functions in the package.
 For individual functions you can use the `?` operator to open the help page for that function, as we explain in [here](04-working-with-r.qmd).

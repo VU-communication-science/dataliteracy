@@ -1,8 +1,8 @@
 ---
-title: "5.6. ANCOVA"
+title: "ANCOVA"
 ---
 
-## 5.6.1. What is ANCOVA?
+## What is ANCOVA?
 
 In a previous chapter we introduced ANOVA (Analysis of Variance) as a method to test whether group means differ significantly. ANOVA works well when the dependent variable is (hypothesized to be) influenced only by the independent variable(s). In practice, however, outcomes are often influenced by additional variables that are not part of the experimental manipulation. For example:
 
@@ -14,19 +14,19 @@ Such variables introduce extra variability in the dependent variable.
 
 **ANCOVA (Analysis of Covariance)** extends ANOVA by including a continuous control variable, called a *covariate*. In short, ANCOVA does the same as ANOVA, which is comparing group means, while additionally controlling for another variable. Conceptually, ANCOVA sits at the intersection of ANOVA and linear regression.
 
-### 5.6.1.1. When do we use ANCOVA?
+### When do we use ANCOVA?
 
 ANCOVA is useful for two reasons:
 
-#### 5.6.1.1.1. 1. Controlling for confounding variables
+#### 1. Controlling for confounding variables
 
 A covariate may influence the dependent variable but is not the main variable of interest. For example: If we compare learning outcomes across teaching methods, students’ prior knowledge may influence the outcome. Including 'prior knowledge' as a covariate allows us to compare teaching methods *while holding prior knowledge constant.*
 
-##### 5.6.1.1.1.1. 2. Reducing unexplained variance
+##### 2. Reducing unexplained variance
 
 Even if the covariate is not a *confounder*, it may still explain part of the outcome variability. Accounting for this variability reduces residual variance, which can increase statistical power.
 
-#### 5.6.1.1.2. What happens to variance when adding a covariate?
+#### What happens to variance when adding a covariate?
 
 Recall from the ANOVA chapter that total variability in the dependent variable is partitioned into:
 
@@ -44,7 +44,7 @@ Conceptually, ANCOVA “cleans up” the error term by removing variance that is
 
 Importantly, the **between-group variance is now evaluated after adjusting for the covariate**. This means that group differences reflect differences **over and above the effect of the covariate**.
 
-## 5.6.2. How to use it
+## How to use it
 
 Suppose we study whether different *robot designs* influence *how comfortable people feel interacting with a robot*. Participants interact with one of three robots: 'Alice', 'Nao' and 'Robocop'. They then report their comfort level.
 
@@ -100,7 +100,7 @@ robot_data <- read_csv("robot_data.csv")
 robot_data |> summary()
 ```
 
-### 5.6.2.1. One-way ANCOVA
+### One-way ANCOVA
 
 Any **one-way ANCOVA** includes:
 
@@ -140,7 +140,7 @@ model_ancova$Anova
 
 The model above tests whether whether robot designs differ in comfort (*F =* 6.09, *p* \< 0.01) *and* whether familiarity predicts comfort (*F =* 105.94, *p* \< 0.001). The effect of robot design has now been tested **while controlling for familiarity**.
 
-#### 5.6.2.1.1. (Un)adjusted means
+#### (Un)adjusted means
 
 Because familiarity influences comfort, 'raw' group means could be misleading. ANCOVA therefore compares **adjusted means**:
 
@@ -178,11 +178,11 @@ p2 <- plot_model(model_ancova$lm,
 p1 + p2
 ```
 
-### 5.6.2.2. Assumptions of ANCOVA
+### Assumptions of ANCOVA
 
 Besides the assumption of equal (error) variances that we've learned to test with the Levene's test, there are two additional assumptions to consider when performing an ANCOVA.
 
-#### 5.6.2.2.1. Independence of the covariate
+#### Independence of the covariate
 
 The covariate (here `familiarity`) **should not differ systematically between groups** of the grouping variable (`robot_design)`. We test for this assumption by estimating a model that studies whether there are differences in covariate means for the groups of the independent grouping variable:
 
@@ -204,7 +204,7 @@ ggplot(robot_data, aes(robot_design, familiarity)) +
 
 Should familiarity strongly differ between groups, ANCOVA adjusts for pre-existing differences rather than purely isolating the effect of the independent variable. In randomized experiments this assumption is typically satisfied. In observational data it should be checked explicitly.
 
-#### 5.6.2.2.2. Homogeneity of regression slopes
+#### Homogeneity of regression slopes
 
 The assumption of homogeneity of regressino slopes suggests implies that the **relationship between the covariate and the dependent variable should be similar across groups**. We test for this by including the interactino between the covariate and the independent grouping variable in the model. If the interaction between the covariate and the factor is *not* significant, the assumption is likely satisfied.
 
@@ -230,7 +230,7 @@ ggplot(robot_data, aes(familiarity, comfort, color = robot_design)) +
   theme_minimal()
 ```
 
-### 5.6.2.3. Two-way ANCOVA
+### Two-way ANCOVA
 
 We now **extend the model** by including interaction type as a *second factor*: the interaction type with the robot, which could be through *touch* or through *voice*. Participants have been divided 50/50 on this variable, which leads to 6 groups of 40 participants in the experiment.
 
@@ -264,7 +264,7 @@ This model tests
 
 The interpretation of main and interaction effects is identical to the two-way ANOVA discussed in the previous chapter. The key difference is that we now **control for familiarity**. Should we present estimated marginal means, `familiarity` would still be held constant at its sample mean.
 
-#### 5.6.2.3.1. Comparing models
+#### Comparing models
 
 To understand how controlling for a covariate increases model explanatory power, we also perform a (two-way) ANOVA without the covariate. Let's then compare the Sum of Squares of the Residuals (RSS), i.e.: error variance, of both models.
 
@@ -285,7 +285,7 @@ model_two_way$Anova
 
 The error variance has decreased by `819.1 - 550.29 = 268.81` after indlucing the covariate `familiarity` in the model. This is the amount of variance now explained by the covariate.
 
-## 5.6.3. Summary
+## Summary
 
 ANCOVA extends ANOVA by including a **covariate**. The main takeaways of this chapter should be that ANCOVA...
 

@@ -1,8 +1,8 @@
 ---
-title: "2.2. Projects"
+title: "Projects"
 ---
 
-## 2.2.1. Keeping track of your data {#file-management}
+## Keeping track of your data {#file-management}
 
 If you're working with data you need to be able to keep track of where you store it, especially if it concerns sensitive data such as personal information.
 In this section we'll first explain and demonstrate a simple, recommended approach to managing files in R.
@@ -10,7 +10,7 @@ Secondly, we provide some optional material that goes more in-depth on how your 
 This second part is optional, and if you're just starting out with R we recommend skipping it for now.
 
 
-## 2.2.2. Recommended approach: stick to your working directory
+## Recommended approach: stick to your working directory
 
 When you read or write files in R, you need to two things:
 
@@ -38,7 +38,7 @@ If I now write a files and I *only* provide the file name (e.g., `file.csv`), R 
 We also refer to this as a **relative path**: by providing just the file name, R will look for it relative to the working directory.
 Let's try this out! 
 
-### 2.2.2.1. Writing a file to your working directory
+### Writing a file to your working directory
 
 The following code writes a plain text file name `hello_world.txt` to your current working directory.
 
@@ -57,7 +57,7 @@ list.files()                    ## show all files
 list.files(pattern="*.txt")     ## show files with .txt extension
 ```
 
-### 2.2.2.2. Reading a file from your working directory
+### Reading a file from your working directory
 
 Reading files works the same way.
 Since there is now a file `hello_world.txt` in your working directory, you can read it with the following code:
@@ -72,7 +72,7 @@ For example, if you have a directory called `data` inside your working directory
 This is very convenient in bigger projects, where you might want to organize things like data, results and visualizations in different directories.
 :::
 
-### 2.2.2.3. Choosing your working directory {#choosing-working-directory}
+### Choosing your working directory {#choosing-working-directory}
 
 We highly recommend to always set your working directory to a specific location on your computer. For instance, in a directory called `R_projects,` or even a specific directory for your current project or assignment.
 
@@ -90,7 +90,7 @@ RStudio will automatically set the working directory to this project directory, 
 
 
 
-## 2.2.3. Optional: working with absolute paths
+## Optional: working with absolute paths
 
 In the previous section we showed you the easiest way to manage files in R: by sticking to your working directory.
 This will get you through most situations, but sometimes it's convenient to be able to read files from other locations on your computer.
@@ -135,12 +135,12 @@ For example, the path to the `Report.docx` file in the `Work` directory would be
 
 :::
 
-### 2.2.3.1. Finding the absolute path    
+### Finding the absolute path    
 
 So how do you find the absolute path to the file? 
 Here are several options.
 
-#### 2.2.3.1.1. Using file.choose()
+#### Using file.choose()
 
 If you run the code `file.choose()`, R will open a file explorer window.
 
@@ -154,14 +154,14 @@ This is easy, because you get a nice menu to browse through your files.
 But it's also a bit cumbersome, because you have to do it every time you want to read a file.
 Also, you can't select folder, only existing files.
 
-#### 2.2.3.1.2. Using the file explorer
+#### Using the file explorer
 
 You can also use your own file explorer (outside of RStudio).
 Navigate to a file or folder, and right click on it. 
 You should then be able to select something like *Properties* (this depends on your operating system).
 Here you should be able to find the absolute path.
 
-#### 2.2.3.1.3. Using tab completion 
+#### Using tab completion 
 
 There is one other nice trick that you can use to find files on your computer: **tab completion**.
 Whenever you are writing something in a code editor, you can often use the **Tab** key (above caps lock) to automatically complete it (like auto-complete on your phone).

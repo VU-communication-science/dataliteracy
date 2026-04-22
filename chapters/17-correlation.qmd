@@ -1,8 +1,8 @@
 ---
-title: "5.3. Correlation analysis"
+title: "Correlation analysis"
 ---
 
-## 5.3.1. What is the correlation test?
+## What is the correlation test?
 
 The correlation test can be used to see if there is `a relationship between two numeric variables`.
 For example, we might want to know if there is a relationship between the amount of time people spend on social media and their feelings of loneliness.
@@ -15,7 +15,7 @@ What the correlation test **does not** tell us is why the relationship exists.
 If we find that there is a correlation between social media use and loneliness, it does not mean that social media use causes loneliness.
 For more detail on this, see the [causality](22-causality.qmd) section.
 
-## 5.3.2. How to use
+## How to use
 
 We'll show two ways of conducting the correlation test: using the `cor.test` function and using the `tab_corr` function from the `sjPlot` package.
 The `cor.test` function is part of the base R package, and is usefull if you just have two variables.
@@ -28,7 +28,7 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") |>
         rename(news_consumption = `news consumption`)
 ```
 
-### 5.3.2.1. Between two variables: cor.test
+### Between two variables: cor.test
 
 In the practice data we have variables for the `news_consumption` of the participants, and their `trust_t1` in the news media (measured before the experiment).
 These are both numeric variables, so we can use the correlation test to see if there is a relationship between them. 
@@ -66,7 +66,7 @@ cor.test(~ news_consumption + trust_t1, data = d)
 ```
 :::
 
-### 5.3.2.2. Between more variables: tab_corr
+### Between more variables: tab_corr
 
 If we need to see the correlations between multiple variables, we can use the `tab_corr` function from the `sjPlot` package.
 For example, let's look at the correlations between the 5 items used to calculate the `trust_t1` scale.
@@ -84,7 +84,7 @@ This is great for getting a quick overview of the relationships between multiple
 If you need to get the exact p-values, you can also use `tab_corr(p.numeric = TRUE)`.
 
 
-## 5.3.3. Conditions and assumptions
+## Conditions and assumptions
 
 The correlation test can be used when you have two `numeric` variables and you want to know if there is a relationship between them.
 There is no `dependent` or `independent` variable in the correlation test, because we are just looking at the relationship between the variables.   
@@ -100,7 +100,7 @@ If these conditions are not met, you might want to use Spearman's $\rho$ or Kend
 Spearman's $\rho$ looks as the rank order of the variables instead of the specific scores, which makes it suitable for ordinal data, and makes it more robust to outliers, non-linear relationships, and non-normality.
 Kenall's $\tau$ is similar to Spearman's $\rho$, but can be preferable if there are many ties in the data (when two or more observations have the same value, due to which they can't be ranked perfectly).
 
-### 5.3.3.1. Spearman's $\rho$ and Kendall's $\tau$
+### Spearman's $\rho$ and Kendall's $\tau$
 
 To use the Spearman's $\rho$ or Kendall's $\tau$ correlation, you need to specify the `method` argument in the `cor.test` function, or the `corr.method` argument in the `tab_corr` function.
 
@@ -113,7 +113,7 @@ d |> select(trust_t1_item1:trust_t1_item5) |> tab_corr(corr.method="kendall")
 ```
 
 
-## 5.3.4. How to report
+## How to report
 
 For APA style reporting of the correlation test you need to know the `correlation coefficient`, `p-value`, and the `degrees of freedom`. 
 You can find all these values in the output of the `cor.test` function.[^1] 

@@ -53,7 +53,7 @@ format:
       - cerulean
       - style.scss
     toc: true
-    number-sections: false
+    number-sections: true
 
 execute:
   freeze: auto

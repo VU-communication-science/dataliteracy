@@ -1,5 +1,5 @@
 ---
-title: "5.4. Linear regression"
+title: "Linear regression"
 ---
 
 ```{r chunk-1, echo=F}
@@ -12,7 +12,7 @@ p_thres <- function(p) {
 }
 ```
 
-## 5.4.1. What is regression analysis?
+## What is regression analysis?
 
 Regression analysis is a statistical technique for *predicting* a `dependent variable` (DV) based on one or more `independent variables` (IVs).
 We use *predict* in a statistical sense, meaning that we are estimating how well we can guess the dependent variable given knowledge of the independent variable(s).
@@ -38,7 +38,7 @@ Finally, we'll talk about when you can use regression analysis, and what the ass
 Understanding the assumptions is important, but requires a good understanding of the basics.
 So we advice first getting comfortable with the previous parts before diving in.
 
-## 5.4.2. How does it work?
+## How does it work?
 
 In **simple linear regression** we have a dependent variable `Y` and an independent variable `X`, and we want to predict `Y` based on `X`.
 The goal is to find a mathematical formula that best describes their relationship.
@@ -108,7 +108,7 @@ Based on this equation, we can learn two important things about the relationship
 1. **The effect of X on Y**: The slope $b_1$ tells us how much Y changes for every unit increase in X.
 2. **The model fit**: Based on the residual $\epsilon_i$ we can calculate how well the model fits the data.
 
-### 5.4.2.1. The effect of X on Y
+### The effect of X on Y
 
 Based on the coefficients of the regression model, we can make inferences about the relationship between the variables.
 In the example, we see that there is a positive relationship between `X` and `Y`, because the slope is positive.
@@ -121,7 +121,7 @@ However, this is not always meaningful.
 For example, if the independent variable is `age`, then the intercept would be the predicted value of Y for a person that is 0 years old.
 This is why the intercept is often not interpreted.
 
-#### 5.4.2.1.1. Model fit
+#### Model fit
 
 Based on the coefficient of the independent variable we can say something about the relation between X and Y.
 However, this is not the full story.
@@ -237,7 +237,7 @@ This should give you an $R^2$ of $0.79$.
 
 
 
-## 5.4.3. How to use
+## How to use
 
 We'll show you how to use regression analysis in several steps:
 
@@ -260,7 +260,7 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") |>
 d
 ```
 
-### 5.4.3.1. Simple linear regression
+### Simple linear regression
 
 We start with the example of predicting `trust` in journalists based on `age`.
 For this we'll be using the `trust_t1`[^1] variable as the dependent variable, and the `age` variable as the independent variable.
@@ -330,7 +330,7 @@ Here we see that the $R^2$ is `r r2`, which means that `r round(r2*100,1)`% of t
 In conclusion, this model shows that (in our simulated data) there is no significant effect of `age` on `trust_t1`.
 
 
-### 5.4.3.2. Multiple regression
+### Multiple regression
 
 In the previous example we used a single independent variable (`age`) to predict the dependent variable.
 Now we'll add a second numeric independent variable (`news_consumption`) to the model.
@@ -404,7 +404,7 @@ There is a relation between the `news_consumption` and `trust_t1` variables, but
 By controlling for `age`, we can see the real effect of `news_consumption` on `trust_t1` (though we can never be sure that we've controlled for all possible confounders).
 For a more detailed explanation of confounding, see the [confounding tutorial](18-linear-regression.qmd).
 
-#### 5.4.3.2.1. Standardized coefficients
+#### Standardized coefficients
 
 In the second model we now have two significant effects: `age` and `news_consumption`.
 So how can we tell which effect is stronger?
@@ -418,7 +418,7 @@ So this suggests that the effect of `age` is stronger.[^test_difference]
 
 [^test_difference]: Note that we have not tested if the difference between the two coefficients is significant. We will not go into this here, but note that the confidence intervalls of the standardized coefficients can provide more confidence in this comparison.
 
-##### 5.4.3.2.1.1. Adjusted $R^2$
+##### Adjusted $R^2$
 
 This is also a good time to talk about the **$R^2$ adjusted** value.
 This is the $R^2$ value, but corrected for the number of independent variables in the model.
@@ -426,7 +426,7 @@ This is important, because the $R^2$ value will always increase when you add mor
 The $R^2$ adjusted value corrects for this, which is why it's slightly lower.
 So when you're adding more independent variables to the model, you can use the $R^2$ adjusted value to see if you're not just adding noise.
 
-### 5.4.3.3. Categorical IVs
+### Categorical IVs
 
 The **independent variable** in a regression model can also be categorical.
 This allows us to include categorical variables in the model, similar to the t-test and ANOVA.
@@ -464,7 +464,7 @@ Instead, we just say that people on the political left (`political_left = 1`) ha
 The intercept is the predicted value of the dependent variable when the independent variable is zero.
 So in this case, the intercept (`3.83`) is the predicted trust in journalists for people that are NOT `political_left`. -->
 
-#### 5.4.3.3.1. Categories with more than two levels
+#### Categories with more than two levels
 
 In the previous example we created the dummy variable ourselves, but we can also let R do this for us.
 This is especially convenient if we have more than two categories.
@@ -535,7 +535,7 @@ lm(trust_t1 ~ political_orientation, data = d2) |>
 
 :::
 
-### 5.4.3.4. Interaction effects
+### Interaction effects
 
 One of the strengths of regression analysis is that it allows you to test **interaction effects**.
 This is when the effect of one independent variable depends on the value of another independent variable.
@@ -628,7 +628,7 @@ This makes sense: if you're not interested in politics, then your political orie
 However, as political interest increases, we see that the line diverge, indicating an increasingly large effect of political orientation.
 We can thus conclude that **the effect of political orientation on trust in journalists is *moderated* by (i.e. depends on) political interest**.
 
-## 5.4.4. Conditions and assumptions
+## Conditions and assumptions
 
 Regression analysis is a very versatile tool that can be used in many different situations.
 However, there are some assumptions that need to be met in order to use it correctly.
@@ -645,7 +645,7 @@ Whether these assumptions are met is generally a grey area.
 It's not a matter of "yes" or "no", but rather a matter of "to what extent".
 Let's discuss some strategies for checking these assumptions.
 
-### 5.4.4.1. Linearity
+### Linearity
 
 Remember that we are trying to fit a straight line through the data.
 If the relationship between the independent and dependent variable is not linear, then the model will not fit the data well.
@@ -685,7 +685,7 @@ grid.arrange(
 )
 ```
 
-#### 5.4.4.1.1. Normality
+#### Normality
 
 The residuals of the model should be normally distributed.
 If you look at the figure of the regression model at the top of this tutorial, you can see how the residuals (the red lines) are distributed around the regression line.
@@ -718,7 +718,7 @@ diag_plots[[2]]
 ```
 
 
-#### 5.4.4.1.2. No outliers in the residuals
+#### No outliers in the residuals
 
 Outliers can have a large effect on the model.
 Usually outliers in the residuals are related to outliers in the variables, which can be detected when [inspecting and cleaning](08-data-cleaning.qmd) the data.
@@ -730,7 +730,7 @@ diag_plots[[1]]
 ```
 
 
-#### 5.4.4.1.3. Homoscedasticity
+#### Homoscedasticity
 
 The residuals should have a constant variance.
 What we mean by this is that among the fitted values in the model, the variance of the residuals should not systematically increase or decrease.
@@ -758,7 +758,7 @@ plot_model(m_het, type = "diag")[[3]]
 ```
 
 
-#### 5.4.4.1.4. Independence
+#### Independence
 
 Independence means that the residuals should not be related to each other.
 There are many ways in which this assumption can be violated.
@@ -776,7 +776,7 @@ Some countries are overall happier, and some countries have more social media us
 Country therefore could act as a **confounder**.
 To reduce the dependency between the residuals, you could control for countries using dummy variables, or use more advanced techniques like **multilevel models**.
 
-#### 5.4.4.1.5. No multicolinearity
+#### No multicolinearity
 
 Multicolinearity is a situation where two or more independent variables are highly correlated with each other.
 This can cause problems in the model, because the model cannot distinguish between the effects of the two variables.
@@ -807,7 +807,7 @@ vif(m)
 :::
 
 
-## 5.4.5. How to report
+## How to report
 
 
 For APA style reporting of regression analysis, we generally report two things:
@@ -815,7 +815,7 @@ For APA style reporting of regression analysis, we generally report two things:
 * The **coefficients** that we're interested in
 * The **model fit**
 
-### 5.4.5.1. Reporting the coefficients
+### Reporting the coefficients
 
 
 

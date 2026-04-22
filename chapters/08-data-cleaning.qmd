@@ -1,5 +1,5 @@
 ---
-title: "3.2. Data cleaning"
+title: "Data cleaning"
 ---
 
 ::: {.callout-note title="Required packages and data for this chapter"}
@@ -12,7 +12,7 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv")
 :::
 
 
-## 3.2.1. Inspect and clean your data
+## Inspect and clean your data
 
 An wise saying in data science is "garbage in, garbage out".[^1]
 If you don't take the time to inspect your data, and clean it up if necessary, you run the risk of ending up with incorrect results.
@@ -23,7 +23,7 @@ In this section we'll show you some techniques for inspecting your data, and how
 
 
 
-### 3.2.1.1. First, get to know your data
+### First, get to know your data
 
 When you start working with a new dataset, the first thing you should do is get to know it.
 What columns are in there? What is the data type? How many rows are there? 
@@ -47,7 +47,7 @@ d
 ```
 
 
-### 3.2.1.2. Viewing a summary of every column
+### Viewing a summary of every column
 
 Viewing the top of your data is a good start, but there are many things that can go wrong that you won't be able to spot. 
 There can be missing values, incorrect data types, or outliers that are hard to spot just by looking at the data.
@@ -96,7 +96,7 @@ print(dfSummary(iris),
 Note that we also set the `max.tbl.height` argument to 500, to make sure that very large tables are put inside a scrollable window.
 :::
 
-#### 3.2.1.2.1. What to look for in the summary
+#### What to look for in the summary
 
 There are a few things in particular that you should look out for:
 
@@ -128,12 +128,12 @@ Finally, one thing to look out for when inspecting the data is *missing values*,
 In the summary we see that there are 5 missing values in the `age` column.
 This isn't too bad, but we do need to be transparent about how we deal with these missing values in our analysis.
 
-## 3.2.2. Cleaning up our data
+## Cleaning up our data
 
 Now that we've identified some issues in our data, we need to clean it up.
 For this we can use the techniques you learned in the `Data Management` chapter.
 
-### 3.2.2.1. Selecting columns
+### Selecting columns
 
 The first thing we can do is to select only the columns that we need for our analysis, and where needed rename them.
 For the current example, let's say that we just need the columns `id`, `age` and `news consumption`.
@@ -146,13 +146,13 @@ d_clean <- select(d, id, age, news_consumption = `news consumption`)
 Note that we assigned the result to a new tibble called `d_clean`.
 This is a good practice, because it keeps the original data frame intact, and you can always go back to it if you need to.
 
-### 3.2.2.2. Mutating columns
+### Mutating columns
 
 Next, we need to deal with the `age` column.
 When inspecting the data we saw that there were some birth years in there.
 Let's consider some ways to address this.
 
-#### 3.2.2.2.1. Option 1: Subtract the birth year from the year of the study
+#### Option 1: Subtract the birth year from the year of the study
 
 The easiest (and in this case best) way is to **subtract** the **birth year** from the **year in which the study took place**.
 We need to do this only for the birth years, and not for the actual ages, so we'll use the `if_else` function.
@@ -169,7 +169,7 @@ d_clean <- mutate(d_clean, age = if_else(age > 200, 2024 - age, age))
 Notice that this time we also used the `d_clean` tibble as input, and assigned the result back to `d_clean` to overwrite it.
 A common mistake would be to use `d` as input, but then we'd lose our previous clean up steps.
 
-#### 3.2.2.2.2. Option 2: Recode specific values
+#### Option 2: Recode specific values
 
 Another option would be to recode the specific values that are wrong.
 This is more work, but it is a versatile technique that you can use in many situations.
@@ -182,7 +182,7 @@ d_clean = mutate(d_clean, age = recode(age, `1987` = 37, `1970` = 51, `1967` = 5
 ```
 
 
-### 3.2.2.3. Removing missing values
+### Removing missing values
 
 It is often a good idea to explicitly remove missing values from your data.
 If you run any statistical analyses using variables with missing data, R will often just ignore these cases.
@@ -211,7 +211,7 @@ This means: select all rows where it is **not** (`!`) the case that the value of
 d_clean <- filter(d_clean, !is.na(age))
 ```
 
-### 3.2.2.4. Filtering rows
+### Filtering rows
 
 Next to missing values, there might also be other conditions for removing rows from your data.
 For example, you might only want to include participants that at least 18 years old.
@@ -221,7 +221,7 @@ We can do this with the `filter` function, where we specify the condition in whi
 d_clean <- filter(d_clean, age >= 18)
 ```
 
-## 3.2.3. Check again!
+## Check again!
 
 After cleaning your data, it's always a good idea to check if everything went as planned.
 So just use the same tricks to inspect your data:

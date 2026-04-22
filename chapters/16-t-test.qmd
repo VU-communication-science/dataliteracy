@@ -1,8 +1,8 @@
 ---
-title: "5.2. t-test"
+title: "t-test"
 ---
 
-## 5.2.1. What is a t-test?
+## What is a t-test?
 
 A t-test is a statistical test used to determine if there is a significant difference between two means. 
 It is comparable to the z-test, but is more appropriate when population standard deviation is unknown, and has to be estimated from the sample.
@@ -74,20 +74,20 @@ There are three main types of t-tests: the one-sample t-test, the independent sa
 You may also encounter the t-distribution in other contexts, such as for testing the significance of individual coefficients in a regression model (i.e. is the coefficient significantly different from zero?).
 In this tutorial we focus on the t-test as a standalone statistical test, but the t-distribution has many other uses in statistics.
 
-### 5.2.1.1. One-sample t-test
+### One-sample t-test
   * **Purpose**. Compare the mean of a single sample to a known value (e.g., a population mean).
   * **Example**. You have a sample of students and you want to test if the average time they spend on social media is significantly different from the national average (which we would then need to know in advance).
   
-#### 5.2.1.1.1. Independent samples t-test
+#### Independent samples t-test
   * **Purpose**. Compare the means *between* two independent groups. 
   * **Example**. You conducted an experiment where you randomly assign participants to play either a *violent* or *non-violent* video game, and you want to test if the hearth rate in the *violent* group is significantly higher than in the *non-violent* group after playing the game.
 
-#### 5.2.1.1.2. Paired samples t-test
+#### Paired samples t-test
   * **Purpose**. Compare the means *within subjects* (e.g., within a person) at two different time points or under two different conditions. In this case the samples are not independent, because the two observations are *paired*.
   * **Example**. You measured the hearth rate of the same participants before and after playing a video game, and you want to test if there is a significant increase.
 
 
-## 5.2.2. How to use 
+## How to use 
 
 The t-test is included in base R, but we'll also need the `car` package for the Levene's test (as you'll see later).
 
@@ -115,7 +115,7 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") |>
 d
 ```
 
-### 5.2.2.1. One-sample t-test
+### One-sample t-test
 
 The one-sample t-test is used to compare the mean of a single sample to a known value (e.g., a population mean).
 In this example, we'll test if the average number of hours per week that people spend consuming news is significantly different from 14 hours (there is no particular reason for this value, it's just an example).
@@ -148,7 +148,7 @@ P <- sprintf("%.3f", m$p.value)
 The results show that the mean number of hours spent consuming news ($M = `r M`, SD = `r SD`$) is not significantly different from 14 hours, $t(`r DF`) = `r T`, p = `r P`$.
 So even though the mean is higher than 14 hours, based on our data we cannot conclude that this difference is statistically significant.
 
-### 5.2.2.2. Independent samples t-test
+### Independent samples t-test
 
 The independent samples t-test is used to compare the means between two independent groups.
 Here we compare `news_consumption` *between* people who have a subscription to a newspaper and those who don't (`np_subscription`).
@@ -199,7 +199,7 @@ T <- sprintf("%.2f", m$statistic)
 The results show that the mean number of hours spent consuming news is significantly different between people with (
 $M_1 = `r M1`, SD = `r SD1`$) and without ($M_0 = `r M0`, SD = `r SD0`$) a subscription to a national newspaper, $t(`r DF`) = `r T`, p < 0.001$.
 
-### 5.2.2.3. Paired samples t-test
+### Paired samples t-test
 
 The paired samples t-test is used to compare the means within subjects at two different time points or under two different conditions.
 In this example, we'll test if the trust in journalism (`trust_t1` and `trust_t2`) significantly changed after the experiment.
@@ -248,7 +248,7 @@ What might be confusing is that the t-test reports a negative value for the mean
 This is because the t-test is based on the difference between the two means, and the difference is calculated as `trust_t1 - trust_t2`.
 
 
-### 5.2.2.4. Two-sided vs one-sided t-test
+### Two-sided vs one-sided t-test
 
 By default, the t-test is two-sided, which means that we don't care about the direction of difference between the means.
 Our one-sample t-test tested whether the mean was *less OR greater* than 10 hours.
@@ -309,7 +309,7 @@ plot_one_sided <- ggplot(data_tdist, aes(x = x, y = y)) +
 grid.arrange(plot_two_sided, plot_one_sided, ncol = 2)
 ```
 
-#### 5.2.2.4.1. Word of caution
+#### Word of caution
 
 Using a one-sided test is only valid if you have a strong, justifiable reason to expect that the difference will be in a specific direction.
 This expectation should be grounded in theory, and formulated a priori, before you look at the data. 
@@ -317,7 +317,7 @@ This expectation should be grounded in theory, and formulated a priori, before y
 Using a one-sided test after examining the data, or simply to achieve statistical significance, is a serious violation of research ethics. It artificially inflates the chances of rejecting the null hypothesis by ignoring potential effects in the other direction. This increases the risk of Type I error (a false positive) and can lead to misleading or exaggerated conclusions.
 In most cases, the more conservative two-sided test is recommended.
 
-#### 5.2.2.4.2. How to use a one-sided t-test
+#### How to use a one-sided t-test
 
 To perform a one-sided t-test, you need to specify the alternative hypothesis in the `alternative` argument in the `t.test()` function.
 The following code shows how to perform the same one-sample t-test as above, but this time as a one-sided test.
@@ -340,7 +340,7 @@ We'll skip the output here, but you can run it yourself to verify that this test
 t.test(news_consumption ~ 1, mu = 14, data = d, alternative = "less")
 ```
 
-#### 5.2.2.4.3. one-sided test in independent and paired samples t-test
+#### one-sided test in independent and paired samples t-test
 
 In the independent samples t-test and paired samples t-test you can specify the alternative hypothesis in the same way as in the one-sample t-test.
 

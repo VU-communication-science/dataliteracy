@@ -1,8 +1,8 @@
 ---
-title: "6.1. Hypothesis testing"
+title: "Hypothesis testing"
 ---
 
-## 6.1.1. Deriving hypotheses from theories
+## Deriving hypotheses from theories
 
 In order to use statistical methods to test theories, we first need to **derive hypotheses** from them.
 A hypothesis is a **testable statement**, that when tested empirically provides evidence for or against the theory.
@@ -22,7 +22,7 @@ Sometimes these variables are only proxies for the concepts in the theory, such 
 To provide evidence for causal mechanisms in theories, hypotheses can formulate relations between variables in such a way that a causal order is implied (e.g., increase "after playing"; hearth rate being unlikely to be a cause of playing video games).
 
 
-### 6.1.1.1. Evidence $\neq$ proof
+### Evidence $\neq$ proof
 
 If an hypothesis is confirmed, it **provides evidence** in support of the theory.
 However, note that it does **not necessarily prove** the theory.

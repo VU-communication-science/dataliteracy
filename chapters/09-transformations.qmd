@@ -1,8 +1,8 @@
 ---
-title: "3.3. Transformations"
+title: "Transformations"
 ---
 
-## 3.3.1. What is standardization?
+## What is standardization?
 
 Standardization is a technique for transforming data into a consistent scale. It involves two key components: **centering** and **scaling**.
 
@@ -21,7 +21,7 @@ It allows us to compare *age* and *income*, even if one is measured in years and
 * **Multiple regression**: Standardization can help you compare the strength of the effects of different independent variables in a [multiple regression model](18-linear-regression.qmd).
 
 
-## 3.3.2. How to standardize variables
+## How to standardize variables
 
 Let's first create a simple numeric variable `x` with some values, and calculate its mean and standard deviation.
 
@@ -127,7 +127,7 @@ cor(x, z)
 ```
 
 
-### 3.3.2.1. Alternative: use the `scale()` function
+### Alternative: use the `scale()` function
 
 There is also a built-in function in R that standardizes variables for you.
 This function is called `scale()`.

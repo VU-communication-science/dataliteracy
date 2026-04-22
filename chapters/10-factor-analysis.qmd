@@ -1,8 +1,8 @@
 ---
-title: "3.4. Factor analysis"
+title: "Factor analysis"
 ---
 
-## 3.4.1. Why Factor Analysis?
+## Why Factor Analysis?
 
 Many concepts in the social sciences are too complex to be captured with a single question. Think of *academic motivation*, *media literacy*, or even *happiness*. Each of these is a **latent construct**: something that cannot be measured directly, but only through multiple related items. In surveys you won’t encounter a direct statement like: "My academic motivation is high" with a Likert scale. Instead, you might see a range of related statements such as "I look forward to studying," "I keep working even when assignments are difficult," or "I set goals for my learning." Taken together, these items give us a better picture of the underlying latent construct. But what if these items reflect not one, but *multiple* underlying constructs?
 
@@ -25,11 +25,11 @@ Take a moment to read through these ten statements yourself: do you spot any hid
 
 [You might have heard about or later on encounter*Principal Component Analysis (PCA)*. While PCA also reduces data into fewer dimensions, it has a different goal (data reduction rather than uncovering latent constructs). In this course, we focus only on **factor analysis**.]{style="font-size:70%"}
 
-### 3.4.1.1. Principal Axis Factoring
+### Principal Axis Factoring
 
 There are various methods and approaches in factor analysis. In this chapter we use the method of **Principal Axis Factoring (PAF)**. The underlying model assumes that the correlations we observe between items are not direct causal effects between those items, but are explained by one or more hidden common factors. A metaphor: think of the items as puppets on a stage that seem to move together. PAF looks for the invisible strings above the stage. Once you remove those hidden strings, the puppets no longer move in sync. In statistical terms: if you remove the effect of the factor(s), the correlations between items disappear as much as possible.
 
-### 3.4.1.2. Factor analysis for scale construction
+### Factor analysis for scale construction
 
 Before we dive into the practical analysis, it’s helpful to place factor analysis within the broader process of scale construction. When building a scale, researchers typically: (1) identify indicators, (2) check the direction and distributions of the items, (3) determine the dimensionality with factor analysis, (4) test internal consistency with reliability analysis, (5) compute the scale(s) and (6) validate the scale(s). The main focus of this chapter is is Step 3: using factor analysis to uncover the dimensionality of our items.
 
@@ -39,7 +39,7 @@ Our key question is: *Do these ten items measure a single underlying construct (
 
 The answer to that question will then guide us further in to process of scale construction. Let's find out how we can best measure media literacy! 
 
-### 3.4.1.3. Step 1: Inspect your data
+### Step 1: Inspect your data
 
 We load the dataset `polcomm_data.csv` - which is a simulated dataset (N = 200) containing various variables on media use, democracy and related topics - and name it `d`.
 
@@ -58,7 +58,7 @@ d |> select(ml_1:ml_10) |> descr()
 
 The output shows the means, standard deviations, and ranges. In our case, all items are measured on a 1–5 Likert scale, with no missing values. The averages hover mostly around 3–4, which makes sense for survey data.
 
-## 3.4.2. Step 2: Check correlations
+## Step 2: Check correlations
 
 Factor analysis is based on **correlations** between items. If items do not correlate, they probably don’t measure the same construct. And if an item shares no correlations at all, it has nothing to do with the other items, so does not fit in the measure of the construct. On the other hand, if correlations are *too high* (above 0.8), it could indicate redundancy.
 
@@ -74,7 +74,7 @@ Here we see a healthy mix: many correlations fall between 0.3 and 0.7, which is 
 
 We also spot one or two correlations that are quite high (above 0.8), which could indicate that certain items are almost redundant — they may be tapping into exactly the same skill. Together, this pattern suggests that the items can form meaningful clusters, while also raising questions about whether some pairs overlap too much or too little.
 
-## 3.4.3. Step 3: How many factors?
+## Step 3: How many factors?
 
 Before the actual factor analysis, that will give us information about the content of our factors, we would like to know how many factors we should extract in the first place.
 
@@ -93,7 +93,7 @@ d |>
 
 Both the scree plot and the eigenvalues suggest that a **three-factor solution** is appropriate. If the criteria yield two different outcomes, we prioritize the scree plot. At the same time, remember there is also a third - less formal - criterion: **interpretability**. The mathematical rules give us a suggestion for the number of factors, but as researchers we need to check whether the resulting factors make substantive sense. If we cannot meaningfully interpret the clusters of items, the factor solution is not useful, even if the numbers suggest it is. This highlights that factor analysis is both a statistical and a substantive exercise.
 
-## 3.4.4. Step 4: Run the factor analysis
+## Step 4: Run the factor analysis
 
 Now we can actually run the factor analysis. We specify:
 
@@ -141,7 +141,7 @@ fa.diagram(fa_result)
 
 This diagram shows factors as circles, items as boxes, and arrows representing strong (\> .3) loadings. The arrows indicate which items are strongly linked to which factors, based on their loadings in the pattern matrix. This visual is a direct translation of the principal axis factoring model you learned about earlier: the circles represent the hidden factors (the "invisible strings"), and the arrows represent how strongly those factors pull on each observed item. Because we applied an oblimin rotation, some circles may be connected with arrows, reflecting that the factors themselves can correlate. In short, the diagram helps you see at a glance which items cluster together under each latent construct and how those latent constructs may relate to each other.
 
-## 3.4.5. Step 5: Interpret the factors
+## Step 5: Interpret the factors
 
 It’s up to the researcher to give meaning to the factors. Take another look at the ten Media Literacy items and the clusters in the pattern matrix. Can you group them yourself? Which items seem to belong together, and what label would you give to each group? Try it out – this interpretive step is part of what makes factor analysis more than just math.
 
@@ -153,7 +153,7 @@ This is how you might have interpreted the factors:
 
 So, instead of one single Media Literacy scale, our analysis suggests there should be **three distinct but related dimensions** that each have a meaningful interpretation.
 
-## 3.4.6. Step 6: Reliability of each factor
+## Step 6: Reliability of each factor
 
 Once we have identified factors, we need to check whether the items in each factor form a reliable scale, in other words: whether the scales are internally consistent. This is where **Cronbach’s alpha** comes in.
 
@@ -168,7 +168,7 @@ d |>
 
 The output will show that all three scales (Analytical, Source, Active) have high reliability (alpha \> .8).
 
-## 3.4.7. Step 7: Construct the scales
+## Step 7: Construct the scales
 
 Finally, we compute new scale scores by averaging the items in each factor. In practice, this means creating new variables (`ml_reflect`, `ml_source`, `ml_active`) that take the mean of the items belonging to each factor. For example, the variable `ml_reflect` is calculated by summing items `ml_1`, `ml_4`, and `ml_7` and dividing by 3 to compute an average that stays on the same 1–5 scale. This way, each respondent’s answers on individual items are combined into a single, interpretable score that represents their position on that underlying dimension.
 
@@ -184,7 +184,7 @@ d |> select(ml_reflect, ml_source, ml_active) |> descr()
 
 We now have three new variables that represent distinct aspects of media literacy. These can be used in further analysis, depending on the theoretical framework and research question.
 
-## 3.4.8. Summary
+## Summary
 
 Factor analysis is a powerful tool for uncovering the **dimensionality** of scales:
 
