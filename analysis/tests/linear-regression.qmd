@@ -266,17 +266,6 @@ d <- read_csv("https://data.dataliteracy.cc/simulated/practice_data.csv") |>
 d
 ```
 
-
-```{r, echo=F, message=F}
-## Here we secretly load the data directly from the folder.
-## This is just because we had a quick update and couldn't wait for
-## the data on the website to update
-d <- read_csv("../../data/practice_data.csv") |>
-        mutate(age = if_else(age > 100, 2024 - age, age)) |>
-        select(age, political_orientation, political_interest, trust_t1,
-               news_consumption = `news consumption`)
-```
-
 ## Simple linear regression
 
 We start with the example of predicting `trust` in journalists based on `age`.

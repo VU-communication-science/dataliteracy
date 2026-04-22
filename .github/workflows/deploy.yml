@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Need full history for git diff
+          fetch-depth: 0 # Need full history for git diff and fetching branches
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -34,13 +34,15 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Restore _freeze directory
-        uses: actions/cache@v4
-        with:
-          path: _freeze
-          key: quarto-freeze-${{ github.sha }}
-          restore-keys: |
-            quarto-freeze-
+      - name: Restore _freeze from dedicated branch
+        run: |
+          git fetch origin _freeze-cache || true
+          if git ls-remote --heads origin _freeze-cache | grep -q _freeze-cache; then
+            echo "Restoring _freeze directory from _freeze-cache branch..."
+            git checkout origin/_freeze-cache -- _freeze || true
+          else
+            echo "Branch _freeze-cache does not exist yet. Starting fresh."
+          fi
 
       - name: Get changed files and install dependencies
         run: |
@@ -50,7 +52,7 @@ jobs:
             # Fallback for manual dispatch or first commit
             CHANGED_FILES=$(find . -name "*.qmd")
           fi
-          
+
           Rscript install_dependencies.R $CHANGED_FILES
 
       - name: Render Quarto Project
@@ -58,20 +60,42 @@ jobs:
         with:
           to: html
 
-      - name: Save _freeze directory
-        uses: actions/cache/save@v4
-        if: always()
-        with:
-          path: _freeze
-          key: quarto-freeze-${{ github.sha }}
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
+
+      - name: Persist _freeze to dedicated branch
+        if: always()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Clone the repo into a separate directory to avoid messing with the current workspace
+          git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" freeze_repo
+          cd freeze_repo
+
+          if git ls-remote --heads origin _freeze-cache | grep -q _freeze-cache; then
+            git checkout _freeze-cache
+          else
+            git checkout --orphan _freeze-cache
+            git rm -rf .
+          fi
+
+          # Copy the updated _freeze folder from the build workspace
+          mkdir -p _freeze
+          cp -r ../_freeze/* _freeze/ || true
+
+          git add _freeze
+          if git diff --staged --quiet; then
+            echo "No changes to freeze cache."
+          else
+            git commit -m "Update freeze cache for ${{ github.sha }}"
+            git push origin _freeze-cache
+          fi
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

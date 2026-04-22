@@ -10,7 +10,7 @@ website:
   sidebar:
     title: "Communication Science R Book"
     allignment: center
-    logo: "data/logo.png"
+    logo: "static/logo.png"
     logo-href: "https://vu.nl/en/about-vu/faculties/faculty-of-social-sciences/departments/communication-science"
     search: true
     style: "docked"
