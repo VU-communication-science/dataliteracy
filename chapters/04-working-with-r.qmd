@@ -1,5 +1,9 @@
 ---
 title: "Working with R"
+format:
+  html:
+    number-sections: true
+    number-offset: [8]
 ---
 
 ## Installation
