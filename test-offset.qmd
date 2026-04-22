@@ -1,5 +1,0 @@
----
-title: "2.1 Working with R"
-number-offset: [1, 0]
----
-## Installation

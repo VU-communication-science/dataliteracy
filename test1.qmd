@@ -1,7 +1,0 @@
----
-title: "Test Chapter"
-shift-heading-level-by: 1
-number-offset: [2, 0]
----
-## H2 heading
-### H3 heading
