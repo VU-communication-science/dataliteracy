@@ -31,6 +31,14 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.qmd') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
