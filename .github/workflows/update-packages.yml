@@ -1,0 +1,147 @@
+name: Update R packages
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 8am UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RENV_PATHS_ROOT: ~/.local/share/renv
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Restore renv cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+
+      - name: Restore freeze cache
+        uses: actions/cache@v4
+        with:
+          path: _freeze
+          key: freeze-${{ hashFiles('**/*.qmd') }}
+          restore-keys: |
+            freeze-
+
+      - name: Install quarto-live extension
+        run: |
+          mkdir -p _extensions/r-wasm/live
+          touch _extensions/r-wasm/live/_knitr.qmd
+          quarto add r-wasm/quarto-live --no-prompt
+
+      - name: Restore current packages
+        run: Rscript -e "renv::restore()"
+
+      - name: Save current freeze for comparison
+        run: |
+          if [ -d "_freeze" ]; then
+            cp -r _freeze _freeze_before
+            echo "Freeze baseline saved."
+          else
+            echo "No freeze cache available, skipping baseline."
+          fi
+
+      - name: Update packages
+        run: |
+          Rscript -e "renv::update()"
+          Rscript -e "renv::snapshot()"
+
+      - name: Check if lockfile changed
+        id: lockfile
+        run: |
+          if git diff --quiet renv.lock; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "All packages are already up to date."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Package updates found:"
+            git diff renv.lock
+          fi
+
+      - name: Render with updated packages
+        if: steps.lockfile.outputs.changed == 'true'
+        id: render
+        continue-on-error: true
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: live-html
+
+      - name: Write PR body
+        if: steps.lockfile.outputs.changed == 'true'
+        run: |
+          cat > pr_body.md << 'PRBODY'
+          Automated weekly package update. See the `renv.lock` diff for details on which packages changed.
+
+          PRBODY
+
+          # Render status
+          if [ "${{ steps.render.outcome }}" == "failure" ]; then
+            echo "## ⚠️ Render failed" >> pr_body.md
+            echo "" >> pr_body.md
+            echo "The book failed to render with the updated packages. Review the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) to identify which package caused the issue. **Do not merge until the render is fixed.**" >> pr_body.md
+          else
+            echo "## ✅ Render succeeded" >> pr_body.md
+          fi
+
+          echo "" >> pr_body.md
+
+          # Chapter output comparison
+          echo "## Chapter output changes" >> pr_body.md
+          echo "" >> pr_body.md
+
+          if [ ! -d "_freeze_before" ]; then
+            echo "_Freeze baseline was not available (cache was cold), so output comparison was skipped. The render itself succeeded, which means no hard errors occurred._" >> pr_body.md
+          elif [ "${{ steps.render.outcome }}" == "failure" ]; then
+            echo "_Output comparison skipped because the render failed._" >> pr_body.md
+          else
+            CHANGED=$(diff -rq _freeze_before _freeze 2>/dev/null \
+              | grep "\.json" \
+              | sed 's|.*_freeze/||; s|/execute-results.*||' \
+              | sort -u)
+
+            if [ -z "$CHANGED" ]; then
+              echo "No chapter outputs changed — the update is purely internal (bug fixes, performance, etc.)." >> pr_body.md
+            else
+              echo "The following chapters produced different R output with the updated packages. Review them before merging:" >> pr_body.md
+              echo "" >> pr_body.md
+              echo "$CHANGED" | while IFS= read -r chapter; do
+                echo "- \`$chapter\`" >> pr_body.md
+              done
+            fi
+          fi
+
+      - name: Open pull request
+        if: steps.lockfile.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="chore/update-renv-$(date +%Y-%m-%d)"
+
+          git checkout -b "$BRANCH"
+          git add renv.lock
+          git commit -m "chore: update renv packages $(date +%Y-%m-%d)"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "chore: update R packages ($(date +%Y-%m-%d))" \
+            --body-file pr_body.md \
+            --base main \
+            --head "$BRANCH"
