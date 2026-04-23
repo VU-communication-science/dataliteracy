@@ -2,6 +2,8 @@
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+
+
 Welcome to **Data Literacy**, the R textbook for the Communication Science program at Vrije Universiteit Amsterdam. This book is developed alongside the quantitative methods courses of the program, and is designed to take you from your very first steps in R all the way through to running and interpreting statistical analyses.
 
 ## Interactive code {.unnumbered}
