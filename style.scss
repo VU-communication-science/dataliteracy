@@ -32,5 +32,8 @@
         "Courier New", monospace;
     min-width: 1.2rem;
     opacity: 0.5;
+}
 
+#title-block-header .chapter-number {
+    color: rgba(var(--bs-link-color-rgb));
 }
