@@ -11,7 +11,7 @@ Welcome to **Data Literacy**, the R textbook for the Communication Science progr
 Throughout this book, you will encounter interactive code blocks like the one below. These run R directly in your browser — no installation required. You can edit the code and click **Run** to see the results immediately.
 
 
-"Thu Apr 23 09:34:58 2026"
+test
 
 ```{webr}
 # Try editing this code and clicking Run!
