@@ -35,5 +35,11 @@
 }
 
 #title-block-header .chapter-number {
-    color: rgba(var(--bs-link-color-rgb));
+    /* color: rgba(var(--bs-link-color-rgb)); */
+    opacity: 0.7;
+}
+
+#quarto-document-content > section {
+    /* margin-bottom: 4rem; */
+    padding-top: 1rem;
 }
