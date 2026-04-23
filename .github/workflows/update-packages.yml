@@ -48,10 +48,16 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          Rscript - << 'EOF'
-          if (!requireNamespace("pak", quietly = TRUE))
-            install.packages("pak", repos = "https://r-lib.github.io/p/pak/stable/")
-          pkgs <- names(jsonlite::fromJSON("renv.lock")$Packages)
+          python3 -c "
+          import json
+          with open('renv.lock') as f:
+              pkgs = list(json.load(f)['Packages'].keys())
+          with open('/tmp/renv_pkgs.txt', 'w') as f:
+              f.write('\n'.join(pkgs))
+          "
+          Rscript --vanilla - << 'EOF'
+          install.packages("pak", repos = "https://cloud.r-project.org", quiet = TRUE)
+          pkgs <- readLines("/tmp/renv_pkgs.txt")
           cmds <- pak::pkg_system_requirements(pkgs, os = "ubuntu", os_release = "24.04")
           for (cmd in cmds) system(cmd)
           EOF
