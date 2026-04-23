@@ -20,6 +20,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       RENV_PATHS_ROOT: ~/.local/share/renv
+      RENV_CONFIG_PAK_ENABLED: "true"
 
     steps:
       - name: Checkout repository
@@ -54,22 +55,6 @@ jobs:
           mkdir -p _extensions/r-wasm/live
           touch _extensions/r-wasm/live/_knitr.qmd
           quarto add r-wasm/quarto-live --no-prompt
-
-      - name: Install system dependencies
-        run: |
-          python3 -c "
-          import json
-          with open('renv.lock') as f:
-              pkgs = list(json.load(f)['Packages'].keys())
-          with open('/tmp/renv_pkgs.txt', 'w') as f:
-              f.write('\n'.join(pkgs))
-          "
-          Rscript --vanilla - << 'EOF'
-          install.packages("pak", repos = "https://cloud.r-project.org", quiet = TRUE)
-          pkgs <- readLines("/tmp/renv_pkgs.txt")
-          cmds <- pak::pkg_system_requirements(pkgs, os = "ubuntu", os_release = "24.04")
-          for (cmd in cmds) system(cmd)
-          EOF
 
       - name: Restore renv
         run: Rscript -e "renv::restore()"
