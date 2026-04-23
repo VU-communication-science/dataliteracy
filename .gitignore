@@ -1,3 +1,6 @@
+# Quarto extensions (installed by CI)
+/_extensions/
+
 # Quarto build files
 /.quarto/
 /_site/
