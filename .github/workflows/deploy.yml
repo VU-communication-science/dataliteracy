@@ -20,7 +20,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       RENV_PATHS_ROOT: ~/.local/share/renv
-      RENV_CONFIG_PAK_ENABLED: "true"
 
     steps:
       - name: Checkout repository
@@ -55,6 +54,20 @@ jobs:
           mkdir -p _extensions/r-wasm/live
           touch _extensions/r-wasm/live/_knitr.qmd
           quarto add r-wasm/quarto-live --no-prompt
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y \
+            cmake \
+            gsfonts \
+            libcurl4-openssl-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libglpk-dev \
+            libmagick++-dev \
+            libnode-dev \
+            libx11-dev
 
       - name: Restore renv
         run: Rscript -e "renv::restore()"
