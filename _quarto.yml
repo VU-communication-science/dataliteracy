@@ -56,13 +56,15 @@ crossref:
   appendix-delim: ""
 
 format:
-  html:
+  live-html:
     theme:
       - cerulean
       - style.scss
     toc: true
     number-sections: true
     number-depth: 3
+
+engine: knitr
 
 execute:
   freeze: auto

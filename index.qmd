@@ -1,11 +1,71 @@
 # Preface {.unnumbered}
 
-This is the website of the Communication Science R Book.
-We are currently developing this book along with the methods courses of the program.
-If you were directed to specific chapters by your instructor, these chapters will be ready for you to read.
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+Welcome to **Data Literacy**, the R textbook for the Communication Science program at Vrije Universiteit Amsterdam. This book is developed alongside the quantitative methods courses of the program, and is designed to take you from your very first steps in R all the way through to running and interpreting statistical analyses.
 
-* [Getting started](/getting-started/)
-* [Data management](/data-management/)
-* [Analysis](/analysis/)
-* [Good to know](/good-to-know/)
+## Interactive code {.unnumbered}
+
+Throughout this book, you will encounter interactive code blocks like the one below. These run R directly in your browser — no installation required. You can edit the code and click **Run** to see the results immediately.
+
+```{webr}
+# Try editing this code and clicking Run!
+x <- c(2, 4, 6, 8, 10)
+mean(x)
+```
+
+These interactive blocks are powered by [WebAssembly](https://webassembly.org/), which means R is running entirely on your own device — nothing is sent to a server. They are a great way to experiment with code as you read, without switching back and forth to RStudio.
+
+## Contents {.unnumbered}
+
+### Introduction {.unnumbered}
+
+| Chapter | Description |
+|---------|-------------|
+| Purpose of the book | What this book is, who it is for, and how it fits into the Communication Science program. |
+| Overview curriculum | An overview of the methods courses and how this book is used across them. |
+| Overview research traditions | An introduction to the quantitative research tradition in communication science. |
+
+### Digital Literacy {.unnumbered}
+
+| Chapter | Description |
+|---------|-------------|
+| Working with R | How to install R and RStudio — the two pieces of software you need to get started. |
+| Projects | A simple, recommended approach to organising your files and working directories in R. |
+| Quarto | How to use Quarto to combine code, text, and results into a single reproducible document. |
+
+### Data Management {.unnumbered}
+
+| Chapter | Description |
+|---------|-------------|
+| Data Frames | An introduction to the tidyverse and how tabular data is represented and worked with in R. |
+| Data cleaning | How to inspect a raw dataset and clean it up before analysis, using `summarytools` and `tidyverse`. |
+| Transformations | Standardisation, z-scores, and other core data transformations used throughout the book. |
+| Factor analysis | Exploratory Factor Analysis (EFA) for discovering latent dimensions underlying a set of survey items. |
+| Scale construction | How to combine multiple survey items into a single, reliable composite score for a complex construct. |
+
+### Data Analysis {.unnumbered}
+
+| Chapter | Description |
+|---------|-------------|
+| Descriptive statistics | Summarising and describing the key properties of your data before running inferential tests. |
+| Visualization | Creating informative plots and charts to explore and communicate patterns in your data. |
+| Statistical tests | An overview of the statistical tests covered in this book and how to choose between them. |
+
+### Statistical Tests {.unnumbered}
+
+| Chapter | Description |
+|---------|-------------|
+| Chi-square | Testing whether there is an association between two categorical variables. |
+| t-test | Comparing the means of two groups to determine whether they differ significantly. |
+| Correlation analysis | Measuring the strength and direction of the linear relationship between two numeric variables. |
+| Linear regression | Modelling the relationship between a dependent variable and one or more predictors. |
+| ANOVA | Comparing means across three or more groups simultaneously — particularly suited to experimental designs. |
+| ANCOVA | Extending ANOVA by controlling for a continuous covariate to account for pre-existing differences between participants. |
+
+### Concepts {.unnumbered}
+
+| Chapter | Description |
+|---------|-------------|
+| Hypothesis testing | How to derive testable hypotheses from theory, and how statistical tests provide evidence for or against them. |
+| Causality | The distinction between correlation and causation, and what conditions are required to make a causal claim. |

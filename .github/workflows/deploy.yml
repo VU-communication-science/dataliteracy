@@ -34,6 +34,9 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Install quarto-live extension
+        run: quarto add r-wasm/quarto-live --no-prompt
+
       - name: Restore _freeze from dedicated branch
         run: |
           if git ls-remote --heads origin _freeze-cache | grep -q _freeze-cache; then

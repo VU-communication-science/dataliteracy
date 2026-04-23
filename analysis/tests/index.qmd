@@ -1,5 +1,0 @@
----
-title: Statistical tests
-listing:
-  - template: ../../listing_template.ejs
----

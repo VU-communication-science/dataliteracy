@@ -1,9 +1,0 @@
----
-title: Analysis
----
-
-#
-
-##### [Concepts](concepts)
-##### [Techniques](techniques)
-##### [Statistical tests](tests)

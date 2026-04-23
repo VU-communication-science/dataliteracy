@@ -1,9 +1,0 @@
----
-title: Key concepts
-listing:
-  - template: ../../listing_template.ejs
----
-
-
-
-
