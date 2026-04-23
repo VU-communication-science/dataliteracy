@@ -1,3 +1,6 @@
+# Quarto internal debug files
+_quarto_internal_scss_error.scss
+
 # Quarto extensions (installed by CI)
 /_extensions/
 
