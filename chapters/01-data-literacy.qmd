@@ -4,6 +4,4 @@ title: "What is Data Literacy"
 
 
 ```{r}
-print(Sys.time())
-if (Sys.time() > "2026-04-23 11:48:00") stop('NOOOOOOOOOOOO')
 ```
