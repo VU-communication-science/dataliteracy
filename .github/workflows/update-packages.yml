@@ -2,7 +2,7 @@ name: Update R packages
 
 on:
   schedule:
-    - cron: '0 8 * * 1'  # Every Monday at 8am UTC
+    - cron: "0 8 * * 1" # Every Monday at 8am UTC
   workflow_dispatch:
 
 jobs:
@@ -45,6 +45,16 @@ jobs:
           mkdir -p _extensions/r-wasm/live
           touch _extensions/r-wasm/live/_knitr.qmd
           quarto add r-wasm/quarto-live --no-prompt
+
+      - name: Install system dependencies
+        run: |
+          Rscript - << 'EOF'
+          if (!requireNamespace("pak", quietly = TRUE))
+            install.packages("pak", repos = "https://r-lib.github.io/p/pak/stable/")
+          pkgs <- names(jsonlite::fromJSON("renv.lock")$Packages)
+          cmds <- pak::pkg_system_requirements(pkgs, os = "ubuntu", os_release = "24.04")
+          for (cmd in cmds) system(cmd)
+          EOF
 
       - name: Restore current packages
         run: Rscript -e "renv::restore()"
