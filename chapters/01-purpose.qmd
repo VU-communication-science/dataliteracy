@@ -1,3 +1,3 @@
 ---
-title: "Purpose of the book"
+title: "What is Data Literacy"
 ---

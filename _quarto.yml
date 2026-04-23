@@ -53,16 +53,22 @@ language:
 
 crossref:
   appendix-title: " "
-  appendix-delim: ""
+  # appendix-delim: ""
+
+# Light/General: default, cerulean, cosmo, flatly,
+# journal, litera, lumen, lux, materia, minty, morph,
+# pulse, quartz, sandstone, simplex, sketchy,
+# spacelab, united, yeti, zephyr.
+# Dark: cyborg, darkly, slate, solar, superhero, vapor.
 
 format:
   live-html:
     theme:
-      - cerulean
+      - flatly
       - style.scss
     toc: true
     number-sections: true
-    number-depth: 3
+    number-depth: 2
 
 engine: knitr
 
