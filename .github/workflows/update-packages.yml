@@ -33,14 +33,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-renv-
 
-      - name: Restore freeze cache
-        uses: actions/cache@v4
-        with:
-          path: _freeze
-          key: freeze-${{ hashFiles('**/*.qmd') }}
-          restore-keys: |
-            freeze-
-
       - name: Install quarto-live extension
         run: |
           mkdir -p _extensions/r-wasm/live
@@ -64,14 +56,18 @@ jobs:
       - name: Restore current packages
         run: Rscript -e "renv::restore()"
 
-      - name: Save current freeze for comparison
+      - name: Fetch previous docs for comparison
         run: |
-          if [ -d "_freeze" ]; then
-            cp -r _freeze _freeze_before
-            echo "Freeze baseline saved."
+          mkdir -p docs_old
+          if git fetch origin gh-pages --depth=1 2>/dev/null; then
+            git worktree add /tmp/gh-pages FETCH_HEAD
+            rsync -a --exclude='.git' /tmp/gh-pages/ docs_old/
+            git worktree remove /tmp/gh-pages --force
+            echo "Previous docs fetched for comparison."
           else
-            echo "No freeze cache available, skipping baseline."
+            echo "No gh-pages branch found, comparison will be skipped."
           fi
+        continue-on-error: true
 
       - name: Update packages
         run: |
@@ -102,7 +98,7 @@ jobs:
         if: steps.lockfile.outputs.changed == 'true'
         run: |
           cat > pr_body.md << 'PRBODY'
-          Automated weekly package update. See the `renv.lock` diff for details on which packages changed.
+          Automated daily package update. See the `renv.lock` diff for details on which packages changed.
 
           PRBODY
 
@@ -121,20 +117,22 @@ jobs:
           echo "## Chapter output changes" >> pr_body.md
           echo "" >> pr_body.md
 
-          if [ ! -d "_freeze_before" ]; then
-            echo "_Freeze baseline was not available (cache was cold), so output comparison was skipped. The render itself succeeded, which means no hard errors occurred._" >> pr_body.md
+          if [ ! -d "docs_old" ] || [ -z "$(ls -A docs_old 2>/dev/null)" ]; then
+            echo "_No previous build was available for comparison._" >> pr_body.md
           elif [ "${{ steps.render.outcome }}" == "failure" ]; then
             echo "_Output comparison skipped because the render failed._" >> pr_body.md
           else
-            CHANGED=$(diff -rq _freeze_before _freeze 2>/dev/null \
-              | grep "\.json" \
-              | sed 's|.*_freeze/||; s|/execute-results.*||' \
+            CHANGED=$(diff -rq docs_old docs 2>/dev/null \
+              | grep "^Files .* differ" \
+              | grep "\.html" \
+              | grep -v "site_libs" \
+              | sed 's|^Files docs_old/||; s| and.*||' \
               | sort -u)
 
             if [ -z "$CHANGED" ]; then
               echo "No chapter outputs changed — the update is purely internal (bug fixes, performance, etc.)." >> pr_body.md
             else
-              echo "The following chapters produced different R output with the updated packages. Review them before merging:" >> pr_body.md
+              echo "The following chapters produced different HTML output with the updated packages. Review them before merging:" >> pr_body.md
               echo "" >> pr_body.md
               echo "$CHANGED" | while IFS= read -r chapter; do
                 echo "- \`$chapter\`" >> pr_body.md
