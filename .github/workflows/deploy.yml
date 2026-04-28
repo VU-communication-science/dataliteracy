@@ -64,41 +64,36 @@ jobs:
       - name: Restore renv
         run: Rscript -e "renv::restore()"
 
-      - name: Fetch previous docs as fallback
+      - name: Fetch freeze from previous deploy
         run: |
-          mkdir -p docs_old
           if git fetch origin gh-pages --depth=1 2>/dev/null; then
             git worktree add /tmp/gh-pages FETCH_HEAD
-            rsync -a --exclude='.git' /tmp/gh-pages/ docs_old/
+            if [ -d "/tmp/gh-pages/_freeze" ]; then
+              rsync -a /tmp/gh-pages/_freeze/ _freeze/
+              echo "Freeze restored from previous deploy."
+            else
+              echo "No freeze found in previous deploy, starting fresh."
+            fi
             git worktree remove /tmp/gh-pages --force
-            echo "Previous docs fetched as fallback."
           else
             echo "No gh-pages branch yet, starting fresh."
           fi
         continue-on-error: true
 
       - name: Render Quarto Project
-        continue-on-error: true
         uses: quarto-dev/quarto-actions/render@v2
         with:
           to: live-html
 
-      - name: Restore missing chapters from previous build
+      - name: Stage docs and freeze for deploy
         run: |
-          if [ -d "docs_old" ] && [ "$(ls -A docs_old 2>/dev/null)" ]; then
-            find docs_old -type f | while IFS= read -r f; do
-              relative="${f#docs_old/}"
-              if [ ! -f "docs/$relative" ]; then
-                mkdir -p "docs/$(dirname "$relative")"
-                cp "$f" "docs/$relative"
-                echo "Restored from previous build: $relative"
-              fi
-            done
-          fi
+          mkdir -p _deploy
+          rsync -a docs/. _deploy/
+          rsync -a _freeze/. _deploy/_freeze/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./_deploy
           force_orphan: true
