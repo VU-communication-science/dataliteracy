@@ -19,7 +19,6 @@ x <- c(2, 4, 6, 8, 10)
 mean(x)
 ```
 
-These interactive blocks are powered by [WebAssembly](https://webassembly.org/), which means R is running entirely on your own device — nothing is sent to a server. They are a great way to experiment with code as you read, without switching back and forth to RStudio.
 
 ## Contents {.unnumbered}
 
