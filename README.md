@@ -68,21 +68,27 @@ Commit the updated `renv.lock` alongside your changes.
 
 ### Updating packages
 
-To update a specific package:
+[![Update R packages](https://github.com/VU-communication-science/dataliteracy/actions/workflows/update-packages.yml/badge.svg)](https://github.com/VU-communication-science/dataliteracy/actions/workflows/update-packages.yml)
 
-```r
-renv::update("somepackage")
-renv::snapshot()
-```
+There are two ways to update packages.
 
-To update everything:
+**Option 1 — locally.** This gives you full control and lets you verify everything works before anyone else sees the change.
 
-```r
-renv::update()
-renv::snapshot()
-```
+1. Clone the repository and restore packages as described above.
+2. Run the update in the R console:
+   ```r
+   renv::update()   # or renv::update("somepackage") for a single package
+   renv::snapshot()
+   ```
+3. Check that the book still renders correctly:
+   ```r
+   quarto::quarto_render()
+   ```
+4. Commit the updated `renv.lock` and push.
 
-Always check that the book still renders correctly before committing an updated lockfile, since package updates can introduce breaking changes.
+**Option 2 — via GitHub Actions.** This runs the update in the cloud without needing a local setup. Packages are updated automatically every Monday, but you can also trigger it manually: click the badge above to open the workflow page, then use the **Run workflow** button.
+
+Either way, the result is a **pull request** — a proposed change that shows exactly what updated before anything goes live. Think of it as a draft that sits for review: you can inspect which packages changed, check whether all chapters still rendered correctly, and only merge it into the live book once you're happy. If something breaks, you simply close the pull request without merging.
 
 ---
 
