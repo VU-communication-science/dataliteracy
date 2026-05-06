@@ -1,0 +1,15 @@
+{
+  "hash": "0b487223f6cedada3678362b5b22e95d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"What is Data Literacy\"\n---\n\n\n\n::: {.cell}\n\n:::\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
