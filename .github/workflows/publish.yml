@@ -1,0 +1,28 @@
+name: Publish to production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout gh-pages (staging)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: staging
+
+      - name: Copy staging content (excluding freeze)
+        run: rsync -a --exclude='_freeze' staging/ production/
+
+      - name: Deploy to production (deploy branch)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./production
+          publish_branch: deploy
+          force_orphan: true

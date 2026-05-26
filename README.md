@@ -43,6 +43,8 @@ Open any `.qmd` file in RStudio and press **Ctrl+Shift+K** (or click Render). To
 quarto::quarto_preview()
 ```
 
+Or render Quarto from the command line
+
 ### Publish changes
 
 1. **Pull** the latest changes before you start (`Git` tab → Pull).

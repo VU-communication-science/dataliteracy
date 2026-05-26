@@ -60,16 +60,25 @@ jobs:
       - name: Restore current packages
         run: Rscript -e "renv::restore()"
 
-      - name: Fetch previous docs for comparison
+      - name: Fetch previous build from gh-pages
         run: |
-          mkdir -p docs_old
           if git fetch origin gh-pages --depth=1 2>/dev/null; then
             git worktree add /tmp/gh-pages FETCH_HEAD
-            rsync -a --exclude='.git' /tmp/gh-pages/ docs_old/
+
+            # Old docs for diff comparison (exclude freeze and any existing diffs)
+            mkdir -p docs_old
+            rsync -a --exclude='_freeze' --exclude='diffs' /tmp/gh-pages/ docs_old/
+
+            # Restore freeze so unchanged chapters don't re-execute
+            if [ -d "/tmp/gh-pages/_freeze" ]; then
+              rsync -a /tmp/gh-pages/_freeze/ _freeze/
+              echo "Freeze restored from gh-pages."
+            fi
+
             git worktree remove /tmp/gh-pages --force
-            echo "Previous docs fetched for comparison."
+            echo "Previous build fetched."
           else
-            echo "No gh-pages branch found, comparison will be skipped."
+            echo "No gh-pages branch found — diffs and freeze restoration skipped."
           fi
         continue-on-error: true
 
@@ -86,8 +95,6 @@ jobs:
             echo "All packages are already up to date."
           else
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Package updates found:"
-            git diff renv.lock
           fi
 
       - name: Render with updated packages
@@ -98,51 +105,45 @@ jobs:
         with:
           to: live-html
 
+      - name: Generate HTML diffs
+        if: steps.lockfile.outputs.changed == 'true' && steps.render.outcome == 'success'
+        run: |
+          pip install --quiet beautifulsoup4
+          python scripts/generate_diffs.py docs_old docs docs/diffs
+
+      - name: Push preview to update-preview branch
+        if: steps.lockfile.outputs.changed == 'true' && steps.render.outcome == 'success'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: update-preview
+          force_orphan: true
+
       - name: Write PR body
         if: steps.lockfile.outputs.changed == 'true'
         run: |
-          cat > pr_body.md << 'PRBODY'
-          Automated daily package update. See the `renv.lock` diff for details on which packages changed.
+          CF_PROJECT="${{ vars.CF_PAGES_PROJECT }}"
 
-          PRBODY
+          echo "## Package update $(date +%Y-%m-%d)" > pr_body.md
+          echo "" >> pr_body.md
 
-          # Render status
           if [ "${{ steps.render.outcome }}" == "failure" ]; then
             echo "## ⚠️ Render failed" >> pr_body.md
             echo "" >> pr_body.md
-            echo "The book failed to render with the updated packages. Review the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) to identify which package caused the issue. **Do not merge until the render is fixed.**" >> pr_body.md
+            echo "The book failed to render with the updated packages. Review the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) before merging." >> pr_body.md
           else
             echo "## ✅ Render succeeded" >> pr_body.md
-          fi
-
-          echo "" >> pr_body.md
-
-          # Chapter output comparison
-          echo "## Chapter output changes" >> pr_body.md
-          echo "" >> pr_body.md
-
-          if [ ! -d "docs_old" ] || [ -z "$(ls -A docs_old 2>/dev/null)" ]; then
-            echo "_No previous build was available for comparison._" >> pr_body.md
-          elif [ "${{ steps.render.outcome }}" == "failure" ]; then
-            echo "_Output comparison skipped because the render failed._" >> pr_body.md
-          else
-            CHANGED=$(diff -rq docs_old docs 2>/dev/null \
-              | grep "^Files .* differ" \
-              | grep "\.html" \
-              | grep -v "site_libs" \
-              | sed 's|^Files docs_old/||; s| and.*||' \
-              | sort -u)
-
-            if [ -z "$CHANGED" ]; then
-              echo "No chapter outputs changed — the update is purely internal (bug fixes, performance, etc.)." >> pr_body.md
+            echo "" >> pr_body.md
+            if [ -n "$CF_PROJECT" ]; then
+              echo "**[View preview and diffs](https://update-preview.${CF_PROJECT}.pages.dev/diffs/)**" >> pr_body.md
             else
-              echo "The following chapters produced different HTML output with the updated packages. Review them before merging:" >> pr_body.md
-              echo "" >> pr_body.md
-              echo "$CHANGED" | while IFS= read -r chapter; do
-                echo "- \`$chapter\`" >> pr_body.md
-              done
+              echo "_Set the \`CF_PAGES_PROJECT\` repository variable to get a direct link to the preview._" >> pr_body.md
             fi
           fi
+
+          echo "" >> pr_body.md
+          echo "See the \`renv.lock\` diff for the full list of package changes." >> pr_body.md
 
       - name: Open pull request
         if: steps.lockfile.outputs.changed == 'true'
@@ -151,7 +152,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           BRANCH="chore/update-renv-$(date +%Y-%m-%d)"
-
           git checkout -b "$BRANCH"
           git add renv.lock
           git commit -m "chore: update renv packages $(date +%Y-%m-%d)"
