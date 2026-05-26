@@ -4,6 +4,13 @@ _quarto_internal_scss_error.scss
 # Quarto extensions (installed by CI)
 /_extensions/
 
+# Runtime-generated directories (CI)
+/docs_old/
+
+# Python virtual environments
+venv/
+env/
+
 # Quarto build files
 /.quarto/
 /_site/

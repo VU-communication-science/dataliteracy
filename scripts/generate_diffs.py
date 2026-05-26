@@ -10,13 +10,24 @@ Outputs:
     <output_dir>/<name>_diff.html  — individual diff per changed file
 """
 
-import sys
 import difflib
+import sys
 from pathlib import Path
 
 from bs4 import BeautifulSoup
 
 EXCLUDE_DIRS = {"site_libs", "diffs"}
+
+# Plain string — no escaping needed when referenced as {STYLE} in an f-string
+STYLE = """
+    body  { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1    { font-size: 1.4rem; }
+    h2    { font-size: 1.05rem; color: #555; margin-top: 2rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+    ul    { padding-left: 1.4rem; }
+    li    { margin: .3rem 0; }
+    a     { color: #0066cc; }
+    .none { color: #888; font-style: italic; }
+"""
 
 
 def extract_text(html_path: Path) -> str:
@@ -37,60 +48,61 @@ def make_diff_page(old_lines: list, new_lines: list) -> str:
     )
 
 
+def items_html(items, href_fn=None) -> str:
+    """Render a list of items as an HTML <ul>, or a 'None' note if empty."""
+    if not items:
+        return '<p class="none">None</p>'
+    lis = ""
+    for item in items:
+        label = str(item[0]) if isinstance(item, tuple) else str(item)
+        href = href_fn(item) if href_fn else None
+        if href:
+            lis += '<li><a href="' + href + '">' + label + "</a></li>\n"
+        else:
+            lis += "<li>" + label + "</li>\n"
+    return "<ul>\n" + lis + "</ul>"
+
+
 def make_index(changed: list, added: list, removed: list, unchanged: list) -> str:
-    def item_list(items, href_fn=None):
-        if not items:
-            return '<p class="none">None</p>'
-        lis = ""
-        for item in items:
-            label = str(item[0]) if isinstance(item, tuple) else str(item)
-            href = href_fn(item) if href_fn else None
-            if href:
-                lis += f'<li><a href="{href}">{label}</a></li>\n'
-            else:
-                lis += f"<li>{label}</li>\n"
-        return f"<ul>{lis}</ul>"
+    # Pre-compute all HTML sections so the f-string stays simple
+    changed_html = items_html(changed, href_fn=lambda x: x[1])
+    added_html = items_html(added)
+    removed_html = items_html(removed)
+    unchanged_html = items_html(unchanged)
+
+    n_changed = len(changed)
+    n_added = len(added)
+    n_removed = len(removed)
+    n_unchanged = len(unchanged)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Update preview — diff index</title>
-  <style>
-    body  {{ font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #222; }}
-    h1    {{ font-size: 1.4rem; }}
-    h2    {{ font-size: 1.05rem; color: #555; margin-top: 2rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }}
-    ul    {{ padding-left: 1.4rem; }}
-    li    {{ margin: .3rem 0; }}
-    a     {{ color: #0066cc; }}
-    .none {{ color: #888; font-style: italic; }}
-  </style>
+  <style>{STYLE}</style>
 </head>
 <body>
   <h1>Package update — diff index</h1>
   <p>Comparing the current production build against a build with updated packages.</p>
 
-  <h2>🔴 Changed ({len(changed)})</h2>
-  {item_list(changed, href_fn=lambda x: x[1])}
+  <h2>Changed ({n_changed})</h2>
+  {changed_html}
 
-  <h2>🟢 Added ({len(added)})</h2>
-  {item_list(added)}
+  <h2>Added ({n_added})</h2>
+  {added_html}
 
-  <h2>🗑 Removed ({len(removed)})</h2>
-  {item_list(removed)}
+  <h2>Removed ({n_removed})</h2>
+  {removed_html}
 
-  <h2>⚪ Unchanged ({len(unchanged)})</h2>
-  {item_list(unchanged)}
+  <h2>Unchanged ({n_unchanged})</h2>
+  {unchanged_html}
 </body>
 </html>"""
 
 
 def html_files(base: Path) -> set:
-    return {
-        p.relative_to(base)
-        for p in base.rglob("*.html")
-        if not any(part in EXCLUDE_DIRS for part in p.parts)
-    }
+    return {p.relative_to(base) for p in base.rglob("*.html") if not any(part in EXCLUDE_DIRS for part in p.parts)}
 
 
 def diff_filename(rel: Path) -> str:
@@ -99,7 +111,7 @@ def diff_filename(rel: Path) -> str:
 
 def main():
     if len(sys.argv) != 4:
-        print(f"Usage: {sys.argv[0]} <old_dir> <new_dir> <output_dir}")
+        print("Usage: generate_diffs.py <old_dir> <new_dir> <output_dir>")
         sys.exit(1)
 
     old_dir = Path(sys.argv[1])
