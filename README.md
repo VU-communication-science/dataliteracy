@@ -23,7 +23,7 @@ Repository URL: `https://github.com/VU-communication-science/dataliteracy`
 
 ### 3. Restore packages
 
-This project uses [renv](https://rstudio.github.io/renv/) to keep R package versions consistent across all contributors and CI. After cloning, run this once in the R console:
+This project uses [renv](https://rstudio.github.io/renv/) to keep R package versions consistent across contributors and CI. After cloning, run this once in the R console:
 
 ```r
 renv::restore()
