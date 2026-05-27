@@ -123,7 +123,6 @@ jobs:
       - name: Write PR body
         if: steps.lockfile.outputs.changed == 'true'
         run: |
-          CF_PROJECT="${{ vars.CF_PAGES_PROJECT }}"
 
           echo "## Package update $(date +%Y-%m-%d)" > pr_body.md
           echo "" >> pr_body.md
@@ -135,12 +134,50 @@ jobs:
           else
             echo "## ✅ Render succeeded" >> pr_body.md
             echo "" >> pr_body.md
-            if [ -n "$CF_PROJECT" ]; then
-              echo "**[View preview and diffs](https://update-preview.${CF_PROJECT}.pages.dev/diffs/)**" >> pr_body.md
-            else
-              echo "_Set the \`CF_PAGES_PROJECT\` repository variable to get a direct link to the preview._" >> pr_body.md
-            fi
+            echo "**[View preview and diffs](https://update-preview.dataliteracy.cc/diffs/)**" >> pr_body.md
           fi
+
+          echo "" >> pr_body.md
+
+          Rscript - << 'REOF' >> pr_body.md
+          old_text <- system("git show HEAD:renv.lock", intern = TRUE)
+          old_lock <- jsonlite::fromJSON(paste(old_text, collapse = "\n"))
+          new_lock <- jsonlite::fromJSON(readLines("renv.lock"))
+
+          old_pkgs <- old_lock$Packages
+          new_pkgs <- new_lock$Packages
+
+          updated <- Filter(function(pkg) {
+            pkg %in% names(old_pkgs) &&
+            new_pkgs[[pkg]]$Version != old_pkgs[[pkg]]$Version
+          }, names(new_pkgs))
+
+          added   <- setdiff(names(new_pkgs), names(old_pkgs))
+          removed <- setdiff(names(old_pkgs), names(new_pkgs))
+
+          cat("## Package changes\n\n")
+
+          if (length(updated) > 0) {
+            cat("### Updated\n\n")
+            cat("| Package | From | To |\n")
+            cat("|---------|------|----|\n")
+            for (pkg in sort(updated)) {
+              cat(sprintf("| %s | %s | %s |\n",
+                pkg, old_pkgs[[pkg]]$Version, new_pkgs[[pkg]]$Version))
+            }
+            cat("\n")
+          }
+
+          if (length(added) > 0) {
+            cat("### Added\n\n")
+            cat(paste0("- ", sort(added), collapse = "\n"), "\n\n")
+          }
+
+          if (length(removed) > 0) {
+            cat("### Removed\n\n")
+            cat(paste0("- ", sort(removed), collapse = "\n"), "\n\n")
+          }
+          REOF
 
           echo "" >> pr_body.md
           echo "See the \`renv.lock\` diff for the full list of package changes." >> pr_body.md

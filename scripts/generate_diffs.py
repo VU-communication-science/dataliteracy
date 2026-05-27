@@ -11,6 +11,8 @@ Outputs:
 """
 
 import difflib
+import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -23,11 +25,64 @@ STYLE = """
     body  { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #222; }
     h1    { font-size: 1.4rem; }
     h2    { font-size: 1.05rem; color: #555; margin-top: 2rem; border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+    h3    { font-size: 0.95rem; color: #555; margin-top: 1.5rem; }
     ul    { padding-left: 1.4rem; }
     li    { margin: .3rem 0; }
     a     { color: #0066cc; }
     .none { color: #888; font-style: italic; }
+    table { border-collapse: collapse; width: 100%; margin: 0.5rem 0; }
+    th, td { text-align: left; padding: 0.3rem 0.6rem; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    th    { font-weight: 600; color: #444; background: #f8f8f8; }
 """
+
+
+def get_package_changes():
+    """Compare renv.lock in git HEAD vs working tree. Returns dict or None."""
+    try:
+        old_text = subprocess.check_output(["git", "show", "HEAD:renv.lock"]).decode()
+        old_pkgs = json.loads(old_text).get("Packages", {})
+    except subprocess.CalledProcessError:
+        return None
+    try:
+        with open("renv.lock") as f:
+            new_pkgs = json.load(f).get("Packages", {})
+    except FileNotFoundError:
+        return None
+
+    updated = [
+        (pkg, old_pkgs[pkg]["Version"], new_pkgs[pkg]["Version"])
+        for pkg in sorted(new_pkgs)
+        if pkg in old_pkgs and new_pkgs[pkg]["Version"] != old_pkgs[pkg]["Version"]
+    ]
+    added = sorted(set(new_pkgs) - set(old_pkgs))
+    removed = sorted(set(old_pkgs) - set(new_pkgs))
+    return {"updated": updated, "added": added, "removed": removed}
+
+
+def packages_html(pkg_changes) -> str:
+    if pkg_changes is None:
+        return '<p class="none">Package comparison unavailable.</p>'
+
+    parts = []
+
+    if pkg_changes["updated"]:
+        rows = "".join(f"<tr><td>{pkg}</td><td>{old}</td><td>{new}</td></tr>" for pkg, old, new in pkg_changes["updated"])
+        parts.append(
+            f"<h3>Updated ({len(pkg_changes['updated'])})</h3>"
+            f"<table><tr><th>Package</th><th>From</th><th>To</th></tr>{rows}</table>"
+        )
+    else:
+        parts.append('<h3>Updated</h3><p class="none">None</p>')
+
+    for label, key in (("Added", "added"), ("Removed", "removed")):
+        items = pkg_changes[key]
+        if items:
+            lis = "".join(f"<li>{p}</li>" for p in items)
+            parts.append(f"<h3>{label} ({len(items)})</h3><ul>{lis}</ul>")
+        else:
+            parts.append(f'<h3>{label}</h3><p class="none">None</p>')
+
+    return "\n".join(parts)
 
 
 def extract_text(html_path: Path) -> str:
@@ -63,7 +118,7 @@ def items_html(items, href_fn=None) -> str:
     return "<ul>\n" + lis + "</ul>"
 
 
-def make_index(changed: list, added: list, removed: list, unchanged: list) -> str:
+def make_index(changed: list, added: list, removed: list, unchanged: list, pkg_changes) -> str:
     # Pre-compute all HTML sections so the f-string stays simple
     changed_html = items_html(changed, href_fn=lambda x: x[1])
     added_html = items_html(added)
@@ -74,6 +129,8 @@ def make_index(changed: list, added: list, removed: list, unchanged: list) -> st
     n_added = len(added)
     n_removed = len(removed)
     n_unchanged = len(unchanged)
+
+    packages_section = packages_html(pkg_changes)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -86,16 +143,19 @@ def make_index(changed: list, added: list, removed: list, unchanged: list) -> st
   <h1>Package update — diff index</h1>
   <p>Comparing the current production build against a build with updated packages.</p>
 
-  <h2>Changed ({n_changed})</h2>
+  <h2>Package changes</h2>
+  {packages_section}
+
+  <h2>Changed chapters ({n_changed})</h2>
   {changed_html}
 
-  <h2>Added ({n_added})</h2>
+  <h2>Added chapters ({n_added})</h2>
   {added_html}
 
-  <h2>Removed ({n_removed})</h2>
+  <h2>Removed chapters ({n_removed})</h2>
   {removed_html}
 
-  <h2>Unchanged ({n_unchanged})</h2>
+  <h2>Unchanged chapters ({n_unchanged})</h2>
   {unchanged_html}
 </body>
 </html>"""
@@ -143,7 +203,9 @@ def main():
     for rel in sorted(old_set - new_set):
         removed.append(rel)
 
-    (out_dir / "index.html").write_text(make_index(changed, added, removed, unchanged), encoding="utf-8")
+    (out_dir / "index.html").write_text(
+        make_index(changed, added, removed, unchanged, get_package_changes()), encoding="utf-8"
+    )
 
     print(f"Diffs: {len(changed)} changed, {len(added)} added, {len(removed)} removed, {len(unchanged)} unchanged")
     for rel, _ in changed:
