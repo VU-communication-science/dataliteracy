@@ -70,6 +70,7 @@ cls: references/apa7.cls
 
 format:
   live-html:
+    #df-print: tibble
     theme:
       - flatly
       - style.scss

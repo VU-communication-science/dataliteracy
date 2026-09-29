@@ -18,7 +18,7 @@
       "row": 0,
       "parents": [],
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
-      "url": "chapters/1.1-working-with-r.html"
+      "url": "1.1-working-with-r.html"
     },
     {
       "id": "projects",
@@ -26,10 +26,10 @@
       "title": "R Projects & Paths",
       "category": "workflow",
       "col": 1,
-      "row": 0,
+      "row": 1,
       "parents": ["r-basics"],
       "summary": "Managing project directories, relative paths, and self-contained workflows.",
-      "url": "chapters/1.2-projects.html"
+      "url": "1.2-projects.html"
     },
     {
       "id": "quarto",
@@ -37,10 +37,10 @@
       "title": "Quarto Reports",
       "category": "workflow",
       "col": 2,
-      "row": 0,
-      "parents": ["projects"],
+      "row": 1,
+      "parents": ["r-basics"],
       "summary": "Weaving narrative text, R code, tables, and plots into reproducible documents.",
-      "url": "chapters/1.3-quarto.html"
+      "url": "1.3-quarto.html"
     },
     {
       "id": "base-r",
@@ -48,11 +48,11 @@
       "title": "Base R Fundamentals",
       "category": "workflow",
       "col": 3,
-      "row": 0,
+      "row": 1,
       "optional": true,
       "parents": ["r-basics"],
       "summary": "Base R square-bracket indexing, dollar signs, and writing custom functions.",
-      "url": "chapters/1.4-base-r.html"
+      "url": "1.4-base-r.html"
     },
     {
       "id": "data-frames",
@@ -63,51 +63,51 @@
       "row": 1,
       "parents": ["r-basics"],
       "summary": "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows.",
-      "url": "chapters/2.1-data-frames.html"
+      "url": "2.1-data-frames.html"
     },
     {
       "id": "summarizing",
       "number": "2.2",
       "title": "Summarizing Data",
       "category": "management",
-      "col": 1,
-      "row": 1,
+      "col": 0,
+      "row": 2,
       "parents": ["data-frames"],
       "summary": "Aggregating, grouping, and calculating summary metrics with dplyr.",
-      "url": "chapters/2.2-summarizing.html"
+      "url": "2.2-summarizing.html"
     },
     {
       "id": "cleaning",
       "number": "2.3",
       "title": "Data Cleaning",
       "category": "management",
-      "col": 2,
-      "row": 1,
+      "col": 1,
+      "row": 2,
       "parents": ["data-frames"],
       "summary": "Handling missing data, recoding categorical values, and auditing sanity.",
-      "url": "chapters/2.3-data-cleaning.html"
+      "url": "2.3-data-cleaning.html"
     },
     {
       "id": "transformations",
       "number": "2.4",
       "title": "Transformations",
       "category": "management",
-      "col": 3,
-      "row": 1,
-      "parents": ["cleaning"],
-      "summary": "Standardization, z-scores, and pivoting between wide and long layouts.",
-      "url": "chapters/2.4-transformations.html"
+      "col": 2,
+      "row": 2,
+      "parents": ["data-frames"],
+      "summary": "Standardization, z-scores.",
+      "url": "2.4-transformations.html"
     },
     {
       "id": "strings",
       "number": "2.5",
       "title": "Strings & Pattern",
       "category": "management",
-      "col": 4,
+      "col": 3,
       "row": 1,
       "parents": ["data-frames"],
       "summary": "String manipulation with stringr: regex detection, extraction, and trimming.",
-      "url": "chapters/2.5-strings.html"
+      "url": "2.5-strings.html"
     },
     {
       "id": "content-analysis",
@@ -118,40 +118,40 @@
       "row": 2,
       "parents": ["strings"],
       "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
-      "url": "chapters/8.1-content-analysis.html"
+      "url": "8.1-content-analysis.html"
     },
     {
       "id": "latent-vars",
       "number": "3.1",
       "title": "Latent Variables",
       "category": "measurement",
-      "col": 0,
+      "col": 1,
       "row": 2,
       "parents": ["data-frames"],
       "summary": "Theoretical constructs, multi-item measurement, and operationalization.",
-      "url": "chapters/3.1-latent-variables.html"
+      "url": "3.1-latent-variables.html"
     },
     {
       "id": "factor-analysis",
       "number": "3.2",
       "title": "Factor Analysis",
       "category": "measurement",
-      "col": 1,
+      "col": 2,
       "row": 2,
       "parents": ["latent-vars"],
       "summary": "Exploratory factor analysis (EFA), scree plots, and factor loadings.",
-      "url": "chapters/3.2-factor-analysis.html"
+      "url": "3.2-factor-analysis.html"
     },
     {
       "id": "scales",
       "number": "3.3",
       "title": "Scale Construction",
       "category": "measurement",
-      "col": 2,
+      "col": 3,
       "row": 2,
       "parents": ["factor-analysis"],
       "summary": "Evaluating Cronbach's alpha, item discrimination, and index creation.",
-      "url": "chapters/3.3-scale-construction.html"
+      "url": "3.3-scale-construction.html"
     },
     {
       "id": "descriptives",
@@ -162,7 +162,7 @@
       "row": 3,
       "parents": ["summarizing"],
       "summary": "Measures of central tendency, dispersion, frequency tables, and outliers.",
-      "url": "chapters/4.1-descriptive-statistics.html"
+      "url": "4.1-descriptive-statistics.html"
     },
     {
       "id": "visualization",
@@ -173,7 +173,7 @@
       "row": 3,
       "parents": ["descriptives"],
       "summary": "Grammar of graphics with ggplot2: histograms, scatterplots, and themes.",
-      "url": "chapters/4.2-visualization.html"
+      "url": "4.2-visualization.html"
     },
     {
       "id": "concepts",
@@ -182,9 +182,9 @@
       "category": "testing",
       "col": 0,
       "row": 4,
-      "parents": ["descriptives"],
+      "parents": [],
       "summary": "Hypothesis testing, NHST, p-values, significance, and inferential logic.",
-      "url": "chapters/5.1-statistical-concepts.html"
+      "url": "5.1-statistical-concepts.html"
     },
     {
       "id": "causality",
@@ -195,7 +195,7 @@
       "row": 4,
       "parents": ["concepts"],
       "summary": "Causal inference, experiments, DAGs, confounders, and spurious links.",
-      "url": "chapters/5.2-causality.html"
+      "url": "5.2-causality.html"
     },
     {
       "id": "power-analysis",
@@ -206,7 +206,7 @@
       "row": 4,
       "parents": ["concepts"],
       "summary": "Sample size planning, Type I/II errors, and power calculations with pwr.",
-      "url": "chapters/5.3-power-analysis.html"
+      "url": "5.3-power-analysis.html"
     },
     {
       "id": "t-test",
@@ -217,7 +217,7 @@
       "row": 5,
       "parents": ["concepts"],
       "summary": "Comparing two means: independent and paired-samples tests in R.",
-      "url": "chapters/6.1-t-test.html"
+      "url": "6.1-t-test.html"
     },
     {
       "id": "anova",
@@ -228,7 +228,7 @@
       "row": 5,
       "parents": ["t-test"],
       "summary": "One-way and factorial ANOVA for comparing three or more condition means.",
-      "url": "chapters/6.2-anova.html"
+      "url": "6.2-anova.html"
     },
     {
       "id": "ancova",
@@ -239,7 +239,7 @@
       "row": 5,
       "parents": ["anova"],
       "summary": "Controlling for continuous covariates in experimental group comparisons.",
-      "url": "chapters/6.3-ancova.html"
+      "url": "6.3-ancova.html"
     },
     {
       "id": "correlation",
@@ -250,7 +250,7 @@
       "row": 6,
       "parents": ["concepts"],
       "summary": "Measuring linear association between continuous variables with Pearson's r.",
-      "url": "chapters/7.1-covariance-and-correlation.html"
+      "url": "7.1-covariance-and-correlation.html"
     },
     {
       "id": "regression",
@@ -261,7 +261,7 @@
       "row": 6,
       "parents": ["correlation"],
       "summary": "Fitting OLS regression lines, interpreting slopes, residuals, and R-squared.",
-      "url": "chapters/7.2-linear-regression.html"
+      "url": "7.2-linear-regression.html"
     },
     {
       "id": "controlling",
@@ -272,7 +272,7 @@
       "row": 6,
       "parents": ["regression", "causality"],
       "summary": "Multiple regression with control variables to isolate true causal effects.",
-      "url": "chapters/7.3-controlling.html"
+      "url": "7.3-controlling.html"
     },
     {
       "id": "mediation",
@@ -283,7 +283,7 @@
       "row": 6,
       "parents": ["controlling"],
       "summary": "Decomposing total effects into direct and indirect paths via mediators.",
-      "url": "chapters/7.4-mediation.html"
+      "url": "7.4-mediation.html"
     },
     {
       "id": "advanced-modeling",
@@ -295,7 +295,7 @@
       "optional": true,
       "parents": ["mediation"],
       "summary": "Roadmap to Multilevel (HLM), Logistic GLMs, and Structural Equations (SEM).",
-      "url": "chapters/9.1-advanced-modeling.html"
+      "url": "9.1-advanced-modeling.html"
     }
   ]
 }

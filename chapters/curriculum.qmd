@@ -58,8 +58,19 @@ cat(sprintf('
 %s
 
 document.addEventListener("DOMContentLoaded", function() {
-  const data = %s;
-  initSkillTree("skill-tree-app", data);
+  const fallbackData = %s;
+  const jsonUrl = new URL("../components/skill-tree/curriculum.json", window.location.href).href + "?t=" + Date.now();
+  fetch(jsonUrl)
+    .then(function(res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .catch(function() {
+      return fallbackData;
+    })
+    .then(function(data) {
+      initSkillTree("skill-tree-app", data);
+    });
 });
 </script>
 ', css_content, js_content, json_content))
