@@ -1,66 +1,72 @@
 project:
-  type: book
+  type: website
   output-dir: docs
   execute-dir: project
-
-book:
-  title: "Data Literacy"
-  references: references/references.bib
-  llms-txt: true
-  sidebar:
-    collapse-level: 2
-    style: "docked"
-  chapters:
+  render:
     - index.qmd
-    - part: "Introduction"
-      chapters:
-        - chapters/01-data-literacy.qmd
-        - chapters/02-curriculum.qmd
-        - chapters/03-research-traditions.qmd
-    - part: "Digital Literacy"
-      chapters:
-        - chapters/04-working-with-r.qmd
-        - chapters/05-projects.qmd
-        - chapters/06-quarto.qmd
-    - part: "Data Management"
-      chapters:
-        - chapters/07-data-frames.qmd
-        - chapters/08-data-cleaning.qmd
-        - chapters/09-transformations.qmd
-        - chapters/10-factor-analysis.qmd
-        - chapters/11-scale-construction.qmd
-    - part: "Data Analysis"
-      chapters:
-        - chapters/12-descriptive-statistics.qmd
-        - chapters/13-visualization.qmd
-        - chapters/14-statistical-tests-overview.qmd
-    - part: "Statistical Tests"
-      chapters:
-        - chapters/15-chi-square.qmd
-        - chapters/16-t-test.qmd
-        - chapters/17-correlation.qmd
-        - chapters/18-linear-regression.qmd
-        - chapters/19-anova.qmd
-        - chapters/20-ancova.qmd
-  appendices:
-    - chapters/21-hypothesis-testing.qmd
-    - chapters/22-causality.qmd
+    - "chapters/*.qmd"
+  resources:
+    - components/
+
+website:
+  title: "Data Literacy"
+  site-url: "https://dev.dataliteracy.cc"
+  sidebar:
+    style: "docked"
+    collapse-level: 2
+    contents:
+      - href: index.qmd
+        text: "Home"
+      - href: chapters/curriculum.qmd
+        text: "Curriculum & Skill Tree"
+      - section: "1. Foundations & Workflow"
+        contents:
+          - chapters/1.1-working-with-r.qmd
+          - chapters/1.2-projects.qmd
+          - chapters/1.3-quarto.qmd
+      - section: "2. Data Management"
+        contents:
+          - chapters/2.1-data-frames.qmd
+          - chapters/2.2-summarizing.qmd
+          - chapters/2.3-data-cleaning.qmd
+          - chapters/2.4-transformations.qmd
+          - chapters/2.5-strings.qmd
+      - section: "3. Measurement & Scales"
+        contents:
+          - chapters/3.1-latent-variables.qmd
+          - chapters/3.2-factor-analysis.qmd
+          - chapters/3.3-scale-construction.qmd
+      - section: "4. Exploration & Description"
+        contents:
+          - chapters/4.1-descriptive-statistics.qmd
+          - chapters/4.2-visualization.qmd
+      - section: "5. Statistical Foundations"
+        contents:
+          - chapters/5.1-statistical-concepts.qmd
+          - chapters/5.2-causality.qmd
+          - chapters/5.3-power-analysis.qmd
+      - section: "6. Comparing Groups"
+        contents:
+          - chapters/6.1-t-test.qmd
+          - chapters/6.2-anova.qmd
+          - chapters/6.3-ancova.qmd
+      - section: "7. Relationships & Modeling"
+        contents:
+          - chapters/7.1-covariance-and-correlation.qmd
+          - chapters/7.2-linear-regression.qmd
+          - chapters/7.3-controlling.qmd
+          - chapters/7.4-mediation.qmd
+      - section: "8. Content Analysis"
+        contents:
+          - chapters/8.1-content-analysis.qmd
+      - section: "Optional & Advanced Tracks"
+        collapsed: true
+        contents:
+          - chapters/1.4-base-r.qmd
+          - chapters/9.1-advanced-modeling.qmd
 
 bibliography: references/references.bib
 cls: references/apa7.cls
-
-language:
-  section-title-appendices: "Concepts"
-
-crossref:
-  appendix-title: " "
-  # appendix-delim: ""
-
-# Light/General: default, cerulean, cosmo, flatly,
-# journal, litera, lumen, lux, materia, minty, morph,
-# pulse, quartz, sandstone, simplex, sketchy,
-# spacelab, united, yeti, zephyr.
-# Dark: cyborg, darkly, slate, solar, superhero, vapor.
 
 format:
   live-html:
@@ -69,7 +75,6 @@ format:
       - style.scss
     fontsize: 0.9em
     toc: true
-    number-sections: true
-    number-depth: 2
+    number-sections: false
 
 engine: knitr

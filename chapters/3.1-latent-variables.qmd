@@ -1,0 +1,8 @@
+---
+title: "3.1 Latent Variables"
+subtitle: "Concepts of measurement, constructs, and indicators"
+---
+
+# Overview
+
+*This module is under construction.*

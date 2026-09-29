@@ -29,6 +29,10 @@ Open the project in RStudio (or open an R console in the project root) and run:
 renv::restore()
 ```
 
+```r
+renv::snapshot()
+```
+
 This installs all packages at the exact versions recorded in `renv.lock`. You're now ready to preview the book.
 
 You'll also need to install the Quarto Live extension. Run this in the terminal (not the R console):

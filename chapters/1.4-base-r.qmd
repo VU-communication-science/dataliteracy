@@ -1,0 +1,86 @@
+---
+title: "1.4 Base R Fundamentals"
+subtitle: "An optional reference guide to vectors, indexing brackets, and custom functions"
+---
+
+# Why Learn Base R?
+
+In this course, we prioritize the **tidyverse** (`dplyr`, `ggplot2`) because of its intuitive, expressive syntax for data manipulation.
+However, R is fundamentally built on **Base R**: the built-in language structures that have powered R for decades.
+
+You will encounter Base R when reading statistical package documentation, viewing R help pages, or inspecting code on StackOverflow.
+This optional reference covers the core Base R conventions every student should recognize.
+
+::: {.callout-note title="Optional Material"}
+This module is optional for the core course curriculum. You can complete the mandatory assignments using only tidyverse syntax.
+:::
+
+# 1. Vectors and Data Types
+
+In Base R, the atomic building block is the **vector** created with `c()`:
+
+```{r}
+numbers <- c(10, 20, 30, 40, 50)
+fruits <- c("apple", "banana", "cherry")
+flags <- c(TRUE, FALSE, TRUE)
+```
+
+Common types:
+- `numeric` (integers and floating-point doubles)
+- `character` (text strings)
+- `logical` (`TRUE` or `FALSE`)
+- `factor` (categorical variables with predefined levels)
+
+# 2. Square Bracket Indexing `[ ]`
+
+While dplyr uses `filter()` and `select()`, Base R subsets vectors and matrices using square brackets:
+
+```{r}
+# 2nd element
+numbers[2]
+
+# Elements 1 through 3
+numbers[1:3]
+
+# Logical filtering
+numbers[numbers > 25]
+```
+
+## Data Frame Indexing: `[row, column]`
+
+For 2D tables, Base R uses `[rows, columns]`:
+
+```{r}
+df <- data.frame(
+  id = 1:3,
+  score = c(85, 92, 78),
+  grade = c("B", "A", "C")
+)
+
+# Row 1, Column 2
+df[1, 2]
+
+# All rows where score > 80
+df[df$score > 80, ]
+```
+
+# 3. Dollar Sign Operator `$`
+
+The `$` operator extracts a single column as a vector:
+
+```{r}
+df$score
+mean(df$score)
+```
+
+# 4. Writing Custom Functions
+
+You can define reusable functions in Base R using the `function()` keyword:
+
+```{r}
+calculate_zscore <- function(x) {
+  (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)
+}
+
+calculate_zscore(df$score)
+```

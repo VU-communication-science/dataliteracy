@@ -1,0 +1,77 @@
+---
+title: "Curriculum & Learning Trajectories"
+subtitle: "A visual roadmap of methods competencies across the Communication Science program"
+toc: false
+---
+
+Welcome to the curriculum overview for Data Literacy at VU Amsterdam.
+
+Communication science research relies on a progressive sequence of skills—from foundational data hygiene and reproducible workflows to psychometrics, hypothesis testing, and advanced regression modeling. 
+
+Below is the **Methods Skill Tree**. Every module clearly defines its **prerequisites** (what starting knowledge is assumed) and what it **unlocks next**. 
+
+- **Hover over any module** to inspect its prerequisites, description, and downstream applications.
+- **Click any module** to jump directly to its lesson.
+
+---
+
+## 🗺️ The Methods Skill Tree
+
+```{r skill-tree-loader, echo=FALSE, results='asis'}
+read_file_safe <- function(filename) {
+  candidates <- c(
+    filename,
+    file.path("..", filename),
+    file.path("../..", filename),
+    file.path(getwd(), filename),
+    file.path(getwd(), "..", filename)
+  )
+  for (cand in candidates) {
+    if (file.exists(cand)) {
+      return(paste(readLines(cand, warn = FALSE), collapse = "\n"))
+    }
+  }
+  # Fallback search by basename in project tree
+  found <- list.files(path = ".", pattern = paste0("^", basename(filename), "$"), recursive = TRUE, full.names = TRUE)
+  if (length(found) > 0) {
+    return(paste(readLines(found[1], warn = FALSE), collapse = "\n"))
+  }
+  found_parent <- list.files(path = "..", pattern = paste0("^", basename(filename), "$"), recursive = TRUE, full.names = TRUE)
+  if (length(found_parent) > 0) {
+    return(paste(readLines(found_parent[1], warn = FALSE), collapse = "\n"))
+  }
+  stop(paste("Could not locate", filename, "from working dir:", getwd()))
+}
+
+json_content <- read_file_safe("components/skill-tree/curriculum.json")
+css_content  <- read_file_safe("components/skill-tree/skill-tree.css")
+js_content   <- read_file_safe("components/skill-tree/skill-tree.js")
+
+cat(sprintf('
+<style>
+%s
+</style>
+
+<div id="skill-tree-app"></div>
+
+<script>
+%s
+
+document.addEventListener("DOMContentLoaded", function() {
+  const data = %s;
+  initSkillTree("skill-tree-app", data);
+});
+</script>
+', css_content, js_content, json_content))
+```
+
+---
+
+## 💡 How to Use the Skill Tree
+
+- **No false prerequisites:** You do **not** need to complete Data Cleaning or Factor Analysis before jumping into a $t$-test or Correlation. Follow the vertical paths straight down from **Working with R $\rightarrow$ Data Frames $\rightarrow$ Summarizing $\rightarrow$ Tests**.
+- **Specialized tracks when needed:**
+  - Conducting a survey? Unlock **Measurement & Scales** (Latent Variables $\rightarrow$ Factor Analysis $\rightarrow$ Scale Construction).
+  - Cleaning messy wild data? Unlock **Data Cleaning**.
+  - Testing experimental manipulations? Follow **T-Test $\rightarrow$ ANOVA $\rightarrow$ ANCOVA**.
+  - Testing theoretical mechanisms? Follow **Correlation $\rightarrow$ Linear Regression $\rightarrow$ Controlling $\rightarrow$ Mediation**.

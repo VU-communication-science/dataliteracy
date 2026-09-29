@@ -1,209 +1,226 @@
 {
   "index.qmd": {
-    "title": "Data Literacy",
-    "source_hash": "43f405e3c95405a9b00024745c64e3859b2248a89af794c6d132c278882f8912",
-    "content_hash": "26a2ad096dcf74bc6f68adacaf91bb72bae2b5a93988490e5e607c1f4cec2a39",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "index.html"
+    "title": "index.qmd",
+    "source_hash": "549fee7bd68754d0cb6c331196f86cb1b1617ee1ceaeb3dee44f252f37569157",
+    "content_hash": "be28e28866bb2b88c9a6388caac007adde38fe8f0d1802c6a3672769c9b5de53",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/01-data-literacy.qmd": {
-    "title": "1  What is Data Literacy",
-    "source_hash": "d31ec4c19b7b107f7de4022019b3958ceef8c33265dfd1a8602d8d8f15e93f18",
-    "content_hash": "7290a62c30b571eac01c0fcc82ca807790626cff17c53a85f5b323254f7ff60b",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/01-data-literacy.html"
+  "chapters/curriculum.qmd": {
+    "title": "Curriculum & Learning Trajectories",
+    "source_hash": "623447bda449f656aec69dc5b95ab100e358a1ebc14e0a6162a59fc237ec526c",
+    "content_hash": "5f76cf389787cbceb1b13d03eed938226c157b384440518e36ee3f72feee6280",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/02-curriculum.qmd": {
-    "title": "2  Overview curriculum",
-    "source_hash": "917ff11095a0f0fc055690b503ea306f2c8adfecc9177de23daaa0ccc0cf3374",
-    "content_hash": "7290a62c30b571eac01c0fcc82ca807790626cff17c53a85f5b323254f7ff60b",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/02-curriculum.html"
+  "chapters/1.1-working-with-r.qmd": {
+    "title": "1.1 Working with R",
+    "source_hash": "c3027fa7d4a198ee1d637bff231b2d1c38bf97859acdcfcc35f485f0e75ece0e",
+    "content_hash": "e210b5863489cd4741d1521e1452c70d2615ad716d10659bcfea79abf6ae3ced",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/03-research-traditions.qmd": {
-    "title": "3  Overview research traditions",
-    "source_hash": "68827a1f046d63566d7b4c0fca96060883b90b1a8aae7cf2fccf105e6b3b8907",
-    "content_hash": "7290a62c30b571eac01c0fcc82ca807790626cff17c53a85f5b323254f7ff60b",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/03-research-traditions.html"
+  "chapters/1.2-projects.qmd": {
+    "title": "1.2 RStudio Projects",
+    "source_hash": "a40b3d0e9a10a73406e75ea2c5fee085ad96176f3a070216ff065fdff1f0a204",
+    "content_hash": "57608d1e7da8879b753b891f1afe4017f24f9076d50599517953209fc6137988",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/04-working-with-r.qmd": {
-    "title": "4  Working with R",
-    "source_hash": "0176ce566a6ca75587bb30336ad72ee228b45e541283a23f586dc99d6b5aeb5a",
-    "content_hash": "e943ab5ccbf0a82210e83ac61e595757c03e00b93f94a299c61306a895d336a9",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/04-working-with-r.html"
+  "chapters/1.3-quarto.qmd": {
+    "title": "1.3 Quarto Reports",
+    "source_hash": "bc65080d2de37073c26885378937bca2c511bff318f4169c2775ee1d06f3fde2",
+    "content_hash": "97ba67eb71aad9994fe7bacdd0a986e66f17fea4f8ebcfeb8f9d2457215a3de7",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/05-projects.qmd": {
-    "title": "5  Projects",
-    "source_hash": "72ca058daf561e1012ea337efc0731d6f9a9dffe980c4a8e74ffbaa1aa004c33",
-    "content_hash": "ccf4c9eef18d64254dc426b10f6219febdb6793a4914fb79710cfda40fbea7bd",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/05-projects.html"
+  "chapters/2.1-data-frames.qmd": {
+    "title": "2.1 Data Frames",
+    "source_hash": "bf000bbfc4312197daa4f12bb0f44e2c3fe755c8b470ba3ad5763b7675aff530",
+    "content_hash": "05f5121e9ea92f2649952d334015a791e5898dc751776f77637680a5be9e1a6f",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/06-quarto.qmd": {
-    "title": "6  Quarto",
-    "source_hash": "f2fe38d2b50623f0eaa3957ca3d5296276583002675bd4474885cff4eb41d12a",
-    "content_hash": "0b1eec2253c78ec8dcb3193c7b49fa6746237039289470c169cec9f4551ec1f4",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/06-quarto.html"
+  "chapters/2.2-summarizing.qmd": {
+    "title": "2.2 Summarizing Data",
+    "source_hash": "d877cc6de3bb652f48653cd0a85b018910c51eb51450a2233aa768150ced335e",
+    "content_hash": "b9d2323cd65e1060b831d8206fa3eb298d4373e85395000fc4b6a909252fb7c6",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/07-data-frames.qmd": {
-    "title": "7  Data Frames",
-    "source_hash": "d7a6f04dce053212c3b7bd617ef6c707e580cbaf61dffc3e0a5b38593061fbc8",
-    "content_hash": "03f8063e096c34197ca7b3088785fec871d348dec8203a699a5dd029fa8999f3",
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/07-data-frames.html"
+  "chapters/2.3-data-cleaning.qmd": {
+    "title": "2.3 Data Cleaning",
+    "source_hash": "769e789f5e58dd9b39db834993bdac5b07194e510153c21715720b44a1882069",
+    "content_hash": "9de77cfd7942a6b0cc1f6b5399d20a56266134dd3c3fb29f7e2db6381d8aa537",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/08-data-cleaning.qmd": {
-    "title": "8  Data cleaning",
-    "source_hash": "08ffae4babae0e3e530f6e022184b08953a1458a9e64a2c4edbd2836f2d721cf",
-    "content_hash": "70bf47b7e39f9c5fe09395c11acdaa8feac50076dec6e406b7458305ae6f61c4",
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/08-data-cleaning.html"
+  "chapters/2.4-transformations.qmd": {
+    "title": "2.4 Transformations & Reshaping",
+    "source_hash": "840d77683828763a27d1f4706c4b2772a4174f7ebf266499f96db6f8819ac9cf",
+    "content_hash": "7483686ea4cfee9a090dd09f5ea55e36598c73978e79ef38848c698463dcda4b",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/09-transformations.qmd": {
-    "title": "9  Transformations",
-    "source_hash": "989df0c6129185debe778dec3c09414adb0cea6492227889f5630865f39efbcd",
-    "content_hash": "b5dbb2ba6a0f75ba9e62e3e20f3ed321899dcac1c6121da1bc5eed59210edb1e",
-    "last_updated": "2026-09-29",
-    "drift_detected": false,
-    "drift_date": null,
-    "html_path": "chapters/09-transformations.html"
+  "chapters/2.5-strings.qmd": {
+    "title": "2.5 String Processing with stringr",
+    "source_hash": "f9ba3665256a6a9526ec37d4ce8749d3b9ca673831cd84eaf30193722d2e0bae",
+    "content_hash": "697d48bbc09bcfa1cb11ffbe49482fc2d11d20808b14d4bfccfacfc94b97aedf",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/10-factor-analysis.qmd": {
-    "title": "10  Factor analysis",
-    "source_hash": "60223d743a87212da533cf25734007f8b1b344a6a3f257232d20e5392f2236b7",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/10-factor-analysis.html"
+  "chapters/3.1-latent-variables.qmd": {
+    "title": "3.1 Latent Variables",
+    "source_hash": "aeb766ddd1fb10d279933e8dae2d2eb22c454008bdd2114b08ef4f270f6f67d8",
+    "content_hash": "4a34a2bffdbcfe99af2f8319f6900a19393865e3647fd51068dbb35c64cbdc81",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/11-scale-construction.qmd": {
-    "title": "11  Scale construction",
-    "source_hash": "7905ea4b57916a39f0d5b9b9e1371ea041c8281c023bce775b3694682ae71596",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/11-scale-construction.html"
+  "chapters/3.2-factor-analysis.qmd": {
+    "title": "3.2 Factor Analysis",
+    "source_hash": "5ae2771be52f8dbd6003412c786bcac187e380bdd888e2757b1b6ef170bb7329",
+    "content_hash": "0d83c7e4752e90ce180f47c1d9a884a4bcf5f30a611ce81c477e774058b09bd6",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/12-descriptive-statistics.qmd": {
-    "title": "12  Descriptive statistics",
-    "source_hash": "bf82c6cbf7bd5a6f651ffd210c37399b3c3141fae811062f36f0e08251261fd1",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/12-descriptive-statistics.html"
+  "chapters/3.3-scale-construction.qmd": {
+    "title": "3.3 Scale Construction",
+    "source_hash": "cc7c9a68990efad4dc41264d4ab24debf60ce077235436c6fae688fb511441c3",
+    "content_hash": "ac8f70b0c8200db2da54bfd74dffb4ae5591a9f15dfcdef1627aef8e0c0396f2",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/13-visualization.qmd": {
-    "title": "13  Visualization",
-    "source_hash": "2adc0d5aa94173948827479f531aa403d3894a62d800a1bf8b4b4c1bd4194673",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/13-visualization.html"
+  "chapters/4.1-descriptive-statistics.qmd": {
+    "title": "4.1 Descriptive Statistics",
+    "source_hash": "a045fecb9629b93842dfecf55ea7dc3b56104c35c415a11ad5812604bce0602f",
+    "content_hash": "7bf8c0a586726cfe97455d0739ff07d6858186e7f84564134eb320729494563f",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/14-statistical-tests-overview.qmd": {
-    "title": "14  Statistical tests",
-    "source_hash": "bfb37341f0a61b95ed14f77cc49b1d1c18e5b37d9ac1e5e0bb89d60ffeaa7b78",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/14-statistical-tests-overview.html"
+  "chapters/4.2-visualization.qmd": {
+    "title": "4.2 Data Visualization",
+    "source_hash": "5084c7141652cd39c3295475600e03b2f8d77cc373d8f5e2fdab7af09b307ff1",
+    "content_hash": "8cdac729470f42625facd2ededcf0c2d9153bc3cb446cb9768b2f4e0f2a99827",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/15-chi-square.qmd": {
-    "title": "15  Chi-square",
-    "source_hash": "212625f009d23c5613f48915431cfe606f1684520f87fd17a3053011f4e13ac0",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/15-chi-square.html"
+  "chapters/5.1-statistical-concepts.qmd": {
+    "title": "5.1 Key Statistical Concepts",
+    "source_hash": "30cbc001d3afd698196f91dfae5d7c05b4ce444b8c830d56b24c1a3bc95df7cf",
+    "content_hash": "30f6b1925caa9cf03c82027c35eb608dedd44bd8f74e69b226a83d3b8c80ac3b",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/16-t-test.qmd": {
-    "title": "16  t-test",
-    "source_hash": "61d80266ee9f69b616324240ccf464e4d323b3464c0f2489947bc18a5bcfd611",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/16-t-test.html"
+  "chapters/5.2-causality.qmd": {
+    "title": "5.2 Causality & Experiments",
+    "source_hash": "b867abc76c822213a743b0db626d28805de3d4bcd70bfb709b71364ec2405273",
+    "content_hash": "6cdb3a1466b29588f7fa6c3a7d757d72cc6d8f50f61f17e5b341fc7e028693d5",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/17-correlation.qmd": {
-    "title": "17  Correlation analysis",
-    "source_hash": "67bdd0658504c29cad3139087a3d6d7b96e49629bb81b2fce6983e57c268b07d",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/17-correlation.html"
+  "chapters/5.3-power-analysis.qmd": {
+    "title": "5.3 Statistical Power & Sample Size",
+    "source_hash": "6ffa2d841350d0e076849e54d7c09711781743e8f09f764c811afab674128dc9",
+    "content_hash": "9e2772010baad5c9f94e61c4fe5c4bab296485ba12a3846a17c58269c70041fa",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/18-linear-regression.qmd": {
-    "title": "18  Linear regression",
-    "source_hash": "aed135fe65312827115016173cb3867dfdd9a95991887221a2ddac29558a1f45",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/18-linear-regression.html"
+  "chapters/6.1-t-test.qmd": {
+    "title": "6.1 T-Test",
+    "source_hash": "1888f53d05b03e7a7c79303645c74bfd5c818810e1d8911932d1f8ec34a6a7e3",
+    "content_hash": "8fca98074c0e83053db21eb1f4f742d705d40a8fcaf9b36fc5828522df8827a2",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/19-anova.qmd": {
-    "title": "19  ANOVA",
-    "source_hash": "c8c1b38a32cf221ee3edd002a8d79ae3b639a21435dd8d2decef94ed16d54a6e",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/19-anova.html"
+  "chapters/6.2-anova.qmd": {
+    "title": "6.2 ANOVA",
+    "source_hash": "de104d8fb1cd60dfaebf885bcf3f37fcd6cb35497f6cb15b7bfb419b0e1772e8",
+    "content_hash": "13fb4570a455c5409cf96074e46f35a27de15dfbfc2fc1ef4380657616ffd95e",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/20-ancova.qmd": {
-    "title": "20  ANCOVA",
-    "source_hash": "c59e53242eeea48102bf33b1adc43aa4ca101f031790f0e9f09fd5117a2600c5",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/20-ancova.html"
+  "chapters/6.3-ancova.qmd": {
+    "title": "6.3 ANCOVA",
+    "source_hash": "ee40be8aef87d913dd854a3e43b8c51c092663ea4a043a618b436e3bb5ac05c7",
+    "content_hash": "62653f76f0effef89fda9943468c8446553a50e12206e540f46fc15920ad406e",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/21-hypothesis-testing.qmd": {
-    "title": "A — Hypothesis testing",
-    "source_hash": "8f35c5e916e055950244bc96020a3e4988606ac0ee58b122d9ec776deb452567",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/21-hypothesis-testing.html"
+  "chapters/7.1-covariance-and-correlation.qmd": {
+    "title": "7.1 Covariance & Correlation",
+    "source_hash": "a12a44cf3bc411d9206f5bd3f164dbd982ec00501e75d3a88af46338f0ee9555",
+    "content_hash": "e5170fe43de6d2d05acfd1dafb47cef2228fe11c0cecec667f4ad48cae03702b",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   },
-  "chapters/22-causality.qmd": {
-    "title": "B — Causality",
-    "source_hash": "7445b214c82bbba3158883cb9edd688b7727bdbaef312a75540f9739799e1c4d",
-    "content_hash": null,
-    "last_updated": "2026-09-29",
-    "drift_detected": true,
-    "drift_date": "2026-09-29",
-    "html_path": "chapters/22-causality.html"
+  "chapters/7.2-linear-regression.qmd": {
+    "title": "7.2 Linear Regression",
+    "source_hash": "bdbfa97806c45eb9777f726b55dd09927ae062813598029fd86b838c1f56a372",
+    "content_hash": "365a4875bf83077eaf1fbd2f128c57b72aa1f3df4c8e499e936172107beb3c8f",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
+  },
+  "chapters/7.3-controlling.qmd": {
+    "title": "7.3 Controlling for Confounders",
+    "source_hash": "f24d2f11bbe679105fcccaaa1ed8ef183e8879978ece3497120ce3eccb3c8dcc",
+    "content_hash": "87385655bedeb24e25bd1c024883ba80435a789d0ac1ffe2f40b631427a31033",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
+  },
+  "chapters/7.4-mediation.qmd": {
+    "title": "7.4 Mediation Analysis",
+    "source_hash": "038fbbcb1816e115d87f36993060c36dc358f4c1c2121435f34099091973722f",
+    "content_hash": "4d989efc32773b2e5442e1ea29603e1f24e2e44c9ea54c11a4a59f4119d4fa5a",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
+  },
+  "chapters/8.1-content-analysis.qmd": {
+    "title": "8.1 Content Analysis & Text as Data",
+    "source_hash": "6ea021f679e6e5c23bfcac37a77f290c2d3c9c0302999dd1260ad242813371d8",
+    "content_hash": "c6f06cede0057bf39f9e43c7e98377426a4476a86e67a46519eaf0e740dddf52",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
+  },
+  "chapters/1.4-base-r.qmd": {
+    "title": "1.4 Base R Fundamentals",
+    "source_hash": "826a22212d37ed91e6c288ff173eee8d18fbe2b000eb0e01c090dfd108d5035d",
+    "content_hash": "58c9469276be642a761acc0b6bc10240ba946c50798e9a65fb860ee97fcd8ef9",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
+  },
+  "chapters/9.1-advanced-modeling.qmd": {
+    "title": "9.1 Advanced Modeling Overview",
+    "source_hash": "b0ddf45906aafa5048a0e7e03d4f50deeb4af984a5f890e5ee9032ef2263d78a",
+    "content_hash": "57fc0da76b41ab98eeb95e4bcd193a2bee628ce4b5dabd227ce4ec3150cf86aa",
+    "last_modified": "2026-09-29",
+    "status": "healthy",
+    "drifted_date": ""
   }
 }
