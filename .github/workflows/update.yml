@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -60,28 +62,6 @@ jobs:
       - name: Restore current packages
         run: Rscript -e "renv::restore()"
 
-      - name: Fetch previous build from gh-pages
-        run: |
-          if git fetch origin gh-pages --depth=1 2>/dev/null; then
-            git worktree add /tmp/gh-pages FETCH_HEAD
-
-            # Old docs for diff comparison (exclude freeze and any existing diffs)
-            mkdir -p docs_old
-            rsync -a --exclude='_freeze' --exclude='diffs' /tmp/gh-pages/ docs_old/
-
-            # Restore freeze so unchanged chapters don't re-execute
-            if [ -d "/tmp/gh-pages/_freeze" ]; then
-              rsync -a /tmp/gh-pages/_freeze/ _freeze/
-              echo "Freeze restored from gh-pages."
-            fi
-
-            git worktree remove /tmp/gh-pages --force
-            echo "Previous build fetched."
-          else
-            echo "No gh-pages branch found — diffs and freeze restoration skipped."
-          fi
-        continue-on-error: true
-
       - name: Update packages
         run: |
           Rscript -e "renv::update()"
@@ -105,36 +85,27 @@ jobs:
         with:
           to: live-html
 
-      - name: Generate HTML diffs
+      - name: Check chapter outputs for package drift
         if: steps.lockfile.outputs.changed == 'true' && steps.render.outcome == 'success'
         run: |
-          pip install --quiet beautifulsoup4
-          python scripts/generate_diffs.py docs_old docs docs/diffs
-
-      - name: Push preview to update-preview branch
-        if: steps.lockfile.outputs.changed == 'true' && steps.render.outcome == 'success'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          publish_branch: update-preview
-          force_orphan: true
+          Rscript scripts/check_drift.R
 
       - name: Write PR body
         if: steps.lockfile.outputs.changed == 'true'
         run: |
-
-          echo "## Package update $(date +%Y-%m-%d)" > pr_body.md
+          echo "## R Package Update $(date +%Y-%m-%d)" > pr_body.md
           echo "" >> pr_body.md
 
           if [ "${{ steps.render.outcome }}" == "failure" ]; then
-            echo "## ⚠️ Render failed" >> pr_body.md
+            echo "### ⚠️ Render Failed" >> pr_body.md
             echo "" >> pr_body.md
-            echo "The book failed to render with the updated packages. Review the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) before merging." >> pr_body.md
+            echo "The book failed to render with the updated packages. Check the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})." >> pr_body.md
+          elif [ -f drift_details.md ]; then
+            cat drift_details.md >> pr_body.md
+            echo "" >> pr_body.md
           else
-            echo "## ✅ Render succeeded" >> pr_body.md
+            echo "### ✅ All chapters rendered cleanly with no output drift." >> pr_body.md
             echo "" >> pr_body.md
-            echo "**[View preview and diffs](https://update-preview.dataliteracy.cc/diffs/)**" >> pr_body.md
           fi
 
           echo "" >> pr_body.md
@@ -155,10 +126,9 @@ jobs:
           added   <- setdiff(names(new_pkgs), names(old_pkgs))
           removed <- setdiff(names(old_pkgs), names(new_pkgs))
 
-          cat("## Package changes\n\n")
+          cat("### Package Changes\n\n")
 
           if (length(updated) > 0) {
-            cat("### Updated\n\n")
             cat("| Package | From | To |\n")
             cat("|---------|------|----|\n")
             for (pkg in sort(updated)) {
@@ -169,18 +139,15 @@ jobs:
           }
 
           if (length(added) > 0) {
-            cat("### Added\n\n")
+            cat("#### Added Packages\n\n")
             cat(paste0("- ", sort(added), collapse = "\n"), "\n\n")
           }
 
           if (length(removed) > 0) {
-            cat("### Removed\n\n")
+            cat("#### Removed Packages\n\n")
             cat(paste0("- ", sort(removed), collapse = "\n"), "\n\n")
           }
           REOF
-
-          echo "" >> pr_body.md
-          echo "See the \`renv.lock\` diff for the full list of package changes." >> pr_body.md
 
       - name: Open pull request
         if: steps.lockfile.outputs.changed == 'true'

@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+  execute-dir: project
 
 book:
   title: "Data Literacy"
@@ -72,6 +73,3 @@ format:
     number-depth: 2
 
 engine: knitr
-
-execute:
-  freeze: auto

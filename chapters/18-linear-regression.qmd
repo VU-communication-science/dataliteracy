@@ -10,6 +10,7 @@ p_thres <- function(p) {
   if (p < 0.05) return(paste0("p < 0.05"))
   sprintf("p = %.3f", p)
 }
+
 ```
 
 ## What is regression analysis?
@@ -19,6 +20,7 @@ We use *predict* in a statistical sense, meaning that we are estimating how well
 The reason we want to do this is usually not to make actual predictions, but to understand the world better.
 If we can model how a variable is predicted by one or more other variables, we can make inferences about the relationship between these variables.
 Specifically, regression analysis allows us to test hypotheses of the sort:
+
 
 * Older people have more trust in journalists
 * People on the political left have more trust in journalists than people on the political right

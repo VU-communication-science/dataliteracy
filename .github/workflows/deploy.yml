@@ -5,6 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      bless:
+        description: 'Re-bless all chapter hashes (accept current outputs as baseline)'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -18,11 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       RENV_PATHS_ROOT: ~/.local/share/renv
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -64,36 +73,58 @@ jobs:
       - name: Restore renv
         run: Rscript -e "renv::restore()"
 
-      - name: Fetch freeze from previous deploy
-        run: |
-          if git fetch origin gh-pages --depth=1 2>/dev/null; then
-            git worktree add /tmp/gh-pages FETCH_HEAD
-            if [ -d "/tmp/gh-pages/_freeze" ]; then
-              rsync -a /tmp/gh-pages/_freeze/ _freeze/
-              echo "Freeze restored from previous deploy."
-            else
-              echo "No freeze found in previous deploy, starting fresh."
-            fi
-            git worktree remove /tmp/gh-pages --force
-          else
-            echo "No gh-pages branch yet, starting fresh."
-          fi
-        continue-on-error: true
-
       - name: Render Quarto Project
+        id: render
         uses: quarto-dev/quarto-actions/render@v2
         with:
           to: live-html
 
-      - name: Stage docs and freeze for deploy
+      - name: Notify Maintainer on Build Failure
+        if: failure() && steps.render.outcome == 'failure'
         run: |
-          mkdir -p _deploy
-          rsync -a docs/. _deploy/
-          rsync -a _freeze/. _deploy/_freeze/
+          MSG="❌ **Book build failed!** One or more chapters failed to render.
+
+          The live website was **not** updated to prevent publishing broken content.
+
+          Please check the [workflow run logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see which chapter and code chunk caused the error."
+
+          gh api repos/${{ github.repository }}/commits/${{ github.sha }}/comments \
+            -f body="$MSG" || echo "Note: Could not post commit comment"
+
+      - name: Check Chapter Drift & Generate Status Page
+        run: |
+          BLESS_FLAG=""
+          if [ "${{ github.event.inputs.bless }}" == "true" ]; then
+            BLESS_FLAG="--bless"
+          fi
+          Rscript scripts/check_drift.R $BLESS_FLAG
+
+      - name: Notify Maintainer on Silent Drift
+        if: hashFiles('drift_detected.txt') != ''
+        run: |
+          DRIFT_COUNT=$(cat drift_detected.txt)
+          MSG="⚠️ **Silent drift detected in $DRIFT_COUNT chapter(s)** during book build.
+
+          One or more chapters produced different output without the chapter source having been edited (likely due to underlying data or dependency updates).
+
+          🔗 View the details on the status page: https://dev.dataliteracy.cc/status"
+
+          gh api repos/${{ github.repository }}/commits/${{ github.sha }}/comments \
+            -f body="$MSG" || echo "Note: Could not post commit comment"
+
+      - name: Commit Updated Hashes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -f _chapter_hashes.json ] && ! git diff --quiet _chapter_hashes.json; then
+            git add _chapter_hashes.json
+            git commit -m "chore: update chapter hashes [skip ci]"
+            git push origin main || echo "Hashes push failed"
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_deploy
+          publish_dir: ./docs
           force_orphan: true
