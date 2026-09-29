@@ -1,6 +1,6 @@
 ---
 title: "7.1 Covariance & Correlation"
-subtitle: measuring the relationship between variables
+subtitle: "Measuring the relationship between variables"
 ---
 
 # What are covariance and correlation?
@@ -84,7 +84,7 @@ They still **move together**, only in the opposite direction.
 
 **Weak correlation** ($r = `r round(weak_cor,3)`$).
 Here we see that there is a weak relation.
-Since the coefficient is negative, we could say a negative relation, but if we were to [test this statistically](../tests/correlation.qmd), we would find that the relation is not significant, so it could also be argued that there is no relation at all.
+Since the coefficient is negative, we could say a negative relation, but if we were to [test this statistically](#testing-correlation), we would find that the relation is not significant, so it could also be argued that there is no relation at all.
 
 
 ## The difference between covariance and correlation
@@ -292,3 +292,23 @@ cov_xy / (Sx * Sy)
 ```
 
 Which is the same as the correlation we calculated before!
+
+# Testing Correlation: `cor.test()` {#testing-correlation}
+
+In empirical research, we do not merely calculate the sample correlation $r$; we also test whether the correlation is statistically significantly different from zero in the population ($H_0: \rho = 0$).
+
+We can perform this test using `cor.test()`:
+
+```{r}
+cor.test(d$x, d$y)
+```
+
+### Interpreting the Output
+
+1. **$t$-statistic and degrees of freedom**: $t(3) = 3.55$, where $df = n - 2 = 5 - 2 = 3$.
+2. **$p$-value**: $p = 0.038$, which is below the threshold of $\alpha = .05$. We reject the null hypothesis and conclude that $x$ and $y$ are significantly positively correlated.
+3. **95% Confidence Interval**: $[0.11, 0.99]$. Since the interval does not include $0$, it further confirms statistical significance.
+
+### APA-Style Reporting
+
+> *"A Pearson correlation revealed a strong, positive, and statistically significant relationship between the two variables, $r(3) = .90$, $p = .038$, 95% CI $[0.11, 0.99]$."*

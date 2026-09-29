@@ -18,6 +18,12 @@ env/
 /_freeze/
 /docs/
 
+# Generated HTML and render artifacts (not tracked in repo)
+*.html
+!/_extensions/**/*.html
+*_files/
+/site_libs/
+
 # R files
 .Rproj.user
 .Rhistory
