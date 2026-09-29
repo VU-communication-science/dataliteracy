@@ -1,0 +1,2 @@
+# Automatically resolve merge conflicts on generated metadata by keeping our local version
+_chapter_hashes.json merge=ours
