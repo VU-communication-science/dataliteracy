@@ -6,9 +6,9 @@ toc: false
 
 Welcome to the curriculum overview for Data Literacy at VU Amsterdam.
 
-Communication science research relies on a progressive sequence of skills—from foundational data hygiene and reproducible workflows to psychometrics, hypothesis testing, and advanced regression modeling. 
+Communication science research relies on a progressive sequence of skills—from foundational data hygiene and reproducible workflows to psychometrics, hypothesis testing, and advanced regression modeling.
 
-Below is the **Methods Skill Tree**. Every module clearly defines its **prerequisites** (what starting knowledge is assumed) and what it **unlocks next**. 
+Below is the **Methods Skill Tree**. Every module clearly defines its **prerequisites** (what starting knowledge is assumed) and what it **unlocks next**.
 
 - **Hover over any module** to inspect its prerequisites, description, and downstream applications.
 - **Click any module** to jump directly to its lesson.
@@ -31,7 +31,6 @@ read_file_safe <- function(filename) {
       return(paste(readLines(cand, warn = FALSE), collapse = "\n"))
     }
   }
-  # Fallback search by basename in project tree
   found <- list.files(path = ".", pattern = paste0("^", basename(filename), "$"), recursive = TRUE, full.names = TRUE)
   if (length(found) > 0) {
     return(paste(readLines(found[1], warn = FALSE), collapse = "\n"))
@@ -57,21 +56,21 @@ cat(sprintf('
 <script>
 %s
 
-document.addEventListener("DOMContentLoaded", function() {
-  const fallbackData = %s;
-  const jsonUrl = new URL("../components/skill-tree/curriculum.json", window.location.href).href + "?t=" + Date.now();
-  fetch(jsonUrl)
-    .then(function(res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
-    })
-    .catch(function() {
-      return fallbackData;
-    })
-    .then(function(data) {
-      initSkillTree("skill-tree-app", data);
-    });
-});
+(function() {
+  const treeData = %s;
+
+  function mountTree() {
+    if (window.initSkillTree) {
+      window.initSkillTree("skill-tree-app", treeData);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountTree);
+  } else {
+    mountTree();
+  }
+})();
 </script>
 ', css_content, js_content, json_content))
 ```
