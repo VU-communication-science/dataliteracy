@@ -1,45 +1,97 @@
 # Skill Tree Component
 
-This directory contains the data-driven interactive skill tree used on the curriculum overview page (`chapters/02-curriculum.qmd`).
+This directory contains the data-driven interactive skill tree used on the curriculum overview page (`chapters/curriculum.qmd`).
 
 ## Directory Structure
 
-- `curriculum.json` — **Single source of truth** defining all modules, their coordinates, categories, prerequisites, descriptions, and URLs.
-- `skill-tree.js` — Client-side renderer that draws the interactive grid, SVG connection curves, and floating popovers.
-- `skill-tree.css` — Compact, responsive styling for pills, legend, and hover states.
+- `curriculum.json` — **Single source of truth** defining categories, courses, the 2D layout mosaic, and all module metadata.
+- `apply-positions.js` — CLI utility that maps the 2D `positions` matrix to (row, col) coordinates, validates prerequisites, and renders an ASCII grid.
+- `skill-tree.js` — Client-side renderer that draws the interactive grid, SVG connection curves, course filter controls, and floating popovers.
+- `skill-tree.css` — Compact, responsive styling for pills, filter controls, custom multi-select dropdown, legend, and prerequisite badges.
 
-## How to Add or Edit a Module
+---
 
-To update the skill tree, simply edit `curriculum.json`. Each entry in `"modules"` has the following schema:
+## 1. Visual 2D Grid Arrangement (`positions`)
+
+Instead of manually maintaining `col` and `row` numbers on each individual module, `curriculum.json` uses a visual 2D matrix (`"positions"`). Each row corresponds to a tier in the tree, and each column position holds a compact module ID (maximum 5 characters) or `""` for an empty space:
 
 ```json
-{
-  "id": "unique-slug",           // Unique identifier used for linking (e.g. "t-test")
-  "number": "16",                // Display number or code (e.g. "16", "10a")
-  "title": "T-Test",             // Compact title shown on the node
-  "category": "testing",         // Key matching a category in "categories"
-  "col": 5,                      // Horizontal column (0 to 6)
-  "row": 4,                      // Vertical tier row (0 to 6)
-  "parents": ["test-overview"],  // Array of prerequisite module IDs
-  "summary": "Comparing...",     // 1-2 sentence description shown in the popover
-  "url": "16-t-test.html"        // Link to the rendered chapter
+"positions": [
+  ["",      "r-bas", "",      "",      "latnt"],
+  ["proj",  "dfs",   "baser", "",      "fact" ],
+  ["quart", "sumar", "clean", "str",   "scale"],
+  ["viz",   "",      "trans", "text",  ""     ],
+  ["",      "desc",  "",      "",      ""     ],
+  ["",      "",      "cncpt", "",      ""     ],
+  ["cause", "ttest", "corr",  "power", ""     ],
+  ["",      "anova", "regr",  "",      ""     ],
+  ["",      "ancov", "ctrl",  "",      ""     ],
+  ["",      "",      "med",   "",      ""     ],
+  ["",      "",      "adv",   "",      ""     ]
+]
+```
+
+When the page loads, `skill-tree.js` automatically loops over this matrix and assigns `row` and `col` to each module.
+
+To inspect the layout and validate that all modules and prerequisites exist, run:
+```bash
+node components/skill-tree/apply-positions.js
+```
+
+---
+
+## 2. Module Definition (`modules`)
+
+`"modules"` is an object keyed directly by module ID (max 5 chars):
+
+```json
+"modules": {
+  "r-bas": {
+    "number": "1.1",
+    "title": "Working with R",
+    "category": "workflow",
+    "courses": ["bachelor-y1"],
+    "parents": [],
+    "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
+    "url": "1.1-working-with-r.html"
+  }
 }
 ```
 
-### Adding a New Category
+### Module Properties:
+- `id` (key): Short slug (max 5 chars, e.g. `"r-bas"`, `"dfs"`, `"ttest"`).
+- `number`: Display number/code (e.g. `"1.1"`).
+- `title`: Compact title shown on the node (supports up to 2 wrapped lines with fixed 40px node height).
+- `category`: Matching a category defined in `"categories"`.
+- `courses`: Array of course IDs in which this module is taught (e.g. `["bachelor-y1", "bachelor-y2"]`).
+- `parents`: Array of prerequisite module IDs that must be completed before this module.
+- `summary`: Short summary shown in the hover popover card.
+- `url`: Link to the lesson page.
 
-Categories are defined at the top of `curriculum.json`:
+---
+
+## 3. Course-Based Filtering & Groupings
+
+Courses and preset groups are configured in `curriculum.json`:
 
 ```json
-"categories": {
-  "workflow": { "name": "R & Workflow", "color": "#2563eb", "bg": "#eff6ff", "border": "#bfdbfe" }
+"courses": {
+  "bachelor-y1": { "name": "Bachelor Year 1", "group": "bachelor" },
+  "bachelor-y2": { "name": "Bachelor Year 2", "group": "bachelor" },
+  "master": { "name": "Master", "group": "master" }
+},
+"course_groups": {
+  "all": { "name": "All", "courses": ["bachelor-y1", "bachelor-y2", "master"] },
+  "bachelor": { "name": "All Bachelor", "courses": ["bachelor-y1", "bachelor-y2"] },
+  "year-1": { "name": "Bachelor Year 1", "courses": ["bachelor-y1"] },
+  "year-2": { "name": "Bachelor Year 2", "courses": ["bachelor-y2"] },
+  "master": { "name": "Master", "courses": ["master"] }
 }
 ```
 
-## Features
-
-- **Compact Grid**: Every module is a compact pill (~136px × 38px), fitting the entire curriculum onto a single bird's-eye canvas.
-- **Dynamic SVG Connectors**: Smooth cubic bezier curves link parent prerequisites to downstream unlocked modules.
-- **Path Highlighting**: Hovering over any module illuminates its upstream prerequisite chain in blue and downstream unlocked skills in green.
-- **Interactive Floating Popovers**: Hovering displays a detailed card with category, description, full prerequisite titles, and a direct link.
-- **Zero Build Toolchain**: Compiles directly into the Quarto book without requiring npm, webpack, or external CDNs.
+### Prerequisite Handling:
+When filtering by a course (e.g. *Bachelor Year 2*):
+1. **Modules taught in that course** are shown in full category colors.
+2. **Prerequisites from earlier courses** required by those modules (e.g. *Working with R*, *Data Frames*, *T-Test*) remain visible to maintain learning continuity, but are styled with dashed borders, muted tones, and a **Prereq** badge.
+3. **Unrelated modules** outside the course and not needed as prerequisites are hidden.
+4. The **Custom** dropdown allows selecting any combination of courses with instant live updates.

@@ -1,14 +1,14 @@
 // components/skill-tree/skill-tree.js
 
 (function () {
-  const NODE_WIDTH = 130;
-  const NODE_HEIGHT = 36;
-  const COL_GAP = 24;
+  const NODE_WIDTH = 100;
+  const NODE_HEIGHT = 40;
+  const COL_GAP = 20;
   const ROW_GAP = 28;
   const PAD_X = 14;
   const PAD_Y = 14;
 
-  function initSkillTree(containerId, data) {
+  function initSkillTree(containerId, rawData) {
     try {
       console.log("[SkillTree] Initializing in container:", containerId);
       const rootEl = document.getElementById(containerId);
@@ -20,68 +20,372 @@
       rootEl.innerHTML = "";
       rootEl.classList.add("st-wrapper");
 
-      const hasOptional = data.modules.some((m) => m.optional === true);
+      // 1. Normalize Modules & Parse Positions
+      const moduleMap = new Map();
+      if (Array.isArray(rawData.modules)) {
+        rawData.modules.forEach((mod) => {
+          if (mod.id) moduleMap.set(mod.id, { ...mod });
+        });
+      } else if (rawData.modules && typeof rawData.modules === "object") {
+        Object.entries(rawData.modules).forEach(([id, mod]) => {
+          moduleMap.set(id, { id, ...mod });
+        });
+      }
 
-      // 1. Controls Bar (Legend + Optional Toggle)
+      // Loop over positions matrix to set col & row
+      if (Array.isArray(rawData.positions)) {
+        rawData.positions.forEach((rowArr, rowIndex) => {
+          if (Array.isArray(rowArr)) {
+            rowArr.forEach((modId, colIndex) => {
+              if (modId && typeof modId === "string" && modId.trim() !== "") {
+                const id = modId.trim();
+                if (moduleMap.has(id)) {
+                  const m = moduleMap.get(id);
+                  m.row = rowIndex;
+                  m.col = colIndex;
+                }
+              }
+            });
+          }
+        });
+      }
+
+      const allModules = Array.from(moduleMap.values());
+
+      // Determine static board dimensions based on positions or modules
+      let maxCol = 0;
+      let maxRow = 0;
+      if (Array.isArray(rawData.positions) && rawData.positions.length > 0) {
+        maxRow = rawData.positions.length - 1;
+        maxCol = rawData.positions.reduce((max, r) => Math.max(max, Array.isArray(r) ? r.length - 1 : 0), 0);
+      } else {
+        allModules.forEach((m) => {
+          if ((m.col || 0) > maxCol) maxCol = m.col;
+          if ((m.row || 0) > maxRow) maxRow = m.row;
+        });
+      }
+
+      const boardWidth = PAD_X * 2 + (maxCol + 1) * NODE_WIDTH + maxCol * COL_GAP;
+      const boardHeight = PAD_Y * 2 + (maxRow + 1) * NODE_HEIGHT + maxRow * ROW_GAP;
+
+      // Assign pixel coordinates
+      allModules.forEach((mod) => {
+        const c = mod.col !== undefined ? mod.col : 0;
+        const r = mod.row !== undefined ? mod.row : 0;
+        mod.x = PAD_X + c * (NODE_WIDTH + COL_GAP);
+        mod.y = PAD_Y + r * (NODE_HEIGHT + ROW_GAP);
+      });
+
+      // 2. Course Configuration
+      const courses = rawData.courses || {};
+      const courseKeys = Object.keys(courses);
+      const courseGroups = rawData.course_groups || {
+        all: { name: "All", courses: courseKeys }
+      };
+
+      // State: Set of selected course IDs
+      let selectedCourses = new Set(courseKeys);
+      let isAllSelected = true;
+
+      // 3. Controls Bar
       const controlsEl = document.createElement("div");
       controlsEl.className = "st-controls-bar";
 
+      // Course Filter Section
+      const filterSection = document.createElement("div");
+      filterSection.className = "st-filter-section";
+
+      const filterHeader = document.createElement("div");
+      filterHeader.className = "st-filter-header";
+      filterHeader.innerHTML = `
+        <span class="st-filter-title">Course View</span>
+        <span class="st-module-count" id="st-module-count"></span>
+      `;
+      filterSection.appendChild(filterHeader);
+
+      const filterRow = document.createElement("div");
+      filterRow.className = "st-filter-row";
+
+      // Preset Pills
+      const presetContainer = document.createElement("div");
+      presetContainer.className = "st-preset-pills";
+
+      Object.entries(courseGroups).forEach(([groupId, group]) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "st-btn-pill" + (groupId === "all" ? " active" : "");
+        btn.setAttribute("data-group", groupId);
+        btn.textContent = group.name;
+        btn.addEventListener("click", () => {
+          if (groupId === "all") {
+            selectedCourses = new Set(courseKeys);
+            isAllSelected = true;
+          } else {
+            selectedCourses = new Set(group.courses || []);
+            isAllSelected = selectedCourses.size === courseKeys.length;
+          }
+          updateControlsUI();
+          renderTree();
+        });
+        presetContainer.appendChild(btn);
+      });
+      filterRow.appendChild(presetContainer);
+
+      // Custom Dropdown for Multi-Course Selection
+      if (courseKeys.length > 0) {
+        const dropdownWrapper = document.createElement("div");
+        dropdownWrapper.className = "st-dropdown-wrapper";
+
+        const dropdownBtn = document.createElement("button");
+        dropdownBtn.type = "button";
+        dropdownBtn.className = "st-btn-dropdown";
+        dropdownBtn.id = "st-course-dropdown-btn";
+        dropdownBtn.innerHTML = `
+          <span>Custom</span>
+          <span class="st-dropdown-arrow">▾</span>
+        `;
+
+        const dropdownMenu = document.createElement("div");
+        dropdownMenu.className = "st-dropdown-menu";
+        dropdownMenu.id = "st-course-dropdown-menu";
+
+        const dropdownHeading = document.createElement("div");
+        dropdownHeading.className = "st-dropdown-heading";
+        dropdownHeading.textContent = "Select Courses:";
+        dropdownMenu.appendChild(dropdownHeading);
+
+        const checkboxList = document.createElement("div");
+        checkboxList.className = "st-checkbox-list";
+
+        courseKeys.forEach((cId) => {
+          const course = courses[cId];
+          const label = document.createElement("label");
+          label.className = "st-checkbox-item";
+
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.value = cId;
+          input.checked = true;
+
+          const span = document.createElement("span");
+          span.textContent = course.name || cId;
+
+          label.appendChild(input);
+          label.appendChild(span);
+
+          input.addEventListener("change", () => {
+            if (input.checked) {
+              selectedCourses.add(cId);
+            } else {
+              selectedCourses.delete(cId);
+            }
+            isAllSelected = selectedCourses.size === courseKeys.length;
+            updateControlsUI();
+            renderTree();
+          });
+          checkboxList.appendChild(label);
+        });
+        dropdownMenu.appendChild(checkboxList);
+
+        // Actions: Select All / Clear
+        const actionsRow = document.createElement("div");
+        actionsRow.className = "st-dropdown-actions";
+
+        const btnAll = document.createElement("button");
+        btnAll.type = "button";
+        btnAll.className = "st-btn-action";
+        btnAll.textContent = "Select All";
+        btnAll.addEventListener("click", () => {
+          selectedCourses = new Set(courseKeys);
+          isAllSelected = true;
+          updateControlsUI();
+          renderTree();
+        });
+
+        const btnClear = document.createElement("button");
+        btnClear.type = "button";
+        btnClear.className = "st-btn-action";
+        btnClear.textContent = "Clear";
+        btnClear.addEventListener("click", () => {
+          selectedCourses = new Set();
+          isAllSelected = false;
+          updateControlsUI();
+          renderTree();
+        });
+
+        actionsRow.appendChild(btnAll);
+        actionsRow.appendChild(btnClear);
+        dropdownMenu.appendChild(actionsRow);
+
+        dropdownBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle("open");
+          dropdownBtn.classList.toggle("open");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!dropdownWrapper.contains(e.target)) {
+            dropdownMenu.classList.remove("open");
+            dropdownBtn.classList.remove("open");
+          }
+        });
+
+        dropdownWrapper.appendChild(dropdownBtn);
+        dropdownWrapper.appendChild(dropdownMenu);
+        filterRow.appendChild(dropdownWrapper);
+      }
+
+      filterSection.appendChild(filterRow);
+      controlsEl.appendChild(filterSection);
+
+      // Legend Section
       const legendEl = document.createElement("div");
       legendEl.className = "st-legend";
-      Object.entries(data.categories).forEach(([key, cat]) => {
+      Object.entries(rawData.categories || {}).forEach(([key, cat]) => {
         const item = document.createElement("div");
         item.className = "st-legend-item";
         item.innerHTML = `<span class="st-legend-dot" style="background:${cat.color}"></span><span>${cat.name}</span>`;
         legendEl.appendChild(item);
       });
+
+      // Prerequisite indicator in legend
+      const prereqLegend = document.createElement("div");
+      prereqLegend.className = "st-legend-item st-legend-item-prereq";
+      prereqLegend.innerHTML = `
+        <span class="st-legend-badge-prereq">Prereq</span>
+        <span>Prior knowledge</span>
+      `;
+      legendEl.appendChild(prereqLegend);
+
       controlsEl.appendChild(legendEl);
-
-      // Toggle button if optional modules exist
-      if (hasOptional) {
-        const toggleWrapper = document.createElement("div");
-        toggleWrapper.className = "st-toggle-wrapper";
-        toggleWrapper.innerHTML = `
-          <label class="st-toggle-label">
-            <input type="checkbox" id="st-optional-toggle" checked />
-            <span>Show Optional Modules</span>
-          </label>
-        `;
-        controlsEl.appendChild(toggleWrapper);
-      }
-
       rootEl.appendChild(controlsEl);
 
-      // 2. Render Board Function
+      // 4. Board Container
       const boardContainer = document.createElement("div");
       boardContainer.className = "st-board-container";
       rootEl.appendChild(boardContainer);
 
-      function renderTree(showOptional) {
+      // 5. Global Floating Popover attached to rootEl (outside boardContainer)
+      // This guarantees the popover NEVER triggers scrollbars inside st-board-container
+      const popover = document.createElement("div");
+      popover.className = "st-popover";
+      rootEl.appendChild(popover);
+
+      // Function to calculate visibility and roles
+      function calculateActiveModules() {
+        if (isAllSelected || courseKeys.length === 0) {
+          return {
+            visibleModules: allModules,
+            coveredSet: new Set(allModules.map((m) => m.id)),
+            prereqSet: new Set()
+          };
+        }
+
+        // 1. Modules directly covered in any selected course
+        const coveredSet = new Set();
+        allModules.forEach((m) => {
+          if (m.courses && m.courses.some((c) => selectedCourses.has(c))) {
+            coveredSet.add(m.id);
+          }
+        });
+
+        // 2. Ancestors / prerequisites of covered modules
+        const prereqSet = new Set();
+        function addAncestors(modId) {
+          const mod = moduleMap.get(modId);
+          if (!mod || !Array.isArray(mod.parents)) return;
+          mod.parents.forEach((parentId) => {
+            if (!coveredSet.has(parentId)) {
+              prereqSet.add(parentId);
+            }
+            addAncestors(parentId);
+          });
+        }
+
+        coveredSet.forEach((modId) => addAncestors(modId));
+
+        // Visible = covered + prerequisites
+        const visibleModules = allModules.filter(
+          (m) => coveredSet.has(m.id) || prereqSet.has(m.id)
+        );
+
+        return { visibleModules, coveredSet, prereqSet };
+      }
+
+      function updateControlsUI() {
+        // Update checkboxes
+        const checkboxes = rootEl.querySelectorAll(".st-checkbox-item input");
+        checkboxes.forEach((cb) => {
+          cb.checked = selectedCourses.has(cb.value);
+        });
+
+        // Match active preset
+        const presetBtns = rootEl.querySelectorAll(".st-btn-pill");
+        let matchedGroup = null;
+
+        if (isAllSelected) {
+          matchedGroup = "all";
+        } else {
+          for (const [groupId, group] of Object.entries(courseGroups)) {
+            if (groupId === "all") continue;
+            const gCourses = group.courses || [];
+            if (
+              gCourses.length === selectedCourses.size &&
+              gCourses.every((c) => selectedCourses.has(c))
+            ) {
+              matchedGroup = groupId;
+              break;
+            }
+          }
+        }
+
+        presetBtns.forEach((btn) => {
+          if (btn.getAttribute("data-group") === matchedGroup) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+
+        const customBtn = rootEl.querySelector("#st-course-dropdown-btn");
+        if (customBtn) {
+          if (!matchedGroup && selectedCourses.size > 0) {
+            customBtn.classList.add("active");
+          } else {
+            customBtn.classList.remove("active");
+          }
+        }
+      }
+
+      // 6. Render Board
+      function renderTree() {
         boardContainer.innerHTML = "";
 
-        // Filter modules
-        const visibleModules = data.modules.filter((m) => {
-          if (!showOptional && m.optional === true) return false;
-          return true;
-        });
+        const { visibleModules, coveredSet, prereqSet } = calculateActiveModules();
 
-        let maxCol = 0;
-        let maxRow = 0;
-        const nodeMap = new Map();
+        // Update module count badge
+        const countEl = rootEl.querySelector("#st-module-count");
+        if (countEl) {
+          if (isAllSelected || selectedCourses.size === 0) {
+            countEl.textContent = `${visibleModules.length} modules`;
+          } else {
+            countEl.textContent = `${visibleModules.length} modules (${coveredSet.size} in course, ${prereqSet.size} prereq)`;
+          }
+        }
 
-        visibleModules.forEach((mod) => {
-          if (mod.col > maxCol) maxCol = mod.col;
-          if (mod.row > maxRow) maxRow = mod.row;
-          nodeMap.set(mod.id, mod);
-        });
+        if (visibleModules.length === 0) {
+          const emptyNotice = document.createElement("div");
+          emptyNotice.className = "st-empty-notice";
+          emptyNotice.innerHTML = `
+            <div class="st-empty-title">No modules match current selection</div>
+            <div class="st-empty-desc">Please choose at least one course or click <strong>All</strong> to view the full skill tree.</div>
+          `;
+          boardContainer.appendChild(emptyNotice);
+          return;
+        }
 
-        const boardWidth = PAD_X * 2 + (maxCol + 1) * NODE_WIDTH + maxCol * COL_GAP;
-        const boardHeight = PAD_Y * 2 + (maxRow + 1) * NODE_HEIGHT + maxRow * ROW_GAP;
-
-        visibleModules.forEach((mod) => {
-          mod.x = PAD_X + mod.col * (NODE_WIDTH + COL_GAP);
-          mod.y = PAD_Y + mod.row * (NODE_HEIGHT + ROW_GAP);
-        });
+        const visibleMap = new Map();
+        visibleModules.forEach((m) => visibleMap.set(m.id, m));
 
         const board = document.createElement("div");
         board.className = "st-board";
@@ -100,14 +404,18 @@
           if (!child.parents || child.parents.length === 0) return;
 
           child.parents.forEach((parentId) => {
-            const parent = nodeMap.get(parentId);
-            if (!parent) return;
+            const parent = visibleMap.get(parentId);
+            if (!parent) return; // Only draw if parent is also visible
 
             const path = document.createElementNS(svgNS, "path");
             path.setAttribute("class", "st-link");
-            if (child.optional || parent.optional) {
-              path.classList.add("st-link-optional");
+
+            // Mark link as prerequisite if parent or child is outside current course
+            const isPrereqLink = prereqSet.has(parent.id) || prereqSet.has(child.id);
+            if (isPrereqLink) {
+              path.classList.add("st-link-prereq");
             }
+
             path.setAttribute("data-parent", parent.id);
             path.setAttribute("data-child", child.id);
 
@@ -153,13 +461,10 @@
         const nodesLayer = document.createElement("div");
         nodesLayer.className = "st-nodes-layer";
 
-        // Popover
-        const popover = document.createElement("div");
-        popover.className = "st-popover";
-        board.appendChild(popover);
-
         visibleModules.forEach((mod) => {
-          const cat = data.categories[mod.category] || {
+          const isPrereq = prereqSet.has(mod.id);
+          const cat = (rawData.categories && rawData.categories[mod.category]) || {
+            name: mod.category || "General",
             color: "#475569",
             bg: "#f8fafc",
             border: "#cbd5e1"
@@ -167,24 +472,32 @@
 
           const nodeEl = document.createElement("a");
           nodeEl.className = "st-node";
-          if (mod.optional) nodeEl.classList.add("st-node-optional");
+          if (isPrereq) {
+            nodeEl.classList.add("st-node-prereq");
+          }
+
           nodeEl.href = mod.url || "#";
           nodeEl.setAttribute("data-id", mod.id);
           nodeEl.style.left = mod.x + "px";
           nodeEl.style.top = mod.y + "px";
-          nodeEl.style.backgroundColor = cat.bg;
-          nodeEl.style.borderColor = cat.border;
 
-          // Pure title - no number pill
+          if (isPrereq) {
+            nodeEl.style.backgroundColor = "#f8fafc";
+            nodeEl.style.borderColor = "#94a3b8";
+          } else {
+            nodeEl.style.backgroundColor = cat.bg;
+            nodeEl.style.borderColor = cat.border;
+          }
+
+          // 2-line title support with fixed height and prereq corner indicator
           nodeEl.innerHTML = `
-            <div class="st-title" title="${mod.title}">
-              ${mod.title}
-            </div>
+            <div class="st-title" title="${mod.title}">${mod.title}</div>
+            ${isPrereq ? '<span class="st-prereq-badge" title="Prerequisite assumed from prior courses">Prereq</span>' : ""}
           `;
 
           nodeEl.addEventListener("mouseenter", (e) => {
             highlightAncestors(mod.id);
-            showPopover(mod, e.currentTarget, popover, data);
+            showPopover(mod, isPrereq, e.currentTarget, popover, rawData, courses);
           });
 
           nodeEl.addEventListener("mouseleave", () => {
@@ -199,7 +512,7 @@
         boardContainer.appendChild(board);
       }
 
-      // Highlight ONLY the path towards the module (ancestors/prerequisites)
+      // Highlight ancestor path leading up to activeId
       function highlightAncestors(activeId) {
         const allLinks = rootEl.querySelectorAll(".st-link");
         const allNodes = rootEl.querySelectorAll(".st-node");
@@ -218,13 +531,12 @@
 
         findAncestors(activeId);
 
-        // Only highlight incoming links in the prerequisite chain leading up to activeId
         allLinks.forEach((link) => {
           const p = link.getAttribute("data-parent");
           const c = link.getAttribute("data-child");
 
-          const isDirectIncoming = (c === activeId && ancestors.has(p));
-          const isUpstreamChain = (ancestors.has(p) && ancestors.has(c));
+          const isDirectIncoming = c === activeId && ancestors.has(p);
+          const isUpstreamChain = ancestors.has(p) && ancestors.has(c);
 
           if (isDirectIncoming || isUpstreamChain) {
             link.classList.add("st-link-highlight");
@@ -254,31 +566,54 @@
         });
       }
 
-      function showPopover(mod, targetEl, popover, rawData) {
+      function showPopover(mod, isPrereq, targetEl, popoverEl, rawData, coursesMap) {
         const parentTitles = (mod.parents || [])
           .map((pid) => {
-            const p = rawData.modules.find((m) => m.id === pid);
+            const p = moduleMap.get(pid);
             return p ? `${p.number} ${p.title}` : pid;
           })
           .filter(Boolean);
 
-        const childTitles = rawData.modules
-          .filter((m) => m.parents && m.parents.includes(mod.id))
-          .map((m) => `${m.number} ${m.title}`);
+        const cat = (rawData.categories && rawData.categories[mod.category]) || {
+          name: mod.category || "General",
+          color: "#475569"
+        };
 
-        const cat = rawData.categories[mod.category] || { name: mod.category, color: "#475569" };
+        const courseNames = (mod.courses || [])
+          .map((cId) => (coursesMap[cId] ? coursesMap[cId].name : cId))
+          .filter(Boolean);
 
-        popover.innerHTML = `
+        let statusBadge = "";
+        if (isPrereq) {
+          statusBadge = `
+            <div class="st-popover-prereq-alert">
+              ⚠️ <strong>Prerequisite Module:</strong> Assumed prior knowledge; not taught directly in selected course(s).
+            </div>
+          `;
+        }
+
+        let coursesHtml = "";
+        if (courseNames.length > 0) {
+          coursesHtml = `
+            <div class="st-popover-courses">
+              <strong>Covered in:</strong> ${courseNames.join(", ")}
+            </div>
+          `;
+        }
+
+        popoverEl.innerHTML = `
           <div class="st-popover-header">
             <span class="st-popover-badge" style="background:${cat.color}">${mod.number}</span>
             <span class="st-popover-title">${mod.title}</span>
           </div>
           <div class="st-popover-category" style="color:${cat.color}">
-            ${cat.name} ${mod.optional ? "• Optional" : ""}
+            ${cat.name}
           </div>
+          ${statusBadge}
           <div class="st-popover-summary">
             ${mod.summary || "No description available."}
           </div>
+          ${coursesHtml}
           ${
             parentTitles.length > 0
               ? `<div class="st-popover-rel"><strong>Prerequisites:</strong> ${parentTitles.join(", ")}</div>`
@@ -286,35 +621,45 @@
           }
         `;
 
-        popover.style.display = "block";
+        popoverEl.style.display = "block";
 
+        // Position relative to rootEl to avoid ever overflowing st-board-container
         const nodeRect = targetEl.getBoundingClientRect();
-        const boardRect = targetEl.closest(".st-board").getBoundingClientRect();
+        const rootRect = rootEl.getBoundingClientRect();
+        const POPOVER_WIDTH = 220;
 
-        let left = nodeRect.left - boardRect.left + NODE_WIDTH + 10;
-        let top = nodeRect.top - boardRect.top - 8;
+        // Try placing to the right of node
+        let left = nodeRect.right - rootRect.left + 8;
+        let top = nodeRect.top - rootRect.top - 4;
 
-        if (left + 230 > boardRect.width) {
-          left = nodeRect.left - boardRect.left - 230 - 10;
+        // If overflowing right side of window or rootEl, flip to the left
+        const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+        if (nodeRect.right + POPOVER_WIDTH + 16 > windowWidth || left + POPOVER_WIDTH > rootRect.width) {
+          left = nodeRect.left - rootRect.left - POPOVER_WIDTH - 8;
         }
 
-        popover.style.left = `${Math.max(8, left)}px`;
-        popover.style.top = `${Math.max(8, top)}px`;
+        // Clamp horizontally within rootEl
+        left = Math.max(6, Math.min(left, rootRect.width - POPOVER_WIDTH - 6));
+
+        // Clamp vertically within rootEl / viewport
+        const popoverHeight = popoverEl.offsetHeight || 180;
+        if (top + popoverHeight > rootRect.height) {
+          top = Math.max(6, rootRect.height - popoverHeight - 6);
+        }
+        top = Math.max(6, top);
+
+        popoverEl.style.left = `${Math.round(left)}px`;
+        popoverEl.style.top = `${Math.round(top)}px`;
       }
 
-      function hidePopover(popover) {
-        popover.style.display = "none";
+      function hidePopover(popoverEl) {
+        popoverEl.style.display = "none";
       }
 
-      // Initial render
-      renderTree(true);
+      // Initial render with All courses
+      updateControlsUI();
+      renderTree();
 
-      const optToggle = document.getElementById("st-optional-toggle");
-      if (optToggle) {
-        optToggle.addEventListener("change", (e) => {
-          renderTree(e.target.checked);
-        });
-      }
       console.log("[SkillTree] Rendered successfully.");
     } catch (err) {
       console.error("[SkillTree] Error during initialization:", err);
