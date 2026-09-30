@@ -2,6 +2,7 @@ suppressPackageStartupMessages({
   requireNamespace("yaml", quietly = TRUE)
   requireNamespace("digest", quietly = TRUE)
   requireNamespace("jsonlite", quietly = TRUE)
+  requireNamespace("rvest", quietly = TRUE)
 })
 
 # Command line arguments parsing
@@ -92,14 +93,14 @@ extract_body_content <- function(html_path) {
   raw_html <- paste(readLines(html_path, warn = FALSE), collapse = "\n")
   
   # Strip dynamic Quarto runtime artifacts
-  cleaned <- gsub('<meta name="quarto:offset"[^>]*>', '', raw_html)
-  cleaned <- gsub('<script id="quarto-search-options"[^>]*>.*?</script>', '', cleaned)
-  cleaned <- gsub('<script src="[^"]*site_libs/[^"]*"></script>', '', cleaned)
-  cleaned <- gsub('<link href="[^"]*site_libs/[^"]*"[^>]*>', '', cleaned)
-  cleaned <- gsub('<div id="quarto-search-results"></div>', '', cleaned)
+  cleaned <- gsub('<meta name=\"quarto:offset\"[^>]*>', '', raw_html)
+  cleaned <- gsub('<script id=\"quarto-search-options\"[^>]*>.*?</script>', '', cleaned)
+  cleaned <- gsub('<script src=\"[^\"]*site_libs/[^\"]*\"></script>', '', cleaned)
+  cleaned <- gsub('<link href=\"[^\"]*site_libs/[^\"]*\"[^>]*>', '', cleaned)
+  cleaned <- gsub('<div id=\"quarto-search-results\"></div>', '', cleaned)
   
   # Extract main content container if present
-  main_match <- regexpr('<main class="content"[^>]*>(.*?)</main>', cleaned, perl = TRUE)
+  main_match <- regexpr('<main class=\"content\"[^>]*>(.*?)</main>', cleaned, perl = TRUE)
   if (main_match != -1) {
     content <- regmatches(cleaned, main_match)
   } else {
@@ -108,7 +109,174 @@ extract_body_content <- function(html_path) {
   content
 }
 
-# 5. Process each chapter
+# 5. Helper to extract granular chunk outputs from HTML and map to QMD lines
+extract_chunk_outputs <- function(qmd_path, html_path) {
+  if (!file.exists(qmd_path) || !file.exists(html_path)) return(list())
+  
+  qmd <- readLines(qmd_path, warn = FALSE)
+  chunk_starts <- which(grepl("^```\\{[a-zA-Z0-9]+", qmd))
+  if (length(chunk_starts) == 0) return(list())
+  
+  # Parse chunk metadata from QMD
+  qmd_chunks <- list()
+  for (cs in chunk_starts) {
+    header <- qmd[cs]
+    end_cs <- cs + 1
+    while (end_cs <= length(qmd) && !grepl("^```$", qmd[end_cs])) end_cs <- end_cs + 1
+    body <- if (end_cs > cs + 1) qmd[(cs+1):(end_cs-1)] else character()
+    
+    m <- regmatches(header, regexec("^```\\{[a-zA-Z0-9]+[[:space:]]+([^,}[:space:]]+)", header))[[1]]
+    label <- if (length(m) > 1 && !grepl("=", m[2])) m[2] else ""
+    lbl_line <- grep("^#\\|\\s*label:", body, value = TRUE)
+    if (length(lbl_line) > 0) {
+      label <- trimws(sub("^#\\|\\s*label:\\s*", "", lbl_line[1]))
+    }
+    
+    code_lines <- body[!grepl("^#", body) & nzchar(trimws(body))]
+    full_code <- paste(trimws(code_lines), collapse = " ")
+    
+    qmd_chunks[[length(qmd_chunks) + 1]] <- list(
+      line = cs,
+      label = label,
+      full_code = full_code
+    )
+  }
+  
+  # Parse HTML cells
+  doc <- tryCatch(rvest::read_html(html_path), error = function(e) NULL)
+  if (is.null(doc)) return(list())
+  
+  cells <- rvest::html_elements(doc, "div.cell")
+  if (length(cells) == 0) return(list())
+  
+  matched_outputs <- list()
+  last_qmd_idx <- 1
+  
+  for (i in seq_along(cells)) {
+    cell <- cells[[i]]
+    out_els <- rvest::html_elements(cell, "div.cell-output, div.cell-output-display")
+    if (length(out_els) == 0) next
+    
+    code_el <- rvest::html_element(cell, "pre > code")
+    matched_qmd <- NULL
+    
+    # Priority 1: Match image filename to chunk label (for echo=F plot cells)
+    img_el <- rvest::html_element(cell, "img")
+    img_src <- if (!is.null(img_el)) rvest::html_attr(img_el, "src") else ""
+    if (nzchar(img_src) && last_qmd_idx <= length(qmd_chunks)) {
+      for (j in last_qmd_idx:length(qmd_chunks)) {
+        if (nzchar(qmd_chunks[[j]]$label) && grepl(qmd_chunks[[j]]$label, img_src, fixed = TRUE)) {
+          matched_qmd <- qmd_chunks[[j]]
+          last_qmd_idx <- j + 1
+          break
+        }
+      }
+    }
+    
+    # Priority 2: Match code lines from pre > code to QMD chunk body
+    if (is.null(matched_qmd) && !is.null(code_el)) {
+      raw_code <- rvest::html_text(code_el)
+      code_lines <- trimws(strsplit(raw_code, "\n")[[1]])
+      code_lines <- code_lines[nzchar(code_lines)]
+      
+      if (length(code_lines) > 0 && last_qmd_idx <= length(qmd_chunks)) {
+        for (j in last_qmd_idx:length(qmd_chunks)) {
+          q_chunk <- qmd_chunks[[j]]
+          matches <- vapply(code_lines, function(cl) {
+            if (!is.na(cl) && nzchar(cl) && !is.na(q_chunk$full_code)) {
+              grepl(cl, q_chunk$full_code, fixed = TRUE)
+            } else FALSE
+          }, logical(1))
+          if (any(matches, na.rm = TRUE)) {
+            matched_qmd <- q_chunk
+            last_qmd_idx <- j + 1
+            break
+          }
+        }
+      }
+    }
+    
+    # Priority 3: Fall back to next sequential chunk
+    if (is.null(matched_qmd) && last_qmd_idx <= length(qmd_chunks)) {
+      matched_qmd <- qmd_chunks[[last_qmd_idx]]
+      last_qmd_idx <- last_qmd_idx + 1
+    }
+    
+    out_text <- paste(rvest::html_text(out_els), collapse = "\n")
+    clean_out_text <- trimws(out_text)
+    
+    out_hash <- if (nzchar(img_src)) {
+      img_full_path <- file.path(dirname(html_path), img_src)
+      if (file.exists(img_full_path)) {
+        digest::digest(file = img_full_path, algo = "sha256")
+      } else {
+        digest::digest(paste(img_src, clean_out_text), algo = "sha256", serialize = FALSE)
+      }
+    } else {
+      digest::digest(clean_out_text, algo = "sha256", serialize = FALSE)
+    }
+    
+    preview_txt <- gsub("\\s+", " ", clean_out_text)
+    if (nchar(preview_txt) > 80) preview_txt <- paste0(substr(preview_txt, 1, 77), "...")
+    if (!nzchar(preview_txt) && nzchar(img_src)) preview_txt <- paste0("[Plot: ", basename(img_src), "]")
+    
+    matched_outputs[[length(matched_outputs) + 1]] <- list(
+      line = if (!is.null(matched_qmd)) matched_qmd$line else NA,
+      label = if (!is.null(matched_qmd)) matched_qmd$label else "",
+      output_hash = substr(out_hash, 1, 16),
+      preview = preview_txt
+    )
+  }
+  
+  matched_outputs
+}
+
+# 6. Helper to compare previous chunks with current chunks
+compare_chunks <- function(prev_chunks, curr_chunks) {
+  if (is.null(prev_chunks) || length(prev_chunks) == 0) return(list())
+  if (is.null(curr_chunks) || length(curr_chunks) == 0) return(list())
+  
+  drifted_chunks <- list()
+  
+  # Build lookup map by chunk label if present, or by line/index
+  for (i in seq_along(curr_chunks)) {
+    curr <- curr_chunks[[i]]
+    # Match with corresponding chunk in prev_chunks
+    prev_match <- NULL
+    
+    # Try match by label if label exists
+    if (!is.null(curr$label) && nzchar(curr$label)) {
+      for (p in prev_chunks) {
+        if (!is.null(p$label) && p$label == curr$label) {
+          prev_match <- p
+          break
+        }
+      }
+    }
+    
+    # Fallback match by index if no label match
+    if (is.null(prev_match) && i <= length(prev_chunks)) {
+      prev_match <- prev_chunks[[i]]
+    }
+    
+    if (!is.null(prev_match)) {
+      if (safe_str(curr$output_hash) != safe_str(prev_match$output_hash)) {
+        drifted_chunks[[length(drifted_chunks) + 1]] <- list(
+          line = curr$line,
+          label = curr$label,
+          expected_hash = safe_str(prev_match$output_hash),
+          observed_hash = safe_str(curr$output_hash),
+          expected_preview = safe_str(prev_match$preview),
+          observed_preview = safe_str(curr$preview)
+        )
+      }
+    }
+  }
+  
+  drifted_chunks
+}
+
+# 7. Process each chapter
 updated_db <- list()
 drift_detected <- character()
 drift_details <- list()
@@ -133,11 +301,13 @@ for (qmd in chapter_files) {
   
   # Compute rendered content hash (SHA-256)
   curr_content_hash <- ""
+  curr_chunks <- list()
   if (file.exists(html_path)) {
     body_content <- extract_body_content(html_path)
     if (!is.null(body_content)) {
       curr_content_hash <- digest::digest(body_content, algo = "sha256", serialize = FALSE)
     }
+    curr_chunks <- extract_chunk_outputs(qmd, html_path)
   }
   
   # Look up existing entry
@@ -148,6 +318,7 @@ for (qmd in chapter_files) {
   prev_status        <- safe_str(prev$status, "healthy")
   prev_drifted_date  <- safe_str(prev$drifted_date, "")
   prev_last_modified <- safe_str(prev$last_modified, today)
+  prev_chunks        <- if (!is.null(prev$chunks)) prev$chunks else list()
   
   if (bless_all) {
     # --bless mode: force all healthy with current state
@@ -157,7 +328,8 @@ for (qmd in chapter_files) {
       content_hash = curr_content_hash,
       last_modified = today,
       status = "healthy",
-      drifted_date = ""
+      drifted_date = "",
+      chunks = curr_chunks
     )
     message("  [BLESSED] ", qmd)
   } else if (prev_source_hash == "") {
@@ -168,7 +340,8 @@ for (qmd in chapter_files) {
       content_hash = curr_content_hash,
       last_modified = today,
       status = "healthy",
-      drifted_date = ""
+      drifted_date = "",
+      chunks = curr_chunks
     )
     message("  [NEW] ", qmd)
   } else if (curr_source_hash != prev_source_hash) {
@@ -179,24 +352,29 @@ for (qmd in chapter_files) {
       content_hash = curr_content_hash,
       last_modified = today,
       status = "healthy",
-      drifted_date = ""
+      drifted_date = "",
+      chunks = curr_chunks
     )
     message("  [EDITED] ", qmd, " (source updated)")
   } else {
     # Source was NOT modified: check for output drift
-    if (curr_content_hash != "" && prev_content_hash != "" && curr_content_hash != prev_content_hash) {
-      # Silent drift occurred!
+    has_drift <- (curr_content_hash != "" && prev_content_hash != "" && curr_content_hash != prev_content_hash)
+    
+    if (has_drift) {
       drift_date <- if (nzchar(prev_drifted_date)) prev_drifted_date else today
+      drifted_chunks <- compare_chunks(prev_chunks, curr_chunks)
+      
       updated_db[[qmd]] <- list(
         title = title,
         source_hash = prev_source_hash,
         content_hash = prev_content_hash,
         last_modified = prev_last_modified,
         status = "drifted",
-        drifted_date = drift_date
+        drifted_date = drift_date,
+        chunks = prev_chunks
       )
       drift_detected <- c(drift_detected, qmd)
-      drift_details[[qmd]] <- list(title = title, date = drift_date)
+      drift_details[[qmd]] <- list(title = title, date = drift_date, chunks = drifted_chunks)
       message("  [DRIFT] ", qmd, " (output changed without source edit since ", drift_date, ")")
     } else {
       # Output matches baseline or previous drift state persists
@@ -206,11 +384,14 @@ for (qmd in chapter_files) {
         content_hash = prev_content_hash,
         last_modified = prev_last_modified,
         status = prev_status,
-        drifted_date = prev_drifted_date
+        drifted_date = prev_drifted_date,
+        chunks = if (length(prev_chunks) > 0) prev_chunks else curr_chunks
       )
       if (prev_status == "drifted") {
+        drift_date <- prev_drifted_date
+        drifted_chunks <- compare_chunks(prev_chunks, curr_chunks)
         drift_detected <- c(drift_detected, qmd)
-        drift_details[[qmd]] <- list(title = title, date = prev_drifted_date)
+        drift_details[[qmd]] <- list(title = title, date = drift_date, chunks = drifted_chunks)
         message("  [DRIFT PERSISTED] ", qmd, " (drifted on ", prev_drifted_date, ")")
       } else {
         message("  [OK] ", qmd)
@@ -219,11 +400,11 @@ for (qmd in chapter_files) {
   }
 }
 
-# 6. Save updated hash database
+# 8. Save updated hash database
 writeLines(jsonlite::toJSON(updated_db, pretty = TRUE, auto_unbox = TRUE), hashes_file)
 message("Saved chapter hashes to ", hashes_file)
 
-# 7. Generate status page
+# 9. Generate status page
 status_dir <- file.path(docs_dir, "status")
 dir.create(status_dir, recursive = TRUE, showWarnings = FALSE)
 
@@ -244,7 +425,15 @@ for (qmd in names(updated_db)) {
   chap_url <- paste0(site_url, "/", html_rel)
   
   if (entry$status == "drifted") {
-    status_td <- sprintf('<span style="color:#dc3545;font-weight:bold;">⚠️ Drifted</span> (since %s)', entry$drifted_date)
+    chunk_msg <- ""
+    if (!is.null(drift_details[[qmd]]$chunks) && length(drift_details[[qmd]]$chunks) > 0) {
+      dc_list <- vapply(drift_details[[qmd]]$chunks, function(dc) {
+        lbl_str <- if (nzchar(dc$label)) sprintf(" (<code>%s</code>)", htmltools::htmlEscape(dc$label)) else ""
+        sprintf("Line %s%s", dc$line, lbl_str)
+      }, character(1))
+      chunk_msg <- sprintf("<br><small style=\"color:#666;\">Drifted at: %s</small>", paste(dc_list, collapse = ", "))
+    }
+    status_td <- sprintf('<span style="color:#dc3545;font-weight:bold;">⚠️ Drifted</span> (since %s)%s', entry$drifted_date, chunk_msg)
     row_style <- 'background-color:#fff3cd;'
   } else {
     status_td <- '<span style="color:#198754;font-weight:bold;">✓ Healthy</span>'
@@ -269,7 +458,7 @@ status_html <- sprintf('<!DOCTYPE html>
     h1 { margin-top: 0; font-size: 1.8rem; }
     .summary { margin: 20px 0; font-size: 1.1rem; }
     table { width: 100%%; border-collapse: collapse; margin-top: 20px; }
-    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #dee2e6; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #dee2e6; vertical-align: top; }
     th { background-color: #f1f3f5; }
     code { background: #e9ecef; padding: 2px 5px; border-radius: 3px; font-size: 0.9em; }
     .timestamp { font-size: 0.85em; color: #6c757d; margin-top: 25px; }
@@ -282,7 +471,7 @@ status_html <- sprintf('<!DOCTYPE html>
     <h1>Chapter Output Drift Status</h1>
     <div class="summary">
       Overall Status: %s
-      <p>Total Chapters: <strong>%d</strong> | Healthy: <strong style="color:#198754;">%d</strong> | Drifted: <strong style="color:#dc3545;">%d</strong></p>
+      <p>Total Chapters: <strong>%d</strong> | Healthy: <strong style=\"color:#198754;\">%d</strong> | Drifted: <strong style=\"color:#dc3545;\">%d</strong></p>
     </div>
     <table>
       <thead>
@@ -308,12 +497,27 @@ writeLines(status_html, file.path(status_dir, "index.html"))
 writeLines(status_html, file.path(docs_dir, "status.html"))
 message("Status page generated at docs/status/index.html and docs/status.html")
 
-# 8. GitHub Action Output & Warning Annotations
+# 10. Write drift_detected.txt for CI workflows if any chapter drifted
+if (drifted_count > 0) {
+  writeLines(as.character(drifted_count), "drift_detected.txt")
+} else if (file.exists("drift_detected.txt")) {
+  unlink("drift_detected.txt")
+}
+
+# 11. GitHub Action Output & Warning Annotations
 if (drifted_count > 0) {
   for (qmd in drift_detected) {
     info <- drift_details[[qmd]]
-    cat(sprintf("::warning file=%s,title=Silent Drift Detected::Output of '%s' changed without source edit (drifted on %s). See %s/status\n",
-                qmd, info$title, info$date, site_url))
+    chunk_anno <- ""
+    if (!is.null(info$chunks) && length(info$chunks) > 0) {
+      anno_chunks <- vapply(info$chunks, function(dc) {
+        lbl <- if (nzchar(dc$label)) sprintf("(%s)", dc$label) else ""
+        sprintf("line %s %s", dc$line, lbl)
+      }, character(1))
+      chunk_anno <- sprintf(" [Drifted at: %s]", paste(anno_chunks, collapse = ", "))
+    }
+    cat(sprintf("::warning file=%s,title=Silent Drift Detected::Output of '%s' changed without source edit (drifted on %s)%s. See %s/status\n",
+                qmd, info$title, info$date, chunk_anno, site_url))
   }
 }
 
