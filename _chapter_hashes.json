@@ -60,8 +60,8 @@
     "source_hash": "c5161378495fbad08b1c296c7fdb9828609ad0399ebd7c4aca5c8480d9a20995",
     "content_hash": "9919a051630b75eb2228f9779cfbea224952da34aecb3dcad50d97ab6314ed62",
     "last_modified": "2026-09-30",
-    "status": "healthy",
-    "drifted_date": ""
+    "status": "drifted",
+    "drifted_date": "2026-09-30"
   },
   "chapters/2.4-transformations.qmd": {
     "title": "2.4 Transformations & Reshaping",
