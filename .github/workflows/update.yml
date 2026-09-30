@@ -149,26 +149,36 @@ jobs:
           }
           REOF
 
-      - name: Open pull request
+      - name: Open or update pull request
         if: steps.lockfile.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          BRANCH="chore/update-renv-$(date +%Y-%m-%d)"
-          git checkout -b "$BRANCH"
+          BRANCH="chore/update-renv"
+          git checkout -B "$BRANCH"
           git add renv.lock
           git commit -m "chore: update renv packages $(date +%Y-%m-%d)"
-          git push origin "$BRANCH"
+          git push origin "$BRANCH" --force
 
-          ASSIGNEE_FLAG=""
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            ASSIGNEE_FLAG="--assignee ${{ github.actor }}"
+          # Check if PR already exists for this rolling branch
+          EXISTING_PR=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "Updating existing PR #$EXISTING_PR"
+            gh pr edit "$EXISTING_PR" \
+              --title "chore: update R packages ($(date +%Y-%m-%d))" \
+              --body-file pr_body.md
+          else
+            ASSIGNEE_FLAG=""
+            if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+              ASSIGNEE_FLAG="--assignee ${{ github.actor }}"
+            fi
+
+            gh pr create \
+              --title "chore: update R packages ($(date +%Y-%m-%d))" \
+              --body-file pr_body.md \
+              --base main \
+              --head "$BRANCH" \
+              $ASSIGNEE_FLAG
           fi
-
-          gh pr create \
-            --title "chore: update R packages ($(date +%Y-%m-%d))" \
-            --body-file pr_body.md \
-            --base main \
-            --head "$BRANCH" \
-            $ASSIGNEE_FLAG
