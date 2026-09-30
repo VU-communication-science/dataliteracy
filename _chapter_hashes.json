@@ -9,9 +9,9 @@
   },
   "chapters/curriculum.qmd": {
     "title": "Curriculum & Learning Trajectories",
-    "source_hash": "623447bda449f656aec69dc5b95ab100e358a1ebc14e0a6162a59fc237ec526c",
-    "content_hash": "5f76cf389787cbceb1b13d03eed938226c157b384440518e36ee3f72feee6280",
-    "last_modified": "2026-09-29",
+    "source_hash": "d9c7a4716579a4a9578da843ec2ed586dcdc0a02e24771ebc737f098d28826cb",
+    "content_hash": "a378c7076362b7019b4ad92c15d755b672d939672fcec3230e97614241030a9f",
+    "last_modified": "2026-09-30",
     "status": "healthy",
     "drifted_date": ""
   },
@@ -49,17 +49,17 @@
   },
   "chapters/2.2-summarizing.qmd": {
     "title": "2.2 Summarizing Data",
-    "source_hash": "d877cc6de3bb652f48653cd0a85b018910c51eb51450a2233aa768150ced335e",
-    "content_hash": "b9d2323cd65e1060b831d8206fa3eb298d4373e85395000fc4b6a909252fb7c6",
-    "last_modified": "2026-09-29",
+    "source_hash": "34edcbad4d6eed7b0b11e52d5568eb9788893357fb8f25466723f4f911a3aa4c",
+    "content_hash": "5fc15291c93b30673870a0899dfdbb3a842d325e270a5387f3811e3f8eb571b6",
+    "last_modified": "2026-09-30",
     "status": "healthy",
     "drifted_date": ""
   },
   "chapters/2.3-data-cleaning.qmd": {
     "title": "2.3 Data Cleaning",
-    "source_hash": "769e789f5e58dd9b39db834993bdac5b07194e510153c21715720b44a1882069",
-    "content_hash": "9de77cfd7942a6b0cc1f6b5399d20a56266134dd3c3fb29f7e2db6381d8aa537",
-    "last_modified": "2026-09-29",
+    "source_hash": "c5161378495fbad08b1c296c7fdb9828609ad0399ebd7c4aca5c8480d9a20995",
+    "content_hash": "9919a051630b75eb2228f9779cfbea224952da34aecb3dcad50d97ab6314ed62",
+    "last_modified": "2026-09-30",
     "status": "healthy",
     "drifted_date": ""
   },
@@ -92,8 +92,8 @@
     "source_hash": "5ae2771be52f8dbd6003412c786bcac187e380bdd888e2757b1b6ef170bb7329",
     "content_hash": "0d83c7e4752e90ce180f47c1d9a884a4bcf5f30a611ce81c477e774058b09bd6",
     "last_modified": "2026-09-29",
-    "status": "healthy",
-    "drifted_date": ""
+    "status": "drifted",
+    "drifted_date": "2026-09-30"
   },
   "chapters/3.3-scale-construction.qmd": {
     "title": "3.3 Scale Construction",
@@ -164,14 +164,14 @@
     "source_hash": "ee40be8aef87d913dd854a3e43b8c51c092663ea4a043a618b436e3bb5ac05c7",
     "content_hash": "62653f76f0effef89fda9943468c8446553a50e12206e540f46fc15920ad406e",
     "last_modified": "2026-09-29",
-    "status": "healthy",
-    "drifted_date": ""
+    "status": "drifted",
+    "drifted_date": "2026-09-30"
   },
   "chapters/7.1-covariance-and-correlation.qmd": {
     "title": "7.1 Covariance & Correlation",
-    "source_hash": "a12a44cf3bc411d9206f5bd3f164dbd982ec00501e75d3a88af46338f0ee9555",
-    "content_hash": "e5170fe43de6d2d05acfd1dafb47cef2228fe11c0cecec667f4ad48cae03702b",
-    "last_modified": "2026-09-29",
+    "source_hash": "831de6daa79c1405f7997c2bf7fd7592e8340f3f0a0117918edf6f197a596a34",
+    "content_hash": "5cb2898a2386ccf926dea5660f61d9be31b9b212fbabbbf1e8a4ccc2ff7a3d5e",
+    "last_modified": "2026-09-30",
     "status": "healthy",
     "drifted_date": ""
   },
