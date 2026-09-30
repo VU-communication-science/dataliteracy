@@ -13,8 +13,8 @@
     "source_hash": "d9c7a4716579a4a9578da843ec2ed586dcdc0a02e24771ebc737f098d28826cb",
     "content_hash": "a378c7076362b7019b4ad92c15d755b672d939672fcec3230e97614241030a9f",
     "last_modified": "2026-09-30",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-09-30",
     "chunks": []
   },
   "chapters/1.1-working-with-r.qmd": {
@@ -874,7 +874,26 @@
     "last_modified": "2026-09-29",
     "status": "drifted",
     "drifted_date": "2026-09-30",
-    "chunks": []
+    "chunks": [
+      {
+        "line": 40,
+        "label": "",
+        "output_hash": "2e52109817453f56",
+        "preview": "  storks birth_rate area_km2 storks   0.620** 0.579* birth_rate 0.620**   0.9..."
+      },
+      {
+        "line": 56,
+        "label": "",
+        "output_hash": "b27eadeb0bc774a6",
+        "preview": "  birth_rate birth_rate Predictors Estimates CI p Estimates CI p (Intercept) ..."
+      },
+      {
+        "line": 74,
+        "label": "",
+        "output_hash": "0f9a7ee75b737678",
+        "preview": "[Plot: unnamed-chunk-4-1.png]"
+      }
+    ]
   },
   "chapters/7.4-mediation.qmd": {
     "title": "7.4 Mediation Analysis",
