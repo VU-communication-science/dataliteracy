@@ -1,17 +1,15 @@
 
 Here I will document a new structure for the modules, for a more modular approach that alligns with the skill tree.
 
-First, I'll make starting modules for different trees, that introduce  the general idea behind the modules. Currently thinkin:
+We'll first focus on getting the skill tree right. THe idea here is to have recommended learning paths, and somehow cluster modules together in a way that makes sense. The "categories' in the worktree should correspond to the top level modules. Currently thinking we should have:
 
-- computational literacy: explains why students need to understand how a computer works. This becomes the parent of the "working with R" module, and I'll probably also add a sibling here for more basic (non r) computer skills, like how the file system works
-- statistical literacy: This begins by focussing on statistical concepts, regardless of R. Probably start with brNches for means and probability.
-- Data law and ethics: This will be a small tree, but it would basically cover some general concepts about your responsibilities when working with data. Modules would include things like copyright and GDPR
+- Statistical foundations
+- Computational skills
+- Data law and ethics
+- Measurement
+- Descriptive statistics (will include visualizations)
+- Inferential statistics
 
-The idea would be that these threes also merge together at different points. The "summarizing" module from computational literacy, that focusses on the stuff (group_by, summarise), with flow into descriptive statistics. And then we'll also have a branch from statistical literacy flow into this. 
+The idea would be that these themes intersect, but not always in the same order. For instance, for descriptive statistics we only need to know the basics of statistical foundations, but for inferential statistics we need to know more about statistical foundations. For both descriptive and inferential statistics, we need to know basics for how to work with data frames, but advance data management stuff like measurement and data cleaning is a separate branch. So we won't for instance make "data cleaning" a prerequisite for inferential statistics in the tree, because the tree is only about recommended learning paths, and not about what is required to do a statistical analysis. Likewise, the module for model diagnostics comes AFTER the module for model fitting, because that order makes more sense for learning.
 
-I'll then also add more smaller modules. Thinking of the following general branches (we'll add intersection between them later)
-
-- computational literacy
-  - Intro to R (takes first part of 'working with r module'. focus on installation of R and Rstudio, and basics of how to run code and assign values)
-  - Data types (takes later stuff from the current 'working with R' module. Introduces vectors and data frames. And different value types (character, numeric, logical)
-  - Tidyverse (Introduction to the tidyverse. Rewrite of current "data frames" module. Start with explaining what the tidyverse is, and then shows how it lets us create versatile piplines for managing data. Then introduces the basics)
+We will try to keep the paths simple, by always starting a category with a node that introduces the category (which is basically the chapter for that module. So "statistical foundations" is also a quarto file).
