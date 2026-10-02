@@ -81,9 +81,9 @@
   },
   "positions": [
     [""     ,"st-fo",""     ,""     ,"co-sk",""     ,""     ,""     ,""     ,"da-st",""     ],
-    ["prob" ,"me-va",""     ,""     ,"rlang","fi-fo",""     ,""     ,""     ,"pr-se",""     ],
+    ["prob" ,"me-va","hy-te",""     ,"rlang","fi-fo",""     ,""     ,""     ,"pr-se",""     ],
     ["samp" ,"co-co",""     ,""     ,"da-ma",""     ,""     ,""     ,""     ,"dm-pl",""     ],
-    ["ef-er","causa",""     ,""     ,"dfs"  ,""     ,""     ,""     ,""     ,""     ,""     ],
+    ["ef-si","causa",""     ,""     ,"dfs"  ,""     ,""     ,""     ,""     ,""     ,""     ],
     ["co-si","hy-te",""     ,""     ,"dfs-a","str"  ,""     ,""     ,""     ,""     ,""     ],
     [""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ],
     [""     ,"in-st","de-st","psych","ma-co",""     ,""     ,""     ,""     ,""     ,""     ],
@@ -304,13 +304,13 @@
       "summary": "Causal inference, experiments, DAGs, confounders, and spurious links.",
       "url": "5.2-causality.html"
     },
-    "ef-er": {
+    "ef-si": {
       "number": "0.4",
-      "title": "Effects and Errors",
+      "title": "Effect sizes",
       "category": "workflow",
       "courses": ["bachelor-y1"],
       "parents": ["samp", "causa"],
-      "summary": "Understanding effects, errors, and variability in data.",
+      "summary": "How do we measure effects and how do we interpret them?",
       "url": ""
     },
     "co-si": {
@@ -318,8 +318,8 @@
       "title": "Confidence and Significance",
       "category": "workflow",
       "courses": ["bachelor-y1"],
-      "parents": ["ef-er"],
-      "summary": "Understanding confidence intervals and significance testing.",
+      "parents": ["ef-si"],
+      "summary": "How do we know if our effects are real? Confidence intervals and significance testing.",
       "url": ""
     },
     "hy-te": {
