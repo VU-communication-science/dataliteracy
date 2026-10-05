@@ -6,6 +6,12 @@
       "bg": "#f0f9ff",
       "border": "#bae6fd"
     },
+    "design": {
+      "name": "Research Design",
+      "color": "#16a34a",
+      "bg": "#f0fdf4",
+      "border": "#bbf7d0"
+    },
     "computational": {
       "name": "Computational Skills",
       "color": "#2563eb",
@@ -93,17 +99,41 @@
     }
   },
   "positions": [
-    ["compu","     ","     ","     ","me-va","probs"],
-    ["rlang","     ","     ","     ","co-co","ef-si"],
-    ["     ","dfs-1","     ","     ","causa","hy-te"],
-    ["strng","clean","de-st","fa-an","     ","     "],
-    ["     ","dfs-2","visua","scale","     ","     "],
-    ["     ","     ","vis-a","     ","ttest","cor-t"],
-    ["     ","     ","     ","anova","s-reg","diagn"],
-    ["co-an","     ","     ","     ","regre","power"],
-    ["class","     ","     ","     ","ctrls","media"]
+    ["     ","compu","rlang","     ","me-va","probs"],
+    ["strng","     ","dfs-1","     ","co-co","ef-si"],
+    ["     ","dfs-2","clean","     ","     ","hy-te"],
+    ["     ","     ","     ","     ","de-st","     "],
+    ["     ","     ","visua","fa-an","     ","     "],
+    ["     ","     ","vis-a","scale","     ","     "],
+    ["class","co-an","     ","     ","ttest","cor-t"],
+    ["     ","     ","     ","power","s-reg","diagn"],
+    ["     ","     ","     ","anova","causa","regre"],
+    ["     ","     ","     ","exper","ctrls","ctrls"],
+    ["     ","     ","     ","     ","     ","media"]
   ],
   "modules": {
+    // "surve": {
+    //   "number": "0.0",
+    //   "title": "Survey Design",
+    //   "category": "design",
+    //   "courses": [
+    //     "bachelor-y1"
+    //   ],
+    //   "parents": ["ctrls"],
+    //   "summary": "Designing surveys, sampling, and questionnaire construction.",
+    //   "url": ""
+    // },
+    "exper": {
+      "number": "0.0",
+      "title": "Experimental designs",
+      "category": "design",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": ["anova", "causa"],
+      "summary": "Designing and analyzing experiments, randomization, and control groups.",
+      "url": ""
+    },
     "compu": {
       "number": "0.0",
       "title": "Computer basics",
@@ -163,7 +193,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "hy-te"
+        "de-st"
       ],
       "summary": "Independent and paired-samples t-tests.",
       "url": "6.1-t-test.html"
@@ -176,7 +206,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "hy-te"
+        "hy-te", "de-st"
       ],
       "summary": "Testing correlation coefficients for significance.",
       "url": ""
@@ -228,7 +258,7 @@
       "courses": [
         "bachelor-y1"
       ],
-      "parents": [],
+      "parents": ["me-va"],
       "summary": "Probability theory, random sampling, and sampling variability.",
       "url": ""
     },
@@ -265,7 +295,7 @@
         "bachelor-y2"
       ],
       "parents": [
-        "co-co"
+        ""
       ],
       "summary": "Causal inference, experiments, DAGs, confounders, and spurious links.",
       "url": "5.2-causality.html"
@@ -291,8 +321,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "ef-si",
-        "causa"
+        "ef-si"
       ],
       "summary": "Formulating and testing hypotheses using statistical methods.",
       "url": "5.1-statistical-concepts.html"
@@ -342,7 +371,7 @@
         "bachelor-y2"
       ],
       "parents": [
-        "co-co", "dfs-1"
+        "de-st"
       ],
       "summary": "Exploratory factor analysis (EFA), scree plots, and factor loadings.",
       "url": "3.2-factor-analysis.html"
@@ -403,13 +432,12 @@
     "co-an": {
       "number": "8.1",
       "title": "Content Analysis",
-      "category": "content",
+      "category": "design",
       "courses": [
         "master"
       ],
       "parents": [
-        "strng",
-        "ma-co"
+        "ctrls"
       ],
       "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
       "url": "8.1-content-analysis.html"
@@ -435,7 +463,7 @@
         "bachelor-y2"
       ],
       "parents": [
-        "regre"
+        "regre", "causa"
       ],
       "summary": "Controlling for confounders and covariates in regression models.",
       "url": "7.3-controlling.html"
