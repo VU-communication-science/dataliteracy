@@ -10,11 +10,11 @@
   },
   "chapters/curriculum.qmd": {
     "title": "Curriculum & Learning Trajectories",
-    "source_hash": "d9c7a4716579a4a9578da843ec2ed586dcdc0a02e24771ebc737f098d28826cb",
-    "content_hash": "a378c7076362b7019b4ad92c15d755b672d939672fcec3230e97614241030a9f",
-    "last_modified": "2026-09-30",
-    "status": "drifted",
-    "drifted_date": "2026-09-30",
+    "source_hash": "a38c1c54291876d28af2d1a47b4d0f44a7df5caa621d542058abb011c146d824",
+    "content_hash": "71b860855335c5e42ff12e19897d1a24121342d28e904d29f0503ba03b37fac0",
+    "last_modified": "2026-10-05",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": []
   },
   "chapters/1.1-working-with-r.qmd": {
