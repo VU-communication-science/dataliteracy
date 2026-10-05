@@ -1,46 +1,40 @@
 {
   "categories": {
-    "workflow": {
-      "name": "R & Workflow",
+    "foundations": {
+      "name": "Statistical Foundations",
+      "color": "#0284c7",
+      "bg": "#f0f9ff",
+      "border": "#bae6fd"
+    },
+    "computational": {
+      "name": "Computational Skills",
       "color": "#2563eb",
       "bg": "#eff6ff",
       "border": "#bfdbfe"
     },
-    "management": {
-      "name": "Data Management",
+    "ethics": {
+      "name": "Data Law & Ethics",
       "color": "#d97706",
       "bg": "#fffbeb",
       "border": "#fde68a"
     },
     "measurement": {
-      "name": "Measurement & Scales",
+      "name": "Measurement & Content",
       "color": "#7c3aed",
       "bg": "#f5f3ff",
       "border": "#ddd6fe"
     },
-    "exploration": {
-      "name": "Exploration & Viz",
+    "descriptive": {
+      "name": "Descriptive Statistics",
       "color": "#059669",
       "bg": "#ecfdf5",
       "border": "#a7f3d0"
     },
-    "testing": {
-      "name": "Inference & Tests",
+    "inferential": {
+      "name": "Inferential Statistics",
       "color": "#0d9488",
       "bg": "#f0fdfa",
       "border": "#99f6e4"
-    },
-    "modeling": {
-      "name": "Statistical Modeling",
-      "color": "#0284c7",
-      "bg": "#f0f9ff",
-      "border": "#bae6fd"
-    },
-    "text": {
-      "name": "Text & Content",
-      "color": "#9333ea",
-      "bg": "#faf5ff",
-      "border": "#e9d5ff"
     }
   },
   "courses": {
@@ -60,75 +54,281 @@
   "course_groups": {
     "all": {
       "name": "All",
-      "courses": ["bachelor-y1", "bachelor-y2", "master"]
+      "courses": [
+        "bachelor-y1",
+        "bachelor-y2",
+        "master"
+      ]
     },
     "bachelor": {
       "name": "All Bachelor",
-      "courses": ["bachelor-y1", "bachelor-y2"]
+      "courses": [
+        "bachelor-y1",
+        "bachelor-y2"
+      ]
     },
     "bachelor-y1": {
       "name": "Bachelor Year 1",
-      "courses": ["bachelor-y1"]
+      "courses": [
+        "bachelor-y1"
+      ]
     },
     "bachelor-y2": {
       "name": "Bachelor Year 2",
-      "courses": ["bachelor-y2"]
+      "courses": [
+        "bachelor-y2"
+      ]
     },
     "master": {
       "name": "Master",
-      "courses": ["master"]
+      "courses": [
+        "master"
+      ]
     }
   },
   "positions": [
-    [""     ,"st-fo",""     ,""     ,"co-sk",""     ,""     ,""     ,""     ,"da-st",""     ],
-    ["prob" ,"me-va","hy-te",""     ,"rlang","fi-fo",""     ,""     ,""     ,"pr-se",""     ],
-    ["samp" ,"co-co",""     ,""     ,"da-ma",""     ,""     ,""     ,""     ,"dm-pl",""     ],
-    ["ef-si","causa",""     ,""     ,"dfs"  ,""     ,""     ,""     ,""     ,""     ,""     ],
-    ["co-si","hy-te",""     ,""     ,"dfs-a","str"  ,""     ,""     ,""     ,""     ,""     ],
-    [""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ],
-    [""     ,"in-st","de-st","psych","ma-co",""     ,""     ,""     ,""     ,""     ,""     ],
-    ["ttest","cor-t","visua","fa-an","text" ,""     ,""     ,""     ,""     ,""     ,""     ],
-    ["anova","regre","vis-a","scale","class",""     ,""     ,""     ,""     ,""     ,""     ],
-    ["diagn","ctrl" ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ],
-    ["power","med"  ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ],
-    [""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ],
-    [""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ],
-    [""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ,""     ]
+    [
+      "co-sk",
+      "fi-fo",
+      "rlang",
+      "da-ma",
+      "dfs",
+      "dfs-a",
+      "str",
+      "co-da",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "proj",
+      "quart",
+      "sumar",
+      "clean",
+      "trans",
+      "baser",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "psych",
+      "latnt",
+      "fa-an",
+      "scale",
+      "ma-co",
+      "",
+      "",
+      "",
+      "text",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "st-fo",
+      "prob",
+      "samp",
+      "cncpt",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "de-st",
+      "desc",
+      "me-va",
+      "co-co",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "visua",
+      "vis-a",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "in-st",
+      "hy-te",
+      "ttest",
+      "anova",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "corr",
+      "regre",
+      "diagn",
+      "ctrl",
+      "med",
+      "adv"
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "co-si",
+      "ef-si",
+      "power",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "cor-t",
+      "causa",
+      "ancov",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "da-st",
+      "dm-pl",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
   ],
   "modules": {
-  "psych": {
+    "psych": {
       "number": "0.0",
-      "title": "Psychometrics",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["dfs"],
-      "summary": "Introduction to psychometrics and measurement theory.",
+      "title": "Measurement",
+      "category": "measurement",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [],
+      "summary": "Measurement theory, reliability, and validity.",
       "url": ""
     },
     "co-da": {
       "number": "0.0",
       "title": "Communication Data",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["str", "dfs-a"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "str",
+        "dfs-a"
+      ],
       "summary": "Measuring and analyzing textual and multimedia data",
       "url": ""
     },
     "ma-co": {
       "number": "0.0",
       "title": "Manual Coding",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["latnt", "fa-an", "scale"],
+      "category": "measurement",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "scale"
+      ],
       "summary": "Manual coding of texts and inter-rater reliability.",
       "url": ""
     },
     "co-sk": {
-
       "number": "0.0",
       "title": "Computational Skills",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
       "parents": [],
       "summary": "Basic computational skills for reproducible research.",
       "url": ""
@@ -136,125 +336,181 @@
     "fi-fo": {
       "number": "0.0",
       "title": "File and Folders",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["co-sk"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "co-sk"
+      ],
       "summary": "Organizing files and folders for reproducible research.",
       "url": ""
     },
     "da-ma": {
       "number": "0.0",
       "title": "Data Management",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["rlang","fi-fo"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "rlang"
+      ],
       "summary": "Introduction to data management and the tidy data paradigm.",
       "url": ""
     },
     "da-st": {
       "number": "0.0",
       "title": "Data Stewardship",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["dfs"],
+      "category": "ethics",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [],
       "summary": "Responsible and ethical data management, privacy, and reproducibility.",
       "url": ""
     },
     "dm-pl": {
       "number": "0.0",
       "title": "Data Management Plan",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["da-st"],
+      "category": "ethics",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "da-st"
+      ],
       "summary": "Creating a data management plan for research projects.",
       "url": ""
     },
     "diagn": {
       "number": "0.0",
       "title": "Diagnostics",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["regre"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "regre"
+      ],
       "summary": "Model diagnostics, residuals, and assumptions.",
       "url": ""
     },
     "dfs-a": {
       "number": "0.0",
       "title": "Data Frames Advanced",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["dfs"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "dfs"
+      ],
       "summary": "Pivoting and joining data frames.",
       "url": ""
     },
     "power": {
       "number": "5.3",
       "title": "Power Analysis",
-      "category": "testing",
-      "courses": ["bachelor-y2"],
-      "parents": ["diagn", "ty-on"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "ef-si",
+        "ttest"
+      ],
       "summary": "Sample size planning, Type I/II errors, effect sizes, and power calculations with pwr.",
       "url": "5.3-power-analysis.html"
     },
     "ttest": {
       "number": "0.0",
       "title": "T-Test",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["hy-te"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "hy-te"
+      ],
       "summary": "Independent and paired-samples t-tests.",
       "url": "6.1-t-test.html"
     },
     "cor-t": {
       "number": "0.0",
       "title": "Correlation Test",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["hy-te"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "corr"
+      ],
       "summary": "Testing correlation coefficients for significance.",
       "url": ""
     },
     "anova": {
       "number": "6.2",
       "title": "ANOVA",
-      "category": "testing",
-      "courses": ["bachelor-y2"],
-      "parents": ["ttest"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "ttest"
+      ],
       "summary": "One-way and factorial ANOVA for comparing three or more condition means.",
       "url": "6.2-anova.html"
     },
     "regre": {
       "number": "7.2",
       "title": "Linear Regression",
-      "category": "modeling",
-      "courses": ["bachelor-y2"],
-      "parents": ["cor-t", "ttest"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "ttest",
+        "corr"
+      ],
       "summary": "Fitting OLS regression lines, interpreting slopes, residuals, and R-squared.",
       "url": "7.2-linear-regression.html"
     },
     "in-st": {
       "number": "0.0",
       "title": "Inferential Statistics",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["clean","hy-te"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "cncpt",
+        "co-co"
+      ],
       "summary": "Inferential statistics and hypothesis testing.",
       "url": ""
     },
     "de-st": {
       "number": "0.0",
       "title": "Descriptive Statistics",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["clean","causa"],
+      "category": "descriptive",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "st-fo",
+        "sumar"
+      ],
       "summary": "Descriptive statistics and data exploration.",
       "url": ""
     },
     "st-fo": {
       "number": "0.1",
       "title": "Statistical Foundations",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
+      "category": "foundations",
+      "courses": [
+        "bachelor-y1"
+      ],
       "parents": [],
       "summary": "Introduction to statistics and the scientific method.",
       "url": ""
@@ -262,81 +518,119 @@
     "prob": {
       "number": "0.2",
       "title": "Probability",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["st-fo"],
+      "category": "foundations",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "st-fo"
+      ],
       "summary": "Introduction to probability theory.",
       "url": ""
     },
     "samp": {
       "number": "0.3",
       "title": "Sampling",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["prob"],
+      "category": "foundations",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "prob"
+      ],
       "summary": "Using samples to make inferences about populations.",
       "url": ""
     },
     "me-va": {
       "number": "0.3",
       "title": "Means & Variance",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["st-fo"],
+      "category": "descriptive",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "desc"
+      ],
       "summary": "Understanding the mean and variance of a variable.",
       "url": ""
     },
     "co-co": {
       "number": "0.4",
       "title": "Correlation & Covariance",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["me-va"],
+      "category": "descriptive",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "me-va"
+      ],
       "summary": "Understanding linear relationships between variables.",
       "url": ""
     },
     "causa": {
       "number": "5.2",
       "title": "Causality",
-      "category": "testing",
-      "courses": ["bachelor-y1", "bachelor-y2"],
-      "parents": ["co-co"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1",
+        "bachelor-y2"
+      ],
+      "parents": [
+        "anova",
+        "regre"
+      ],
       "summary": "Causal inference, experiments, DAGs, confounders, and spurious links.",
       "url": "5.2-causality.html"
     },
     "ef-si": {
       "number": "0.4",
       "title": "Effect sizes",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["samp", "causa"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "co-si"
+      ],
       "summary": "How do we measure effects and how do we interpret them?",
       "url": ""
     },
     "co-si": {
       "number": "0.5",
       "title": "Confidence and Significance",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["ef-si"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "hy-te"
+      ],
       "summary": "How do we know if our effects are real? Confidence intervals and significance testing.",
       "url": ""
     },
     "hy-te": {
       "number": "0.6",
       "title": "Hypothesis Testing",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["co-si"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "in-st"
+      ],
       "summary": "Formulating and testing hypotheses using statistical methods.",
       "url": ""
     },
     "rlang": {
       "number": "1.1",
       "title": "R language",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": [],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "fi-fo"
+      ],
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
       "url": "1.1-working-with-r.html"
     },
@@ -344,35 +638,49 @@
       "number": "3.1",
       "title": "Latent Variables",
       "category": "measurement",
-      "courses": ["bachelor-y2"],
-      "parents": [],
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "psych"
+      ],
       "summary": "Theoretical constructs, multi-item measurement, and operationalization.",
       "url": "3.1-latent-variables.html"
     },
     "proj": {
       "number": "1.2",
       "title": "R Projects & Paths",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["rlang"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "rlang"
+      ],
       "summary": "Managing project directories, relative paths, and self-contained workflows.",
       "url": "1.2-projects.html"
     },
     "dfs": {
       "number": "2.1",
       "title": "Data Frames",
-      "category": "management",
-      "courses": ["bachelor-y1"],
-      "parents": ["r-bas"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "da-ma"
+      ],
       "summary": "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows.",
       "url": "2.1-data-frames.html"
     },
     "baser": {
       "number": "1.4",
       "title": "Base R Fundamentals",
-      "category": "workflow",
+      "category": "computational",
       "courses": [],
-      "parents": ["r-bas"],
+      "parents": [
+        "rlang"
+      ],
       "summary": "Base R square-bracket indexing, dollar signs, and writing custom functions.",
       "url": "1.4-base-r.html"
     },
@@ -380,44 +688,64 @@
       "number": "3.2",
       "title": "Factor Analysis",
       "category": "measurement",
-      "courses": ["bachelor-y2"],
-      "parents": ["latnt"],
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "latnt"
+      ],
       "summary": "Exploratory factor analysis (EFA), scree plots, and factor loadings.",
       "url": "3.2-factor-analysis.html"
     },
     "quart": {
       "number": "1.3",
       "title": "Quarto Reports",
-      "category": "workflow",
-      "courses": ["bachelor-y1"],
-      "parents": ["r-bas"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "rlang"
+      ],
       "summary": "Weaving narrative text, R code, tables, and plots into reproducible documents.",
       "url": "1.3-quarto.html"
     },
     "sumar": {
       "number": "2.2",
       "title": "Summarizing Data",
-      "category": "management",
-      "courses": ["bachelor-y1"],
-      "parents": ["dfs", "co-co"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "dfs"
+      ],
       "summary": "Aggregating, grouping, and calculating summary metrics with dplyr.",
       "url": "2.2-summarizing.html"
     },
     "clean": {
       "number": "2.3",
       "title": "Data Cleaning",
-      "category": "management",
-      "courses": ["bachelor-y1"],
-      "parents": ["dfs"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "dfs"
+      ],
       "summary": "Handling missing data, recoding categorical values, and auditing sanity.",
       "url": "2.3-data-cleaning.html"
     },
     "str": {
       "number": "2.5",
       "title": "Strings & Pattern",
-      "category": "management",
-      "courses": ["master"],
-      "parents": ["dfs"],
+      "category": "computational",
+      "courses": [
+        "master"
+      ],
+      "parents": [
+        "dfs-a"
+      ],
       "summary": "String manipulation with stringr: regex detection, extraction, and trimming.",
       "url": "2.5-strings.html"
     },
@@ -425,107 +753,157 @@
       "number": "3.3",
       "title": "Scale Construction",
       "category": "measurement",
-      "courses": ["bachelor-y2"],
-      "parents": ["fa-an"],
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "fa-an"
+      ],
       "summary": "Evaluating Cronbach's alpha, item discrimination, and index creation.",
       "url": "3.3-scale-construction.html"
     },
     "visua": {
       "number": "4.2",
       "title": "Data Visualization",
-      "category": "exploration",
-      "courses": ["bachelor-y1"],
-      "parents": ["de-st"],
+      "category": "descriptive",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "de-st"
+      ],
       "summary": "Grammar of graphics with ggplot2: histograms, scatterplots, and themes.",
       "url": "4.2-visualization.html"
     },
     "vis-a": {
       "number": "4.3",
       "title": "Advanced Visualization",
-      "category": "exploration",
-      "courses": ["bachelor-y2"],
-      "parents": ["visua","dfs-a"],
+      "category": "descriptive",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "visua",
+        "dfs-a"
+      ],
       "summary": "Advanced visualization techniques: pooling, faceting, and interactive plots.",
       "url": "4.3-advanced-visualization.html"
     },
     "trans": {
       "number": "2.4",
       "title": "Transformations",
-      "category": "management",
-      "courses": ["bachelor-y2"],
-      "parents": ["clean"],
+      "category": "computational",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "clean"
+      ],
       "summary": "Standardization, z-scores, and computing transformations.",
       "url": "2.4-transformations.html"
     },
     "text": {
       "number": "8.1",
       "title": "Content Analysis",
-      "category": "text",
-      "courses": ["master"],
-      "parents": ["str"],
+      "category": "measurement",
+      "courses": [
+        "master"
+      ],
+      "parents": [
+        "co-da",
+        "ma-co"
+      ],
       "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
       "url": "8.1-content-analysis.html"
     },
     "desc": {
       "number": "4.1",
       "title": "Descriptives",
-      "category": "exploration",
-      "courses": ["bachelor-y1"],
-      "parents": ["sumar"],
+      "category": "descriptive",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "de-st"
+      ],
       "summary": "Measures of central tendency, dispersion, frequency tables, and outliers.",
       "url": "4.1-descriptive-statistics.html"
     },
     "cncpt": {
       "number": "5.1",
       "title": "Statistical Concepts",
-      "category": "testing",
-      "courses": ["bachelor-y1"],
-      "parents": [],
+      "category": "foundations",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "samp"
+      ],
       "summary": "Hypothesis testing, NHST, p-values, significance, and inferential logic.",
       "url": "5.1-statistical-concepts.html"
     },
     "corr": {
       "number": "7.1",
       "title": "Correlation",
-      "category": "modeling",
-      "courses": ["bachelor-y1"],
-      "parents": ["desc", "cncpt"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "hy-te",
+        "co-co"
+      ],
       "summary": "Measuring linear association between continuous variables with Pearson's r.",
       "url": "7.1-covariance-and-correlation.html"
     },
     "ancov": {
       "number": "6.3",
       "title": "ANCOVA",
-      "category": "testing",
-      "courses": ["bachelor-y2"],
-      "parents": ["anova", "cause"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "causa",
+        "anova"
+      ],
       "summary": "Controlling for continuous covariates in experimental group comparisons.",
       "url": "6.3-ancova.html"
     },
     "ctrl": {
       "number": "7.3",
       "title": "Controlling",
-      "category": "modeling",
-      "courses": ["bachelor-y2"],
-      "parents": ["regre"],
+      "category": "inferential",
+      "courses": [
+        "bachelor-y2"
+      ],
+      "parents": [
+        "diagn"
+      ],
       "summary": "Controlling for confounders and covariates in regression models.",
       "url": "7.3-controlling.html"
     },
     "med": {
       "number": "7.4",
       "title": "Mediation Analysis",
-      "category": "modeling",
-      "courses": ["master"],
-      "parents": ["ctrl"],
+      "category": "inferential",
+      "courses": [
+        "master"
+      ],
+      "parents": [
+        "ctrl"
+      ],
       "summary": "Decomposing total effects into direct and indirect paths via mediators.",
       "url": "7.4-mediation.html"
     },
     "adv": {
       "number": "9.1",
       "title": "Advanced Models",
-      "category": "modeling",
+      "category": "inferential",
       "courses": [],
-      "parents": ["med"],
+      "parents": [
+        "med"
+      ],
       "summary": "Roadmap to Multilevel (HLM), Logistic GLMs, and Structural Equations (SEM).",
       "url": "9.1-advanced-modeling.html"
     }
