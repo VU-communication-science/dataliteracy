@@ -93,138 +93,17 @@
     }
   },
   "positions": [
-    [
-      "prob",
-      "me-va",
-      "",
-      "",
-      "",
-      "co-sk",
-      "",
-      "",
-      "da-st",
-      ""
-    ],
-    [
-      "norm",
-      "co-co",
-      "causa",
-      "",
-      "",
-      "fi-fo",
-      "",
-      "",
-      "dm-pl",
-      ""
-    ],
-    [
-      "error",
-      "ef-si",
-      "",
-      "",
-      "",
-      "rlang",
-      "",
-      "",
-      "",
-      ""
-    ],
-    [
-      "hy-te",
-      "",
-      "",
-      "",
-      "",
-      "da-ma",
-      "",
-      "",
-      "",
-      ""
-    ],
-    [
-      "ttest",
-      "cor-t",
-      "",
-      "",
-      "",
-      "dfs",
-      "de-st",
-      "",
-      "",
-      "psych"
-    ],
-    [
-      "s-reg",
-      "",
-      "",
-      "",
-      "",
-      "dfs-a",
-      "visua",
-      "",
-      "",
-      "fa-an"
-    ],
-    [
-      "anova",
-      "regre",
-      "diagn",
-      "power",
-      "",
-      "str",
-      "vis-a",
-      "",
-      "",
-      "scale"
-    ],
-    [
-      "",
-      "ctrl",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "ma-co"
-    ],
-    [
-      "",
-      "med",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "text"
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
+    [ "probs", "me-va", "     ", "     ", "     ", "co-sk", "     ", "     ", "da-st", "     " ],
+    [ "norms", "co-co", "causa", "     ", "     ", "fi-fo", "     ", "     ", "dm-pl", "     " ],
+    [ "error", "ef-si", "     ", "     ", "     ", "rlang", "     ", "     ", "     ", "     " ],
+    [ "hy-te", "     ", "     ", "     ", "     ", "da-ma", "     ", "     ", "     ", "     " ],
+    [ "ttest", "cor-t", "     ", "     ", "     ", "dfs00", "de-st", "     ", "     ", "psych" ],
+    [ "s-reg", "     ", "     ", "     ", "     ", "dfs-a", "visua", "     ", "     ", "fa-an" ],
+    [ "anova", "regre", "diagn", "power", "     ", "strng", "vis-a", "     ", "     ", "scale" ],
+    [ "     ", "ctrls", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "ma-co" ],
+    [ "     ", "media", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "texts" ],
+    [ "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     " ],
+    [ "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     " ]
   ],
   "modules": {
     "psych": {
@@ -235,7 +114,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "dfs"
+        "dfs00"
       ],
       "summary": "Measurement theory, reliability, and validity.",
       "url": ""
@@ -299,7 +178,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "dfs"
+        "dfs00"
       ],
       "summary": "Responsible and ethical data management, privacy, and reproducibility.",
       "url": ""
@@ -338,7 +217,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "dfs"
+        "dfs00"
       ],
       "summary": "Pivoting and joining data frames.",
       "url": ""
@@ -416,13 +295,13 @@
         "bachelor-y1"
       ],
       "parents": [
-        "dfs",
+        "dfs00",
         "me-va"
       ],
       "summary": "Descriptive statistics and data exploration.",
       "url": ""
     },
-    "prob": {
+    "probs": {
       "number": "0.2",
       "title": "Probability & Sampling",
       "category": "foundations",
@@ -509,7 +388,7 @@
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
       "url": "1.1-working-with-r.html"
     },
-    "dfs": {
+    "dfs00": {
       "number": "2.1",
       "title": "Data Frames",
       "category": "computational",
@@ -535,7 +414,7 @@
       "summary": "Exploratory factor analysis (EFA), scree plots, and factor loadings.",
       "url": "3.2-factor-analysis.html"
     },
-    "str": {
+    "strng": {
       "number": "2.5",
       "title": "Strings & Pattern",
       "category": "computational",
@@ -543,7 +422,7 @@
         "master"
       ],
       "parents": [
-        "dfs"
+        "dfs00"
       ],
       "summary": "String manipulation with stringr: regex detection, extraction, and trimming.",
       "url": "2.5-strings.html"
@@ -588,7 +467,7 @@
       "summary": "Advanced visualization techniques: pooling, faceting, and interactive plots.",
       "url": "4.3-advanced-visualization.html"
     },
-    "text": {
+    "texts": {
       "number": "8.1",
       "title": "Content Analysis",
       "category": "measurement",
@@ -596,13 +475,13 @@
         "master"
       ],
       "parents": [
-        "str",
+        "strng",
         "ma-co"
       ],
       "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
       "url": "8.1-content-analysis.html"
     },
-    "ctrl": {
+    "ctrls": {
       "number": "7.3",
       "title": "Controlling",
       "category": "inferential",
@@ -615,7 +494,7 @@
       "summary": "Controlling for confounders and covariates in regression models.",
       "url": "7.3-controlling.html"
     },
-    "med": {
+    "media": {
       "number": "7.4",
       "title": "Mediation Analysis",
       "category": "inferential",
@@ -623,7 +502,7 @@
         "master"
       ],
       "parents": [
-        "ctrl"
+        "ctrls"
       ],
       "summary": "Decomposing total effects into direct and indirect paths via mediators.",
       "url": "7.4-mediation.html"
@@ -643,7 +522,7 @@
       "summary": "The simple linear model: intercept, slope, fitted values, and residuals.",
       "url": "7.2-linear-regression.html"
     },
-    "norm": {
+    "norms": {
       "number": "0.3",
       "title": "Normal Distribution",
       "category": "foundations",
@@ -651,7 +530,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "prob",
+        "probs",
         "me-va"
       ],
       "summary": "The bell curve, empirical distributions, the 68-95-99.7 rule, and z-score standardization.",
@@ -665,7 +544,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "norm"
+        "norms"
       ],
       "summary": "Standard errors, the Central Limit Theorem, and random sampling noise.",
       "url": ""
