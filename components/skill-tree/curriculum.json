@@ -94,8 +94,8 @@
   },
   "positions": [
     [
-      "",
-      "st-fo",
+      "prob",
+      "me-va",
       "",
       "",
       "",
@@ -106,9 +106,9 @@
       ""
     ],
     [
+      "norm",
+      "co-co",
       "causa",
-      "prob",
-      "me-va",
       "",
       "",
       "fi-fo",
@@ -118,9 +118,9 @@
       ""
     ],
     [
+      "error",
+      "ef-si",
       "",
-      "samp",
-      "co-co",
       "",
       "",
       "rlang",
@@ -130,9 +130,9 @@
       ""
     ],
     [
+      "hy-te",
       "",
       "",
-      "ef-si",
       "",
       "",
       "da-ma",
@@ -142,8 +142,8 @@
       ""
     ],
     [
-      "",
-      "hy-te",
+      "ttest",
+      "cor-t",
       "",
       "",
       "",
@@ -154,9 +154,9 @@
       "psych"
     ],
     [
+      "s-reg",
       "",
-      "ttest",
-      "cor-t",
+      "",
       "",
       "",
       "dfs-a",
@@ -166,28 +166,16 @@
       "fa-an"
     ],
     [
-      "",
-      "s-reg",
-      "",
-      "",
+      "anova",
+      "regre",
+      "diagn",
+      "power",
       "",
       "str",
       "vis-a",
       "",
       "",
       "scale"
-    ],
-    [
-      "anova",
-      "regre",
-      "diagn",
-      "power",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "ma-co"
     ],
     [
       "",
@@ -199,11 +187,23 @@
       "",
       "",
       "",
-      "text"
+      "ma-co"
     ],
     [
       "",
       "med",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "text"
+    ],
+    [
+      "",
+      "",
       "",
       "",
       "",
@@ -417,46 +417,20 @@
       ],
       "parents": [
         "dfs",
-        "st-fo"
+        "me-va"
       ],
       "summary": "Descriptive statistics and data exploration.",
       "url": ""
     },
-    "st-fo": {
-      "number": "0.1",
-      "title": "Statistical Foundations",
+    "prob": {
+      "number": "0.2",
+      "title": "Probability & Sampling",
       "category": "foundations",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [],
-      "summary": "Introduction to statistics and the scientific method.",
-      "url": ""
-    },
-    "prob": {
-      "number": "0.2",
-      "title": "Probability",
-      "category": "foundations",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "st-fo"
-      ],
-      "summary": "Introduction to probability theory.",
-      "url": ""
-    },
-    "samp": {
-      "number": "0.3",
-      "title": "Sampling",
-      "category": "foundations",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "prob"
-      ],
-      "summary": "Using samples to make inferences about populations.",
+      "summary": "Probability theory, random sampling, and sampling variability.",
       "url": ""
     },
     "me-va": {
@@ -466,9 +440,7 @@
       "courses": [
         "bachelor-y1"
       ],
-      "parents": [
-        "st-fo"
-      ],
+      "parents": [],
       "summary": "Understanding the mean and variance of a variable.",
       "url": ""
     },
@@ -520,11 +492,11 @@
         "bachelor-y1"
       ],
       "parents": [
-        "samp",
+        "error",
         "ef-si"
       ],
       "summary": "Formulating and testing hypotheses using statistical methods.",
-      "url": ""
+      "url": "5.1-statistical-concepts.html"
     },
     "rlang": {
       "number": "1.1",
@@ -670,6 +642,33 @@
       ],
       "summary": "The simple linear model: intercept, slope, fitted values, and residuals.",
       "url": "7.2-linear-regression.html"
+    },
+    "norm": {
+      "number": "0.3",
+      "title": "Normal Distribution",
+      "category": "foundations",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "prob",
+        "me-va"
+      ],
+      "summary": "The bell curve, empirical distributions, the 68-95-99.7 rule, and z-score standardization.",
+      "url": ""
+    },
+    "error": {
+      "number": "0.4",
+      "title": "Sampling Error",
+      "category": "foundations",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "norm"
+      ],
+      "summary": "Standard errors, the Central Limit Theorem, and random sampling noise.",
+      "url": ""
     }
   }
 }
