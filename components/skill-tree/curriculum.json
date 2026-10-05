@@ -6,35 +6,35 @@
       "bg": "#f0f9ff",
       "border": "#bae6fd"
     },
-    "design": {
-      "name": "Research Design",
-      "color": "#e11d48",
-      "bg": "#fff1f2",
-      "border": "#fecdd3"
-    },
     "computational": {
       "name": "Computational Skills",
       "color": "#2563eb",
       "bg": "#eff6ff",
       "border": "#bfdbfe"
     },
-    "ethics": {
-      "name": "Data Law & Ethics",
-      "color": "#d97706",
-      "bg": "#fffbeb",
-      "border": "#fde68a"
-    },
     "measurement": {
-      "name": "Measurement & Content",
+      "name": "Measurement",
       "color": "#7c3aed",
       "bg": "#f5f3ff",
       "border": "#ddd6fe"
     },
+    "management": {
+      "name": "Data Management",
+      "color": "#eab308",
+      "bg": "#fefce8",
+      "border": "#fef9c3"
+    },
+    "content": {
+      "name": "Content Analysis",
+      "color": "#f97316",
+      "bg": "#fff7ed",
+      "border": "#ffedd5"
+    },
     "descriptive": {
       "name": "Descriptive Statistics",
-      "color": "#059669",
-      "bg": "#ecfdf5",
-      "border": "#a7f3d0"
+      "color": "#e11d48",
+      "bg": "#fff1f2",
+      "border": "#fecdd3"
     },
     "inferential": {
       "name": "Inferential Statistics",
@@ -93,107 +93,27 @@
     }
   },
   "positions": [
-    [ "probs", "me-va", "     ", "     ", "     ", "co-sk", "     ", "     ", "da-st", "     " ],
-    [ "norms", "co-co", "causa", "     ", "     ", "fi-fo", "     ", "     ", "dm-pl", "     " ],
-    [ "error", "ef-si", "     ", "     ", "     ", "rlang", "     ", "     ", "     ", "     " ],
-    [ "hy-te", "     ", "     ", "     ", "     ", "da-ma", "     ", "     ", "     ", "     " ],
-    [ "ttest", "cor-t", "     ", "     ", "     ", "dfs00", "de-st", "     ", "     ", "psych" ],
-    [ "s-reg", "     ", "     ", "     ", "     ", "dfs-a", "visua", "     ", "     ", "fa-an" ],
-    [ "anova", "regre", "diagn", "power", "     ", "strng", "vis-a", "     ", "     ", "scale" ],
-    [ "     ", "ctrls", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "ma-co" ],
-    [ "     ", "media", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "texts" ],
-    [ "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     " ],
-    [ "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     ", "     " ]
+    ["compu","     ","     ","     ","me-va","probs"],
+    ["rlang","     ","     ","     ","co-co","ef-si"],
+    ["     ","dfs-1","     ","     ","causa","hy-te"],
+    ["strng","clean","de-st","fa-an","     ","     "],
+    ["     ","dfs-2","visua","scale","     ","     "],
+    ["     ","     ","vis-a","     ","ttest","cor-t"],
+    ["     ","     ","     ","anova","s-reg","diagn"],
+    ["co-an","     ","     ","     ","regre","power"],
+    ["class","     ","     ","     ","ctrls","media"]
   ],
   "modules": {
-    "psych": {
+    "compu": {
       "number": "0.0",
-      "title": "Measurement",
-      "category": "measurement",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "dfs00"
-      ],
-      "summary": "Measurement theory, reliability, and validity.",
-      "url": ""
-    },
-    "ma-co": {
-      "number": "0.0",
-      "title": "Manual Coding",
-      "category": "measurement",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "scale"
-      ],
-      "summary": "Manual coding of texts and inter-rater reliability.",
-      "url": ""
-    },
-    "co-sk": {
-      "number": "0.0",
-      "title": "Computational Skills",
-      "category": "computational",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [],
-      "summary": "Basic computational skills for reproducible research.",
-      "url": ""
-    },
-    "fi-fo": {
-      "number": "0.0",
-      "title": "File and Folders",
+      "title": "Computer basics",
       "category": "computational",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "co-sk"
       ],
-      "summary": "Organizing files and folders for reproducible research.",
-      "url": ""
-    },
-    "da-ma": {
-      "number": "0.0",
-      "title": "Data Management",
-      "category": "computational",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "rlang",
-        "fi-fo"
-      ],
-      "summary": "Introduction to data management and the tidy data paradigm.",
-      "url": ""
-    },
-    "da-st": {
-      "number": "0.0",
-      "title": "Data Stewardship",
-      "category": "ethics",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "dfs00"
-      ],
-      "summary": "Responsible and ethical data management, privacy, and reproducibility.",
-      "url": ""
-    },
-    "dm-pl": {
-      "number": "0.0",
-      "title": "Data Management Plan",
-      "category": "ethics",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "da-st"
-      ],
-      "summary": "Creating a data management plan for research projects.",
+      "summary": "Basic computer skills, file management, and software installation.",
       "url": ""
     },
     "diagn": {
@@ -209,15 +129,15 @@
       "summary": "Model diagnostics, residuals, and assumptions.",
       "url": ""
     },
-    "dfs-a": {
+    "dfs-2": {
       "number": "0.0",
       "title": "Data Frames Advanced",
-      "category": "computational",
+      "category": "management",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "dfs00"
+        "dfs-1"
       ],
       "summary": "Pivoting and joining data frames.",
       "url": ""
@@ -295,8 +215,8 @@
         "bachelor-y1"
       ],
       "parents": [
-        "dfs00",
-        "me-va"
+        "dfs-1",
+        "co-co"
       ],
       "summary": "Descriptive statistics and data exploration.",
       "url": ""
@@ -339,7 +259,7 @@
     "causa": {
       "number": "5.2",
       "title": "Causality",
-      "category": "design",
+      "category": "foundations",
       "courses": [
         "bachelor-y1",
         "bachelor-y2"
@@ -358,7 +278,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "co-co"
+        "co-co", "probs"
       ],
       "summary": "How do we measure effects and how do we interpret them?",
       "url": ""
@@ -371,11 +291,24 @@
         "bachelor-y1"
       ],
       "parents": [
-        "error",
-        "ef-si"
+        "ef-si",
+        "causa"
       ],
       "summary": "Formulating and testing hypotheses using statistical methods.",
       "url": "5.1-statistical-concepts.html"
+    },
+    "clean": {
+      "number": "2.4",
+      "title": "Data Cleaning",
+      "category": "management",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "dfs-1"
+      ],
+      "summary": "Data cleaning: missing values, duplicates, and recoding.",
+      "url": "2.4-data-cleaning.html"
     },
     "rlang": {
       "number": "1.1",
@@ -384,19 +317,19 @@
       "courses": [
         "bachelor-y1"
       ],
-      "parents": [],
+      "parents": ["compu"],
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
       "url": "1.1-working-with-r.html"
     },
-    "dfs00": {
+    "dfs-1": {
       "number": "2.1",
       "title": "Data Frames",
-      "category": "computational",
+      "category": "management",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "da-ma"
+        "rlang"
       ],
       "summary": "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows.",
       "url": "2.1-data-frames.html"
@@ -409,7 +342,7 @@
         "bachelor-y2"
       ],
       "parents": [
-        "psych"
+        "co-co", "dfs-1"
       ],
       "summary": "Exploratory factor analysis (EFA), scree plots, and factor loadings.",
       "url": "3.2-factor-analysis.html"
@@ -417,12 +350,12 @@
     "strng": {
       "number": "2.5",
       "title": "Strings & Pattern",
-      "category": "computational",
+      "category": "management",
       "courses": [
         "master"
       ],
       "parents": [
-        "dfs00"
+        "rlang"
       ],
       "summary": "String manipulation with stringr: regex detection, extraction, and trimming.",
       "url": "2.5-strings.html"
@@ -462,15 +395,15 @@
       ],
       "parents": [
         "visua",
-        "dfs-a"
+        "dfs-2"
       ],
       "summary": "Advanced visualization techniques: pooling, faceting, and interactive plots.",
       "url": "4.3-advanced-visualization.html"
     },
-    "texts": {
+    "co-an": {
       "number": "8.1",
       "title": "Content Analysis",
-      "category": "measurement",
+      "category": "content",
       "courses": [
         "master"
       ],
@@ -480,6 +413,19 @@
       ],
       "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
       "url": "8.1-content-analysis.html"
+    },
+    "class": {
+      "number": "8.2",
+      "title": "Text Classification",
+      "category": "content",
+      "courses": [
+        "master"
+      ],
+      "parents": [
+        "co-an"
+      ],
+      "summary": "Supervised text classification with bag-of-words and embeddings.",
+      "url": "8.2-text-classification.html"
     },
     "ctrls": {
       "number": "7.3",
@@ -521,33 +467,6 @@
       ],
       "summary": "The simple linear model: intercept, slope, fitted values, and residuals.",
       "url": "7.2-linear-regression.html"
-    },
-    "norms": {
-      "number": "0.3",
-      "title": "Normal Distribution",
-      "category": "foundations",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "probs",
-        "me-va"
-      ],
-      "summary": "The bell curve, empirical distributions, the 68-95-99.7 rule, and z-score standardization.",
-      "url": ""
-    },
-    "error": {
-      "number": "0.4",
-      "title": "Sampling Error",
-      "category": "foundations",
-      "courses": [
-        "bachelor-y1"
-      ],
-      "parents": [
-        "norms"
-      ],
-      "summary": "Standard errors, the Central Limit Theorem, and random sampling noise.",
-      "url": ""
     }
   }
 }
