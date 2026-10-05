@@ -15,14 +15,14 @@
     "computational": {
       "name": "Computational Skills",
       "color": "#2563eb",
-      "bg": "#eff6ff",
+      "bg": "#eff6aa",
       "border": "#bfdbfe"
     },
-    "measurement": {
-      "name": "Measurement",
-      "color": "#7c3aed",
-      "bg": "#f5f3ff",
-      "border": "#ddd6fe"
+    "causality": {
+      "name": "Causality",
+      "color": "#db2777",
+      "bg": "#bbf4f8",
+      "border": "#fecdd3"
     },
     "management": {
       "name": "Data Management",
@@ -36,8 +36,8 @@
       "bg": "#fff7ed",
       "border": "#ffedd5"
     },
-    "descriptive": {
-      "name": "Descriptive Statistics",
+    "exploration": {
+      "name": "Exploration and Measurement",
       "color": "#e11d48",
       "bg": "#fff1f2",
       "border": "#fecdd3"
@@ -99,17 +99,19 @@
     }
   },
   "positions": [
-    ["     ","compu","rlang","     ","me-va","probs"],
-    ["strng","     ","dfs-1","     ","co-co","ef-si"],
-    ["     ","dfs-2","clean","     ","     ","hy-te"],
-    ["     ","     ","     ","     ","de-st","     "],
-    ["     ","     ","visua","fa-an","     ","     "],
-    ["     ","     ","vis-a","scale","     ","     "],
-    ["class","co-an","     ","     ","ttest","cor-t"],
-    ["     ","     ","     ","power","s-reg","diagn"],
-    ["     ","     ","     ","anova","causa","regre"],
-    ["     ","     ","     ","exper","ctrls","ctrls"],
-    ["     ","     ","     ","     ","     ","media"]
+    ["     ","     ","     ","     ","     ","     "],
+    ["     ","     ","fi-fo","rlang","     ","     "],
+    ["     ","clean","dfs-1","     ","me-va","probs"],
+    ["     ","strng","summa","     ","co-co","ef-si"],
+    ["     ","     ","dfs-2","de-st","     ","     "],
+    ["     ","     ","vis-a","visua","fa-an","     "],
+    ["     ","     ","     ","     ","scale","     "],
+    ["class","co-an","     ","     ","     ","hy-te"],
+    ["     ","     ","     ","causa","cor-t","     "],
+    ["     ","     ","con-e","con-s","regre","ttest"],
+    ["     ","     ","     ","media","lin-m","anova"],
+    ["     ","     ","     ","     ","power","diagn"],
+    ["     ","     ","     ","     ","     ","     "]
   ],
   "modules": {
     // "surve": {
@@ -123,27 +125,40 @@
     //   "summary": "Designing surveys, sampling, and questionnaire construction.",
     //   "url": ""
     // },
-    "exper": {
+    "con-e": {
       "number": "0.0",
-      "title": "Experimental designs",
-      "category": "design",
+      "title": "Experimental control",
+      "category": "causality",
       "courses": [
         "bachelor-y1"
       ],
-      "parents": ["anova", "causa"],
+      "parents": ["causa"],
       "summary": "Designing and analyzing experiments, randomization, and control groups.",
       "url": ""
     },
-    "compu": {
+    "fi-fo": {
       "number": "0.0",
-      "title": "Computer basics",
+      "title": "Files and Folders",
       "category": "computational",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
       ],
-      "summary": "Basic computer skills, file management, and software installation.",
+      "summary": "Organizing files and folders.",
+      "url": ""
+    },
+    "lin-m": {
+      "number": "0.0",
+      "title": "Linear Model",
+      "category": "inferential",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "regre","anova"
+      ],
+      "summary": "Understanding the linear model.",
       "url": ""
     },
     "diagn": {
@@ -154,20 +169,20 @@
         "bachelor-y1"
       ],
       "parents": [
-        "s-reg"
+        "lin-m"
       ],
       "summary": "Model diagnostics, residuals, and assumptions.",
       "url": ""
     },
     "dfs-2": {
       "number": "0.0",
-      "title": "Data Frames Advanced",
+      "title": "Pivoting and joining",
       "category": "management",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "dfs-1"
+        "summa"
       ],
       "summary": "Pivoting and joining data frames.",
       "url": ""
@@ -180,20 +195,20 @@
         "bachelor-y2"
       ],
       "parents": [
-        "s-reg"
+        "lin-m"
       ],
       "summary": "Sample size planning, Type I/II errors, effect sizes, and power calculations with pwr.",
       "url": "5.3-power-analysis.html"
     },
     "ttest": {
       "number": "0.0",
-      "title": "T-Test",
+      "title": "T-Test for comparing means",
       "category": "inferential",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "de-st"
+        "hy-te"
       ],
       "summary": "Independent and paired-samples t-tests.",
       "url": "6.1-t-test.html"
@@ -206,7 +221,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "hy-te", "de-st"
+        "hy-te"
       ],
       "summary": "Testing correlation coefficients for significance.",
       "url": ""
@@ -219,20 +234,20 @@
         "bachelor-y2"
       ],
       "parents": [
-        "s-reg"
+        "ttest"
       ],
       "summary": "One-way and factorial ANOVA for comparing three or more condition means.",
       "url": "6.2-anova.html"
     },
     "regre": {
       "number": "7.2",
-      "title": "Multiple Regression",
+      "title": "Regression",
       "category": "inferential",
       "courses": [
         "bachelor-y2"
       ],
       "parents": [
-        "s-reg"
+        "ttest","cor-t"
       ],
       "summary": "Fitting OLS regression lines, interpreting slopes, residuals, and R-squared.",
       "url": "7.2-linear-regression.html"
@@ -240,12 +255,12 @@
     "de-st": {
       "number": "0.0",
       "title": "Descriptive Statistics",
-      "category": "descriptive",
+      "category": "exploration",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "dfs-1",
+        "summa",
         "co-co"
       ],
       "summary": "Descriptive statistics and data exploration.",
@@ -269,7 +284,7 @@
       "courses": [
         "bachelor-y1"
       ],
-      "parents": [],
+      "parents": ["rlang"],
       "summary": "Understanding the mean and variance of a variable.",
       "url": ""
     },
@@ -286,16 +301,29 @@
       "summary": "Understanding linear relationships between variables.",
       "url": ""
     },
+    "summa": {
+      "number": "0.5",
+      "title": "Grouping and summarizing",
+      "category": "management",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "dfs-1"
+      ],
+      "summary": "Calculating and interpreting summary statistics.",
+      "url": ""
+    },
     "causa": {
       "number": "5.2",
       "title": "Causality",
-      "category": "foundations",
+      "category": "causality",
       "courses": [
         "bachelor-y1",
         "bachelor-y2"
       ],
       "parents": [
-        ""
+        "hy-te"
       ],
       "summary": "Causal inference, experiments, DAGs, confounders, and spurious links.",
       "url": "5.2-causality.html"
@@ -346,7 +374,7 @@
       "courses": [
         "bachelor-y1"
       ],
-      "parents": ["compu"],
+      "parents": [],
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
       "url": "1.1-working-with-r.html"
     },
@@ -358,7 +386,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "rlang"
+        "rlang","fi-fo"
       ],
       "summary": "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows.",
       "url": "2.1-data-frames.html"
@@ -366,7 +394,7 @@
     "fa-an": {
       "number": "3.2",
       "title": "Factor Analysis",
-      "category": "measurement",
+      "category": "exploration",
       "courses": [
         "bachelor-y2"
       ],
@@ -378,13 +406,13 @@
     },
     "strng": {
       "number": "2.5",
-      "title": "Strings & Pattern",
+      "title": "String processing",
       "category": "management",
       "courses": [
         "master"
       ],
       "parents": [
-        "rlang"
+        "dfs-1"
       ],
       "summary": "String manipulation with stringr: regex detection, extraction, and trimming.",
       "url": "2.5-strings.html"
@@ -392,7 +420,7 @@
     "scale": {
       "number": "3.3",
       "title": "Scale Construction",
-      "category": "measurement",
+      "category": "exploration",
       "courses": [
         "bachelor-y2"
       ],
@@ -405,7 +433,7 @@
     "visua": {
       "number": "4.2",
       "title": "Data Visualization",
-      "category": "descriptive",
+      "category": "exploration",
       "courses": [
         "bachelor-y1"
       ],
@@ -418,7 +446,7 @@
     "vis-a": {
       "number": "4.3",
       "title": "Advanced Visualization",
-      "category": "descriptive",
+      "category": "exploration",
       "courses": [
         "bachelor-y2"
       ],
@@ -437,7 +465,7 @@
         "master"
       ],
       "parents": [
-        "ctrls"
+        ""
       ],
       "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
       "url": "8.1-content-analysis.html"
@@ -455,10 +483,10 @@
       "summary": "Supervised text classification with bag-of-words and embeddings.",
       "url": "8.2-text-classification.html"
     },
-    "ctrls": {
+    "con-s": {
       "number": "7.3",
-      "title": "Controlling",
-      "category": "inferential",
+      "title": "Statistical control",
+      "category": "causality",
       "courses": [
         "bachelor-y2"
       ],
@@ -471,30 +499,15 @@
     "media": {
       "number": "7.4",
       "title": "Mediation Analysis",
-      "category": "inferential",
+      "category": "causality",
       "courses": [
         "master"
       ],
       "parents": [
-        "ctrls"
+        "con-s"
       ],
       "summary": "Decomposing total effects into direct and indirect paths via mediators.",
       "url": "7.4-mediation.html"
-    },
-    "s-reg": {
-      "number": "7.1",
-      "title": "Simple Regression",
-      "category": "inferential",
-      "courses": [
-        "bachelor-y1",
-        "bachelor-y2"
-      ],
-      "parents": [
-        "ttest",
-        "cor-t"
-      ],
-      "summary": "The simple linear model: intercept, slope, fitted values, and residuals.",
-      "url": "7.2-linear-regression.html"
     }
   }
 }
