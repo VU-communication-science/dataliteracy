@@ -1,0 +1,63 @@
+---
+title: "7.2 Manual Coding"
+subtitle: "Manual coding of text data, inter-coder reliability, and coding schemes."
+---
+
+Imagine two research assistants independently read the same 50 news articles and each decide, article by article, whether the tone toward immigration is positive, negative, or neutral. If they agree on 48 of the 50, you have a usable measure; if they agree on 30, your coding scheme (or your coders) need work before you can trust a single number from it.
+
+*You arrive here from [Pivoting and joining](2.04-pivoting-and-joining.qmd), so you can already reshape and combine data frames. Here you'll learn how researchers turn text into a trustworthy variable by hand: writing a codebook, having independent coders apply it, and checking that they agree before you use the result. This "gold standard" measurement is what the automated methods later in this section are built on, and tested against.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=ma-co)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## What is manual coding?
+
+Manual (or "human") content coding means reading or watching real material — news articles, tweets, policy documents, talk-show transcripts — and assigning each piece a value on one or more variables, exactly like filling in a row of a data frame by hand. Three decisions have to be made before anyone starts coding:
+
+- **Unit of analysis**: what counts as one "case"? A whole article, a single sentence, a tweet, a paragraph?
+- **Variables and categories**: what do you want to measure (topic, tone, frame, actor) and what are the possible values?
+- **Codebook**: a written document that defines every category with clear rules and examples, so that two different people reading it would code the same unit the same way.
+
+A good codebook is the single most important ingredient here — vague categories like "negative" without examples and boundary cases are the most common reason coders disagree.
+
+## Training coders and inter-coder reliability
+
+Before coding the full dataset, a small, representative subset is usually double- (or multi-) coded: every coder codes the *same* units independently, without discussing them. Comparing their answers tells you whether the scheme is clear enough to use at scale.
+
+Simple **percent agreement** (the share of units where coders agree) is easy to compute but can be misleadingly high just by chance — if 90% of articles are "neutral", two coders who always guess "neutral" will already agree 81% of the time without reading a word. That's why researchers report chance-corrected statistics instead:
+
+- **Cohen's kappa** (for two coders) and **Krippendorff's alpha** (for two or more coders, and for ordinal/interval variables) both subtract out the agreement you'd expect from chance alone, leaving a number around 0 (chance-level) to 1 (perfect agreement). Values above roughly .80 are commonly treated as reliable, .67–.80 as tentatively acceptable, depending on the field and the stakes of the decision.
+
+You don't need the formulas to use these numbers sensibly: the idea — agreement minus what chance alone would produce — is what matters. In R, packages like `irr` (`kappa2()`, `kappam.fleiss()`) or `irrCAC` can compute them directly from two columns of codes.
+
+```{r, message=FALSE}
+library(tidyverse)
+library(irr)
+
+# two coders' judgements on the same 10 articles (1 = positive, 2 = neutral, 3 = negative)
+codes <- tibble(
+  coder_a = c(1, 2, 2, 3, 1, 2, 3, 3, 1, 2),
+  coder_b = c(1, 2, 3, 3, 1, 2, 3, 2, 1, 2)
+)
+
+kappa2(codes)
+```
+
+Here the two coders agree on 8 of 10 articles, but `kappa2()` reports a lower, chance-corrected value — a reminder that raw agreement overstates how reliable a scheme really is.
+
+## When to prefer manual coding
+
+Manual coding is slow and expensive, so it's not the default choice for every project. It's the right tool when:
+
+- the concept is subtle or context-dependent (irony, framing, implicit bias) and no dictionary or classifier can capture it reliably without training data anyway,
+- you need a trustworthy benchmark to validate an automated method against (see [Text Classification](6.04-text-classification.qmd)),
+- the dataset is small enough that coding it by hand is feasible within your project's time and budget.
+
+Once you have a manually coded (and validated) dataset, you can join it back onto the rest of your data exactly as in [Pivoting and joining](2.04-pivoting-and-joining.qmd) — the coded variable becomes just another column to analyse.
+
+## Further resources {.unnumbered}
+
+- 📘 [R for Communication Science: Content Analysis](https://r4css.vanatteveldt.com/) — covers codebook design and reliability statistics in more depth.

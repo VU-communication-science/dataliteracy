@@ -23,3 +23,9 @@
 - [ ] **Tree note**: this node has no parent in `curriculum.json`. Consider adding one (e.g. `linear-models` or `data-frames`).
 - [ ] Style harmonization (see `module_standard.md`): add a 'Key Takeaways' callout, a standard 'Required Packages & Data' callout, plain-language conceptual intuition before code, and an APA reporting block where relevant.
 - [ ] Review whether the skill-tree intro box at the top still matches the content after edits.
+
+### Follow-up pass: written
+
+- Wrote the full module (previously a stub): supervised vs. unsupervised learning, a `glm()` toy classifier framed explicitly as "machine learning" to bridge from `regression.qmd`, train/test split and overfitting (conceptual, one paragraph), and a brief `naivebayes` example as a second algorithm.
+- Added the new unboxed intro + code hook + skill-tree link (`?module=ma-le`), the "AI-assisted draft" notice, a webR "Try it yourself" box (base `glm()`, no extra packages beyond tidyverse), and a "Further resources" section (StatQuest ML overview video, verified via oEmbed; r4css.vanatteveldt.com).
+- Left the "no parent" tree note as-is per instructions — not my call to add one.

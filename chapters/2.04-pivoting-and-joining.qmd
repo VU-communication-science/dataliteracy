@@ -1,0 +1,156 @@
+---
+title: "2.4 Pivoting and joining"
+subtitle: "Pivoting and joining data frames."
+---
+
+*You arrive here from [Grouping and summarizing](2.02-grouping-and-summarizing.qmd), so you can already group and summarise data frames. Here you'll reshape data between wide and long format with `pivot_longer()` and `pivot_wider()`, and combine separate data frames with the `*_join()` family. Survey, experiment, and platform data rarely arrive in exactly the shape you need, and long format is also required for many plots and models.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=dfs-2)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Wide vs. long data
+
+As a small toy example, consider a trust-in-news-media survey where three respondents were asked the same question at three points in time (`t1`, `t2`, `t3`):
+
+```{r setup, message=FALSE}
+library(tidyverse)
+
+survey_wide <- tibble(
+  id = 1:3,
+  trust_t1 = c(5, 6, 4),
+  trust_t2 = c(6, 6, 5),
+  trust_t3 = c(7, 5, 6)
+)
+survey_wide
+```
+
+This is called **wide** format: each respondent is one row, and each measurement occasion gets its own column (`trust_t1`, `trust_t2`, `trust_t3`). Wide format is often how data is entered or exported (e.g. from Qualtrics), and it's easy to read by eye. But it's inconvenient for analysis: if you want to plot trust over time, or run a repeated-measures model, most R functions expect one row per *observation* rather than one row per *respondent*.
+
+The alternative is **long** format, where every single measurement gets its own row:
+
+```{r}
+survey_long <- survey_wide |>
+  pivot_longer(cols = starts_with("trust"), names_to = "wave", values_to = "trust")
+survey_long
+```
+
+Now there are three rows per respondent (one per wave) instead of one row with three columns. This is the "tidy data" idea you'll keep running into: **each variable is a column, each observation is a row**. Whether wide or long is "tidy" depends on what you call a variable — here, `wave` and `trust` are both meaningful variables in their own right, so the long format is the tidy one.
+
+## Pivoting longer: `pivot_longer()`
+
+`pivot_longer()` takes several columns and turns them into two: one column holding the *names* of the old columns, and one column holding their *values*. You tell it:
+
+- `cols`: which columns to pivot (here, everything starting with `trust`, using the helper `starts_with()`);
+- `names_to`: what to call the new column that holds the old column names (here, `"wave"`);
+- `values_to`: what to call the new column that holds the values (here, `"trust"`).
+
+```{r}
+survey_wide |>
+  pivot_longer(cols = starts_with("trust"), names_to = "wave", values_to = "trust")
+```
+
+Notice that the `wave` column still contains the full original column name (`trust_t1`, `trust_t2`, ...). Often you'll want to clean that up, for example by removing the `trust_` prefix:
+
+```{r}
+survey_long <- survey_wide |>
+  pivot_longer(
+    cols = starts_with("trust"),
+    names_to = "wave",
+    names_prefix = "trust_",
+    values_to = "trust"
+  )
+survey_long
+```
+
+Long format is exactly what you need to, for instance, compute the average trust per wave with the grouping tools from the previous module:
+
+```{r}
+survey_long |>
+  group_by(wave) |>
+  summarize(mean_trust = mean(trust))
+```
+
+## Pivoting wider: `pivot_wider()`
+
+`pivot_wider()` does the opposite: it spreads one column's distinct values out into multiple columns. This is useful when you need wide format for a specific function or for a readable table to report. It needs two arguments: `names_from` (which column's values become the new column names) and `values_from` (which column's values fill them in):
+
+```{r}
+survey_long |>
+  pivot_wider(names_from = wave, values_from = trust)
+```
+
+This recovers the original wide data frame. `pivot_longer()` and `pivot_wider()` are mirror images of each other — if you get stuck in one direction, it can help to picture the matching call in the other direction.
+
+## Combining data frames: joins
+
+Pivoting reshapes *one* data frame. Just as often, the information you need is split across *multiple* data frames, and you need to combine them. For example, suppose you also have a separate data frame about the media outlets each respondent follows most:
+
+```{r}
+respondents <- tibble(
+  id = 1:4,
+  age = c(24, 31, 45, 19),
+  favorite_outlet = c("nos", "telegraaf", "nos", "rtl")
+)
+
+outlets <- tibble(
+  outlet_id = c("nos", "telegraaf", "volkskrant"),
+  outlet_name = c("NOS", "De Telegraaf", "De Volkskrant"),
+  outlet_type = c("public", "private", "private")
+)
+```
+
+Here, `respondents` has one row per person, and `outlets` has one row per media outlet, with its own set of columns. To combine them, we need a **key**: a column (or set of columns) that identifies matching rows across the two data frames. In this case, `favorite_outlet` in `respondents` and `outlet_id` in `outlets` play that role, even though they have different names.
+
+### `left_join()`
+
+`left_join()` keeps **every row of the first ("left") data frame**, and adds columns from the second data frame wherever a match is found. When `by =` names differ between the two data frames, you write `by = c("left_column" = "right_column")`:
+
+```{r}
+respondents |>
+  left_join(outlets, by = c("favorite_outlet" = "outlet_id"))
+```
+
+Respondent 4 follows `rtl`, which doesn't appear in `outlets` — so their `outlet_name` and `outlet_type` become `NA`, but the respondent's row is still kept. This is the join to reach for by default whenever you want to *enrich* one data frame with extra information, without losing any of its original rows.
+
+### `inner_join()`
+
+`inner_join()` keeps **only the rows that have a match in both** data frames:
+
+```{r}
+respondents |>
+  inner_join(outlets, by = c("favorite_outlet" = "outlet_id"))
+```
+
+Respondent 4 (favorite outlet `rtl`) disappears entirely, because there's no matching row in `outlets`. Use `inner_join()` when a missing match means the row genuinely doesn't belong in your analysis — for example, if you only want to analyse respondents whose outlet you have full information about.
+
+### `full_join()`
+
+`full_join()` keeps **every row from both** data frames, matching where it can and filling in `NA` everywhere else:
+
+```{r}
+respondents |>
+  full_join(outlets, by = c("favorite_outlet" = "outlet_id"))
+```
+
+Now `volkskrant` also shows up as its own row, even though no respondent follows it, with `NA` for the respondent columns. This is useful when you want to see the complete picture from both sides, for instance to spot outlets that nobody in your sample follows.
+
+### Checking a join
+
+Joins can silently go wrong in two ways, and it's worth checking for both every time:
+
+- **Unmatched rows**: did more or fewer rows disappear (or gain `NA`s) than you expected? Compare `nrow()` before and after the join, and inspect any new `NA`s with `filter(is.na(...))`.
+- **Duplicated keys**: if a key value occurs more than once in the *second* data frame, each matching row in the first data frame gets duplicated once per match. For example, if `outlets` accidentally had two rows for `"nos"`, every respondent who follows NOS would appear twice after the join. Always check `count()` on your join key in the second data frame first (`outlets |> count(outlet_id)`) to make sure each key is unique before joining.
+
+```{r}
+outlets |> count(outlet_id)
+```
+
+Here every `outlet_id` occurs exactly once, so we know the join above won't have silently duplicated any respondents.
+
+## Further resources {.unnumbered}
+
+- 📘 [R for Data Science: Data tidying](https://r4ds.hadley.nz/data-tidy) — the canonical reference on `pivot_longer()`/`pivot_wider()` and the tidy data principles behind them.
+- 📘 [R for Data Science: Joins](https://r4ds.hadley.nz/joins) — a more in-depth look at keys, mutating joins, and filtering joins.

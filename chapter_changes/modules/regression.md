@@ -19,3 +19,10 @@
 - [ ] `_potential_modules/R_statistics_moderation-analysis.qmd` and `r-power-bivariate-regression.qmd` can enrich interactions and power.
 - [ ] Style harmonization (see `module_standard.md`): add a 'Key Takeaways' callout, a standard 'Required Packages & Data' callout, plain-language conceptual intuition before code, and an APA reporting block where relevant.
 - [ ] Review whether the skill-tree intro box at the top still matches the content after edits.
+
+### Follow-up pass: reordering + format standardization
+
+- **Reflects the user-approved reordering decision**: `statistical-control` now comes *after* `regression` (not before), so the intro paragraph's only prerequisite is `linear-models`; the old "You arrive here from Linear Models and Statistical control" framing is gone.
+- Replaced the boxed "learning journey" callout with the new unboxed intro paragraph + skill-tree deep link (`curriculum.qmd?module=regre`); dropped the "Where it leads" sentence (no more forward link to `mediation-analysis` in the running text).
+- Added a code hook at the top (`tab_model()` of a two-predictor model) previewing the module's payoff.
+- Added a "Try it yourself" webR box and `webr: packages` frontmatter.

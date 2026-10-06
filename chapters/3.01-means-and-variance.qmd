@@ -1,0 +1,110 @@
+---
+title: "3.1 Means & Variance"
+subtitle: "Understanding the mean and variance of a variable."
+---
+
+*You arrive here from [R language](1.02-r-language.qmd), so you can already compute things in R with vectors and functions. Here you'll learn what the mean, variance, and standard deviation of a variable actually tell you, and how to compute them, by hand once and then with `mean()`, `var()`, and `sd()`. This matters because nearly every statistic you'll meet later in the book — t-tests, correlations, regression coefficients — is built on top of these two numbers.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=me-va)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## The mean: a balance point
+
+Suppose we asked 10 respondents to rate their political interest on a scale from 1 (not interested at all) to 10 (very interested):
+
+```{r}
+library(tidyverse)
+
+political_interest <- c(2, 3, 3, 4, 5, 5, 6, 7, 8, 9)
+```
+
+The **mean** is the number you already know as "the average": add up all the values, and divide by how many there are.
+
+$$ \bar{X} = \frac{\sum X_i}{n} $$
+
+```{r}
+sum(political_interest) / length(political_interest)
+```
+
+Of course, R has a built-in function for this, so you'll never actually need to type out the formula:
+
+```{r}
+mean(political_interest)
+```
+
+It helps to think of the mean as a **balance point**. If you drew the 10 scores as weights on a see-saw, the mean is the point where the see-saw would balance. Some respondents are far below the mean, some are far above it, and the positive and negative distances exactly cancel out.
+
+This "distance from the mean" is called a **deviation**, and it's the building block for everything else in this chapter. For a given value $X_i$, the deviation is $X_i - \bar{X}$.
+
+```{r}
+d <- tibble(political_interest) |>
+  mutate(deviation = political_interest - mean(political_interest))
+
+d
+```
+
+If you sum the `deviation` column, you'll always get (approximately) zero — that's exactly what "balance point" means.
+
+```{r}
+sum(d$deviation)
+```
+
+## Variance and standard deviation: how spread out is the data?
+
+The mean tells you where the *center* of the data is, but it tells you nothing about how spread out the scores are. Two samples can have the exact same mean while looking completely different: in one, everyone agrees and clusters close to the average; in the other, respondents are scattered from one extreme to the other. For a researcher, that difference matters a lot — a highly polarized sample is a different story than a uniformly moderate one.
+
+To measure spread, we'd like to average the deviations from the mean. But as we just saw, the deviations always sum to (about) zero, so a plain average of them is useless — positive and negative deviations cancel out. The fix is to **square** each deviation first. Squaring makes every value positive, and it also makes large deviations count disproportionately more than small ones, which is a reasonable way to penalize scores that are far from the average.
+
+That gives us the **variance**: the (roughly) average squared deviation from the mean.
+
+$$ var(X) = \frac{\sum (X_i - \bar{X})^2}{n - 1} $$
+
+```{r}
+d <- d |> mutate(squared_deviation = deviation^2)
+d
+
+sum(d$squared_deviation) / (length(political_interest) - 1)
+```
+
+Again, R has a built-in function so you don't need to do this by hand in practice:
+
+```{r}
+var(political_interest)
+```
+
+### Why divide by $n - 1$ and not $n$?
+
+You might expect we'd divide by $n$, the number of observations, since variance is supposed to be an *average* squared deviation. The reason we divide by $n - 1$ instead is a subtle but important one: we're almost always using a **sample** to estimate the variance of a **population**, and the sample mean $\bar{X}$ is, by construction, the value that makes the squared deviations in *this particular sample* as small as possible. That means a sample will systematically underestimate the true population variance just a little bit, on average. Dividing by the slightly smaller number $n - 1$ instead of $n$ corrects for this bias.
+
+You don't need to be able to re-derive this to use it correctly — just remember the rule of thumb: when you're working with a sample (which is almost always the case in practice), use $n - 1$. R's `var()` and `sd()` functions already do this for you.
+
+### Standard deviation: back to the original units
+
+One awkward thing about variance is that it's expressed in **squared units**. If political interest is measured on a 1–10 scale, the variance is in "scale points squared", which is hard to interpret intuitively. The **standard deviation** fixes this by taking the square root of the variance, bringing it back to the original scale:
+
+$$ SD(X) = \sqrt{var(X)} $$
+
+```{r}
+sqrt(var(political_interest))
+sd(political_interest)
+```
+
+A useful (rough) intuition for the standard deviation: for many variables, most observations fall within about one SD of the mean, and nearly all fall within two or three SDs. So if political interest has a mean of 5.2 and an SD of 2.2, a respondent scoring 9 is unusually interested compared to the rest of the sample, while someone scoring 6 is close to typical.
+
+## Why this matters for everything that follows
+
+The mean and the variance (or SD) aren't just descriptive trivia — they are the two ingredients that almost every statistical test in this book combines in some way:
+
+* A **t-test** (in [Comparing two Groups](5.01-comparing-two-groups.qmd)) compares the *difference between two means*, relative to how much variance there is within each group.
+* A **correlation** (in [Correlation & Covariance](3.03-correlation-and-covariance.qmd)) is built from deviations from the mean of two variables at once.
+* A **regression model** (in [Multiple Regression](5.06-regression.qmd)) tries to explain variance in your outcome variable using one or more predictors.
+* **Effect sizes** (in [Effects](3.04-effects.qmd)), like Cohen's $d$, are literally mean differences expressed in standard deviation units.
+
+In other words: once you understand the mean as "where the center is" and the variance/SD as "how much do individual scores typically deviate from that center", you already understand the core building block of most of the statistics you'll see from here on.
+
+## Further resources {.unnumbered}
+
+- 🎥 [StatQuest: Calculating the Mean, Variance and Standard Deviation, Clearly Explained!!!](https://www.youtube.com/watch?v=SzZ6GpcfoQY) — a short, visual walkthrough of exactly the calculations in this chapter.

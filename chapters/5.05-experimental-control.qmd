@@ -1,0 +1,56 @@
+---
+title: "6.2 Experimental control"
+subtitle: "Designing and analyzing experiments, randomization, and control groups."
+engine: knitr
+---
+
+*You now understand the ANOVA model for comparing experimental groups (from [ANOVA](5.04-anova.qmd)): you can test whether the means of three or more conditions differ more than chance alone would produce. This module steps back to the* design *side of that same picture — how do you make sure those groups are actually comparable in the first place, and what do you need to get right before you ever run the ANOVA? It builds on [Causality](3.06-causality.qmd): random assignment is the single strongest tool you have against confounding, and this module shows exactly how and why it works, plus the other design choices (control groups, blinding, between- vs. within-subjects) that make an experiment convincing.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=con-e)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Why design comes before analysis
+
+Remember the one-way ANOVA example from the previous module: participants were randomly assigned to watch a *neutral*, *positive*, or *negative* movie about journalism, and we compared their average trust in journalists afterwards. The ANOVA test told us whether the three group means differed more than random noise would explain. But that test only produces a meaningful answer because of a decision that was made *before* any data was collected: participants were **randomly assigned** to the three groups.
+
+If instead the researchers had let participants pick which movie to watch, or assigned the first 50 people who signed up to the *positive* condition and the rest to *negative*, the ANOVA would still happily spit out an F-statistic and a p-value — but you would have no way of knowing whether a difference in trust was caused by the movie, or by whatever made people end up in one group rather than another (maybe the more media-literate students signed up early). The statistics cannot fix a design problem. This module is about getting the design right so that the numbers you feed into `aov_car()` actually mean what you want them to mean.
+
+## Randomization: why it works
+
+**Random assignment** means every participant has an equal, chance-determined probability of ending up in each condition, with no role for their own preferences, the researcher's judgement, or anything else they bring with them.
+
+Here is the key idea: any characteristic a participant brings into the study — age, political orientation, prior trust in media, how media-literate they are, what mood they're in that day — is, *on average*, spread equally across your conditions when assignment is random. Not identically in any single study (randomization is still a gamble), but *on average, across many studies*, these confounders wash out. That is why, when you then observe a difference in trust between the movie conditions, you can attribute it to the movie rather than to pre-existing differences between the people who ended up watching each one. Random assignment is what let us treat the between-subjects factor in the ANOVA example as something we can read causally.
+
+This is subtly different from **random sampling** (randomly selecting *who* participates in your study at all, which matters for generalizability) — experimental control is about random *assignment to conditions*, which matters for internal validity, i.e. whether the comparison between conditions is fair.
+A single run of this simulation will never give you *perfectly* equal means across groups — that's expected, and it's why we use statistical tests rather than eyeballing the numbers. But the means should be reasonably close, and critically, none of the groups is *systematically* higher or lower on a variable the researcher never intended to manipulate. Try re-running the chunk (changing the seed, or `n`) a few times: the imbalance moves around randomly rather than always favouring the same group, and it shrinks as `n` grows. That's randomization doing its job.
+
+## Control groups and manipulation checks
+
+A **control group** is a condition that does not receive the treatment (or receives a neutral/placebo version of it), so you have something to compare the treatment condition(s) against. In the movie example, the *neutral* movie condition served exactly this purpose: without it, you would only be able to say that the *positive* and *negative* movies differ from each other, not whether either one *changed* trust relative to not seeing a journalism-themed movie at all.
+
+Having a control group is not enough on its own, though — you also need evidence that your manipulation actually did what you intended. A **manipulation check** is a (usually short) additional measure that verifies the manipulation worked as intended: for instance, after watching the movies, you might ask participants to rate how *positive* or *negative* they found the movie's portrayal of journalists. If participants in the *positive* and *negative* conditions don't actually perceive the movies as differing in tone, then whatever you find (or fail to find) on `trust_t2` tells you nothing about the effect you were interested in testing — the independent variable was never really varied in practice.
+
+**Blinding** addresses a related but distinct problem: participants (and sometimes researchers) changing their behaviour simply because they know which condition they're in, rather than because of the treatment itself. In the medicine example from [Causality](3.06-causality.qmd), this is the *placebo effect* — patients who know they got the real drug may report feeling better partly from expectation alone, not the drug's pharmacology. A **single-blind** design keeps participants unaware of their condition (e.g. they don't know whether they're getting the "new persuasion strategy" or a standard message); a **double-blind** design keeps the researchers who interact with participants unaware too, so they cannot unconsciously treat conditions differently. Not every communication science experiment can be meaningfully blinded (participants obviously know which movie they just watched), but wherever it's feasible, it removes another source of non-random variation between groups.
+
+## Between-subjects vs. within-subjects designs
+
+This is exactly the distinction the ANOVA module flagged with its `Error(id)` term, and it's a design decision you make long before you fit any model.
+
+- In a **between-subjects design**, each participant experiences only *one* condition. The three-movie experiment is between-subjects: a given participant watches either the neutral, positive, or negative movie — never more than one. Comparisons are then made *between* different groups of people.
+- In a **within-subjects** (repeated measures) design, the *same* participants are measured under multiple conditions, or at multiple time points. The `trust_t1`/`trust_t2` comparison (trust before vs. after watching a movie) is within-subjects: the same person contributes a data point at both time points, and you're tracking *change* within each individual.
+
+Within-subjects designs are often more statistically powerful, because each person acts as their own baseline — individual differences in, say, general media cynicism, no longer add noise to the comparison, since they're the same for a person's "before" and "after" measurement. But within-subjects designs introduce their own risks: **order effects** (does watching the positive movie first change how someone reacts to the negative movie afterwards?) and **practice** or **fatigue effects** (does answering the same trust questions twice change how someone answers the second time, regardless of any movie?). Researchers often address order effects with **counterbalancing**: randomly varying *which* condition each participant sees first, so that order itself becomes another randomized, controlled factor rather than a confound. A **mixed design** — like the health-care robot example in the ANOVA module, where participants were randomly assigned *between* three robot designs but had their heart rate measured *within* subjects at several time points — combines both approaches to answer richer questions in a single model.
+
+## Threats to validity (briefly)
+
+Even a well-randomized experiment can have its conclusions undermined in other ways. A few of the most common threats:
+
+- **Confounding within the manipulation itself.** If your "positive" movie about journalism also happens to be longer, funnier, or made by a more famous director than your "negative" movie, you haven't isolated the variable you intended to manipulate — you've bundled several differences together.
+- **Attrition.** If participants drop out of your study, and they don't do so randomly (e.g. people who found the negative movie upsetting are more likely to quit before the trust measurement), your remaining groups are no longer the randomized groups you started with.
+- **Demand characteristics.** Participants who guess what the study is "about" may (consciously or not) behave in ways they think the researcher wants, rather than how they naturally would.
+- **Ecological validity.** Even a perfectly internally valid experiment, run in a lab on a convenience sample, may not generalize to how people respond to similar media in their everyday lives — this is a tradeoff experiments make in exchange for the strong causal claims they allow.
+
+None of these threats mean an experiment is worthless — they're exactly the kind of thing good design (and honest reporting) anticipates and minimizes, rather than something that only shows up after the fact. Keeping them in mind while *designing* a study is both cheaper and more effective than trying to statistically patch them up afterwards.

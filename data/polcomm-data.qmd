@@ -1,0 +1,52 @@
+---
+title: "Polcomm Data"
+subtitle: "A simulated 'Media & Democracy' survey, used to illustrate factor analysis on a media-literacy scale."
+---
+
+::: {.callout-note title="Dataset status"}
+**Status**: external *(hosted in [`dataliteracy-data`](https://github.com/VU-communication-science/dataliteracy-data), not yet migrated into this repo)*
+**Access**: `read_csv("https://data.dataliteracy.cc/simulated/polcomm_data.csv")`
+:::
+
+## What this dataset is for
+
+A simulated survey built around media literacy, political efficacy, and related attitudes (trust in media, conspiracy beliefs, engagement). [Factor Analysis](../chapters/4.04-factor-analysis.qmd) uses its 10-item media-literacy scale (`ml_1`–`ml_10`) as the worked example for uncovering latent sub-dimensions. No other chapter currently uses this dataset, so most of its columns (political efficacy items, conspiracy beliefs, engagement, etc.) are not yet referenced anywhere in the book.
+
+## Columns
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `id` | integer | Respondent ID. |
+| `age` | integer | Age in years. |
+| `female` | integer (0/1) | Gender indicator. |
+| `edu_level` | character (coded) | Education level, numeric code as a string (e.g. `"1"`, `"2"`, `"3"`). |
+| `pol_ident` | character (coded) | Political identification, numeric code as a string. |
+| `news_freq` | integer | Frequency of news use. |
+| `trust_media` | integer | Trust in media, single item. |
+| `news_type` | character (coded) | Preferred news source type, numeric code as a string. |
+| `source_cred` | character (coded) | Source credibility judgement, numeric code as a string. |
+| `pe_1`…`pe_6` | integer | 6 political efficacy items. |
+| `internal_efficacy`, `external_efficacy`, `pol_efficacy` | numeric | Composite political efficacy scores derived from the `pe_*` items. |
+| `ml_1`…`ml_10` | integer (1–5) | 10 media-literacy items. Used in [Factor Analysis](../chapters/4.04-factor-analysis.qmd) to recover 3 factors: *Analytical reflection* (`ml_1`, `ml_4`, `ml_7`), *Source literacy* (`ml_3`, `ml_5`, `ml_8`, `ml_9`), and *Active engagement* (`ml_2`, `ml_6`, `ml_10`). |
+| `media_lit_analytical`, `media_lit_source`, `media_lit_active`, `media_lit` | numeric | Composite media-literacy scores (per-factor and overall). |
+| `conspiracy_beliefs` | numeric | Conspiracy-belief score. |
+| `engagement` | numeric | Political/civic engagement score. |
+| `affec_bias` | numeric | Affective (partisan) bias score. |
+| `emotion_response` | numeric | Emotional response score. |
+| `support_reg` | numeric | Support for regulation (of media/platforms, presumably). |
+| `discussion_freq` | numeric | Frequency of political discussion. |
+| `fact_check_behavior` | numeric | Self-reported fact-checking behaviour. |
+
+## Simulation notes
+
+This dataset's generator script isn't currently in the `dataliteracy-data` repo (only the generic `data_simulator.r` helper functions are), so the exact simulated relationships between columns aren't documented anywhere right now. The in-book chapter text describes it as the simulated *"Media & Democracy"* dataset, previously distributed to students via Canvas and mirrored here.
+
+## Caveats (flagged for review)
+
+- Several categorical columns (`edu_level`, `pol_ident`, `news_type`, `source_cred`) are stored as numeric codes inside character strings (e.g. `"2"`), with no documented label mapping — unclear what each code means without the original codebook/script.
+- Most columns in this dataset (everything except `ml_1`–`ml_10`) are currently unused by any chapter. Worth deciding whether to: (a) write a second chapter example using some of these (e.g. political efficacy, conspiracy beliefs), (b) trim the dataset down to just what's used, or (c) replace it with a more deliberately-designed simulated dataset once the `ml_*` generation logic is reconstructed/documented.
+- This is a good first candidate for the "under review" migration status (see `data_standard.md`), rather than straight migration as-is.
+
+## Used in
+
+- [Factor Analysis](../chapters/4.04-factor-analysis.qmd)

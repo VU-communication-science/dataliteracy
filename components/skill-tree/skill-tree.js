@@ -20,6 +20,12 @@
       rootEl.innerHTML = "";
       rootEl.classList.add("st-wrapper");
 
+      // Support deep-linking to a single module via a `?module=<id>` URL
+      // param (e.g. `curriculum.html?module=regre`), so chapter pages can
+      // link back to the skill tree with their own module highlighted.
+      const urlParams = new URLSearchParams(window.location.search);
+      const selectedModuleId = urlParams.get("module");
+
       // 1. Normalize Modules & Parse Positions
       const moduleMap = new Map();
       if (Array.isArray(rawData.modules)) {
@@ -495,6 +501,10 @@
             ${isPrereq ? '<span class="st-prereq-badge" title="Prerequisite assumed from prior courses">Prereq</span>' : ""}
           `;
 
+          if (selectedModuleId && mod.id === selectedModuleId) {
+            nodeEl.classList.add("st-node-selected");
+          }
+
           nodeEl.addEventListener("mouseenter", (e) => {
             highlightAncestors(mod.id);
             showPopover(mod, isPrereq, e.currentTarget, popover, rawData, courses);
@@ -503,6 +513,10 @@
           nodeEl.addEventListener("mouseleave", () => {
             clearHighlights();
             hidePopover(popover);
+            // Restore the persistent highlight for the deep-linked module.
+            if (selectedModuleId && visibleMap.has(selectedModuleId)) {
+              highlightAncestors(selectedModuleId);
+            }
           });
 
           nodesLayer.appendChild(nodeEl);
@@ -510,6 +524,22 @@
 
         board.appendChild(nodesLayer);
         boardContainer.appendChild(board);
+
+        // If a module was requested via the URL, highlight its prerequisite
+        // path and scroll it into view as soon as the board is rendered.
+        if (selectedModuleId && visibleMap.has(selectedModuleId)) {
+          highlightAncestors(selectedModuleId);
+          const selectedNode = nodesLayer.querySelector(
+            `.st-node[data-id="${selectedModuleId}"]`
+          );
+          if (selectedNode) {
+            selectedNode.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "center"
+            });
+          }
+        }
       }
 
       // Highlight ancestor path leading up to activeId

@@ -1,0 +1,326 @@
+---
+title: "5.3 Simple Regression"
+subtitle: "Understanding the linear model with a single predictor."
+---
+
+*You arrive here from [Comparing two Groups](5.01-comparing-two-groups.qmd) and [Testing Associations](5.02-testing-associations.qmd), so you can already compare two group means with a t-test and test whether a correlation differs from zero. Here you'll learn the linear model that sits behind both of those tests: fitting a straight line through your data, reading the slope as an effect, and judging how well it fits with R². It's the gateway to almost every method that follows, from ANOVA to multiple regression.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=lin-m)
+
+```{r chunk-1, echo=F}
+## convenience functions
+p_thres <- function(p) {
+  if (p < 0.001) return("p < 0.001")
+  if (p < 0.01) return(paste0("p < 0.01"))
+  if (p < 0.05) return(paste0("p < 0.05"))
+  sprintf("p = %.3f", p)
+}
+
+```
+
+## What is a linear model?
+
+Regression analysis is a statistical technique for *predicting* a `dependent variable` (DV) based on one or more `independent variables` (IVs).
+We use *predict* in a statistical sense, meaning that we are estimating how well we can guess the dependent variable given knowledge of the independent variable(s).
+The reason we want to do this is usually not to make actual predictions, but to understand the world better.
+If we can model how a variable is predicted by one or more other variables, we can make inferences about the relationship between these variables.
+Specifically, regression analysis allows us to test hypotheses of the sort:
+
+* Older people have more trust in journalists
+* People on the political left have more trust in journalists than people on the political right
+
+You *could* test these hypotheses one-by-one with a correlation test and a t-test, respectively.
+The benefit of regression analysis is that you can test these hypotheses in the same model, and thereby also **controlling** for the relations between the independent variables.
+This allows us to deal with **confounding**, which can be critical when working with observational data.
+For instance, if younger people are more likely to be on the political left, then in order to test the effect of political orientation on trust, we need to somehow control for age.
+
+This module covers the linear model with a **single predictor** (often called *simple regression*). We first discuss how it works under the hood: we won't go deep into the math, but a basic understanding of the regression equation and the $R^2$ value is helpful. If you are already familiar with regression and are just here to learn how to do it in R, you can safely skip that part and go straight to *How to use*. Using several predictors is covered in [Multiple Regression](5.06-regression.qmd), and checking whether the model is appropriate in [Linear Model Assumptions](5.08-linear-model-assumptions.qmd).
+
+## How does it work?
+
+In **simple linear regression** we have a dependent variable `Y` and an independent variable `X`, and we want to predict `Y` based on `X`.
+The goal is to find a mathematical formula that best describes their relationship.
+You can visually think of this as a scatterplot, where we draw a `regression line`  such that the distance between the line and the data points is as small as possible.
+
+```{r how-does-it-work-1, echo=F, message=F, fig.height=3,out.width='100%',  warning=F}
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+# Create a sample dataset
+set.seed(123)
+df <- data.frame(
+  x = 1:20,
+  y = 1:20 + rnorm(20, mean = 0, sd = 3) # Linear relation with noise
+)
+ojs_define(x = df$x, y = df$y)
+
+# m <- lm(y ~ x, data = df)
+# summary(m)
+# sum((predict(m) - df$y)^2)
+
+# Fit a linear model
+model <- lm(y ~ x, data = df)
+
+# Get the predicted values from the model
+df <- df %>%
+  mutate(predicted = predict(model))
+
+# Create the scatter plot with regression line
+gg1 = ggplot(df, aes(x = x, y = y)) +
+  geom_point(size = 2) +  # Scatter points
+  labs(title = "Scatterplot of X and Y",
+       x = "X", y = "Y") +
+  theme_minimal()
+gg2 = ggplot(df, aes(x = x, y = y)) +
+  geom_smooth(method = "lm", color = "blue", se=F) +  # Regression line
+  geom_segment(aes(x = x, xend = x, y = y, yend = predicted),
+               color = "red", size = 0.7) +  # Error lines
+  geom_point(size = 2, color='darkgreen') +  # Scatter points
+  labs(title = "Regression model",
+       x = "X (independent variable)", y = "Y (dependent variable)") +
+  theme_minimal()
+
+grid.arrange(gg1, gg2, ncol=2)
+```
+
+This visualization corresponds to the **regression equation**.
+We've coloured the different parts of the equation according to the colours used in the visualization.
+
+$$ \Large  \color{Green} Y_i = \color{Blue} b_0 + b_1 X_i + \color{Red} \epsilon_i $$
+
+* $\color{Green} Y_i$ represents the real values of the dependent variable ($Y_1, Y_2, ... Y_n$) that we want to predict.
+* $\color{Blue} b_0 + b_1 X_i$ represents our prediction of y. It has two coefficients:
+  * **intercept** $\color{Blue} b_0$: The value of Y when X is zero.
+  * **slope** $\color{Blue} b_1$: How much Y changes for every unit increase in X.
+* $\color{Red} \epsilon_i$ represents the **residual**. This is the distance between the <span style="color:blue;">predicted</span> and the <span style="color:green">real</span> value of Y.[^error]
+
+[^error]: For example, at $X = 10$, the blue line predicting Y passes through the point $Y = 10.45$.
+However, the real value of Y at this point is 8.66.
+So the residual $\epsilon_i$ at this point is $8.66 - 10.45 = -1.79$.
+
+Based on this equation, we can learn two important things about the relationship between X and Y:
+
+1. **The effect of X on Y**: The slope $b_1$ tells us how much Y changes for every unit increase in X.
+2. **The model fit**: Based on the residual $\epsilon_i$ we can calculate how well the model fits the data.
+
+### The effect of X on Y
+
+Based on the coefficients of the regression model, we can make inferences about the relationship between the variables.
+In the example, we see that there is a positive relationship between `X` and `Y`, because the slope is positive.
+If X goes up, then Y tends to go up as well.
+This relation is expressed by the coefficient $b_1$, which in our example is 0.95.
+For every unit increase in X, Y increases by 0.95.
+
+We can also interpret the intercept ($b_0$), which is the value of Y when X is zero.
+However, this is not always meaningful.
+For example, if the independent variable is `age`, then the intercept would be the predicted value of Y for a person that is 0 years old.
+This is why the intercept is often not interpreted.
+
+#### Model fit
+
+Based on the coefficient of the independent variable we can say something about the relation between X and Y.
+However, this is not the full story.
+Based on the coefficients we can make a prediction of Y, but we don't yet know how good this prediction is.
+This is why we also need the **coefficent of determination** ($R^2$), which tells us how well the model fits the data.
+
+We can calculate this based on the residual $\epsilon_i$.
+The residuals tell us how bad our prediction is for each data point.
+To get a single score for how bad our prediction is for all data points, we can calculate the **residual sum of squares** ($SS_R$).
+As the name implies, we take the sum of the squared residuals.
+
+$$  SS_R = \large \sum_{i=1}^{n} {\color{red} \epsilon_i^2} $$
+
+You can think of the $SS_R$ as the variance of the real values of Y around the predicted values of Y.
+If our model is perfect, then the $SS_R$ would be zero.
+But how do we know how not-perfect our model is? how high is too high?
+For this, we can look at the **total sum of squares** ($SS_T$), which is the sum of the squared differences between the real values of Y and the mean of Y.
+
+$$ SS_T = \sum_{i=1}^{n} (Y_i - \bar{Y})^2 $$
+
+The $SS_T$ is the **total variance** in Y.
+Notice that the calculation is similar to the $SS_R$, but instead of the predicted values of Y, we use the mean of Y.
+So now we can use this to see how much better our prediction is than just using the mean of Y.
+By subtracting the variance that we did not explain ($SS_R$) from the total variance ($SS_T$), we get the variance that we did explain, called the **model sum of squares** ($SS_M$).
+$$ SS_M = SS_T - SS_R $$
+
+And now we can calculate the $R^2$ value: the proportion of the total variance that has been explained by our model.
+$$ R^2 = \frac{SS_M}{SS_T} $$
+
+The $R^2$ is a value between 0 and 1, that tells us how much of the variance in the dependent variable is explained by the independent variable(s).
+In our example the $R^2$ is 0.79, which means that 79% of the variance in Y can be explained by the variance in X.
+This is **very high**, especially for social science data.
+When we're trying to predict human behaviour, we're usually already happy if we can explain a few percent of the variance.
+
+::: {.callout-tip title="Interactive widget for building intuition" collapse="true"}
+
+Try for yourself how the regression line changes when you change the values of the intercept and slope!
+The goal is to get the lowest possible SSE (and the highest possible R2), which means that the line is as close as possible to the data points.
+
+Note that because you're manually tweaking the intercept and slope, you might actually create a model that is worse than the mean of Y, which is why you can get a negative $R^2$.
+In a regression model this is not possible, because it will always find a model that is at least as good as the mean of Y.
+
+```{ojs}
+//| echo: false
+viewof intercept = Inputs.range(
+  [-8, 6],
+  {value: 3, step: 0.001, label: "b0 Intercept"}
+)
+viewof slope = Inputs.range(
+  [0.5,1.8],
+  {value: 0.5, step: 0.001, label: "b1 Slope"}
+)
+```
+
+```{ojs}
+//| echo: false
+x_line = Array.from({ length: 100 }, (_, i) => i-5);
+y_line = x_line.map(x => slope * x + intercept);
+mutable SSR = 0
+mutable R2 = 0
+
+SST = {
+  let sst = 0
+  let mean = 0
+  y.forEach((d, i) => {
+    mean += y[i] / y.length
+  })
+  y.forEach((d, i) => {
+    sst += Math.pow(y[i] - mean, 2)
+  })
+  return(Number(sst.toFixed(2)))
+}
+
+update_SSR = {
+  let ssr = 0
+  x.forEach((d, i) => {
+    ssr += Math.pow(y[i] - (slope * x[i] + intercept), 2)
+  })
+  mutable SSR = Number(ssr.toFixed(2))
+  mutable R2 = Number((1 - SSR / SST).toFixed(2))
+}
+
+// Now, plot the regression line
+Plot.plot({
+  marks: [
+    Plot.lineY(y_line, {x: x_line, stroke: "blue"}),
+    Plot.dot(x, {x: x, y: y, fill: "darkgreen"}),
+    Plot.text([{intercept,slope}], {x: 10, y: 3, text: d => `prediction = ${d.intercept.toFixed(2)} + ${d.slope.toFixed(2)} * X`, fill: "black", fontSize: 16, fill: "blue", textAnchor: "start"}),
+    Plot.text([{SSR, R2}], {x: 10, y: 0, text: d => `R2 = ${d.R2} = ${(SST - d.SSR).toFixed(2)} / ${SST}`, fill: "black", fontSize: 16, fill: "black", textAnchor: "start"})
+  ],
+  x: {
+    label: "X",
+    domain: [-5, 20]
+  },
+  y: {
+    label: "Y",
+    domain: [-5,22]
+  },
+  height: 300
+})
+
+```
+
+::: {.callout-tip title="Spoiler" collapse="true"}
+
+The optimal values for the intercept and slope are $b_0 = 0.930$ and $b_1 = 0.952$.
+This should give you an $R^2$ of $0.79$.
+
+:::
+:::
+
+## How to use
+
+We'll show you how to fit **simple linear regression** with a single numeric independent variable.
+
+* First, we'll look at **simple linear regression** with a single numeric independent variable.
+* Then, we'll perform a **multiple regression** with two numeric independent variables, and show you how this allows you to **control** for the relations between the independent variables.
+* In the third step we'll show you how to use a **categorical independent variable** in the regression model.
+* Finally, we'll show you how to use **interaction effects** in the regression model, and how you can use this to test **moderation**.
+
+We'll be using our standard (simulated) practice data, and a bit of `tidyverse` to load and clean the data.
+We'll also be using the `sjPlot` package, which can create nice tables and plots of regression models.
+
+```{r how-to-use-1, message=F, results='hide'}
+library(tidyverse)
+library(sjPlot)
+
+d <- read_csv("https://dev.dataliteracy.cc/practice_data.csv") |>
+        mutate(age = if_else(age > 100, 2024 - age, age)) |>
+        select(age, political_orientation, political_interest, trust_t1,
+               news_consumption = `news consumption`)
+d
+```
+
+### Simple linear regression
+
+We start with the example of predicting `trust` in journalists based on `age`.
+For this we'll be using the `trust_t1`[^1] variable as the dependent variable, and the `age` variable as the independent variable.
+We can use the `lm()` function to create a linear regression model.
+Inside the `lm()` function we specify the formula for the regression, which has the format `dependent ~ independent`.
+
+[^1]: We use the `trust_t1` variable here, because for the current analysis we are not interested in the effect of the experimental group. Since `trust_t1` is measured before the experiment, it is not influenced by the experiment.
+
+```{r simple-linear-regression-1}
+m <- lm(trust_t1 ~ age, data = d)
+```
+
+The *standard* way to inspect the results is using the `summary(m)` function.
+This gives you all the information you need, but not in a very nice and readable format.
+We will therefore be using the `tab_model()` function from the `sjPlot` package to get a nice table of the results with some additional statistics (like the confidence intervals for regression coefficients).
+
+```{r simple-linear-regression-2}
+#| html-table-processing: none
+tab_model(m)
+```
+
+::: {.callout-caution title="Backup plan if tab_model doesn't work" collapse="true"}
+
+The `tab_model` function by default shows the regression table in your `viewer` pane.
+If this for some reason doesn't work, you can also use the `use.viewer=F` argument to show the table in your default web browser.
+
+```{r simple-linear-regression-3, eval=F}
+tab_model(m, use.viewer=F)
+```
+
+:::
+
+::: {.callout-note title="Confidence intervalls without tab_model" collapse="true"}
+
+In case you want to calculate the confidence intervals yourself, instead of using the `tab_model` function, you can use the `confint()` function.
+Here you provide the model as an argument, and you can also specify the level of the confidence interval (default is 95%).
+
+```{r simple-linear-regression-4, eval=F}
+confint(m)
+confint(m, level = 0.95)
+```
+
+:::
+
+The output of the regression analysis gives us values for two coefficients: the **(intercept)** and the **age** variable (like $b_0$ and $b_1$ in the regression equation).
+We get the coefficient **estimates** and **p-values** that tell us if these coefficients are statistically significant.
+With `tab_model` we also get the **confidence interval**.
+
+```{r simple-linear-regression-5, echo=F, results=F}
+b_age = coef(m)[2] |> round(2)
+p_age = summary(m)$coefficients[2,4] |> round(3)
+r2 = summary(m)$r.squared |> round(3)
+ci_age = confint(m)[2,] |> round(2)
+```
+
+* The coefficient for the `intercept` tells us the predicted value of `trust_t1` when `age` is zero.
+This is not very meaningful in this case, because we don't have any people with an age of zero in our data.
+* The coefficient for `age` tells us how much `trust_t1` changes for every *unit increase* in `age`.
+  * Our `age` variable is in years, so the coefficient `r b_age` tells us that for every year of age, trust in journalists increases on average by `r b_age` points.
+  * The p-value < 0.001 tells us that this effect is statistically significant.
+  * The confidence interval tells us that we are 95% confident that the true effect of `age` on `trust_t1` is between `r ci_age[1]` and `r ci_age[2]`.
+
+We also get the $R^2$ value, which tells us how well the model fits the data.
+Here we see that the $R^2$ is `r r2`, which means that `r round(r2*100,1)`% of the variance in `trust_t1` can be explained by the variance in `age`.
+
+In conclusion, this model shows that (in our simulated data) there is no significant effect of `age` on `trust_t1`.
+
+## Further resources {.unnumbered}
+
+- 🎥 [StatQuest: Linear Models & R-squared](https://www.youtube.com/watch?v=2AQKmw14mHM) — a clear, visual walkthrough of what fitting a line and R² actually mean.

@@ -16,3 +16,9 @@
 - [ ] Add a short 'what to do if an assumption fails' summary (robust SEs, transformation).
 - [ ] Style harmonization (see `module_standard.md`): add a 'Key Takeaways' callout, a standard 'Required Packages & Data' callout, plain-language conceptual intuition before code, and an APA reporting block where relevant.
 - [ ] Review whether the skill-tree intro box at the top still matches the content after edits.
+
+### Follow-up pass: format standardization
+
+- Replaced the boxed "learning journey" callout with the new unboxed intro paragraph + skill-tree deep link (`curriculum.qmd?module=diagn`).
+- Added a code hook at the top (linear vs. quadratic fit comparison plot, reusing the chapter's own later example) previewing why assumptions matter before the formal build-up.
+- Added a "Try it yourself" webR box and `webr: packages` frontmatter.

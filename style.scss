@@ -1,5 +1,7 @@
 /*-- scss:defaults --*/
 
+$dl-accent: #18bc9c;
+
 .continue {
     @extend .btn;
     @extend .btn-outline-primary;
@@ -7,7 +9,8 @@
 }
 
 .sidebar-header {
-    text-align: center;
+    text-align: left;
+
 }
 
 .sidebar-logo {
@@ -23,14 +26,17 @@
     min-height: 40px;
 }
 
+
 /* Align chapter titles in the sidebar by giving the number a fixed width */
 .sidebar-navigation .chapter-number {
     display: inline-block;
-    text-align: right;
+    text-align: left;
     font-family:
         SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
         "Courier New", monospace;
-    min-width: 1.2rem;
+    min-width: 1rem;
+    padding-right: 0.5rem;
+    padding-left: 0rem;
     opacity: 0.5;
 }
 
@@ -43,3 +49,79 @@
     /* margin-bottom: 4rem; */
     padding-top: 1rem;
 }
+
+/* Sidebar colour scheme: a dark navy background (matching Flatly's own
+   primary colour) instead of the default plain white/grey, with the
+   title and section headers in white and individual module links
+   slightly dimmed so the active/hovered one (teal) stands out. */
+#quarto-sidebar {
+    background-color: #2c3e50;
+}
+
+.sidebar-title,
+.sidebar-title a {
+    color: #ffffff;
+}
+
+.sidebar-navigation .sidebar-item-text,
+.sidebar-navigation .sidebar-link {
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 400;
+}
+
+/* Section headers (e.g. "Computational Skills") stay a bit brighter and
+   bold; only they match this selector, not the modules nested below
+   them. */
+li.sidebar-item-section > .sidebar-item-container > .sidebar-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.sidebar-navigation .sidebar-link.active,
+.sidebar-navigation .sidebar-item-text.active {
+    color: $dl-accent;
+    font-weight: 500;
+}
+
+.sidebar-navigation .sidebar-link:hover,
+.sidebar-navigation .sidebar-item-text:hover {
+    color: #ffffff;
+}
+
+/* Code results: a bit more visually distinct from the input code block
+   above it, and slightly smaller/denser so long console output doesn't
+   dominate the page. */
+.cell-output {
+    background-color: #f7f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85em;
+}
+
+.cell-output pre {
+    background-color: transparent;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.cell-output-stderr {
+    background-color: #fdf3e7;
+    border-color: #f3e0c4;
+}
+
+.cell-output-error {
+    background-color: #fcedec;
+    border-color: #f1c6c2;
+}
+
+
+/*-- scss:rules --*/
+.sidebar-section {
+    padding-left: 0rem;
+    padding-bottom: 0.3rem;
+}
+// .sidebar-item-container {
+//     padding-bottom: 0.3rem;
+// }

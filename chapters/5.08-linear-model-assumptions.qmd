@@ -1,0 +1,195 @@
+---
+title: "5.6 Linear Model Assumptions"
+subtitle: "Model diagnostics, residuals, and assumptions."
+---
+
+*You arrive here from [Simple Regression](5.03-linear-models.qmd), so you can already fit a linear model with one predictor. Here you'll learn the assumptions behind that model — linearity, normality of residuals, outliers, equal variance, independence, and multicollinearity — and how to check each of them. If assumptions are badly violated, your estimates and p-values may mislead you, so checking them tells you how much to trust your model.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=diagn)
+
+In the previous modules you fitted linear models. Here we show how to check whether the model you fitted is appropriate. We use the same (simulated) practice data as in [Simple Regression](5.03-linear-models.qmd) and [Multiple Regression](5.06-regression.qmd).
+
+```{r how-to-use-1, message=F, results='hide'}
+library(tidyverse)
+library(sjPlot)
+
+d <- read_csv("https://dev.dataliteracy.cc/practice_data.csv") |>
+        mutate(age = if_else(age > 100, 2024 - age, age)) |>
+        select(age, political_orientation, political_interest, trust_t1,
+               news_consumption = `news consumption`)
+d
+```
+
+## Conditions and assumptions
+
+Regression analysis is a very versatile tool that can be used in many different situations.
+However, there are some assumptions that need to be met in order to use it correctly.
+The most important assumptions are:
+
+1. **Linearity**: The relationship between the independent and dependent variable(s) should be linear.
+2. **Normality**: The residuals should be normally distributed.
+3. **No outliers**: Extreme values can have a large effect on the model.
+3. **Homoscedasticity**: The variance of the residuals should be constant.
+4. **Independence**: The observations should be independent of each other.
+5. **No multicollinearity**: In **multiple regression**, the independent variables should not be too highly correlated with each other.
+
+Whether these assumptions are met is generally a grey area.
+It's not a matter of "yes" or "no", but rather a matter of "to what extent".
+Let's discuss some strategies for checking these assumptions.
+
+### Linearity
+
+Remember that we are trying to fit a straight line through the data.
+If the relationship between the independent and dependent variable is not linear, then the model will not fit the data well.
+To check this assumption, you can plot the data and see if a straight line is a good fit.
+With the `plot_model()` function from the `sjPlot` package you can plot the predicted (`type = "pred"`) values for an independent variable (`terms = "age"`) on top of the data points (`show.data = T, jitter = T`[^jitter]).
+
+[^jitter]: Jitter is a small amount of noise that is added to the data points to prevent them from overlapping in case their values are the same.
+
+```{r linearity-1, fig.height=3, results=F, fig.show='hide'}
+m <- lm(trust_t1 ~ age, data = d)
+
+plot_model(m, type = "pred", terms = "age",
+              show.data = T, jitter = T)
+```
+
+If you check this plot for our practice data, you'll see that the relationship between `age` and `trust_t1` is indeed linear.
+Let's instead look at an example where the relationship is not linear.
+In the following plot the relation between `age` and `happiness` is quadratic, following a u-shape.
+Younger and older people tend to be happier than middle-aged people.
+A regular linear model (left) will not be able to capture this relationship well, and will therefore not fit the data well.
+On the right we fit a regression line to the actual relation.
+
+```{r linearity-2, message=F, warning=F, echo=F, fig.height=3}
+library(gridExtra)
+set.seed(1)
+x = sample(10:80, 50, replace = T)
+x_z = (x - mean(x)) / sd(x)
+y = 4 + x*0.02 + 0.3*x_z^2 + rnorm(50, mean = 0, sd = 0.5)
+ds = data.frame(x = x, y = y)
+m_nonlin = lm(y ~ x, data = ds)
+m_nonlin_fit = lm(y ~ poly(x,2), data = ds)
+
+grid.arrange(
+  plot_model(m_nonlin, type = "pred", terms = "x", show.data = T, jitter = T, title='Linear model on non-linear data'),
+  plot_model(m_nonlin_fit, type = "pred", terms = "x", show.data = T, jitter = T, title="Actual relation is quadratic"),
+  ncol = 2
+)
+```
+
+#### Normality
+
+The residuals of the model should be normally distributed.
+If you look at the figure of the regression model at the top of this tutorial, you can see how the residuals (the red lines) are distributed around the regression line.
+This distribution should be normal.
+
+You can to some extend see whether this is the case using the same plot as above.
+But there are also special diagnostics plots that can help you with this.
+With the `plot_model()` function you can plot the residuals (`type = "diag"`) of the model.
+
+```{r normality-1, fig.height=3, results=F, fig.show='hide'}
+diag_plots <- plot_model(m, type = "diag")
+```
+
+This creates a series of plots that show the residuals in different ways.
+What diagnostics plots are produced depends on the type of model you have.
+For regression we get three plots:
+
+* `diag_plots[[1]]`: Non-normality of residuals and outliers
+* `diag_plots[[2]]`: Non-normality of outliers
+* `diag_plots[[3]]:` Homoscedasticity
+
+Let's first focus on the second plot, which shows just the distribution of the residuals.
+The coloured area is a smoothed density plot of the residuals, and the blue line shows a proper bell curve for reference.
+If there is a clear difference between the two, then the residuals are not normally distributed.
+
+```{r normality-2, message=F, warning=F, fig.height=3}
+#| html-table-processing: none
+diag_plots = plot_model(m, type="diag")
+diag_plots[[2]]
+```
+
+#### No outliers in the residuals
+
+Outliers can have a large effect on the model.
+Usually outliers in the residuals are related to outliers in the variables, which can be detected when [inspecting and cleaning](2.03-data-cleaning.qmd) the data.
+For detecting outliers in the residuals, the **Non-normality of residuals and outliers** plot can be helpful.
+If there are outliers, they will show up as points that are far away from the line.
+
+```{r no-outliers-in-the-residuals-1, message=F, warning=F, fig.height=3}
+diag_plots[[1]]
+```
+
+#### Homoscedasticity
+
+The residuals should have a constant variance.
+What we mean by this is that among the fitted values in the model, the variance of the residuals should not systematically increase or decrease.
+For instance, if in our model of **age** predicting **trust** the residuals are very small for young people, and very large for old people, then the model is not homoscedastic.
+
+This can be checked with the **Homoscedasticity** plot.
+If the residuals are homoscedastic, then the residuals should be randomly distributed around the horizontal line.
+
+```{r homoscedasticity-1, fig.show=F, message=F, warning=F, fig.height=3}
+diag_plots[[3]]
+```
+
+Now let's look at an example where the variance of the residuals systematically increases with the fitted values.
+So the higher our prediction of `trust_t1`, the larger the residuals.
+We then say that the residuals are **heteroscedastic**.
+
+```{r homoscedasticity-2, echo=F, message=F, warning=F, fig.height=3}
+set.seed(1)
+x = sample(10:80, 100, replace = T)
+y = 4 + x*0.02 + rnorm(100, mean = 0, sd = x*0.056 + 1)
+ds = data.frame(x = x, y = y)
+m_het = lm(y ~ x, data = ds)
+plot_model(m_het, type = "diag")[[3]]
+```
+
+#### Independence
+
+Independence means that the residuals should not be related to each other.
+There are many ways in which this assumption can be violated.
+
+One common case is data over time.
+If you're measuring something over time, like a person's number of social media followers, then it is very common that every observations is highly dependent on the previous observation.
+This is called **autocorrelation** (the variable correlates with itself).
+In order to use these data in a regression model, you need to use special techniques that take this autocorrelation into account.
+This area of statistics is called **time series analysis**.
+
+Another common case is that your observations are nested within groups.
+For example, say your measuring the relation between social media use and happiness, and you gathered data from multiple countries.
+Observations nested in countries are not independent, because people within the same country tend to be more similar to each other than people from different countries.
+Some countries are overall happier, and some countries have more social media use.
+Country therefore could act as a **confounder**.
+To reduce the dependency between the residuals, you could control for countries using dummy variables, or use more advanced techniques like **multilevel models**.
+
+#### No multicolinearity
+
+Multicolinearity is a situation where two or more independent variables are highly correlated with each other.
+This can cause problems in the model, because the model cannot distinguish between the effects of the two variables.
+To check for multicolinearity, you can look at the **correlation matrix** of the independent variables (see the [correlation tutorial](3.03-correlation-and-covariance.qmd)).
+A rough rule of thumb is that if the correlation between two variables is higher than 0.5 you should be cautious, and if it's higher than 0.8 you should be very worried.
+
+You should try to avoid high correlations between independent variables where possible.
+If you have multiple variables that are highly correlated, they might be measuring a common factor, so you could consider combining them into a single variable (see the [scale construction](4.05-scale-construction.qmd) tutorial).
+
+::: {.callout-note title="The variance inflation factor" collapse="true"}
+
+A more appropriate way to check for multicolinearity is to use the **variance inflation factor** (VIF).
+Looking just at correlations is actually not good enough.
+The more accurate definition of multicolinearity is that one independent variable can be predicted by the other independent variables in the model.
+So looking at bi-variate correlations is not enough, because the prediction of one variable can be spread out over multiple other variables.
+
+In R we can calculate the VIF of the variables in a model with the `vif()` function from the `car` package.
+This returns the VIF score for each independent variable.
+If the VIF is 1 or lower, we don't have to worry about multicolinearity.
+If it's higher than 5, we very likely have a problem.
+If it's between 1 and 5, it's a grey area, and you (as always) have to use your judgement.
+
+```{r no-multicolinearity-1}
+library(car)
+m <- lm(trust_t1 ~ age + news_consumption, data = d)
+vif(m)
+```
+:::

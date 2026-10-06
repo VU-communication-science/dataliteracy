@@ -1,0 +1,100 @@
+---
+title: "1.1 Basic Computer Skills"
+subtitle: "Organizing files and installing software."
+---
+
+*This is the very first module in the book, so we assume nothing: not that you've used a command line, not that you know what a "working directory" is, and not that you've installed R before. You'll learn how your computer organises files and folders, how to describe where a file lives with a path, and how to install and start using R and RStudio — the software you'll use for the rest of this course. Getting comfortable with these basics now will save you a lot of frustration later, because almost every early R problem ("file not found", "it says the package isn't installed", "nothing happens when I run this") is actually a computer-skills problem in disguise.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=compu)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Files, folders, and the command line
+
+Everything on your computer — documents, photos, programs, and (soon) your R scripts and data — is stored as a **file**, and files are organised into **folders** (also called **directories**). A folder can contain files and other folders, so the whole system forms a tree: your hard drive is the root, and everything else branches off from there.
+
+Most of the time you interact with files through a graphical **file explorer** (Finder on macOS, File Explorer on Windows): you double-click folders to open them, and drag files around with your mouse. This is fine for everyday use, but as soon as you start programming, you'll also encounter the **command line** (also called the **terminal** or **console**): a window where, instead of clicking icons, you type text commands and press Enter to run them.
+
+You won't need to use the command line directly very often in this course — RStudio mostly hides it from you — but it's worth knowing that it exists, because:
+
+- RStudio's own **console** (which you'll meet below) works on the same principle: you type a command, press Enter, and it runs immediately.
+- Some error messages and installation instructions you'll find online assume you know what a command line is.
+- Every command you type refers to files and folders using the same idea of **paths**, which is the next thing we'll cover.
+
+## Working directories and file paths
+
+Whenever a program (including R) reads or writes a file, it needs to know *where* that file is. There are two ways to describe a location:
+
+### Absolute paths
+
+An **absolute path** spells out the complete location of a file, starting from the very top of the file system. On Windows it typically starts with a drive letter, e.g.:
+
+```
+C:\Users\yourname\Documents\survey_data.csv
+```
+
+On macOS or Linux it starts with a `/`, e.g.:
+
+```
+/Users/yourname/Documents/survey_data.csv
+```
+
+An absolute path always works, no matter what else is going on, because it doesn't depend on "where you currently are" — but it's long to type, and it's tied to one specific computer (a path like `C:\Users\yourname\...` will not exist on someone else's laptop).
+
+### Relative paths and the working directory
+
+This is where the **working directory** comes in. At any point in time, a program is "standing" in one particular folder — its working directory — and a **relative path** describes a file's location *starting from there*, instead of from the very top. For example, if your working directory is `Documents`, then the relative path `survey_data.csv` refers to the exact same file as the absolute path above.
+
+Relative paths are shorter, and — more importantly — they keep working even if you move your whole project folder to a different computer, as long as the files inside it stay in the same arrangement relative to each other. This is why, later in the course, you will almost always use relative paths rather than absolute ones. You'll see this in action properly once you start working with R itself; for now, just remember the core idea: *a relative path is read starting from wherever you currently are, an absolute path is read starting from the very top.*
+
+## Installing R and RStudio
+
+To do any of the work in this course, you need two separate pieces of free software:
+
+- **R**. This is the actual program that runs your code and does the calculations. You almost never open R directly.
+- **RStudio**. This is a much more user-friendly window around R, with a text editor, file browser, and helpful buttons. This is the program you'll actually open every time you work.
+
+Install them in this order (R first, then RStudio), both for free:
+
+1. Download and install **R** from the [CRAN website](https://cran.r-project.org/). Don't be put off by the plain, old-fashioned look of the site — it's the official, trusted source. Pick the installer for your operating system (Windows, macOS, or Linux) and follow the default installation steps.
+2. Download and install **RStudio Desktop** from [posit.co](https://posit.co/download/rstudio-desktop/) (RStudio's developer). Again, pick the installer for your operating system and use the default settings.
+
+Once both are installed, open **RStudio** (not R directly) — RStudio will automatically start R in the background for you. If RStudio opens without an error message, you're ready to go.
+
+## Scripts versus the console
+
+Inside RStudio you'll see a panel called the **console**. This is where you can type a line of R code, press Enter, and see the result immediately:
+
+```{r trying-the-console, eval=FALSE}
+1 + 1
+```
+
+This runs the line and shows `[1] 2` right below it. The console is great for quick, one-off checks, but it has one big downside: once you close RStudio (or scroll past it), that line of code is gone. There's no record of what you did.
+
+This is why, for any real piece of work, you write your code in a **script** instead. A script is simply a text file (in R, it has the `.R` extension) where you write all your code in order, save it, and can reopen it, edit it, and rerun it at any time. Think of the console as a scratchpad for quick experiments, and the script as the actual, permanent record of your work — the thing you'll hand in for assignments.
+
+To create a new script in RStudio: go to the menu bar and select `File > New File > R Script`. A new, empty text editor panel will appear above the console, ready for you to start typing code.
+
+## Running and saving a script
+
+Once you've written a line (or several lines) of code in your script, you need to tell R to actually run it — writing code by itself does nothing until you execute it.
+
+- To run a **single line**, put your cursor on that line and press **Ctrl + Enter** (Windows/Linux) or **Cmd + Enter** (macOS). You'll see the line, and its result, appear in the console below.
+- To run **several selected lines** at once, select them with your mouse (or keyboard) first, then use the same shortcut.
+- To run the **entire script**, use **Ctrl/Cmd + Shift + Enter**, or click the `Source` button.
+
+Don't forget to **save** your script regularly, with **Ctrl + S** (Windows/Linux) or **Cmd + S** (macOS) — just like you would in any other program. The first time you save a new script, RStudio will ask you to choose a name and a folder; give it a short, descriptive name ending in `.R`, for instance `week1_exercises.R`.
+
+A few more keyboard shortcuts that are worth building into muscle memory early on:
+
+| Shortcut (Win/Linux) | Shortcut (macOS) | What it does |
+|---|---|---|
+| `Ctrl + Enter` | `Cmd + Enter` | Run the current line (or selection) |
+| `Ctrl + S` | `Cmd + S` | Save the current file |
+| `Ctrl + Z` | `Cmd + Z` | Undo your last change |
+| `Ctrl + C` / `Ctrl + V` | `Cmd + C` / `Cmd + V` | Copy / paste |
+| `Ctrl + F` | `Cmd + F` | Find (and replace) text in your script |
+
+You now have everything you need to open RStudio, write some code in a script, and run it. The next module shows you what that code actually looks like and how R thinks about data.

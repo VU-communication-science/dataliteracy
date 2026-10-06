@@ -1,0 +1,19 @@
+---
+title: "Datasets"
+subtitle: "Every dataset used in the book: what it contains, where it's hosted, and which chapters use it."
+---
+
+The book uses two simulated datasets. `practice_data.csv` is generated at build time from an in-repo simulation script and served from the book's own domain; `polcomm_data.csv` is still hosted externally while it's reviewed for migration (see [`data/data_standard.md`](https://github.com/VU-communication-science/dataliteracy/blob/main/data/data_standard.md) for the full workflow). Each dataset below has its own page with a full column-by-column description.
+
+| Dataset | Status | Used in | Access |
+| :--- | :--- | :--- | :--- |
+| [Practice Data](practice-data.qmd) | migrated (generated at build time) | 11 chapters (Data Frames through Linear Model Assumptions) | `read_csv("https://dev.dataliteracy.cc/practice_data.csv")` |
+| [Polcomm Data](polcomm-data.qmd) | external, under review | [Factor Analysis](../chapters/4.04-factor-analysis.qmd) only | `read_csv("https://data.dataliteracy.cc/simulated/polcomm_data.csv")` |
+
+## Why datasets get their own page
+
+Rather than a chapter just calling `read_csv()` on an unexplained URL, every dataset used in the book gets documented once, here, with its full column list, how it was simulated (and why — which relationships were deliberately built in), and every chapter that uses it. Chapters link to the relevant page the first time they load a dataset, so a reader can always check what a column means without hunting through chapter prose.
+
+## Hosting
+
+The repo contains no data files, only the R scripts that simulate them (`data/simulation_scripts/`, each with a fixed seed for reproducible output). A Quarto `pre-render` hook (`scripts/generate_data.R`) runs these scripts on every render and writes the resulting CSVs straight into the site's root output folder, so they end up served from the same domain as the book itself (e.g. `https://dev.dataliteracy.cc/practice_data.csv`) with no CORS concerns and no data bloat in git history. `polcomm_data.csv` doesn't have a simulation script yet and remains hosted on the separate `dataliteracy-data` repo/domain (`data.dataliteracy.cc`, on Cloudflare Pages) until one is written. See `data/data_standard.md` for the per-dataset migration checklist.

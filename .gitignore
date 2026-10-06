@@ -1,9 +1,6 @@
 # Quarto internal debug files
 _quarto_internal_scss_error.scss
 
-# Quarto extensions (installed by CI)
-/_extensions/
-
 # Runtime-generated directories (CI)
 /docs_old/
 
@@ -18,9 +15,13 @@ env/
 /_freeze/
 /docs/
 
+# Simulated datasets are regenerated at build time by scripts/generate_data.R
+# from data/simulation_scripts/ (see data/data_standard.md); never commit the
+# generated CSVs themselves.
+/data/generated/
+
 # Generated HTML and render artifacts (not tracked in repo)
 *.html
-!/_extensions/**/*.html
 *_files/
 /site_libs/
 

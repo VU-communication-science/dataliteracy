@@ -1,5 +1,8 @@
 ---
 title: "2.1 Data Frames"
+format:
+  html:
+    df-print: default
 ---
 
 ::: {.callout-note title="Required packages and data for this chapter"}
@@ -34,12 +37,12 @@ When you first run this code, it will print a message that shows you all the pac
 
 * [tibble](https://tibble.tidyverse.org/). An optimized way for structuring *rectangular data* (basically: a spreadsheet of rows and columns)
 * [dplyr](https://dplyr.tidyverse.org/). Functions for manipulating tibbles: select and rename columns, filter rows, mutate values, etc.
-* [readr](https://readr.tidyverse.org/). Read data into R. 
+* [readr](https://readr.tidyverse.org/). Read data into R.
 * [ggplot2](https://ggplot2.tidyverse.org/). One of the best visualization tools out there. Check out the [gallery](https://r-graph-gallery.com/)
 
 
 ::: {.callout-warning title="What about the 'Conflicts'?" collapse="true"}
-When opening the tidyverse, and when opening packages in general, you can get a `Conflicts` warning. 
+When opening the tidyverse, and when opening packages in general, you can get a `Conflicts` warning.
 A very common warning for the tidyverse is:
 
 ```
@@ -96,8 +99,8 @@ As a simple example, the following code creates a tibble containing respondents,
 We'll call our tibble **d** (short for data).
 
 ```{r data-management-with-the-tidyverse-1}
-d <- tibble(resp_id = c(  1,   2,   3,   4), 
-            gender  = c("M", "M", "F", "F"), 
+d <- tibble(resp_id = c(  1,   2,   3,   4),
+            gender  = c("M", "M", "F", "F"),
             height  = c(176, 165, 172, 160))
 ```
 
@@ -279,21 +282,21 @@ So in this case R will just print the result to the console, but not store it in
 
 ##### Selecting and renaming columns
 
-When you select a column, you can also rename it using the syntax `new_name = old_name`. 
+When you select a column, you can also rename it using the syntax `new_name = old_name`.
 The following code selects the columns `experiment_group`, `trust_t1`, and `trust_t2`, and renames them to `group`, `trust_before`, and `trust_after`:
 
 ```{r selecting-and-renaming-columns-1, results='hide'}
-select(d, group = experiment_group, 
-          trust_before = trust_t1, 
+select(d, group = experiment_group,
+          trust_before = trust_t1,
           trust_after = trust_t2)
 ```
 
 
-##### Selecting columns that have spaces in the name  
+##### Selecting columns that have spaces in the name
 
 Sometimes columns names have spaces in them.
 This is a bit annoying to work with in R, because you need to then tell R where a name starts and ends.
-You can do this by using backticks (reverse quotes) around the column name. 
+You can do this by using backticks (reverse quotes) around the column name.
 In our practice data, we need this to select the `news consumption` column.
 It is then often smart to immediately rename the column to something without spaces, such as just replacing them with underscores:
 
@@ -320,8 +323,8 @@ Sometimes you only want to rename columns without selecting or dropping any.
 You can do this with the `rename` function, which works similarly to how you rename columns with `select`:
 
 ```{r renaming-columns-with-rename-1, results='hide'}
-rename(d, group = experiment_group, 
-          trust_before = trust_t1, 
+rename(d, group = experiment_group,
+          trust_before = trust_t1,
           trust_after = trust_t2)
 ```
 
@@ -329,9 +332,9 @@ In this case, we do rename the columns, but without dropping all the other colum
 
 ## Filter and arrange
 
-### Subsetting rows with filter() {#filter} 
+### Subsetting rows with filter() {#filter}
 
-The `filter` function can be used to select a subset of rows. 
+The `filter` function can be used to select a subset of rows.
 The first argument of the `filter` function is the tibble you want to filter.
 The second argument is the condition that should be met for a row to be included in the result.
 Let's say we want to select only the rows where the `experiment_group` column is equal to `control`.
@@ -344,7 +347,7 @@ filter(d, experiment_group == 'control')
 This gives us the 200 rows (out of 600) where the `experiment_group` is `control`.
 
 We can use other common operators as well, such as `>`, `<`, `>=`, `<=`, and `!=` (not equal).
-And we can also combine multiple conditions with the `&` (and) and `|` (or) operators. 
+And we can also combine multiple conditions with the `&` (and) and `|` (or) operators.
 
 For example, here we select all rows where the `experiment_group` is `control` and the `age` is greater than 30:
 
@@ -375,7 +378,7 @@ In this optional information block we'll go a bit deeper into how the filter con
 
 The condition in `filter` can be any **logical expression**.
 A logical expression is simply a statement that is either `TRUE` or `FALSE`.
-When we use a logical expression in the `filter` function, we are asking R to evaluate this expression for each row in the tibble. 
+When we use a logical expression in the `filter` function, we are asking R to evaluate this expression for each row in the tibble.
 Each row for which the expression evaluates to `TRUE` is then included in the subset.
 
 If you know a bit about how logical expressions work, you will have great control over what rows are included in your subset.
@@ -391,9 +394,9 @@ Comparison operators are used to compare two values.
 - `>=`   greater than or equal to
 - `<`    less than
 - `<=`   less than or equal to
-- `%in%` is in a list of values (second value must be a list or vector) 
+- `%in%` is in a list of values (second value must be a list or vector)
 
-Example: 
+Example:
 
 ```{r comparison-operators-1}
 5 > 1    # TRUE:  5 is greater than 1
@@ -595,7 +598,7 @@ if_else(condition, value_if_true, value_if_false)
 ```
 
 A common use case is that sometimes you want to perform an operation only on a subset of the data.
-For example, in our data there are a few participants that accidentally entered their birthyear instead of their age. 
+For example, in our data there are a few participants that accidentally entered their birthyear instead of their age.
 To correct this, we can use `if_else` to set the age to `2024 - birthyear`, but only if the number the participants entered is above 1000 (which is only the case if it's a birthyear).
 
 ```{r binary-cases-with-if-else-2}
@@ -608,7 +611,7 @@ So this reads: if the age is above 1000, return `2024 - age`, otherwise return t
 
 ### Working with Pipes
 
-In the [Functions](1.1-working-with-r.qmd#using-the-pipe-syntax) tutorial we already mentioned that R also has a `pipe` syntax. 
+In the [Functions](1.1-working-with-r.qmd#using-the-pipe-syntax) tutorial we already mentioned that R also has a `pipe` syntax.
 This is a way to chain functions together, where the output of one function is the input of the next function.
 The syntax for the pipe is `|>`, and it is used like this:
 
@@ -616,13 +619,13 @@ The syntax for the pipe is `|>`, and it is used like this:
 argument1 |> function(argument2)
 ```
 
-The first argument of a funtion can also be *piped into it*. 
+The first argument of a funtion can also be *piped into it*.
 Between the parentheses of the function we then only need to specify any additional arguments (if needed).
 Often the first argument of a function is the input data, which allows you to chain functions together.
 
 ```{r working-with-pipes-2, eval=F}
-data |> 
-   do_this() |> 
+data |>
+   do_this() |>
    then_this() |>
    finally_this()
 ```
@@ -664,7 +667,7 @@ Both functions work almost in the same way.
 So why have two?
 The reason is simply that R keeps evolving, and the `|>` pipe was only recently introduced.
 
-The `%>%` pipe was introduced in the `magrittr` package, and was made popular by the `tidyverse`. 
-Because of this popularity, R decided that it would be a good idea to have a *native* pipe in the language itself, meaning that you don't need to install a package to use it. 
+The `%>%` pipe was introduced in the `magrittr` package, and was made popular by the `tidyverse`.
+Because of this popularity, R decided that it would be a good idea to have a *native* pipe in the language itself, meaning that you don't need to install a package to use it.
 This is why they introduced the `|>` pipe.
 :::

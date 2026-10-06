@@ -35,12 +35,6 @@ renv::snapshot()
 
 This installs all packages at the exact versions recorded in `renv.lock`. You're now ready to preview the book.
 
-You'll also need to install the Quarto Live extension. Run this in the terminal (not the R console):
-
-```bash
-quarto add r-wasm/quarto-live
-```
-
 ---
 
 ## Working on the book

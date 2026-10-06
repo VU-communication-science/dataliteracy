@@ -39,12 +39,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-renv-
 
-      - name: Install quarto-live extension
-        run: |
-          mkdir -p _extensions/r-wasm/live
-          touch _extensions/r-wasm/live/_knitr.qmd
-          quarto add r-wasm/quarto-live --no-prompt
-
       - name: Install system dependencies
         run: |
           sudo apt-get update -qq
@@ -83,7 +77,7 @@ jobs:
         continue-on-error: true
         uses: quarto-dev/quarto-actions/render@v2
         with:
-          to: live-html
+          to: html
 
       - name: Check chapter outputs for package drift
         if: steps.lockfile.outputs.changed == 'true' && steps.render.outcome == 'success'

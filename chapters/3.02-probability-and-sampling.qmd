@@ -1,0 +1,76 @@
+---
+title: "3.2 Probability & Sampling"
+subtitle: "Probability theory, random sampling, and sampling variability."
+---
+
+*You arrive here from [Means & Variance](3.01-means-and-variance.qmd), so you can already describe a single variable with its mean and spread. Here you'll learn the basics of probability, the difference between a population and a sample, what a sampling distribution is, and why a bigger sample gives you a more reliable estimate. This is the logic that explains why we can say anything at all about a population when we've only measured a sample of it — the foundation of every hypothesis test in the rest of the book.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=probs)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Probability, briefly
+
+**Probability** is a number between 0 and 1 that expresses how likely something is to happen. A probability of 0 means "never happens", a probability of 1 means "always happens", and 0.5 means "happens about half the time".
+
+In R, we can simulate random events directly. For example, flipping a fair coin 10 times:
+
+```{r}
+sample(c("heads", "tails"), size = 10, replace = TRUE)
+```
+
+Or drawing a random value from a **normal distribution** — the familiar bell-shaped curve that shows up everywhere in statistics, from test scores to measurement error:
+
+```{r}
+rnorm(5, mean = 0, sd = 1)
+```
+
+You don't need to be able to do formal combinatorics for the rest of this book. What matters is the intuition that most variables we study — political interest, trust in media, reaction times — can be thought of as **random variables**: quantities whose exact value isn't fixed, but that tend to cluster around some typical value (the population mean) with some amount of spread (the population SD), roughly following a normal distribution.
+
+## Population vs. sample
+
+In communication science (and most empirical research), we almost always want to know something about a **population** — all Dutch adults, all Twitter users, all readers of a newspaper — but we can only ever collect data from a **sample**: a subset of that population.
+
+* The **population mean** is a fixed (but usually unknown) number, traditionally written $\mu$.
+* The **sample mean** ($\bar{X}$) is what we actually calculate from our data, and it's an *estimate* of $\mu$.
+
+Crucially, if you drew a different sample of the same size from the same population, you would get a slightly different sample mean. This isn't a mistake — it's **sampling variability**: by chance, the particular 500 people you happened to ask will never be a perfect miniature copy of the entire population.
+
+## The sampling distribution
+
+Here's the key idea that makes statistical inference possible. Imagine (hypothetically) that you could repeat your survey of 500 people over and over again, each time drawing a fresh random sample from the same population, and each time computing the sample mean. If you plotted all of those sample means, you'd get a distribution — the **sampling distribution of the mean**.
+
+```{r sampling-distribution-plot, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+set.seed(1)
+population <- rnorm(100000, mean = 5, sd = 2)
+
+sample_means <- replicate(2000, {
+  mean(sample(population, size = 500))
+})
+
+ggplot(tibble(sample_means), aes(x = sample_means)) +
+  geom_histogram(bins = 40, fill = "steelblue", color = "white") +
+  labs(title = "Sampling distribution of the mean (500 repeated samples)",
+       x = "Sample mean", y = "Count")
+```
+
+Two things stand out:
+
+1. The sampling distribution is centered almost exactly on the true population mean (5 in this simulation) — on average, the sample mean is a good estimate of the population mean, even though any single sample will be a little off.
+2. The sampling distribution has its own spread, called the **standard error**. This tells you how much sample means typically vary from one sample to the next.
+
+## Why bigger samples reduce sampling error
+
+If you repeat the simulation above with samples of only 20 people instead of 500, the individual sample means will scatter much more widely around the true population mean. Intuitively: with only 20 people, a few unusually high or low scores can pull the average noticeably off target. With 500 people, those same unusual scores get diluted by hundreds of more typical ones, so the average is much more stable.
+
+This is why "a bigger sample is more reliable" isn't just a rule of thumb — it directly follows from how averaging works: individual extreme scores matter less and less as $n$ grows, so the standard error of the mean actually shrinks as the sample size increases (specifically, it shrinks in proportion to $\sqrt{n}$). This is closely related to the **Central Limit Theorem**, which we won't prove here but which you can build strong visual intuition for in the video linked below.
+
+This single fact — that larger samples give you a narrower, more trustworthy sampling distribution — is the reason sample size matters so much in study design, and it's the logic behind confidence intervals and p-values that you'll meet in [Hypothesis Testing](3.05-hypothesis-testing.qmd).
+
+## Further resources {.unnumbered}
+
+- 🎥 [3Blue1Brown: But what is the Central Limit Theorem?](https://www.youtube.com/watch?v=zeJD6dqJ5lo) — a visual, intuitive build-up of why sampling distributions behave the way they do.

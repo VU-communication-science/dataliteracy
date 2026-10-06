@@ -1,0 +1,91 @@
+---
+title: "3.4 Effects"
+subtitle: "How do we measure effects and how do we interpret them?"
+---
+
+*You arrive here from [Correlation & Covariance](3.03-correlation-and-covariance.qmd) and [Probability & Sampling](3.02-probability-and-sampling.qmd), so you can already quantify how two variables relate and you understand that samples vary by chance. Here you'll learn what an *effect* is, how to express its size on a standardized scale (Cohen's $d$, $r$), and why "how big is the effect?" is a different question from "how sure are we that it's not zero?". Confusing these two is one of the most common mistakes in reading (and reporting) research.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=ef-si)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## What is an "effect"?
+
+Whenever a study compares groups, or relates two variables, it is looking for an **effect**: some systematic pattern in the data, as opposed to pure noise. Effects come in several familiar shapes, most of which you've already met:
+
+* A **mean difference**: newspaper subscribers score, on average, higher on political interest than non-subscribers.
+* A **correlation**: more news consumption goes together with more political interest.
+* A **regression slope**: for every extra hour of news consumption per week, political interest goes up by some amount.
+
+All of these answer the same underlying question — "does X relate to Y, and how strongly?" — just using different kinds of variables.
+
+## Raw effects are hard to compare
+
+Suppose newspaper subscribers score `r round(mean(c(7.2,6.8,7.5,7.0,7.1)), 2)` on average on a political-interest scale, versus `r round(mean(c(5.1,4.8,5.5,5.0,4.9)), 2)` for non-subscribers — a difference of `r round(mean(c(7.2,6.8,7.5,7.0,7.1)) - mean(c(5.1,4.8,5.5,5.0,4.9)), 2)` points. Is that a big effect? It depends entirely on the scale the variable was measured on, and on how much people vary to begin with. A 2-point difference on a 1–10 scale is substantial; the same 2-point difference would be tiny on a 1–100 scale. This is the same problem you already saw with **covariance** in [Correlation & Covariance](3.03-correlation-and-covariance.qmd): raw, unstandardized numbers depend on the units of measurement, which makes them hard to compare across studies or variables.
+
+The solution is the same one you already know: **standardize**.
+
+## Cohen's d: a standardized mean difference
+
+**Cohen's $d$** expresses a mean difference between two groups in standard-deviation units, instead of raw scale points. The formula is:
+
+$$ d = \frac{\bar{X}_1 - \bar{X}_2}{SD_{pooled}} $$
+
+where $SD_{pooled}$ is a (sample-size weighted) average of the standard deviations in the two groups. A simplified version, when the two groups are roughly the same size, just averages the two SDs:
+
+```{r}
+library(tidyverse)
+
+d <- tibble(
+  np_subscription  = c(rep("yes", 5), rep("no", 5)),
+  political_interest = c(7.2, 6.8, 7.5, 7.0, 7.1, 5.1, 4.8, 5.5, 5.0, 4.9)
+)
+
+group_stats <- d |>
+  group_by(np_subscription) |>
+  summarise(m = mean(political_interest), s = sd(political_interest))
+
+group_stats
+```
+
+```{r}
+mean_diff <- group_stats$m[group_stats$np_subscription == "yes"] -
+             group_stats$m[group_stats$np_subscription == "no"]
+
+pooled_sd <- mean(group_stats$s)
+
+cohens_d <- mean_diff / pooled_sd
+cohens_d
+```
+
+A common (but not universal) rule of thumb, also due to Cohen, is that $d = 0.2$ is a *small* effect, $d = 0.5$ is *medium*, and $d = 0.8$ is *large*. Our example above, with $d \approx `r round(cohens_d, 2)`$, would be considered a very large effect — but keep in mind this is a tiny, illustrative dataset, and real-world effects are rarely this clean.
+
+If you'd rather not compute this by hand every time, the `effectsize` package provides `cohens_d()`, which also returns a confidence interval around the estimate:
+
+```{r, eval=FALSE}
+library(effectsize)
+cohens_d(political_interest ~ np_subscription, data = d)
+```
+
+## Correlation (r) as an effect size
+
+When your effect is a relationship between two continuous variables rather than a group difference, the **correlation coefficient** $r$ you already met in [Correlation & Covariance](3.03-correlation-and-covariance.qmd) already *is* a standardized effect size — that's precisely why we bothered to standardize the covariance in the first place. The same rough rule-of-thumb thresholds are often used: around $r = 0.1$ is small, $0.3$ is medium, and $0.5$ is large.
+
+Other common standardized effect sizes you will encounter later in the book include $R^2$ (the proportion of variance explained by a regression model) and the **odds ratio** (how much the odds of an event change, used for binary outcomes in logistic regression). The details differ, but the goal is always the same: express an effect on a scale that doesn't depend on the units of the original variables.
+
+## Effect size $\neq$ statistical significance
+
+This is the single most important distinction in this chapter. A $p$-value (which you'll study properly in [Hypothesis Testing](3.05-hypothesis-testing.qmd)) answers "how likely is it that I'd see a difference this big (or bigger) purely by chance, if there were truly no effect in the population?" An effect size answers a completely different question: "how big is the difference, regardless of how sure we are about it?"
+
+Here's why this matters in practice:
+
+* With a **very large sample**, even a tiny, practically meaningless effect (say, $d = 0.02$) can become "statistically significant" ($p < .05$), simply because large samples make estimates very precise. The effect is detectable, but it may not be worth caring about.
+* With a **very small sample**, even a large, practically important effect can fail to reach statistical significance, simply because there isn't enough data to be confident it isn't due to chance.
+
+So a responsible reading of any result always asks both questions: *is this effect likely to be real* (significance), and *is this effect big enough to matter* (effect size)? Good research reports both, and journals increasingly require it. How to plan a study so that it has a good chance of detecting an effect of a given size is the subject of [Power Analysis](5.09-power-analysis.qmd), later in the book.
+
+## Further resources {.unnumbered}
+
+- 🎥 [StatQuest: p-values: What they are and how to interpret them](https://www.youtube.com/watch?v=vemZtEM63GY) — useful companion viewing for the significance-vs-effect-size distinction covered here, before you dive into [Hypothesis Testing](3.05-hypothesis-testing.qmd).

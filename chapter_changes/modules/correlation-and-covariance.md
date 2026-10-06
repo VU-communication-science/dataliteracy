@@ -17,3 +17,9 @@
 - [ ] Could use a short section on how correlation relates to effect sizes (see `effects`).
 - [ ] Style harmonization (see `module_standard.md`): add a 'Key Takeaways' callout, a standard 'Required Packages & Data' callout, plain-language conceptual intuition before code, and an APA reporting block where relevant.
 - [ ] Review whether the skill-tree intro box at the top still matches the content after edits.
+
+### Follow-up pass: format only
+
+- Replaced the old boxed learning-journey callout with the new unboxed intro paragraph + a one-line code hook (cor() teaser) + skill-tree link, per `module_standard.md`.
+- Added a "Try it yourself" webR box (cov/cor on the chapter's own toy data) and a Further resources entry (StatQuest Pearson correlation video).
+- No AI-assisted-draft notice added; body content is unchanged, pre-existing material.

@@ -1,0 +1,57 @@
+---
+title: "7.3 Machine Learning"
+subtitle: "Supervised and unsupervised machine learning methods."
+---
+
+*Machine learning doesn't require prior modules in this section, but it builds on the modelling intuition from the Inferential Statistics section (especially [Multiple Regression](5.06-regression.qmd)). Here you'll learn the vocabulary that turns "fitting a model" into "machine learning": labelled training data, a train/test split, and the risk of overfitting. The same logic scales from a toy example like the one below to classifiers that code thousands of documents in [Text Classification](6.04-text-classification.qmd).*
+
+→ [See this module in the skill tree](curriculum.qmd?module=ma-le)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Supervised vs. unsupervised learning
+
+Most machine learning used in content analysis is **supervised**: you start with examples that already have a known answer (a label), such as articles a human coder marked "political" or "not political" (see [Manual Coding](6.02-manual-coding.qmd)), and the algorithm learns a rule that maps the input (the text, or features of it) to that label. Once trained, the rule can be applied to new, unlabelled texts.
+
+**Unsupervised** learning has no labels at all — the algorithm instead finds structure in the data on its own, for example grouping documents into clusters of similar content (topic modelling is a common example in text analysis). It's exploratory: useful for discovering structure, but it doesn't give you a validated measurement the way supervised learning can.
+
+## A small logistic regression example
+
+As a toy example, suppose a human coder has already labelled a handful of short texts as political or not, and counted how many policy-related words (like "tax" or "regulation") each one contains:
+
+```{r, message=FALSE}
+library(tidyverse)
+
+texts <- tibble(
+  n_policy_words = c(0, 1, 3, 2, 0, 4, 1, 5, 0, 2, 1, 3, 2, 4),
+  is_political    = c(0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0)
+)
+
+model <- glm(is_political ~ n_policy_words, data = texts, family = "binomial")
+texts |> mutate(predicted_prob = round(predict(model, type = "response"), 2))
+```
+
+This logistic regression is a supervised classifier: `is_political` is the label, `n_policy_words` is the predictor, and `glm()` estimates the rule that connects them — exactly the same math as in [Multiple Regression](5.06-regression.qmd), just with a classification goal in mind.
+
+## Train/test split and overfitting
+
+A model that perfectly separates your labelled examples isn't automatically a good model — it may have simply memorised the quirks of that particular dataset rather than learning a pattern that generalises. This is **overfitting**. The standard safeguard is to split your labelled data into a **training set** (used to fit the model) and a **test set** (held back, used only to check how well the model predicts cases it has never seen). A model that does well on training data but poorly on test data is overfit; a model that does comparably on both is more likely to generalise to new, real-world text.
+
+## A tiny worked example
+
+Beyond `glm()`, dedicated classification algorithms such as Naive Bayes (`naivebayes::naive_bayes()`) or decision trees are common starting points for text classification, and packages like `tidymodels` or `caret` standardise the train/test/evaluate workflow across many algorithms. The core idea stays the same regardless of algorithm: fit on labelled examples, predict on new ones, and check the predictions against reality.
+
+```{r, message=FALSE}
+library(naivebayes)
+
+texts$is_political <- factor(texts$is_political, labels = c("not political", "political"))
+nb_model <- naive_bayes(is_political ~ n_policy_words, data = texts)
+predict(nb_model, texts)
+```
+
+## Further resources {.unnumbered}
+
+- 🎥 [A Gentle Introduction to Machine Learning](https://www.youtube.com/watch?v=Gv9_4yMHFhI) (StatQuest) — a jargon-free overview of the core ideas.
+- 📘 [R for Communication Science: Supervised Text Classification](https://r4css.vanatteveldt.com/) — applies these ideas directly to text data.

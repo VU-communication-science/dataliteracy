@@ -1,0 +1,67 @@
+---
+title: "7.4 Text Classification"
+subtitle: "Supervised text classification with bag-of-words and embeddings."
+---
+
+*Text classification assigns each document to one of a set of predefined categories — a topic, a stance, a sentiment. It draws on [Text as Data](6.01-text-as-data.qmd) to turn documents into tokens, on [Manual Coding](6.02-manual-coding.qmd) to supply trustworthy labelled examples, and on [Machine Learning](6.03-machine-learning.qmd) to turn those examples into a rule that generalises to new documents.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=class)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Three ways to classify text
+
+**Dictionary-based classification**, assigns a category whenever a document contains words from a predefined list. It's transparent and needs no training data, but it's rigid: it misses synonyms, sarcasm, and anything the dictionary's author didn't think of.
+
+As a toy example, take a small dictionary mapping words to topics, and two example statements:
+
+```{r, message=FALSE}
+library(tidyverse)
+library(tidytext)
+
+dictionary <- tibble(
+  word  = c("tax", "education", "energy", "regulation", "school", "climate"),
+  topic = c("economy", "education", "environment", "economy", "education", "environment")
+)
+
+statements <- tibble(
+  doc_id = 1:2,
+  text = c(
+    "We must invest in public education and clean energy.",
+    "Economic growth requires lowering taxes and reducing regulation."
+  )
+)
+
+statements |>
+  unnest_tokens(word, text) |>
+  inner_join(dictionary, by = "word") |>
+  count(doc_id, topic)
+```
+
+Each statement gets scored by counting how many of its words match each topic in the dictionary — no training data required, but also no way to catch a topic word the dictionary author didn't anticipate.
+
+**Supervised classifiers** fix that rigidity by learning the rule from examples instead of a fixed word list. The pipeline is: a human codes a sample of documents by hand ([Manual Coding](6.02-manual-coding.qmd)), each document is represented as a set of features — classically a **bag-of-words**: one column per word, counting how often it appears — and a machine learning algorithm ([Machine Learning](6.03-machine-learning.qmd)) learns to predict the human's label from those features. The resulting model can then label every remaining document in a corpus too large to code by hand.
+
+**LLM-based classification** is a newer third option: instead of training a model on your own labelled examples, you prompt a general-purpose large language model to assign the category directly — fast to set up, but (like any method) it still needs to be validated against manual coding before you trust its output.
+
+## From tokens to a bag-of-words
+
+Where the dictionary example above only *counts matches*, a supervised classifier typically needs every word turned into its own feature column. `tidytext`'s `cast_dtm()` (or, for tidy-format modelling, simply pivoting token counts wider) produces exactly this **document-term matrix**: one row per document, one column per word, filled with word counts — the direct input to a classification algorithm.
+
+```{r}
+statements |>
+  unnest_tokens(word, text) |>
+  count(doc_id, word) |>
+  pivot_wider(names_from = word, values_from = n, values_fill = 0)
+```
+
+## Evaluating a classifier
+
+However a classifier is built, the question is always the same: how often does it agree with the manual coding held back as a test set? A **confusion matrix** (cross-tabulating predicted vs. true labels, e.g. with `table()`) lets you see not just overall accuracy but what kind of mistakes the classifier makes — which categories it confuses for one another.
+
+## Further resources {.unnumbered}
+
+- 📘 [R for Communication Science: Supervised Text Classification](https://r4css.vanatteveldt.com/) — a full tutorial on bag-of-words classifiers, including evaluation.
+- 📘 [Text Mining with R](https://www.tidytextmining.com/) — covers dictionary-based sentiment analysis with `tidytext` in detail.

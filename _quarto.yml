@@ -2,11 +2,16 @@ project:
   type: website
   output-dir: docs
   execute-dir: project
+  pre-render: scripts/generate_data.R
   render:
     - index.qmd
     - "chapters/*.qmd"
+    - "data/*.qmd"
   resources:
     - components/
+
+filters:
+  - filters/number-sections.lua
 
 website:
   title: "Data Literacy"
@@ -19,63 +24,68 @@ website:
         text: "Home"
       - href: chapters/curriculum.qmd
         text: "Curriculum & Skill Tree"
+      - href: data/datasets.qmd
+        text: "Datasets"
       - section: "Computational Skills"
         contents:
-          - chapters/basic-computer-skills.qmd
-          - chapters/r-language.qmd
-          - chapters/reproducible-reports.qmd
+          - chapters/1.01-basic-computer-skills.qmd
+          - chapters/1.02-r-language.qmd
+          - chapters/1.03-reproducible-reports.qmd
       - section: "Data Management"
         contents:
-          - chapters/data-frames.qmd
-          - chapters/grouping-and-summarizing.qmd
-          - chapters/data-cleaning.qmd
-          - chapters/pivoting-and-joining.qmd
-          - chapters/string-processing.qmd
+          - chapters/2.01-data-frames.qmd
+          - chapters/2.02-grouping-and-summarizing.qmd
+          - chapters/2.03-data-cleaning.qmd
+          - chapters/2.04-pivoting-and-joining.qmd
+          - chapters/2.05-string-processing.qmd
       - section: "Statistical Foundations"
         contents:
-          - chapters/means-and-variance.qmd
-          - chapters/probability-and-sampling.qmd
-          - chapters/correlation-and-covariance.qmd
-          - chapters/effects.qmd
-          - chapters/hypothesis-testing.qmd
-          - chapters/causality.qmd
-          - chapters/experimental-control.qmd
-          - chapters/statistical-control.qmd
+          - chapters/3.01-means-and-variance.qmd
+          - chapters/3.02-probability-and-sampling.qmd
+          - chapters/3.03-correlation-and-covariance.qmd
+          - chapters/3.04-effects.qmd
+          - chapters/3.05-hypothesis-testing.qmd
       - section: "Exploration and Measurement"
         contents:
-          - chapters/descriptive-statistics.qmd
-          - chapters/data-visualization.qmd
-          - chapters/advanced-visualization.qmd
-          - chapters/factor-analysis.qmd
-          - chapters/scale-construction.qmd
+          - chapters/4.01-descriptive-statistics.qmd
+          - chapters/4.02-data-visualization.qmd
+          - chapters/4.03-advanced-visualization.qmd
+          - chapters/4.04-factor-analysis.qmd
+          - chapters/4.05-scale-construction.qmd
       - section: "Inferential Statistics"
         contents:
-          - chapters/comparing-two-groups.qmd
-          - chapters/testing-associations.qmd
-          - chapters/linear-models.qmd
-          - chapters/anova.qmd
-          - chapters/regression.qmd
-          - chapters/linear-model-assumptions.qmd
-          - chapters/power-analysis.qmd
-          - chapters/mediation-analysis.qmd
+          - chapters/5.01-comparing-two-groups.qmd
+          - chapters/5.02-testing-associations.qmd
+          - chapters/5.03-linear-models.qmd
+          - chapters/5.04-anova.qmd
+          - chapters/5.06-regression.qmd
+          - chapters/5.08-linear-model-assumptions.qmd
+          - chapters/5.09-power-analysis.qmd
+      - section: "Causality"
+        contents:
+          - chapters/3.06-causality.qmd
+          - chapters/5.05-experimental-control.qmd
+          - chapters/5.07-statistical-control.qmd
+          - chapters/5.10-mediation-analysis.qmd
       - section: "Content Analysis"
         contents:
-          - chapters/text-as-data.qmd
-          - chapters/manual-coding.qmd
-          - chapters/machine-learning.qmd
-          - chapters/text-classification.qmd
+          - chapters/6.01-text-as-data.qmd
+          - chapters/6.02-manual-coding.qmd
+          - chapters/6.03-machine-learning.qmd
+          - chapters/6.04-text-classification.qmd
 
 bibliography: references/references.bib
 cls: references/apa7.cls
 
 format:
-  live-html:
-    #df-print: tibble
+  html:
+    df-print: paged
     theme:
       - flatly
       - style.scss
     fontsize: 0.9em
     toc: true
     number-sections: false
+    include-after-body: components/sidebar-numbers.html
 
 engine: knitr

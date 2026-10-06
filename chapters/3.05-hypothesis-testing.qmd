@@ -1,0 +1,93 @@
+---
+title: "3.5 Hypothesis Testing"
+subtitle: "Formulating and testing hypotheses using statistical methods."
+---
+
+*You arrive here from [Effects](3.04-effects.qmd), so you can already express how big an effect is and you know that results from a sample are never perfectly precise. Here you'll learn how to derive a testable hypothesis from a theory, and the logic that turns an uncertain sample result into a yes/no decision — the null hypothesis, the p-value, and the confidence interval — which is the reasoning every test in the rest of the book relies on.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=hy-te)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## Deriving hypotheses from theories
+
+In order to use statistical methods to test theories, we first need to **derive hypotheses** from them.
+A hypothesis is a **testable statement**, that when tested empirically provides evidence for or against the theory.
+
+For example, consider the theory that *playing violent video games leads to increased aggression in children*.
+There is much disagreement about whether this theory is correct [@griffiths99], so it's important to test it empirically.
+In order to do so, we need to derive hypotheses that we can conduct to rigorous statistical tests.
+Some examples of hypotheses are:
+
+- There is a relation "between arcade game use and teachers' ratings of impulsiveness and aggresiveness". [@lin87, p. 81]
+- Playing violent video games leads to higher levels of heart rate and blood pressure compared to playing non-violent video games. [@lynch94]
+- There will be a "linear increase in aggressive affect after playing nonaggressive, moderately aggresive, and highly aggressive games". [@scott95, p. 125]
+
+Notice that these hypotheses are more specific than the theory they are derived from.
+Where the theory talks about concepts, the hypotheses talk about specific relations between variables.
+Sometimes these variables are only proxies for the concepts in the theory, such as "heart rate" and "blood pressure" are proxies for "aggression".
+To provide evidence for causal mechanisms in theories, hypotheses can formulate relations between variables in such a way that a causal order is implied (e.g., increase "after playing"; hearth rate being unlikely to be a cause of playing video games).
+
+### Evidence $\neq$ proof
+
+If an hypothesis is confirmed, it **provides evidence** in support of the theory.
+However, note that it does **not necessarily prove** the theory.
+
+For example, if we find that children who play violent video games are more aggressive, it does not yet prove that the games caused the aggression, because there are other possible explanations for finding this relation.
+Perhaps people who are already aggressive are more likely to play violent video games, or there could be a confounding variable that causes both aggression and video game playing (e.g., gender, socioeconomic status, or parental involvement).
+To build stronger evidence, we therefore need to design our studies in such a way that we can rule out these alternative explanations, for instanced by conducting **randomized controlled trials**, or by **statistically controlling** for confounders [Also see the tutorial on causality](3.06-causality.qmd).
+And more generally speaking, a theory is not proven by a single empirical test. 
+Sometimes results only occur in a specific context or sample, or are sheer coincidence. 
+Studies therefore need to be replicated in other contexts or samples to gradually build a stronger case for a theory.
+
+Hypotheses are thus the bridge between theory and statistical methods, and are essential for conducting rigorous research in communication science. They need to be specific enough to be testable, but close enough to the theory they are derived from to allow for meaningful conclusions.
+
+## The null hypothesis and the alternative hypothesis
+
+Once we have a hypothesis, such as *"playing violent video games leads to a higher heart rate than playing non-violent video games"*, we need a way to actually test it against data. Null hypothesis testing does this in a slightly indirect way: instead of trying to directly prove our hypothesis, we formulate its opposite, and then ask whether the data gives us enough reason to reject that opposite.
+
+* The **null hypothesis** ($H_0$) is the "nothing is going on" statement: there is *no* difference between the violent and non-violent game groups in the population. Any difference we see in our sample is purely due to chance (sampling variability, as you saw in [Probability & Sampling](3.02-probability-and-sampling.qmd)).
+* The **alternative hypothesis** ($H_1$) is usually the hypothesis we actually derived from theory: there *is* a real difference in heart rate between the two groups in the population.
+
+We never get to directly observe the population, so we can't simply check which of the two is true. Instead, the logic works like this: **assume the null hypothesis is true**, and then ask how likely it would be to see a sample result as extreme as the one we actually observed, just by chance. If that would be very unlikely, we take it as evidence against $H_0$, and in favor of $H_1$. If a result like ours would be quite plausible under $H_0$, we don't have enough evidence to reject it — which is not the same as proving $H_0$ is true (just like failing to find evidence for a theory doesn't prove the theory false).
+
+## The p-value
+
+The **p-value** is the number that formalizes "how likely would a result this extreme be, if the null hypothesis were true?" More precisely:
+
+> The p-value is the probability of observing a sample result at least as extreme as the one you found, *assuming the null hypothesis is true*.
+
+Suppose we run a small experiment: 10 children play a violent video game, another 10 play a non-violent one, and we measure heart rate afterwards.
+
+```{r hypothesis-testing-ttest-1}
+set.seed(1)
+violent     <- rnorm(10, mean = 85, sd = 8)
+non_violent <- rnorm(10, mean = 78, sd = 8)
+
+t.test(violent, non_violent)
+```
+
+The `p-value` in the output tells us: *if there were truly no difference in heart rate between the two conditions in the population* ($H_0$), how likely is it that we'd see a sample difference at least this large, just due to chance? A small p-value (conventionally, below $\alpha = .05$) is treated as sufficient evidence to **reject the null hypothesis**, and conclude that the groups likely do differ in the population.
+
+### What a p-value does *not* mean
+
+p-values are among the most misinterpreted numbers in all of statistics, so it is worth being explicit about what they do **not** tell you:
+
+* **A p-value is not the probability that $H_0$ is true.** $p = .03$ does *not* mean "there's a 3% chance the null hypothesis is correct". It's a statement about how surprising the *data* would be *if* $H_0$ were true — not a statement about how probable $H_0$ itself is.
+* **A p-value is not the probability that your result is due to chance.** This sounds similar to the correct definition but subtly reverses the conditioning: the p-value assumes $H_0$ is true from the start, it doesn't tell you the probability of that assumption.
+* **A small p-value does not mean the effect is large or important.** As you saw in [Effects](3.04-effects.qmd), a p-value tells you how *sure* you can be that an effect isn't exactly zero — not how *big* that effect is. A tiny, practically irrelevant effect can produce a very small p-value if the sample is large enough.
+* **A non-significant result ($p > .05$) does not prove $H_0$ is true.** "We found no significant effect" means the data didn't give us enough evidence to reject $H_0$ — it does not mean we've shown there is truly no effect. The effect might be real but small, or the sample might simply be too small to detect it (see [Power Analysis](5.09-power-analysis.qmd)).
+
+## Confidence intervals
+
+A p-value only gives a yes/no answer about whether an effect differs from zero. A **confidence interval (CI)** gives you more information: a plausible range of values for the true population effect, given your sample.
+
+Look again at the `t.test()` output above — it reports a 95% confidence interval for the difference in means. The intuitive (if slightly informal) way to read this is: *if we were to repeat this study many times, about 95% of the confidence intervals we'd compute this way would contain the true population difference.* A narrower interval reflects a more precise estimate (usually from a larger sample, as you saw in [Probability & Sampling](3.02-probability-and-sampling.qmd)); a wider one reflects more uncertainty.
+
+As a quick rule of thumb that connects CIs back to p-values: if a 95% confidence interval for a mean difference (or a correlation, or a regression coefficient) does *not* contain zero, the result will also be statistically significant at $\alpha = .05$ — the two tools are two views of the same underlying logic. The confidence interval has the advantage of also showing you the plausible *size* of the effect, not just whether it differs from zero.
+
+## Further resources {.unnumbered}
+
+- 🎥 [StatQuest: p-values: What they are and how to interpret them](https://www.youtube.com/watch?v=vemZtEM63GY) — a clear walkthrough of what a p-value is (and isn't), with the same cautions covered above.

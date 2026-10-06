@@ -23,3 +23,10 @@
 - [ ] Write the module (new). Decide whether the normal distribution and the sampling distribution warrant separate modules (earlier tree versions had them separate).
 - [ ] Style harmonization (see `module_standard.md`): add a 'Key Takeaways' callout, a standard 'Required Packages & Data' callout, plain-language conceptual intuition before code, and an APA reporting block where relevant.
 - [ ] Review whether the skill-tree intro box at the top still matches the content after edits.
+
+### Follow-up pass: full content written
+
+- Wrote the full module: probability basics via simulation, population vs. sample, the sampling distribution of the mean, and an intuitive (non-CLT-proof) explanation of why larger samples reduce sampling error.
+- Framed around surveying a sample of a population and generalizing (comm-sci framing).
+- Applied new intro format (hook + merged paragraph + skill-tree link) and the AI-assisted-draft notice.
+- Added a "Try it yourself" webR box (repeated sampling from a simulated population) and a Further resources entry (3Blue1Brown CLT video).

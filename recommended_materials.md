@@ -25,9 +25,12 @@ Exceptional visual and mathematical intuitions for core statistical and calculus
 ### StatQuest with Josh Starmer
 Clear, jargon-free step-by-step visual breakdowns of statistical tests:
 - **[Hypothesis Testing and P-values Clearly Explained](https://www.youtube.com/watch?v=vemZtEM63GY)**
-- **[T-Tests, Degrees of Freedom, and Standard Error](https://www.youtube.com/watch?v=0Pd3dc1GcHc)**
 - **[Linear Models & R-squared](https://www.youtube.com/watch?v=2AQKmw14mHM)**
 - **[Logistic Regression Details](https://www.youtube.com/watch?v=yIYKR4sgzI8)**
+- **[Calculating the Mean, Variance and Standard Deviation](https://www.youtube.com/watch?v=SzZ6GpcfoQY)**
+
+### StatsCast
+- **[What is a t-test?](https://www.youtube.com/watch?v=0Pd3dc1GcHc)**
 
 ---
 

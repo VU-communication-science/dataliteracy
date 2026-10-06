@@ -421,6 +421,20 @@
   opacity: 0.22;
 }
 
+/* Deep-linked module (opened via `?module=<id>` from a chapter page) */
+.st-node-selected {
+  border-color: #db2777 !important;
+  border-width: 2px !important;
+  box-shadow: 0 0 0 3px rgba(219,39,119,0.25), 0 3px 8px rgba(0,0,0,0.08) !important;
+  z-index: 11;
+  animation: st-selected-pulse 1.8s ease-in-out 2;
+}
+
+@keyframes st-selected-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(219,39,119,0.25), 0 3px 8px rgba(0,0,0,0.08); }
+  50% { box-shadow: 0 0 0 6px rgba(219,39,119,0.12), 0 3px 8px rgba(0,0,0,0.08); }
+}
+
 /* Empty State */
 .st-empty-notice {
   text-align: center;

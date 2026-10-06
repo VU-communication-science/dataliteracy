@@ -1,0 +1,123 @@
+---
+title: "4.2 Data Visualization"
+subtitle: "Grammar of graphics with ggplot2: histograms, scatterplots, and themes."
+---
+
+*You arrive here from [Grouping and summarizing](2.02-grouping-and-summarizing.qmd), so you can already summarise data per group with `group_by()` and `summarise()`. Here you'll learn to turn data into plots with `ggplot2`: histograms, bar charts, boxplots, and scatterplots, styled with labels and themes. A good plot reveals patterns, outliers, and mistakes that a table of summary numbers hides, and it's often the clearest way to communicate what you found.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=visua)
+
+::: {.callout-warning title="AI-assisted draft"}
+This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+:::
+
+## The grammar of graphics
+
+We'll keep using the same practice dataset for these examples:
+
+```{r setup, message=FALSE}
+library(tidyverse)
+d <- read_csv("https://dev.dataliteracy.cc/practice_data.csv")
+```
+
+`ggplot2` builds plots out of a small set of building blocks, which together form a "grammar" you can recombine for almost any plot:
+
+* **Data**: a tibble (data frame) with the variables you want to plot.
+* **Aesthetics** (`aes()`): which columns map to which visual properties — the x-axis, the y-axis, the color, the size, and so on.
+* **Geoms**: the type of shape used to represent the data — points, bars, lines, boxplots.
+
+Every `ggplot2` plot starts the same way: call `ggplot()` with your data and aesthetic mapping, then add (`+`) one or more geoms:
+
+```{r grammar-1}
+ggplot(d, aes(x = political_interest)) +
+  geom_histogram()
+```
+
+Note that we didn't need to tell `ggplot()` which type of plot to draw — that's the job of the geom. The same data and aesthetic mapping can be shown in a different way just by swapping the geom:
+
+```{r grammar-2, message=FALSE}
+ggplot(d, aes(x = political_interest)) +
+  geom_density()
+```
+
+This is the core idea of the grammar of graphics: **you describe what you want plotted, and a geom decides how to draw it**. This makes it easy to try out different plot types without rewriting your whole call.
+
+## Choosing the right plot for your variable(s)
+
+Just like with [descriptive statistics](4.01-descriptive-statistics.qmd), the right plot depends on the type of variable(s) you're looking at.
+
+### One numeric variable: histogram or density plot
+
+A **histogram** bins a numeric variable into intervals and shows how many observations fall into each bin. Use the `binwidth` argument to control how coarse or fine the bins are:
+
+```{r one-numeric-1}
+ggplot(d, aes(x = political_interest)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", color = "white")
+```
+
+A **density plot** (`geom_density()`) shows the same kind of information as a smooth curve instead of bars, which can make the overall shape easier to see, especially for larger datasets.
+
+### One categorical variable: bar chart
+
+For a categorical variable, a **bar chart** shows the count (or proportion) of observations in each category. Note that this uses `geom_bar()`, which counts rows for you — unlike a histogram, you don't need to specify a `y`:
+
+```{r one-categorical-1}
+ggplot(d, aes(x = political_orientation)) +
+  geom_bar(fill = "darkorange")
+```
+
+### Two numeric variables: scatterplot
+
+A **scatterplot** (`geom_point()`) plots two numeric variables against each other, one point per observation — the classic way to spot a [correlation](3.03-correlation-and-covariance.qmd):
+
+```{r two-numeric-1}
+ggplot(d, aes(x = age, y = trust_t1)) +
+  geom_point(alpha = 0.5)
+```
+
+We set `alpha = 0.5` (partial transparency) so overlapping points are still visible — a useful trick whenever you have many observations plotted close together.
+
+### One numeric + one categorical variable: boxplot
+
+A **boxplot** (`geom_boxplot()`) compares the distribution of a numeric variable across the levels of a categorical variable — showing the median, the interquartile range (the box), and the overall spread in one compact shape:
+
+```{r mixed-1}
+ggplot(d, aes(x = experiment_group, y = trust_t1)) +
+  geom_boxplot(fill = "lightgreen")
+```
+
+Here we can quickly compare trust levels between the experiment groups without having to compute every group's mean and spread by hand first.
+
+## Titles, labels, and themes
+
+A plot without clear labels is hard to interpret for anyone but you. Use `labs()` to set a title, axis labels, and (if relevant) a legend title:
+
+```{r labels-1}
+ggplot(d, aes(x = experiment_group, y = trust_t1)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(
+    title = "Trust in journalism by experiment group",
+    x = "Experiment group",
+    y = "Trust in journalism (1-10)"
+  )
+```
+
+`ggplot2` also comes with built-in **themes** that change the overall look of a plot (background, gridlines, fonts) without touching the data or geoms. `theme_minimal()` is a popular, clean default:
+
+```{r themes-1}
+ggplot(d, aes(x = experiment_group, y = trust_t1)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(
+    title = "Trust in journalism by experiment group",
+    x = "Experiment group",
+    y = "Trust in journalism (1-10)"
+  ) +
+  theme_minimal()
+```
+
+Adding a theme is often the single quickest way to make a plot look more polished and publication-ready.
+
+## Further resources {.unnumbered}
+
+- 📘 [R for Data Science: Data visualization](https://r4ds.hadley.nz/data-visualize) — the canonical, in-depth reference for `ggplot2`, with many more geoms and examples.
+- 📘 [ggplot2 reference site](https://ggplot2.tidyverse.org/reference/index.html) — a searchable overview of every geom, scale, and theme function.

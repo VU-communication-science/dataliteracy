@@ -1,0 +1,91 @@
+---
+title: "2.5 String processing"
+subtitle: "String manipulation with stringr: regex detection, extraction, and trimming."
+---
+
+*You arrive here from [Data Frames](2.01-data-frames.qmd), so you can already load a data frame and work with its columns. Here you'll work with text columns using `stringr`: detecting, extracting, replacing, and cleaning text patterns. Text is everywhere in communication data (open answers, names, social media posts), so cleaning it is the first step to analysing it.*
+
+→ [See this module in the skill tree](curriculum.qmd?module=strng)
+
+# Introduction
+
+In communication science, much of the data we work with contains text: survey open-ended responses, headlines, social media posts, or category codes that need standardization.
+Before conducting computational content analysis, we often need basic tools to inspect, clean, and manipulate character strings.
+
+The `stringr` package (part of the core tidyverse) provides a consistent and friendly set of functions for string manipulation, where all functions start with `str_`.
+
+# Basic String Operations
+
+Let's load the tidyverse and create a small example vector of news headlines:
+
+```{r, message=FALSE}
+library(tidyverse)
+
+headlines <- c(
+  "Breaking: Prime minister announces new climate policy!",
+  "Economy shows modest growth in Q3",
+  "Breaking: New survey reveals rising public concern over inflation",
+  "Local election debate ends in stalemate"
+)
+headlines
+```
+
+## Detecting Patterns: `str_detect()`
+
+`str_detect()` tests whether a string matches a pattern, returning `TRUE` or `FALSE`. It is frequently used inside `filter()`:
+
+```{r}
+str_detect(headlines, "Breaking")
+```
+
+To make searches case-insensitive, wrap the pattern in `regex(..., ignore_case = TRUE)`:
+
+```{r}
+str_detect(headlines, regex("election", ignore_case = TRUE))
+```
+
+## Extracting Patterns: `str_extract()`
+
+`str_extract()` pulls out the first matching pattern:
+
+```{r}
+str_extract(headlines, "Q[1-4]")
+```
+
+## Replacing Patterns: `str_replace()` and `str_replace_all()`
+
+`str_replace()` replaces the first match, while `str_replace_all()` replaces every occurrence:
+
+```{r}
+str_replace(headlines, "Breaking: ", "")
+```
+
+## Modifying Case and Whitespace
+
+Common data cleaning tasks involve standardizing casing and trimming unnecessary whitespace:
+
+```{r}
+dirty_text <- c("  United Nations ", "EU ", " climate change  ")
+
+str_trim(dirty_text)
+str_to_lower(dirty_text)
+```
+
+# Using `stringr` inside Data Frames
+
+In practice, string operations are most powerful inside `mutate()` and `filter()`:
+
+```{r}
+df <- tibble(
+  title = headlines,
+  source = c("Daily News", "Financial Times", "Daily News", "Metro")
+)
+
+df |> 
+  filter(str_detect(title, "Breaking")) |> 
+  mutate(clean_title = str_replace(title, "Breaking: ", ""))
+```
+
+## Further resources {.unnumbered}
+
+- 📘 [R for Communication Science: regular expressions](https://r4css.vanatteveldt.com/) — a more in-depth reference for regular expressions and advanced string operations.
