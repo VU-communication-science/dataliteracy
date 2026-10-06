@@ -86,6 +86,5 @@ format:
     fontsize: 0.9em
     toc: true
     number-sections: false
-    include-after-body: components/sidebar-numbers.html
 
 engine: knitr
