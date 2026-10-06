@@ -1,0 +1,75 @@
+---
+title: "9.1 Advanced Modeling Overview"
+subtitle: "An optional guide to multilevel models, generalized linear models, and structural equations"
+---
+
+# Advanced Statistical Modeling
+
+In undergraduate communication science methods, the linear model (OLS regression, ANOVA, and ANCOVA) forms our analytical bedrock.
+However, empirical communication data often violates standard OLS assumptions:
+- Categorical or binary outcomes (e.g., voting choice, clicking an ad).
+- Hierarchical / clustered observations (e.g., students nested within classrooms, respondents within countries, repeated measures over time).
+- Complex latent measurement networks with simultaneous direct and indirect pathways.
+
+This optional reference summarizes the primary advanced modeling frameworks taught in our graduate and honors curricula.
+
+::: {.callout-note title="Elective / Advanced Material"}
+These models are not required for standard undergraduate assignments. They serve as an analytical roadmap for master's theses and research internships.
+:::
+
+# 1. Generalized Linear Models (GLMs) & Logistic Regression
+
+When the dependent variable is binary (0/1) rather than continuous, OLS regression can produce nonsensical predictions outside $[0, 1]$.
+Logistic regression transforms the outcome via the logit link function:
+
+$$\log\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 X_1 + \dots$$
+
+In R, GLMs are fitted using the built-in `glm()` function:
+
+```{r, eval=FALSE}
+# Example logistic regression
+model_logit <- glm(voted ~ age + news_exposure, data = survey_data, family = binomial(link = "logit"))
+summary(model_logit)
+```
+
+# 2. Multilevel / Mixed-Effects Models (HLM)
+
+When observations are grouped (e.g., participants nested in schools or longitudinal panel data), standard errors in OLS are underestimated because observations within clusters are not independent.
+
+**Multilevel models** partition variance into within-group and between-group components.
+In R, the standard package is `lme4`:
+
+```{r, eval=FALSE}
+library(lme4)
+
+# Random intercept model: respondents nested within countries
+model_mlm <- lmer(trust ~ news_use + (1 | country), data = comparative_data)
+summary(model_mlm)
+```
+
+# 3. Structural Equation Modeling (SEM) & Confirmatory Factor Analysis (CFA)
+
+While Module 3.2 uses Exploratory Factor Analysis (EFA), **Confirmatory Factor Analysis (CFA)** tests whether an explicit, theoretically specified factor structure fits empirical data.
+Furthermore, SEM allows testing entire causal networks of latent variables and observed indicators simultaneously.
+
+In R, the leading package is `lavaan`:
+
+```{r, eval=FALSE}
+library(lavaan)
+
+cfa_model <- '
+  # Measurement model
+  trust =~ trust_fair + trust_unbiased + trust_accurate
+  # Structural regression
+  trust ~ news_exposure + political_interest
+'
+
+fit <- sem(cfa_model, data = survey_data)
+summary(fit, fit.measures = TRUE, standardized = TRUE)
+```
+
+# Recommended Learning Resources
+
+- **Gelman & Hill (2007)**: *Data Analysis Using Regression and Multilevel/Hierarchical Models*.
+- **Rosseel (2012)**: *lavaan: An R Package for Structural Equation Modeling*.
+- [R for Communication Science](https://r4css.vanatteveldt.com/)
