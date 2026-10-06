@@ -19,51 +19,51 @@ website:
         text: "Home"
       - href: chapters/curriculum.qmd
         text: "Curriculum & Skill Tree"
-      - section: "1. Foundations & Workflow"
+      - section: "Computational Skills"
         contents:
-          - chapters/1.1-working-with-r.qmd
-          - chapters/1.2-projects.qmd
-          - chapters/1.3-quarto.qmd
-      - section: "2. Data Management"
+          - chapters/basic-computer-skills.qmd
+          - chapters/r-language.qmd
+          - chapters/reproducible-reports.qmd
+      - section: "Data Management"
         contents:
-          - chapters/2.1-data-frames.qmd
-          - chapters/2.2-summarizing.qmd
-          - chapters/2.3-data-cleaning.qmd
-          - chapters/2.4-transformations.qmd
-          - chapters/2.5-strings.qmd
-      - section: "3. Measurement & Scales"
+          - chapters/data-frames.qmd
+          - chapters/grouping-and-summarizing.qmd
+          - chapters/data-cleaning.qmd
+          - chapters/pivoting-and-joining.qmd
+          - chapters/string-processing.qmd
+      - section: "Statistical Foundations"
         contents:
-          - chapters/3.1-latent-variables.qmd
-          - chapters/3.2-factor-analysis.qmd
-          - chapters/3.3-scale-construction.qmd
-      - section: "4. Exploration & Description"
+          - chapters/means-and-variance.qmd
+          - chapters/probability-and-sampling.qmd
+          - chapters/correlation-and-covariance.qmd
+          - chapters/effects.qmd
+          - chapters/hypothesis-testing.qmd
+          - chapters/causality.qmd
+          - chapters/experimental-control.qmd
+          - chapters/statistical-control.qmd
+      - section: "Exploration and Measurement"
         contents:
-          - chapters/4.1-descriptive-statistics.qmd
-          - chapters/4.2-visualization.qmd
-      - section: "5. Statistical Foundations"
+          - chapters/descriptive-statistics.qmd
+          - chapters/data-visualization.qmd
+          - chapters/advanced-visualization.qmd
+          - chapters/factor-analysis.qmd
+          - chapters/scale-construction.qmd
+      - section: "Inferential Statistics"
         contents:
-          - chapters/5.1-statistical-concepts.qmd
-          - chapters/5.2-causality.qmd
-          - chapters/5.3-power-analysis.qmd
-      - section: "6. Comparing Groups"
+          - chapters/comparing-two-groups.qmd
+          - chapters/testing-associations.qmd
+          - chapters/linear-models.qmd
+          - chapters/anova.qmd
+          - chapters/regression.qmd
+          - chapters/linear-model-assumptions.qmd
+          - chapters/power-analysis.qmd
+          - chapters/mediation-analysis.qmd
+      - section: "Content Analysis"
         contents:
-          - chapters/6.1-t-test.qmd
-          - chapters/6.2-anova.qmd
-          - chapters/6.3-ancova.qmd
-      - section: "7. Relationships & Modeling"
-        contents:
-          - chapters/7.1-covariance-and-correlation.qmd
-          - chapters/7.2-linear-regression.qmd
-          - chapters/7.3-controlling.qmd
-          - chapters/7.4-mediation.qmd
-      - section: "8. Content Analysis"
-        contents:
-          - chapters/8.1-content-analysis.qmd
-      - section: "Optional & Advanced Tracks"
-        collapsed: true
-        contents:
-          - chapters/1.4-base-r.qmd
-          - chapters/9.1-advanced-modeling.qmd
+          - chapters/text-as-data.qmd
+          - chapters/manual-coding.qmd
+          - chapters/machine-learning.qmd
+          - chapters/text-classification.qmd
 
 bibliography: references/references.bib
 cls: references/apa7.cls

@@ -20,11 +20,28 @@ Every module (`.qmd`) must follow this 6-part structure:
 ### Part 1: Frontmatter
 ```yaml
 ---
-title: "X.Y Module Title"
+title: "Module Title"  # same as the title in curriculum.json
 subtitle: "One-line description of the specific skill or analysis"
 ---
 ```
-- Hardcoded numerical IDs (`X.Y`) ensure absolute stability in citations and teacher syllabus references.
+- Modules are identified by their skill-tree ID (`curriculum.json`) and a stable file name (`chapters/<slug>.qmd`), not by chapter numbers. Chapter titles and subtitles (summary) are taken from `curriculum.json`.
+
+---
+
+### Part 1b: Skill-tree intro box (required)
+Every module opens with a short callout that places it in the student's learning journey, using the parent/child structure of `curriculum.json`:
+```markdown
+::: {.callout-note title="Where you are in your learning journey" icon=false}
+**Where you come from.** You arrive here from [Parent](parent.qmd). One sentence on what the student can do now.
+
+**What this module adds.** One or two sentences, in simple terms.
+
+**Why it is valuable.** One or two sentences.
+
+**Where it leads.** Next up: [Child](child.qmd).
+:::
+```
+See `chapter_changes/README.md` for details.
 
 ---
 
@@ -100,5 +117,5 @@ To avoid confusing students with competing packages, each domain has an official
 
 ## 4. Rollout Strategy
 
-1. **Phase 1 (Completed)**: Core modules migrated, drift-checked, and backed up in `current_chapters/`.
+1. **Phase 1 (Completed)**: Core modules migrated, drift-checked, and backed up in `_potential_modules/previous_chapters/` (the book was later reorganised around the skill tree; see `chapter_changes/`).
 2. **Phase 2**: Add Key Takeaways and APA Reporting blocks systematically across chapters during the annual summer syllabus revision.

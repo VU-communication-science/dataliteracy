@@ -1,0 +1,25 @@
+---
+title: "Manual Coding"
+subtitle: "Manual coding of text data, inter-coder reliability, and coding schemes."
+---
+
+::: {.callout-note title="Where you are in your learning journey" icon=false}
+**Where you come from.** You arrive here from [Pivoting and joining](pivoting-and-joining.qmd). You can reshape and combine data frames.
+
+**What this module adds.** You'll learn how to code content by hand with a codebook, measure inter-coder reliability, and combine the coded data with your other data.
+
+**Why it is valuable.** Manual coding is the 'gold standard' that computational methods are tested against, and it gives you the training data for text classification.
+
+**Where it leads.** Next up: [Text Classification](text-classification.qmd).
+:::
+
+::: {.callout-warning title="Under construction"}
+This module has not been written yet. Below is the planned outline.
+:::
+
+## Planned content
+
+- Codebooks and coding units
+- Training coders and pilot coding
+- Inter-coder reliability (percent agreement, Cohen's kappa, Krippendorff's alpha)
+- Preparing coded data for analysis (joins)

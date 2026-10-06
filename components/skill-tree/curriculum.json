@@ -124,7 +124,7 @@
       ],
       "parents": ["causa"],
       "summary": "Designing and analyzing experiments, randomization, and control groups.",
-      "url": ""
+      "url": "experimental-control.html"
     },
     "quart": {
       "number": "0.0",
@@ -137,7 +137,7 @@
         "rlang"
       ],
       "summary": "Creating reproducible reports with Quarto.",
-      "url": ""
+      "url": "reproducible-reports.html"
     },
     "compu": {
       "number": "0.0",
@@ -149,7 +149,7 @@
       "parents": [
       ],
       "summary": "Organizing files and installing software.",
-      "url": ""
+      "url": "basic-computer-skills.html"
     },
     "lin-m": {
       "number": "0.0",
@@ -162,7 +162,7 @@
         "com-g","te-as"
       ],
       "summary": "Understanding the linear model.",
-      "url": ""
+      "url": "linear-models.html"
     },
     "ma-le": {
       "number": "0.0",
@@ -174,7 +174,7 @@
       "parents": [
       ],
       "summary": "Supervised and unsupervised machine learning methods.",
-      "url": ""
+      "url": "machine-learning.html"
     },
     "diagn": {
       "number": "0.0",
@@ -187,7 +187,7 @@
         "lin-m"
       ],
       "summary": "Model diagnostics, residuals, and assumptions.",
-      "url": ""
+      "url": "linear-model-assumptions.html"
     },
     "dfs-2": {
       "number": "0.0",
@@ -200,7 +200,7 @@
         "summa"
       ],
       "summary": "Pivoting and joining data frames.",
-      "url": ""
+      "url": "pivoting-and-joining.html"
     },
     "power": {
       "number": "5.3",
@@ -213,7 +213,7 @@
         "lin-m"
       ],
       "summary": "Sample size planning, Type I/II errors, effect sizes, and power calculations with pwr.",
-      "url": "5.3-power-analysis.html"
+      "url": "power-analysis.html"
     },
     "com-g": {
       "number": "0.0",
@@ -226,7 +226,7 @@
         "hy-te"
       ],
       "summary": "Independent and paired-samples t-tests.",
-      "url": "6.1-t-test.html"
+      "url": "comparing-two-groups.html"
     },
     "te-as": {
       "number": "0.0",
@@ -239,7 +239,7 @@
         "hy-te"
       ],
       "summary": "Testing correlation coefficients for significance.",
-      "url": ""
+      "url": "testing-associations.html"
     },
     "anova": {
       "number": "6.2",
@@ -252,7 +252,7 @@
         "lin-m", "con-e"
       ],
       "summary": "One-way and factorial ANOVA for comparing three or more condition means.",
-      "url": "6.2-anova.html"
+      "url": "anova.html"
     },
     "regre": {
       "number": "7.2",
@@ -265,7 +265,7 @@
         "lin-m","con-s"
       ],
       "summary": "Fitting OLS regression lines, interpreting slopes, residuals, and R-squared.",
-      "url": "7.2-linear-regression.html"
+      "url": "regression.html"
     },
     "de-st": {
       "number": "0.0",
@@ -279,7 +279,7 @@
         "co-co"
       ],
       "summary": "Descriptive statistics and data exploration.",
-      "url": ""
+      "url": "descriptive-statistics.html"
     },
     "probs": {
       "number": "0.2",
@@ -290,7 +290,7 @@
       ],
       "parents": ["me-va"],
       "summary": "Probability theory, random sampling, and sampling variability.",
-      "url": ""
+      "url": "probability-and-sampling.html"
     },
     "me-va": {
       "number": "0.3",
@@ -301,7 +301,7 @@
       ],
       "parents": ["rlang"],
       "summary": "Understanding the mean and variance of a variable.",
-      "url": ""
+      "url": "means-and-variance.html"
     },
     "co-co": {
       "number": "0.4",
@@ -314,7 +314,7 @@
         "me-va"
       ],
       "summary": "Understanding linear relationships between variables.",
-      "url": ""
+      "url": "correlation-and-covariance.html"
     },
     "summa": {
       "number": "0.5",
@@ -327,7 +327,7 @@
         "dfs-1"
       ],
       "summary": "Calculating and interpreting summary statistics.",
-      "url": ""
+      "url": "grouping-and-summarizing.html"
     },
     "causa": {
       "number": "5.2",
@@ -341,7 +341,7 @@
         "hy-te"
       ],
       "summary": "Causal inference, experiments, DAGs, confounders, and spurious links.",
-      "url": "5.2-causality.html"
+      "url": "causality.html"
     },
     "ef-si": {
       "number": "0.4",
@@ -354,7 +354,7 @@
         "co-co", "probs"
       ],
       "summary": "How do we measure effects and how do we interpret them?",
-      "url": ""
+      "url": "effects.html"
     },
     "hy-te": {
       "number": "0.6",
@@ -367,7 +367,7 @@
         "ef-si"
       ],
       "summary": "Formulating and testing hypotheses using statistical methods.",
-      "url": "5.1-statistical-concepts.html"
+      "url": "hypothesis-testing.html"
     },
     "clean": {
       "number": "2.4",
@@ -380,7 +380,7 @@
         "dfs-1"
       ],
       "summary": "Data cleaning: missing values, duplicates, and recoding.",
-      "url": "2.4-data-cleaning.html"
+      "url": "data-cleaning.html"
     },
     "rlang": {
       "number": "1.1",
@@ -391,7 +391,7 @@
       ],
       "parents": ["compu"],
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
-      "url": "1.1-working-with-r.html"
+      "url": "r-language.html"
     },
     "dfs-1": {
       "number": "2.1",
@@ -404,7 +404,7 @@
         "rlang"
       ],
       "summary": "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows.",
-      "url": "2.1-data-frames.html"
+      "url": "data-frames.html"
     },
     "fa-an": {
       "number": "3.2",
@@ -417,7 +417,7 @@
         "de-st"
       ],
       "summary": "Exploratory factor analysis (EFA), scree plots, and factor loadings.",
-      "url": "3.2-factor-analysis.html"
+      "url": "factor-analysis.html"
     },
     "strng": {
       "number": "2.5",
@@ -430,7 +430,7 @@
         "dfs-1"
       ],
       "summary": "String manipulation with stringr: regex detection, extraction, and trimming.",
-      "url": "2.5-strings.html"
+      "url": "string-processing.html"
     },
     "scale": {
       "number": "3.3",
@@ -443,7 +443,7 @@
         "fa-an"
       ],
       "summary": "Evaluating Cronbach's alpha, item discrimination, and index creation.",
-      "url": "3.3-scale-construction.html"
+      "url": "scale-construction.html"
     },
     "visua": {
       "number": "4.2",
@@ -456,7 +456,7 @@
         "summa"
       ],
       "summary": "Grammar of graphics with ggplot2: histograms, scatterplots, and themes.",
-      "url": "4.2-visualization.html"
+      "url": "data-visualization.html"
     },
     "vis-a": {
       "number": "4.3",
@@ -470,7 +470,7 @@
         "dfs-2"
       ],
       "summary": "Advanced visualization techniques: pooling, faceting, and interactive plots.",
-      "url": "4.3-advanced-visualization.html"
+      "url": "advanced-visualization.html"
     },
     "te-an": {
       "number": "8.1",
@@ -483,7 +483,7 @@
         "strng"
       ],
       "summary": "Introduction to text as data, tokenization, and text preprocessing.",
-      "url": "8.1-content-analysis.html"
+      "url": "text-as-data.html"
     },
     "class": {
       "number": "8.2",
@@ -496,7 +496,7 @@
         "te-an", "ma-co", "ma-le"
       ],
       "summary": "Supervised text classification with bag-of-words and embeddings.",
-      "url": "8.2-text-classification.html"
+      "url": "text-classification.html"
     },
     "ma-co": {
       "number": "8.3",
@@ -509,7 +509,7 @@
         "dfs-2"
       ],
       "summary": "Manual coding of text data, inter-coder reliability, and coding schemes.",
-      "url": ""
+      "url": "manual-coding.html"
     },
     "con-s": {
       "number": "7.3",
@@ -522,7 +522,7 @@
       "causa"
       ],
       "summary": "Controlling for confounders and covariates in regression models.",
-      "url": "7.3-controlling.html"
+      "url": "statistical-control.html"
     },
     "media": {
       "number": "7.4",
@@ -535,7 +535,7 @@
         "regre"
       ],
       "summary": "Decomposing total effects into direct and indirect paths via mediators.",
-      "url": "7.4-mediation.html"
+      "url": "mediation-analysis.html"
     }
   }
 }

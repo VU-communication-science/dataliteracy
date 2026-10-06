@@ -1,0 +1,27 @@
+---
+title: "Experimental control"
+subtitle: "Designing and analyzing experiments, randomization, and control groups."
+---
+
+::: {.callout-note title="Where you are in your learning journey" icon=false}
+**Where you come from.** You arrive here from [Causality](causality.qmd). You know why correlation is not causation and what confounders are.
+
+**What this module adds.** You'll learn how to deal with confounding through *design*: random assignment, control groups, manipulation checks, and between- vs. within-subject designs.
+
+**Why it is valuable.** Good design is the strongest protection against confounding: no statistical fix is as convincing as random assignment.
+
+**Where it leads.** Next up: [ANOVA](anova.qmd).
+:::
+
+::: {.callout-warning title="Under construction"}
+This module has not been written yet. Below is the planned outline.
+:::
+
+## Planned content
+
+- Randomization and why it removes confounding on average
+- Control groups, manipulation checks, and blinding
+- Between-subjects vs. within-subjects (repeated measures) designs
+- Threats to validity in experiments (brief)
+
+<!-- Source material: Section 'How to (better) establish causation' of `causality` (old 5.2). -->

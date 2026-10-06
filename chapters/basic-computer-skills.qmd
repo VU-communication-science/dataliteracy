@@ -1,0 +1,28 @@
+---
+title: "Basic Computer Skills"
+subtitle: "Organizing files and installing software."
+---
+
+::: {.callout-note title="Where you are in your learning journey" icon=false}
+**Where you come from.** This is where your journey starts.
+
+**What this module adds.** You'll learn how your computer organises files and folders, how to install and update software, and how to keep your work tidy and backed up.
+
+**Why it is valuable.** Many early R problems ("file not found", "package won't install") are really computer-skills problems. A solid base here saves you a lot of frustration later.
+
+**Where it leads.** Next up: [R language](r-language.qmd).
+:::
+
+::: {.callout-warning title="Under construction"}
+This module has not been written yet. Below is the planned outline.
+:::
+
+## Planned content
+
+- Files, folders, and paths (absolute vs. relative); file extensions and why they matter
+- Downloading, unzipping, and organising course files and datasets
+- Installing and updating software (R, RStudio) and what to do when something goes wrong
+- Keyboard shortcuts, copy/paste, and searching for help effectively
+- Keeping work safe: backups, cloud storage, and handling sensitive data
+
+<!-- Source material: Partly overlaps with the 'Keeping track of your data' section of the old 1.2 RStudio Projects (now in `r-language`) and the 'Installation' section of old 1.1. -->

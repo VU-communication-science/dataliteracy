@@ -1,0 +1,23 @@
+---
+title: "Advanced Visualization"
+subtitle: "Advanced visualization techniques: pooling, faceting, and interactive plots."
+---
+
+::: {.callout-note title="Where you are in your learning journey" icon=false}
+**Where you come from.** You arrive here from [Data Visualization](data-visualization.qmd) and [Pivoting and joining](pivoting-and-joining.qmd). You can make basic plots and reshape data into long format.
+
+**What this module adds.** You'll use faceting, multiple layers, grouped and interactive plots, and polish figures for publication.
+
+**Why it is valuable.** Reshaped data lets you compare many variables or groups in a single figure, which is what most real research plots require.
+:::
+
+::: {.callout-warning title="Under construction"}
+This module has not been written yet. Below is the planned outline.
+:::
+
+## Planned content
+
+- Faceting and small multiples
+- Combining layers: points, lines, error bars
+- Plotting repeated measures and groups (needs long data)
+- Interactive plots (e.g. `plotly`) and publication-ready styling

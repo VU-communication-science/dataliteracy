@@ -1,0 +1,25 @@
+---
+title: "Text Classification"
+subtitle: "Supervised text classification with bag-of-words and embeddings."
+---
+
+::: {.callout-note title="Where you are in your learning journey" icon=false}
+**Where you come from.** You arrive here from [Text as Data](text-as-data.qmd), [Manual Coding](manual-coding.qmd) and [Machine Learning](machine-learning.qmd). You can turn text into data, you have a manually coded set of examples, and you know the basics of machine learning.
+
+**What this module adds.** You'll train a classifier that assigns categories (e.g. topic or sentiment) to texts and evaluate it against your manual coding.
+
+**Why it is valuable.** This lets you analyse thousands of texts with a measurement you can validate, which is the core of modern computational content analysis.
+:::
+
+::: {.callout-warning title="Under construction"}
+This module has not been written yet. Below is the planned outline.
+:::
+
+## Planned content
+
+- From tokens to a document-term matrix (bag of words)
+- Training and evaluating a classifier against manual coding
+- Dictionaries and sentiment analysis as a simpler alternative
+- Embeddings and large language models (overview)
+
+<!-- Source material: `_potential_modules/sentiment_analysis.qmd`, `tidytext-dictionary.qmd`, `tidytext-topicmodel.qmd`, `R_text_3_quanteda.qmd` | The 'Measurement Approaches' section of `text-as-data` (old 8.1). -->
