@@ -99,36 +99,26 @@
     }
   },
   "positions": [
+    ["     ","     ","     ","compu","     ","     "],
+    ["     ","     ","     ","rlang","     ","     "],
+    ["     ","     ","dfs-1","quart","me-va","     "],
+    ["strng","clean","summa","     ","co-co","     "],
+    ["     ","dfs-2","visua","de-st","probs","     "],
+    ["     ","     ","vis-a","fa-an","ef-si","     "],
+    ["     ","     ","     ","scale","     ","     "],
+    ["te-an","ma-co","ma-le","     ","hy-te","     "],
+    ["     ","class","     ","te-as","com-g","causa"],
+    ["     ","     ","     ","lin-m","anova","con-e"],
+    ["     ","     ","     ","diagn","regre","con-s"],
+    ["     ","     ","     ","power","media","     "],
     ["     ","     ","     ","     ","     ","     "],
-    ["     ","     ","fi-fo","rlang","     ","     "],
-    ["     ","clean","dfs-1","     ","me-va","probs"],
-    ["     ","strng","summa","     ","co-co","ef-si"],
-    ["     ","     ","dfs-2","de-st","     ","     "],
-    ["     ","     ","vis-a","visua","fa-an","     "],
-    ["     ","     ","     ","     ","scale","     "],
-    ["class","co-an","     ","     ","     ","hy-te"],
-    ["     ","     ","     ","causa","cor-t","     "],
-    ["     ","     ","con-e","con-s","regre","ttest"],
-    ["     ","     ","     ","media","lin-m","anova"],
-    ["     ","     ","     ","     ","power","diagn"],
     ["     ","     ","     ","     ","     ","     "]
   ],
   "modules": {
-    // "surve": {
-    //   "number": "0.0",
-    //   "title": "Survey Design",
-    //   "category": "design",
-    //   "courses": [
-    //     "bachelor-y1"
-    //   ],
-    //   "parents": ["ctrls"],
-    //   "summary": "Designing surveys, sampling, and questionnaire construction.",
-    //   "url": ""
-    // },
     "con-e": {
       "number": "0.0",
       "title": "Experimental control",
-      "category": "causality",
+      "category": "foundations",
       "courses": [
         "bachelor-y1"
       ],
@@ -136,34 +126,59 @@
       "summary": "Designing and analyzing experiments, randomization, and control groups.",
       "url": ""
     },
-    "fi-fo": {
+    "quart": {
       "number": "0.0",
-      "title": "Files and Folders",
+      "title": "Reproducible Reports",
+      "category": "computational",
+      "courses": [
+        "bachelor-y1"
+      ],
+      "parents": [
+        "rlang"
+      ],
+      "summary": "Creating reproducible reports with Quarto.",
+      "url": ""
+    },
+    "compu": {
+      "number": "0.0",
+      "title": "Basic Computer Skills",
       "category": "computational",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
       ],
-      "summary": "Organizing files and folders.",
+      "summary": "Organizing files and installing software.",
       "url": ""
     },
     "lin-m": {
       "number": "0.0",
-      "title": "Linear Model",
+      "title": "Linear Models",
       "category": "inferential",
       "courses": [
         "bachelor-y1"
       ],
       "parents": [
-        "regre","anova"
+        "com-g","te-as"
       ],
       "summary": "Understanding the linear model.",
       "url": ""
     },
+    "ma-le": {
+      "number": "0.0",
+      "title": "Machine Learning",
+      "category": "content",
+      "courses": [
+        "master"
+      ],
+      "parents": [
+      ],
+      "summary": "Supervised and unsupervised machine learning methods.",
+      "url": ""
+    },
     "diagn": {
       "number": "0.0",
-      "title": "Diagnostics",
+      "title": "Linear Model Assumptions",
       "category": "inferential",
       "courses": [
         "bachelor-y1"
@@ -200,9 +215,9 @@
       "summary": "Sample size planning, Type I/II errors, effect sizes, and power calculations with pwr.",
       "url": "5.3-power-analysis.html"
     },
-    "ttest": {
+    "com-g": {
       "number": "0.0",
-      "title": "T-Test for comparing means",
+      "title": "Comparing two Groups",
       "category": "inferential",
       "courses": [
         "bachelor-y1"
@@ -213,9 +228,9 @@
       "summary": "Independent and paired-samples t-tests.",
       "url": "6.1-t-test.html"
     },
-    "cor-t": {
+    "te-as": {
       "number": "0.0",
-      "title": "Correlation Test",
+      "title": "Testing Associations",
       "category": "inferential",
       "courses": [
         "bachelor-y1"
@@ -234,7 +249,7 @@
         "bachelor-y2"
       ],
       "parents": [
-        "ttest"
+        "lin-m", "con-e"
       ],
       "summary": "One-way and factorial ANOVA for comparing three or more condition means.",
       "url": "6.2-anova.html"
@@ -247,7 +262,7 @@
         "bachelor-y2"
       ],
       "parents": [
-        "ttest","cor-t"
+        "lin-m","con-s"
       ],
       "summary": "Fitting OLS regression lines, interpreting slopes, residuals, and R-squared.",
       "url": "7.2-linear-regression.html"
@@ -317,7 +332,7 @@
     "causa": {
       "number": "5.2",
       "title": "Causality",
-      "category": "causality",
+      "category": "foundations",
       "courses": [
         "bachelor-y1",
         "bachelor-y2"
@@ -330,7 +345,7 @@
     },
     "ef-si": {
       "number": "0.4",
-      "title": "Effect sizes",
+      "title": "Effects",
       "category": "foundations",
       "courses": [
         "bachelor-y1"
@@ -374,7 +389,7 @@
       "courses": [
         "bachelor-y1"
       ],
-      "parents": [],
+      "parents": ["compu"],
       "summary": "Vectors, object types, functions, console vs. script, and basic syntax.",
       "url": "1.1-working-with-r.html"
     },
@@ -386,7 +401,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "rlang","fi-fo"
+        "rlang"
       ],
       "summary": "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows.",
       "url": "2.1-data-frames.html"
@@ -438,7 +453,7 @@
         "bachelor-y1"
       ],
       "parents": [
-        "de-st"
+        "summa"
       ],
       "summary": "Grammar of graphics with ggplot2: histograms, scatterplots, and themes.",
       "url": "4.2-visualization.html"
@@ -457,17 +472,17 @@
       "summary": "Advanced visualization techniques: pooling, faceting, and interactive plots.",
       "url": "4.3-advanced-visualization.html"
     },
-    "co-an": {
+    "te-an": {
       "number": "8.1",
-      "title": "Content Analysis",
-      "category": "design",
+      "title": "Text as Data",
+      "category": "content",
       "courses": [
         "master"
       ],
       "parents": [
-        ""
+        "strng"
       ],
-      "summary": "Text as data pipeline: tidytext tokenization, stop words, dictionaries, and LLMs.",
+      "summary": "Introduction to text as data, tokenization, and text preprocessing.",
       "url": "8.1-content-analysis.html"
     },
     "class": {
@@ -478,20 +493,33 @@
         "master"
       ],
       "parents": [
-        "co-an"
+        "te-an", "ma-co", "ma-le"
       ],
       "summary": "Supervised text classification with bag-of-words and embeddings.",
       "url": "8.2-text-classification.html"
     },
+    "ma-co": {
+      "number": "8.3",
+      "title": "Manual Coding",
+      "category": "content",
+      "courses": [
+        "master"
+      ],
+      "parents": [
+        "dfs-2"
+      ],
+      "summary": "Manual coding of text data, inter-coder reliability, and coding schemes.",
+      "url": ""
+    },
     "con-s": {
       "number": "7.3",
       "title": "Statistical control",
-      "category": "causality",
+      "category": "foundations",
       "courses": [
         "bachelor-y2"
       ],
       "parents": [
-        "regre", "causa"
+      "causa"
       ],
       "summary": "Controlling for confounders and covariates in regression models.",
       "url": "7.3-controlling.html"
@@ -499,12 +527,12 @@
     "media": {
       "number": "7.4",
       "title": "Mediation Analysis",
-      "category": "causality",
+      "category": "inferential",
       "courses": [
         "master"
       ],
       "parents": [
-        "con-s"
+        "regre"
       ],
       "summary": "Decomposing total effects into direct and indirect paths via mediators.",
       "url": "7.4-mediation.html"
