@@ -5,7 +5,7 @@ subtitle: "Vectors, object types, functions, console vs. script, and basic synta
 
 *You arrive here from [Basic Computer Skills](1.01-basic-computer-skills.qmd), so you already know your way around files, folders, and installed software on your computer. Here you'll install R and RStudio, store values in objects like `age` above, use functions and packages to do something with them, and keep your files organised with a working directory and RStudio projects. R is the tool we use for everything else in this course, so every later module assumes you are comfortable with these basics.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=rlang)
+→ [See this module in the skill tree](curriculum.html?module=rlang)
 
 ## Installation
 
@@ -669,7 +669,7 @@ When you read or write files in R, you need to two things:
 The file name is easy to understand, but to find the file path you need to know a bit about how your computer organizes files.
 In addition, it's inconvenient to always provide the exact location of a file.
 
-Luckily, there is an alternative. 
+Luckily, there is an alternative.
 When you are working in R, you are always working in a specific directory on your computer, called your **working directory**.
 You can check the current working directory with the `getwd()` (*get working directory*) function:
 
@@ -685,7 +685,7 @@ In our case it tells us that the working directory is the `projects` directory i
 
 If I now write a files and I *only* provide the file name (e.g., `file.csv`), R will create (over overwrite) it in this directory (`/home/kasper/projects/file.csv`).
 We also refer to this as a **relative path**: by providing just the file name, R will look for it relative to the working directory.
-Let's try this out! 
+Let's try this out!
 
 ### Writing a file to your working directory
 
@@ -761,12 +761,12 @@ It looks a bit different on Windows and Mac (or Linux), but the basic idea is th
 Here is a simplified example (normally there are more layers, such as your user directory):
 
 ```{r optional-working-with-absolute-paths-2, eval=FALSE}
-/ (Root Directory) 
+/ (Root Directory)
 │
 ├── Documents
 │   ├── Work
 │   │   ├── survey.csv
-│   │   └──  
+│   │   └──
 │   └── Personal
 │       ├── Resume.pdf
 │       └── Budget.xlsx
@@ -781,9 +781,9 @@ For example, the path to the `Report.docx` file in the `Work` directory would be
 
 :::
 
-### Finding the absolute path    
+### Finding the absolute path
 
-So how do you find the absolute path to the file? 
+So how do you find the absolute path to the file?
 Here are several options.
 
 #### Using file.choose()
@@ -803,11 +803,11 @@ Also, you can't select folder, only existing files.
 #### Using the file explorer
 
 You can also use your own file explorer (outside of RStudio).
-Navigate to a file or folder, and right click on it. 
+Navigate to a file or folder, and right click on it.
 You should then be able to select something like *Properties* (this depends on your operating system).
 Here you should be able to find the absolute path.
 
-#### Using tab completion 
+#### Using tab completion
 
 There is one other nice trick that you can use to find files on your computer: **tab completion**.
 Whenever you are writing something in a code editor, you can often use the **Tab** key (above caps lock) to automatically complete it (like auto-complete on your phone).

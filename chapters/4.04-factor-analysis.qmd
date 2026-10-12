@@ -5,7 +5,7 @@ subtitle: "Exploratory factor analysis (EFA), scree plots, and factor loadings."
 
 *You arrive here from [Descriptive Statistics](4.01-descriptive-statistics.qmd), so you can already describe variables and see how they correlate. Here you'll learn exploratory factor analysis (EFA): a way to find out whether a set of questionnaire items measures one underlying construct, or several. This matters because questionnaires almost always measure abstract concepts through multiple items, and factor analysis is how you check that those items really belong together before you combine them into a single score.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=fa-an)
+→ [See this module in the skill tree](curriculum.html?module=fa-an)
 
 ## Why Factor Analysis?
 
@@ -51,7 +51,7 @@ We load the dataset `polcomm_data.csv` - which is a simulated dataset (N = 200) 
 Before any analysis, it’s good practice to run descriptive statistics. This shows whether the items are coded consistently, whether all answer categories were used, and if there are missing values.
 
 ```{r step-1-inspect-your-data-1, message=FALSE}
-library(tidyverse) 
+library(tidyverse)
 library(summarytools)
 
 d <- read_csv("https://data.dataliteracy.cc/simulated/polcomm_data.csv")

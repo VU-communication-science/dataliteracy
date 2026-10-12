@@ -5,7 +5,7 @@ subtitle: "Importing CSVs, inspecting tibbles, selecting columns, and filtering 
 
 *You arrive here from [R language](1.02-r-language.qmd), so you can already work with vectors, functions, and packages — but real research data rarely comes as a loose vector. Here you'll learn to load data into a data frame (tibble) and to select columns, filter rows, create new variables, and chain those steps together with the pipe. This is the single most-used skill in the entire book: almost every later module starts from a data frame you've shaped with these tools.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=dfs-1)
+→ [See this module in the skill tree](curriculum.html?module=dfs-1)
 
 ## Introducing the tidyverse
 

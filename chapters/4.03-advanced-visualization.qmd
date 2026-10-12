@@ -5,7 +5,7 @@ subtitle: "Advanced visualization techniques: pooling, faceting, and interactive
 
 *You arrive here from [Data Visualization](4.02-data-visualization.qmd) and [Pivoting and joining](2.04-pivoting-and-joining.qmd), so you can already make a basic plot and reshape data into long format. Here you'll learn to split one plot into several small, comparable panels with faceting, combine multiple geoms in a single plot, and make deliberate choices about color and clarity so your plots are easy to read for everyone — including colorblind readers. These are the techniques that turn a quick exploratory plot into one you'd actually put in a report or a paper.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=vis-a)
+→ [See this module in the skill tree](curriculum.html?module=vis-a)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.

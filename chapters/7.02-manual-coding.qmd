@@ -7,7 +7,7 @@ Imagine two research assistants independently read the same 50 news articles and
 
 *You arrive here from [Pivoting and joining](2.04-pivoting-and-joining.qmd), so you can already reshape and combine data frames. Here you'll learn how researchers turn text into a trustworthy variable by hand: writing a codebook, having independent coders apply it, and checking that they agree before you use the result. This "gold standard" measurement is what the automated methods later in this section are built on, and tested against.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=ma-co)
+→ [See this module in the skill tree](curriculum.html?module=ma-co)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
@@ -53,7 +53,7 @@ Here the two coders agree on 8 of 10 articles, but `kappa2()` reports a lower, c
 Manual coding is slow and expensive, so it's not the default choice for every project. It's the right tool when:
 
 - the concept is subtle or context-dependent (irony, framing, implicit bias) and no dictionary or classifier can capture it reliably without training data anyway,
-- you need a trustworthy benchmark to validate an automated method against (see [Text Classification](6.04-text-classification.qmd)),
+- you need a trustworthy benchmark to validate an automated method against (see [Text Classification](7.04-text-classification.qmd)),
 - the dataset is small enough that coding it by hand is feasible within your project's time and budget.
 
 Once you have a manually coded (and validated) dataset, you can join it back onto the rest of your data exactly as in [Pivoting and joining](2.04-pivoting-and-joining.qmd) — the coded variable becomes just another column to analyse.

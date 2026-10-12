@@ -1,11 +1,15 @@
 ---
-title: "7.4 Mediation Analysis"
-subtitle: 'Conducting simple mediation analyses in R'
+title: "6.4 Mediation Analysis"
+subtitle: "Decomposing total effects into direct and indirect paths via mediators."
 ---
+
+*You arrive here from [Multiple Regression](5.06-regression.qmd), so you can already fit a regression with several predictors. Here you'll learn to split a total effect into a direct effect and an indirect effect that runs through a third variable, a mediator. Researchers rarely just want to know* whether *X affects Y — they want to know* how*, and mediation analysis is how you test such a mechanism.*
+
+→ [See this module in the skill tree](curriculum.html?module=media)
 
 # Introduction
 
-In this tutorial, we will give a preliminary introduction on how to conduct simple mediation analyses in R. 
+In this tutorial, we will give a preliminary introduction on how to conduct simple mediation analyses in R.
 We will focus on running multiple regression analyses manually, to explain the concept of mediation and how to test for its significance.
 In practice, it is often recommended to use specialized packages for mediation analyses, but to develop a good intuition for the concept, you should first understand the basics.
 <!-- At the end of this tutorial we will show an example of how to use the `bruceR` package to use the **PROCESS** approach. -->
@@ -14,48 +18,46 @@ In practice, it is often recommended to use specialized packages for mediation a
 
 We are often interested in explaining a relationship or causal effect between two variables (e.g., `X` and `Y`). Many theories suggest that `X` does not necessarily *directly* influence `Y`, but that this effect is *mediated* by a third variable, which we can call `M` (for **M**ediation). We can visualize this interplay between the three variables like so:
 
-```{r, echo=F, fig.height=3.4, out.width='100%', message=F, warning=F}
-library(grid)
-library(ggdag)
-library(gridExtra)
-library(tidyverse)
-
-coords <- list(
-    x = c(X=1, M=2, Y=3),
-    y = c(X=1, M=2, Y=1)
-)
-
-mediated <- dagify(Y ~ X + M, M ~ X, Y ~ M, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "M" ~ "indirect (a)",
-        name == "M" & to == "Y" ~ "indirect (b)",
-        name == "X" & to == "Y" ~ "direct effect (c')",
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = if_else(name == 'X' & to == 'Y', 2, 0.5)) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
-
-total <- dagify(Y ~ X, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "Y" ~ "total effect (c)",
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = 2) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
-
-
-grid.arrange(total,mediated,  ncol=2)
+::: {layout-ncol=2}
+```{r, echo=F}
+source("scripts/dag_helpers.R")
 ```
 
-In the left figure we see the **total effect** of `X` on `Y`. 
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("X", x = 0, y = 0),
+        Y = dag_node("Y", x = 3, y = 0)
+    ),
+    edges = list(
+        dag_edge("X", "Y", label = "total effect (c)")
+    ),
+    fig_width = 3.6, fig_height = 0.57
+))
+```
+
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("X", x = 0, y = 0),
+        M = dag_node("M", x = 1.5, y = 1.1),
+        Y = dag_node("Y", x = 3, y = 0)
+    ),
+    edges = list(
+        dag_edge("X", "M", label = "indirect (a)"),
+        dag_edge("M", "Y", label = "indirect (b)"),
+        dag_edge("X", "Y", label = "direct effect (c')")
+    ),
+    fig_width = 3.6, fig_height = 1.5
+))
+```
+:::
+
+In the left figure we see the **total effect** of `X` on `Y`.
 Here we only have one **path** from `X` to `Y`.
 In mediation analysis, the total effect is referred to as **c**.
 
-In the right figure, we see a mediation model, where the effect of `X` on `Y` is mediated by `M`. 
+In the right figure, we see a mediation model, where the effect of `X` on `Y` is mediated by `M`.
 This gives us two different **paths** for how X to have an effect on Y:
 
 * **direct effect**. The direct path `X -> Y`, referred to as **c'**.
@@ -68,8 +70,8 @@ The mediated model can help us distinguish between different scenarios:
 * **No mediation**: Only the direct effect (**c'**) is significant.
 * **Partial mediation**: Both the direct and indirect effects are significant
 * **No effect**: Neither the direct nor the indirect effect is significant.
-  
-**Note of caution:** Theoretically, mediation models almost always suggest some sort of "causal chain". Yet, the analysis itself cannot prove causality. The same caution applies as discussed in the [causality](5.2-causality.qmd) section.
+
+**Note of caution:** Theoretically, mediation models almost always suggest some sort of "causal chain". Yet, the analysis itself cannot prove causality. The same caution applies as discussed in the [causality](6.01-causality.qmd) section.
 
 ## Packages and simulated data
 
@@ -78,7 +80,7 @@ library(tidyverse)
 library(sjPlot)
 ```
 
-For this tutorial we are going to simulate some data that align with the Figure presented above. 
+For this tutorial we are going to simulate some data that align with the Figure presented above.
 You don't need to understand this process, and can just run the code to create the data.
 
 ```{r}
@@ -100,11 +102,9 @@ Here is a brief explanation of the data simulation code:
 * This gives us a data set in which `X` influences `Y` both directly and indirectly through `M`.
 :::
 
-
-
 # Simple regression analyses
 
-Let's first look at the model without the mediator `M`. 
+Let's first look at the model without the mediator `M`.
 
 ```{r}
 #| html-table-processing: none
@@ -112,10 +112,9 @@ m_total <- lm(Y ~ X, data = d)
 tab_model(m_total)
 ```
 
-
 This gives us the total effect of `X` on `Y`.
 
-```{r, fig.height=1.3, echo=F, out.width='100%', message=F, warning=F}
+```{r, echo=F}
 get_coef <- function(name, m, var) {
     coef = summary(m)$coef[var,1]
     p = summary(m)$coef[var,4]
@@ -126,15 +125,41 @@ get_coef <- function(name, m, var) {
     return (sprintf("%s = %.2f%s", name,coef, stars))
 }
 
-dagify(Y ~ X, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "Y" ~ get_coef('c', m_total, 2),
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = 2) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
+# Thin wrappers around dag_diagram() (see scripts/dag_helpers.R) so the
+# repeated X -> Y / X -> M -> Y layout only needs to be defined once,
+# with the just-computed regression coefficients plugged in as labels.
+total_effect_dag <- function(c_label) {
+    dag_diagram(
+        nodes = list(
+            X = dag_node("X", x = 0, y = 0),
+            Y = dag_node("Y", x = 3, y = 0)
+        ),
+        edges = list(
+            dag_edge("X", "Y", label = c_label)
+        ),
+        fig_width = 3.6, fig_height = 0.57
+    )
+}
+
+mediated_dag <- function(a_label, b_label, cprime_label) {
+    dag_diagram(
+        nodes = list(
+            X = dag_node("X", x = 0, y = 0),
+            M = dag_node("M", x = 1.5, y = 1.1),
+            Y = dag_node("Y", x = 3, y = 0)
+        ),
+        edges = list(
+            dag_edge("X", "M", label = a_label),
+            dag_edge("M", "Y", label = b_label),
+            dag_edge("X", "Y", label = cprime_label)
+        ),
+        fig_width = 3.6, fig_height = 1.5
+    )
+}
+```
+
+```{r, echo=F, output='asis'}
+cat(total_effect_dag(get_coef('c', m_total, 2)))
 ```
 
 Now let's look at the model with the mediator `M`.
@@ -153,32 +178,24 @@ tab_model(m1, m2)
 
 Let's visualize the paths in the mediation model:
 
-```{r, fig.height=3.4, echo=F, out.width='100%', message=F, warning=F}
-dagify(Y ~ X + M, M ~ X, Y ~ M, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "M" ~ get_coef('a', m2, 2),
-        name == "M" & to == "Y" ~ get_coef('b', m1, 3),
-        name == "X" & to == "Y" ~ get_coef("c'", m1, 2),
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = if_else(name == 'X' & to == 'Y', 2, 0.5)) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
+```{r, echo=F, output='asis'}
+cat(mediated_dag(
+    get_coef('a', m2, 2),
+    get_coef('b', m1, 3),
+    get_coef("c'", m1, 2)
+))
 ```
 
-We can see that all paths are significant, suggesting that there is both a direct and indirect effect of `X` on `Y`. 
+We can see that all paths are significant, suggesting that there is both a direct and indirect effect of `X` on `Y`.
 In other words, this is a **partial mediation**.
 
-We can calculate the **indirect effect** by multiplying the coefficients of the two paths: 
+We can calculate the **indirect effect** by multiplying the coefficients of the two paths:
 
 ```{r, echo=F, results=F}
 a <- summary(m2)$coef[2,1] |> round(3)
 b <- summary(m1)$coef[3,1] |> round(3)
 ```
 $$a \times b = `r a` \times `r b` = `r round(a*b,2)`$$
-
-
 
 ::: {.callout-warning title="Testing the significance of the indirect effect with the Sobel test" collapse="true"}
 
@@ -194,9 +211,9 @@ We can calculate this in R using the results from our earlier regression models.
 Notice in the formula that we need the values for:
 
 * `a`: the effect of X on M
-* `s_a`: The Standard Error of `a` 
+* `s_a`: The Standard Error of `a`
 * `b`: the effect of M on Y
-* `s_b`: The Standard Error of `b` 
+* `s_b`: The Standard Error of `b`
 
 There are two ways to get these values. One is to simply look them up manually in the regression tables,
 and enter the values directly in our code.
@@ -213,8 +230,7 @@ sb <- 0.0629  # SE of b
 
 ```
 
-
-Alternatively, we can also directly extract the values. 
+Alternatively, we can also directly extract the values.
 We then first extract the table of coefficients from the model using `summary(m1)$coef`.
 Given this coefficients table, we can get the value for a specific row and colums using `[row,column]`.
 
@@ -232,7 +248,7 @@ Now we can calculate the formula:
 # Sobel test
 
 ## Formula for z-score
-sobel_z <- (a * b) / sqrt((b^2 * sa^2) + (a^2 * sb^2)) 
+sobel_z <- (a * b) / sqrt((b^2 * sa^2) + (a^2 * sb^2))
 
 ## Corresponding p-value
 p_value <- 2 * (1 - pnorm(abs(sobel_z)))
@@ -260,41 +276,26 @@ d_full <- tibble(X,M,Y)
 
 ```
 
-
 To nicely interpret the models side-by-side, we'll add some labels and drop the confidence intervals.
 
 ```{r}
 m_total <- lm(Y ~ X, data=d_full)
 m1 <- lm(Y ~ X + M, data=d_full)
 m2 <- lm(M ~ X, data=d_full)
-tab_model(m_total, m1, m2,  
+tab_model(m_total, m1, m2,
           dv.labels=c("Y ~ X", "M ~ X", "Y ~ X + M"), show.ci = FALSE)
 ```
 
-```{r, fig.height=3.4, echo=F, out.width='100%', message=F, warning=F}
-
-total <- dagify(Y ~ X, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "Y" ~ get_coef('c',m_total, 2),
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = 2) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
-mediated <- dagify(Y ~ X + M, M ~ X, Y ~ M, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "M" ~ get_coef('a',m2, 2),
-        name == "M" & to == "Y" ~ get_coef('b',m1, 3),
-        name == "X" & to == "Y" ~ get_coef("c'",m1, 2),
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = if_else(name == 'X' & to == 'Y', 2, 0.5)) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
-
-grid.arrange(total,mediated,  ncol=2)
+```{r, echo=F, output='asis'}
+cat("::: {layout-ncol=2}\n\n")
+cat(total_effect_dag(get_coef('c', m_total, 2)))
+cat("\n\n")
+cat(mediated_dag(
+    get_coef('a', m2, 2),
+    get_coef('b', m1, 3),
+    get_coef("c'", m1, 2)
+))
+cat("\n\n:::\n")
 ```
 
 Here we do have an effect of `X` on `Y`, but when we control for `M`, the effect of `X` on `Y` is no longer significant.
@@ -318,33 +319,20 @@ d_no_mediation <- tibble(X,M,Y)
 m_total <- lm(Y ~ X, data=d_no_mediation)
 m1 <- lm(Y ~ X + M, data=d_no_mediation)
 m2 <- lm(M ~ X, data=d_no_mediation)
-tab_model(m_total, m1, m2,  
+tab_model(m_total, m1, m2,
           dv.labels=c("Y ~ X", "M ~ X", "Y ~ X + M"), show.ci = FALSE)
 ```
 
-```{r, fig.height=3.4, echo=F, out.width='100%', message=F, warning=F}
-total <- dagify(Y ~ X, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "Y" ~ get_coef('c', m_total, 2),
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = 2) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
-mediated <- dagify(Y ~ X + M, M ~ X, Y ~ M, coords = coords) |> 
-    tidy_dagitty() |> 
-    mutate(edge = case_when(
-        name == "X" & to == "M" ~ get_coef('a', m2, 2),
-        name == "M" & to == "Y" ~ get_coef('b', m1, 3),
-        name == "X" & to == "Y" ~ get_coef("c'", m1, 2),
-        TRUE ~ NA_character_
-    )) |>
-    mutate(vjust = if_else(name == 'X' & to == 'Y', 2, 0.5)) |>
-    ggdag() + theme_dag() +
-    geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
-
-grid.arrange(total,mediated,  ncol=2)
+```{r, echo=F, output='asis'}
+cat("::: {layout-ncol=2}\n\n")
+cat(total_effect_dag(get_coef('c', m_total, 2)))
+cat("\n\n")
+cat(mediated_dag(
+    get_coef('a', m2, 2),
+    get_coef('b', m1, 3),
+    get_coef("c'", m1, 2)
+))
+cat("\n\n:::\n")
 ```
 
 In this case, the effect of `X` on `Y` is significant, but the effect of `X` on `M` is not. So there is no mediation effect.

@@ -36,9 +36,9 @@ Each module's `chapter_changes/modules/<slug>.md` notes which hook/example was u
 | | Correlation & Covariance (`co-co`) | `3.03-correlation-and-covariance.qmd` | split from old 7.1 |
 | | Effects (`ef-si`) | `3.04-effects.qmd` | written (3.4) |
 | | Hypothesis Testing (`hy-te`) | `3.05-hypothesis-testing.qmd` | old 5.1 + new null-hypothesis/p-value/CI sections (3.5, complete) |
-| | Causality (`causa`) | `3.06-causality.qmd` | old 5.2 |
-| | Experimental control (`con-e`) | `5.05-experimental-control.qmd` | written (5.5), now parented by `anova` |
-| | Statistical control (`con-s`) | `5.07-statistical-control.qmd` | old 7.3, reframed as coming after `regression` (5.7) |
+| | Causality (`causa`) | `6.01-causality.qmd` | old 5.2 |
+| | Experimental control (`con-e`) | `6.02-experimental-control.qmd` | written (5.5), now parented by `anova` |
+| | Statistical control (`con-s`) | `6.03-statistical-control.qmd` | old 7.3, reframed as coming after `regression` (5.7) |
 | Exploration and Measurement | Descriptive Statistics (`de-st`) | `4.01-descriptive-statistics.qmd` | old 4.1 (empty) + old 2.4 |
 | | Data Visualization (`visua`) | `4.02-data-visualization.qmd` | written (4.2) |
 | | Advanced Visualization (`vis-a`) | `4.03-advanced-visualization.qmd` | written (4.3) |
@@ -51,11 +51,11 @@ Each module's `chapter_changes/modules/<slug>.md` notes which hook/example was u
 | | Regression (`regre`) | `5.06-regression.qmd` | split from old 7.2 |
 | | Linear Model Assumptions (`diagn`) | `5.08-linear-model-assumptions.qmd` | split from old 7.2 |
 | | Power Analysis (`power`) | `5.09-power-analysis.qmd` | old 5.3 |
-| | Mediation Analysis (`media`) | `5.10-mediation-analysis.qmd` | old 7.4 |
-| Content Analysis | Text as Data (`te-an`) | `6.01-text-as-data.qmd` | old 8.1 |
-| | Manual Coding (`ma-co`) | `6.02-manual-coding.qmd` | written, kept short (6.2) |
-| | Machine Learning (`ma-le`) | `6.03-machine-learning.qmd` | written, kept short (6.3, no parent yet) |
-| | Text Classification (`class`) | `6.04-text-classification.qmd` | written, kept short (6.4) |
+| | Mediation Analysis (`media`) | `6.04-mediation-analysis.qmd` | old 7.4 |
+| Content Analysis | Text as Data (`te-an`) | `7.01-text-as-data.qmd` | old 8.1 |
+| | Manual Coding (`ma-co`) | `7.02-manual-coding.qmd` | written, kept short (6.2) |
+| | Machine Learning (`ma-le`) | `7.03-machine-learning.qmd` | written, kept short (6.3, no parent yet) |
+| | Text Classification (`class`) | `7.04-text-classification.qmd` | written, kept short (6.4) |
 
 ## Old chapters and where they went
 
@@ -107,13 +107,13 @@ Resolved per instructor decision: both control modules are now taught *after* th
 - `curriculum.json`: `con-e` (experimental-control) parents are now `['causa', 'anova']`; `con-s` (statistical-control) parents are now `['causa', 'regre']`. `anova`/`regre` no longer list `con-e`/`con-s` as parents. Both moved category from `foundations` to `inferential`, matching their new sidebar section.
 - `_quarto.yml`: "Inferential Statistics" section order is now `comparing-two-groups, testing-associations, linear-models, anova, experimental-control, regression, statistical-control, linear-model-assumptions, power-analysis, mediation-analysis`.
 - `5.04-anova.qmd` / `5.06-regression.qmd`: intro paragraphs rewritten so their only stated prerequisite is `linear-models` (no longer reference the control modules as something the student needs first).
-- `5.05-experimental-control.qmd` (written from stub) and `5.07-statistical-control.qmd` (existing content, reframed) both explicitly build on the statistical model taught just before them.
+- `6.02-experimental-control.qmd` (written from stub) and `6.03-statistical-control.qmd` (existing content, reframed) both explicitly build on the statistical model taught just before them.
 
 ## Numbering
 
 Every module now has a `number` field in `curriculum.json` of the form `{section}.{index}` (section = sidebar section order, index = position within it), matching the book's final section order (Computational Skills, Data Management, Statistical Foundations, Exploration and Measurement, Inferential Statistics, Content Analysis). Every chapter's frontmatter `title:` is prefixed with this number (e.g. `"3.5 Hypothesis Testing"`), and the skill-tree popovers read the same field — so the stale pre-reorg numbers (`0.0`, `7.3`, etc.) are gone and both places now agree.
 
-**File names also carry this number** (e.g. `3.05-hypothesis-testing.qmd`), so `ls chapters/` sorts in reading order. The index is zero-padded to two digits in the *file name only* (`5.10-mediation-analysis.qmd`, not `5.1-mediation-analysis.qmd`) so section 5's ten modules still sort correctly as plain text; the `number` field and the title prefix stay unpadded (`5.10`). These module numbers are now considered stable — don't renumber/reorder modules casually, since it means a rename across `curriculum.json`, every chapter's frontmatter, every cross-chapter link, and `_quarto.yml`.
+**File names also carry this number** (e.g. `3.05-hypothesis-testing.qmd`), so `ls chapters/` sorts in reading order. The index is zero-padded to two digits in the *file name only* (`6.04-mediation-analysis.qmd`, not `5.1-mediation-analysis.qmd`) so section 5's ten modules still sort correctly as plain text; the `number` field and the title prefix stay unpadded (`5.10`). These module numbers are now considered stable — don't renumber/reorder modules casually, since it means a rename across `curriculum.json`, every chapter's frontmatter, every cross-chapter link, and `_quarto.yml`.
 
 ## Deep-linking into the skill tree
 

@@ -1,6 +1,6 @@
 # Skill Tree Component
 
-This directory contains the data-driven interactive skill tree used on the curriculum overview page (`chapters/curriculum.qmd`).
+This directory contains the data-driven interactive skill tree used on the curriculum overview page (`chapters/curriculum.html`).
 
 ## Directory Structure
 

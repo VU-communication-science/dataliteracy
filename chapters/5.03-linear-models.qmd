@@ -5,7 +5,7 @@ subtitle: "Understanding the linear model with a single predictor."
 
 *You arrive here from [Comparing two Groups](5.01-comparing-two-groups.qmd) and [Testing Associations](5.02-testing-associations.qmd), so you can already compare two group means with a t-test and test whether a correlation differs from zero. Here you'll learn the linear model that sits behind both of those tests: fitting a straight line through your data, reading the slope as an effect, and judging how well it fits with R². It's the gateway to almost every method that follows, from ANOVA to multiple regression.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=lin-m)
+→ [See this module in the skill tree](curriculum.html?module=lin-m)
 
 ```{r chunk-1, echo=F}
 ## convenience functions

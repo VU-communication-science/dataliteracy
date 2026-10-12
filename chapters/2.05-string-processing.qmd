@@ -5,7 +5,7 @@ subtitle: "String manipulation with stringr: regex detection, extraction, and tr
 
 *You arrive here from [Data Frames](2.01-data-frames.qmd), so you can already load a data frame and work with its columns. Here you'll work with text columns using `stringr`: detecting, extracting, replacing, and cleaning text patterns. Text is everywhere in communication data (open answers, names, social media posts), so cleaning it is the first step to analysing it.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=strng)
+→ [See this module in the skill tree](curriculum.html?module=strng)
 
 # Introduction
 
@@ -81,8 +81,8 @@ df <- tibble(
   source = c("Daily News", "Financial Times", "Daily News", "Metro")
 )
 
-df |> 
-  filter(str_detect(title, "Breaking")) |> 
+df |>
+  filter(str_detect(title, "Breaking")) |>
   mutate(clean_title = str_replace(title, "Breaking: ", ""))
 ```
 

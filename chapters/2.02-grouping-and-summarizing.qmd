@@ -5,7 +5,7 @@ subtitle: "Calculating and interpreting summary statistics."
 
 *You arrive here from [Data Frames](2.01-data-frames.qmd), so you can already load a data frame and pick the columns and rows you need. Here you'll group that data and summarise it per group with `group_by()` and `summarise()`. Comparing groups like this is at the heart of a lot of research, and it's also the stepping stone to descriptive statistics and plotting.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=summa)
+→ [See this module in the skill tree](curriculum.html?module=summa)
 
 # Data Summarization
 

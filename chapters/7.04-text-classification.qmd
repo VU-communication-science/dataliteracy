@@ -3,9 +3,9 @@ title: "7.4 Text Classification"
 subtitle: "Supervised text classification with bag-of-words and embeddings."
 ---
 
-*Text classification assigns each document to one of a set of predefined categories — a topic, a stance, a sentiment. It draws on [Text as Data](6.01-text-as-data.qmd) to turn documents into tokens, on [Manual Coding](6.02-manual-coding.qmd) to supply trustworthy labelled examples, and on [Machine Learning](6.03-machine-learning.qmd) to turn those examples into a rule that generalises to new documents.*
+*Text classification assigns each document to one of a set of predefined categories — a topic, a stance, a sentiment. It draws on [Text as Data](7.01-text-as-data.qmd) to turn documents into tokens, on [Manual Coding](7.02-manual-coding.qmd) to supply trustworthy labelled examples, and on [Machine Learning](7.03-machine-learning.qmd) to turn those examples into a rule that generalises to new documents.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=class)
+→ [See this module in the skill tree](curriculum.html?module=class)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
@@ -42,7 +42,7 @@ statements |>
 
 Each statement gets scored by counting how many of its words match each topic in the dictionary — no training data required, but also no way to catch a topic word the dictionary author didn't anticipate.
 
-**Supervised classifiers** fix that rigidity by learning the rule from examples instead of a fixed word list. The pipeline is: a human codes a sample of documents by hand ([Manual Coding](6.02-manual-coding.qmd)), each document is represented as a set of features — classically a **bag-of-words**: one column per word, counting how often it appears — and a machine learning algorithm ([Machine Learning](6.03-machine-learning.qmd)) learns to predict the human's label from those features. The resulting model can then label every remaining document in a corpus too large to code by hand.
+**Supervised classifiers** fix that rigidity by learning the rule from examples instead of a fixed word list. The pipeline is: a human codes a sample of documents by hand ([Manual Coding](7.02-manual-coding.qmd)), each document is represented as a set of features — classically a **bag-of-words**: one column per word, counting how often it appears — and a machine learning algorithm ([Machine Learning](7.03-machine-learning.qmd)) learns to predict the human's label from those features. The resulting model can then label every remaining document in a corpus too large to code by hand.
 
 **LLM-based classification** is a newer third option: instead of training a model on your own labelled examples, you prompt a general-purpose large language model to assign the category directly — fast to set up, but (like any method) it still needs to be validated against manual coding before you trust its output.
 

@@ -5,7 +5,7 @@ subtitle: "Testing correlation coefficients for significance."
 
 *You arrive here from [Hypothesis Testing](3.05-hypothesis-testing.qmd), so you already know how hypothesis testing works, and you can compute a correlation to describe a relationship. Here you'll test whether a correlation in your sample is statistically different from zero with `cor.test()`. A correlation in a sample can arise by chance, so testing it tells you how much confidence you can place in the relationship — and it prepares you for the linear model, since `cor.test()` turns out to be a t-test in disguise.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=te-as)
+→ [See this module in the skill tree](curriculum.html?module=te-as)
 
 ## Example data
 

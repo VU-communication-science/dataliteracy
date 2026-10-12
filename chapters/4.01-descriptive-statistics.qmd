@@ -5,7 +5,7 @@ subtitle: "Descriptive statistics and data exploration."
 
 *You arrive here from [Grouping and summarizing](2.02-grouping-and-summarizing.qmd) and [Correlation & Covariance](3.03-correlation-and-covariance.qmd), so you can already compute summaries per group and describe how two variables relate. Here you'll learn which descriptive statistic fits which type of variable — frequencies for categories, central tendency and spread for numbers — and how to standardize a numeric variable into z-scores so it is comparable across different scales. Describing your data well like this is the first thing you do in any analysis, and it tells you which methods fit your data later on.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=de-st)
+→ [See this module in the skill tree](curriculum.html?module=de-st)
 
 ## Describing variables
 
@@ -74,13 +74,13 @@ Standardization is a technique for transforming data into a consistent scale. It
 * Centering shifts the data so that its mean becomes zero.
 * Scaling adjusts the data's range by dividing it by the standard deviation.
 
-The result is that the data is transformed to have a mean of zero and a standard deviation of one. 
+The result is that the data is transformed to have a mean of zero and a standard deviation of one.
 We then also refer to the values of the transformed data as **z-scoreds**.
 Standardizing a variable to z-scores has a number of benefits, and you'll see that we use standardization in different contexts throughout this book:
 
-* **Interpretability**: Standardized variables can be interpreted in the same way. Since zero is the mean, positive values indicate that the observation is above average, and negative values indicate that it is below average. 
+* **Interpretability**: Standardized variables can be interpreted in the same way. Since zero is the mean, positive values indicate that the observation is above average, and negative values indicate that it is below average.
 A value of 1 means that the observation is one standard deviation above the mean.
-* **Comparability**: Standardization allows you to compare variables that have different units or scales. 
+* **Comparability**: Standardization allows you to compare variables that have different units or scales.
 It allows us to compare *age* and *income*, even if one is measured in years and the other in euros.
 * **Correlation analysis**: If you calculate the covariance of two standardized variables, you get the [correlation coefficient](3.03-correlation-and-covariance.qmd), which is a useful measure of the strength and direction of the relationship between two variables.
 * **Multiple regression**: Standardization can help you compare the strength of the effects of different independent variables in a [multiple regression model](5.06-regression.qmd).
@@ -107,11 +107,11 @@ Try changing the mean and standard deviation in this widget to see this shifting
 ```{ojs}
 //| echo: false
 viewof numberLine = Inputs.range(
-  [0, 6.83], 
+  [0, 6.83],
   {value: 6.83, step: 0.01, label: "MEAN"}
 )
 viewof standardDeviation = Inputs.range(
-  [1, 2.93], 
+  [1, 2.93],
   {value: 2.93, step: 0.01, label: "SD"}
 )
 
@@ -119,10 +119,10 @@ viewof standardDeviation = Inputs.range(
   const width = 600;
   const height = 150;
   const margin = { left: 50, right: 50, top: 20, bottom: 20 };
-  
+
   const meanValue = numberLine;
   const stddevValue = standardDeviation;
-  
+
   // Scale based on mean and standard deviation
   const scaleX = d3.scaleLinear()
       .domain([meanValue-10 * stddevValue/5, meanValue+10 * stddevValue/5])
@@ -139,7 +139,7 @@ viewof standardDeviation = Inputs.range(
   svg.append("g")
       .attr("transform", `translate(0, ${height / 2})`)
       .call(axis);
-  
+
   // Add some data points centered around the mean
   const dataPoints = [meanValue - stddevValue, meanValue, meanValue + stddevValue];
   const labels  = ["-1 SD", "Mean", "+1 SD"];
@@ -181,7 +181,7 @@ But other than that, the distribution of the data is the same!
 You can see that they're perfectly correlated:
 
 [^almostzero]: Note that instead of a clean zero, you might see a weird number like `9.253666e-16`. This is because computer's have limited precision, and in this case the best it could to is to get *reaaaaally* close to zero.
-The number is in **scientific notation**, which is used to express really small or really large numbers. The notation can be read as: $9.253666 \times 10^{-17}$. 
+The number is in **scientific notation**, which is used to express really small or really large numbers. The notation can be read as: $9.253666 \times 10^{-17}$.
 
 ```{r how-to-standardize-variables-3}
 cor(x, z)

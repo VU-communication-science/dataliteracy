@@ -1,11 +1,15 @@
 ---
-title: "7.3 Controlling for Confounders"
-subtitle: "Using multiple regression to better test causal relationships"
+title: "6.3 Statistical control"
+subtitle: "Controlling for confounders and covariates in regression models."
 ---
+
+*You now know how to fit and interpret a regression model (from [Multiple Regression](5.06-regression.qmd)). This module shows you how to use that same tool — adding a covariate to the model — to adjust for confounders statistically: the observational-data counterpart to the experimental control you'd use when you can randomise. In observational research you usually cannot randomise, so statistical control is your main tool for getting closer to a causal answer.*
+
+→ [See this module in the skill tree](curriculum.html?module=con-s)
 
 # Controlling for spurious correlations
 
-In the section about [causality](5.2-causality.qmd) we discussed the difference between correlation and causation, and what techniques we can use to distinguish between the two.
+In the section about [causality](6.01-causality.qmd) we discussed the difference between correlation and causation, and what techniques we can use to distinguish between the two.
 One of those techniques is to use **multivariate analysis** techniques, such as **multiple regression**.
 In this tutorial we will show you how to use multiple regression to control for **confounding variables**, and how this helps us deal with **spurious correlations**.
 As example data we'll be using a famous example of a spurious correlation: the number of storks and the birth rate of a country.
@@ -14,7 +18,7 @@ As example data we'll be using a famous example of a spurious correlation: the n
 
 There is a [famous example](http://www.brixtonhealth.com/storksBabies.pdf) of confounding, that points at the surprisingly high correlation between the number of storks and the number of newborn babies across European countries ($\rho = 0.62$).
 Based on this empirical finding, could one actually argue that the might be some truth to the old folk tale that storks deliver babies?
-The answer to this questions is obviously no, but it does raise an important issue: 
+The answer to this questions is obviously no, but it does raise an important issue:
 how can we distinguish between correlation and causation?
 The example of storks and babies is sufficiently ridiculous to make it clear that this is a spurious correlation, but how can we be sure in more realistic cases?
 
@@ -28,7 +32,7 @@ library(sjPlot)
 storks <- tibble(
  storks = c(100,300,1,5000,9,140,3300,2500,4,5000,5,30000,1500,5000,8000,150,25000),
  birth_rate = c(83,87,118,117,59,774,901,106,188,124,551,610,120,367,439,82,1576),
- area_km2 = c(29,84,31,111,43,544,357,132,42,93,301,312,92,237,505,41,779) 
+ area_km2 = c(29,84,31,111,43,544,357,132,42,93,301,312,92,237,505,41,779)
 )
 ```
 
@@ -52,7 +56,6 @@ Our dependent variable is the `birth_rate`, our independent variable is the `sto
 The variables are standardized first, so that you can see the relation to the correlation coefficients.
 We'll run two models: without and with the control variable.
 
-
 ```{r}
 ##  standardize all variables
 storks_z <- storks |> scale() |> as_tibble()
@@ -68,53 +71,56 @@ So here you see firsthand a spurious effect.
 
 In the second model, where we control for the area of the country, the effect of the number of storks on the birth rate is no longer significant (p = 0.304).
 Instead, we see a very strong effect of the area of the country on the birth rate ($\beta = 0.85$, p < 0.001).
-So here you see the power of multiple regression in action: by controlling for `area_km2`, the spurious effect of `storks` on `birth_rate` disappears. 
+So here you see the power of multiple regression in action: by controlling for `area_km2`, the spurious effect of `storks` on `birth_rate` disappears.
 
+```{r, echo=F}
+source("scripts/dag_helpers.R")
 
-```{r, fig.height=3, echo=F, out.width='100%', message=F, warning=F}
+# area's (unadjusted) effect on storks, just to label the Z -> X edge below
+m3 <- lm(storks ~ area_km2, data = storks_z)
 
-library(ggdag)
-library(gridExtra)
-library(tidyverse)
+get_coef <- function(m, var) {
+    coef = summary(m)$coef[var,1]
+    p = summary(m)$coef[var,4]
+    stars = ""
+    if (p < 0.05) stars = "*"
+    if (p < 0.01) stars = "**"
+    if (p < 0.001) stars = "***"
+    return (sprintf("\u03b2 = %.2f%s", coef, stars))
+}
+```
 
-coords <- list(
-    x = c(x=1, z=2, y=3),
-    y = c(x=1.5, z=1.5, y=1.5)
-)
-labels <- c("x" = "Storks", "y" = "Birth rate", "z" = "Area km2")
+**Spurious relation: It looks like Storks causes Birth rate**
 
-d_cause <- dagify(y ~ x, coords = coords) |> 
-    tidy_dagitty() |> 
-    dag_label(labels) |> 
-    ggdag() + theme_dag() + ggtitle("Spurious relation: It looks like Storks causes Birth rate")  +
-    geom_dag_label_repel(aes(label=label), box.padding=3, segment.color='transparent')
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Storks", x = 0, y = 0),
+        Y = dag_node("Birth rate", x = 3, y = 0)
+    ),
+    edges = list(
+        dag_edge("X", "Y", label = get_coef(m1, 2))
+    ),
+    fig_width = 3.6, fig_height = 0.57
+))
+```
 
-d_conf <- dagify(y ~ x, x ~ z, y ~ z, coords = coords) |> 
-    tidy_dagitty() |> 
-    dag_label(labels) |> 
-    ggdag() + theme_dag() + ggtitle("Actual relation: Both Storks and Birth rate are explained by Area") +
-    geom_dag_label_repel(aes(label=label), box.padding=3, segment.color='transparent')
+**Actual relation: Both Storks and Birth rate are explained by Area**
 
-grid.arrange(d_cause, d_conf, ncol=1)
-
-# library(ggdag)
-# 
-# coords <- list(
-#     x = c(storks=1, area=2, birth_rate=3),
-#     y = c(storks=1, area=2, birth_rate=1)
-# )
-# 
-# dagify(birth_rate ~ area, storks ~ `area`, coords = coords) |> 
-#     tidy_dagitty() |> 
-#     mutate(edge = case_when(
-#         name == "area" & to == "storks" ~ '',
-#         name == "area" & to == "birth_rate" ~ '',
-#         name == "storks" & to == "birth_rate" ~ '',
-#         TRUE ~ NA_character_
-#     )) |>
-#     mutate(vjust = if_else(name == 'storks' & to == 'birth_rate', 2, 0.5)) |>
-#     ggdag() + theme_dag() +
-#     geom_dag_edges_fan(aes(label=edge,vjust=vjust), angle_calc="along", arrow=NULL, edge_width=0)
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Storks", x = 0, y = 0),
+        Y = dag_node("Birth rate", x = 3, y = 0),
+        Z = dag_node("Area km2", x = 1.5, y = 1.4)
+    ),
+    edges = list(
+        dag_edge("Z", "X", label = get_coef(m3, 2)),
+        dag_edge("Z", "Y", label = get_coef(m2, 3)),
+        dag_edge("X", "Y", label = get_coef(m2, 2))
+    ),
+    fig_width = 3.6, fig_height = 1.85
+))
 ```
 
 # Why controlling for confounding is important
@@ -123,7 +129,7 @@ If we do not control for confounding variables, the coefficients in our regressi
 Sometimes the effect is overestimated, as we saw here with the effect of storks on the birth rate.
 But the effect can also be suppressed, or even reversed!
 
-Being able to control for confounding variables enables us to better explore possible [causal relationships](5.2-causality.qmd) between variables.
+Being able to control for confounding variables enables us to better explore possible [causal relationships](6.01-causality.qmd) between variables.
 Based on the first model, we might have concluded that if the number of storks increases or decreases, the birth rate of the country will follow.
 Imagine the policy implications of such a finding!
 If a government would want to increase the birth rate, they would simply have to breed more storks.

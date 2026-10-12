@@ -46,7 +46,7 @@ Whenever it helps, open with a **small concrete hook** instead of (or before) th
 
 Immediately below the intro paragraph, add a quiet link back to the skill tree with the module's own id, so a reader can see the module highlighted in context:
 ```markdown
-→ [See this module in the skill tree](curriculum.qmd?module=dfs-1)
+→ [See this module in the skill tree](curriculum.html?module=dfs-1)
 ```
 
 ---

@@ -5,7 +5,7 @@ subtitle: "Evaluating Cronbach's alpha, item discrimination, and index creation.
 
 *You arrive here from [Factor Analysis](4.04-factor-analysis.qmd), so you can already find out which items belong together. Here you'll learn to check whether those items are reliable (Cronbach's alpha), spot and fix items that drag reliability down, and combine the remaining items into a single scale score. This turns several separate questionnaire items into one clean variable you can actually use in later analyses.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=scale)
+→ [See this module in the skill tree](curriculum.html?module=scale)
 
 ## What is a scale?
 
@@ -45,15 +45,15 @@ For example, in our [practice data](2.01-data-frames.qmd#practice-data) we have 
 5. Journalists separate facts from opinion when covering the news
 
 Note that **item 3 is inversed**, so that higher values indicate lower trust.
-Keep this in mind, because to create the scale we 
+Keep this in mind, because to create the scale we
 
 #### 2. Inspect your data
 
-Once you have collected your data, always check whether everything is in order. 
+Once you have collected your data, always check whether everything is in order.
 In the [Inspect and clean](2.03-data-cleaning.qmd) chapter we looked at how to do this.
 Here we just use the `dfSummary` function from the `summarytools` package to get a quick overview of our data.
 
-First though, let's load our data and select the columns that we're interested in. 
+First though, let's load our data and select the columns that we're interested in.
 
 ```{r 2-inspect-your-data-1, message=F}
 library(tidyverse)
@@ -67,13 +67,13 @@ The following code selects the five items for `trust_t1`, and then uses the `dfS
 ```{r 2-inspect-your-data-2, eval=F}
 library(summarytools)
 
-d |> 
-    select(trust_t1_item1:trust_t1_item5) |> 
+d |>
+    select(trust_t1_item1:trust_t1_item5) |>
     dfSummary() |>
     view()
 ```
 
-This looks good. 
+This looks good.
 There are no missing values, all values are within the expected range (1-10), and the distributions look reasonable.
 
 #### 3. Look at the correlations
@@ -81,14 +81,14 @@ There are no missing values, all values are within the expected range (1-10), an
 The idea behind a scale is that the items are related to each other, because they all measure the same underlying construct.
 A good way to check this is by looking at the correlations between the items.
 
-For this we'll be using the `sjPlot` package, which has a function `tab_corr` (tabulate correlations) that creates a nice table with the correlations between all columns in a data frame. 
+For this we'll be using the `sjPlot` package, which has a function `tab_corr` (tabulate correlations) that creates a nice table with the correlations between all columns in a data frame.
 We again use this on the five items for `trust_t1`.
 In `tab_corr` we also set `p.numeric=TRUE` to show the p-values for the correlations as numbers (instead of stars).
 
 ```{r 3-look-at-the-correlations-1, message=F}
 library(sjPlot)
-d |> 
-    select(trust_t1_item1:trust_t1_item5) |> 
+d |>
+    select(trust_t1_item1:trust_t1_item5) |>
     tab_corr(p.numeric=TRUE)
 ```
 
@@ -96,7 +96,7 @@ Here we see that the correlations between the items is mostly quite strong, and 
 The only notable exception in terms of strength is that the correlations of `item2` to the other items is much lower.
 This suggests that our items indeed measure are common underlying construct, but `item2` (about *bias*) might measure a somewhat different aspect of trust in journalism.
 
-One **very important thing** to notice is that the correlation of `trust_t1_item3` with the other items is **negative**! 
+One **very important thing** to notice is that the correlation of `trust_t1_item3` with the other items is **negative**!
 So when the score on `trust_t1_item3` goes up, the scores on the other items tend to go down.
 This makes complete sense if we remember that `trust_t1_item3` is inversed, so that higher values indicate lower trust.
 
@@ -113,17 +113,17 @@ We'll cover factor analysis in a later tutorial.
 In the correlation analysis we saw that the third item (`trust_t1_item3`) is negatively correlated with the other items.
 This is all according to plan, since we inversed the scale for this item.
 But to create a single construct, we need to make sure that all items have the same directionality.
-So we need to invert the values for `trust_t1_item3`. 
+So we need to invert the values for `trust_t1_item3`.
 
 Since we have a scale from 1 to 10, we can inverse the value by subtracking it from `11` (11 - 1 = 10, 11 - 2 = 9, ..., 11 - 10 = 1).
 
 ```{r 4-invert-items-if-necessary-1}
-d <- d |> 
+d <- d |>
     mutate(trust_t1_item3_inv = 11 - trust_t1_item3)
 ```
 
-Notice that we **do not** overwrite the original column, but create a new column `trust_t1_item3_inv` (inversed). 
-Overwriting the original column is possible, but dangerous and not transparent. 
+Notice that we **do not** overwrite the original column, but create a new column `trust_t1_item3_inv` (inversed).
+Overwriting the original column is possible, but dangerous and not transparent.
 Creating a new column prevents you from accidentally running the inversion multiple times, and messing up your analysis.
 
 ::: {.callout-note title="General formula for inversing" collapse="true"}
@@ -160,12 +160,12 @@ So we'll do the same thing as above, but note that this time our select statemen
 ```{r 5-calculate-the-reliability-1, message=F}
 library(psych)
 
-d |> 
-    select(trust_t1_item1,  
-           trust_t1_item2, 
-           trust_t1_item3_inv, 
-           trust_t1_item4, 
-           trust_t1_item5) |> 
+d |>
+    select(trust_t1_item1,
+           trust_t1_item2,
+           trust_t1_item3_inv,
+           trust_t1_item4,
+           trust_t1_item5) |>
     alpha()
 ```
 
@@ -175,8 +175,8 @@ By default, `alpha` only shows two digits for Cronbach's alpha.
 If you want to see more digits, you can use the `print` function with the `digits` argument.
 
 ```{r 5-calculate-the-reliability-2}
-d |> 
-    select(trust_t1_item1, trust_t1_item2, trust_t1_item3_inv, trust_t1_item4, trust_t1_item5) |> 
+d |>
+    select(trust_t1_item1, trust_t1_item2, trust_t1_item3_inv, trust_t1_item4, trust_t1_item5) |>
     alpha() |>
     print(digits=3)
 ```
@@ -186,8 +186,8 @@ Note that this way of setting the nr of digits is specific to the `psych` packag
 :::
 
 ```{r 5-calculate-the-reliability-3, echo=F, results=F}
-alpha = d |> 
-    select(trust_t1_item1, trust_t1_item2, trust_t1_item3_inv, trust_t1_item4, trust_t1_item5) |> 
+alpha = d |>
+    select(trust_t1_item1, trust_t1_item2, trust_t1_item3_inv, trust_t1_item4, trust_t1_item5) |>
     alpha()
 ca = sprintf("%.2f", alpha$total$raw_alpha)
 ca_drop = sprintf("%.2f", alpha$alpha.drop[2,1])
@@ -195,8 +195,8 @@ ca_drop = sprintf("%.2f", alpha$alpha.drop[2,1])
 
 This gives quite a lot of output. These are the most important parts to consider:
 
-1. **Cronbach's alpha**: At the top we have a row that says `raw_alpha`, `std.alpha`, etc. Here we are just interested in the `raw_alpha`, which is the value of Cronbach's alpha. In this case it's `r ca`, which is already very good. 
-3. **Reliability if an item is dropped**: This part shows you what would happen to the `raw_alpha` (and the other reliability measures) if you would drop one of the items from the scale. In our data we see that if `item2` would be dropped, the `raw_alpha` would go up to `r ca_drop` (from `r ca`). In other words, if we would use a 4-item scale with `item2` dropped, the scale would be more reliable.  
+1. **Cronbach's alpha**: At the top we have a row that says `raw_alpha`, `std.alpha`, etc. Here we are just interested in the `raw_alpha`, which is the value of Cronbach's alpha. In this case it's `r ca`, which is already very good.
+3. **Reliability if an item is dropped**: This part shows you what would happen to the `raw_alpha` (and the other reliability measures) if you would drop one of the items from the scale. In our data we see that if `item2` would be dropped, the `raw_alpha` would go up to `r ca_drop` (from `r ca`). In other words, if we would use a 4-item scale with `item2` dropped, the scale would be more reliable.
 4. **Item statistics**: This part shows you some usefull statistics about the items, like the mean and standard deviation (sd). More importantly, it also shows several scores for `item-total correlation` (the `r` in `raw.r`, `std.r`, `r.cor` and `r.drop` stands for correlation). This indicate how strongly the item is correlated to the total scale (i.e. the combination of the other items). The recommended correlation measure to look at is the `r.cor` (correlation corrected for item overlap). In our data we see that `item5` has the strongest correlation with the total scale, whereas `item2` has the weakets. Notice how this is in line with the `Reliability if an item is dropped` part: if we would drop `item2`, the scale would become more reliable. (Think about why that makes sense!)
 
 #### 6. Remove items if necessary
@@ -206,11 +206,11 @@ Above we saw that if we would drop `item2`, the reliability of the scale would g
 You can verify that this is indeed what happens:
 
 ```{r 6-remove-items-if-necessary-1, results='hide'}
-d |> 
-    select(trust_t1_item1, 
-           trust_t1_item3_inv, 
-           trust_t1_item4, 
-           trust_t1_item5) |> 
+d |>
+    select(trust_t1_item1,
+           trust_t1_item3_inv,
+           trust_t1_item4,
+           trust_t1_item5) |>
     alpha()
 ```
 
@@ -230,7 +230,7 @@ The simplest way to do so is to just add up the items and divide by the number o
 Let's do this for the 4-item scale ($\alpha = `r ca_drop`$) that we tested above (mind the parentheses!):
 
 ```{r 7-calculate-the-scale-score-1}
-d <- d |> 
+d <- d |>
     mutate(trust_t1_scale = (trust_t1_item1 + trust_t1_item3_inv + trust_t1_item4 + trust_t1_item5) / 4)
 ```
 

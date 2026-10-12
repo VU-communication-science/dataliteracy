@@ -5,7 +5,7 @@ subtitle: "Introduction to text as data, tokenization, and text preprocessing."
 
 *You arrive here from [String processing](2.05-string-processing.qmd), so you can already detect, extract, and clean text patterns in a data frame. Here you'll learn to treat whole documents as data: splitting them into words (tokens), removing uninformative "stop words", and counting what's left with `tidytext`. Turning text into numbers like this is the first step toward measuring concepts — topics, tone, frames — in news articles, social media posts, or open survey answers.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=te-an)
+→ [See this module in the skill tree](curriculum.html?module=te-an)
 
 # Introduction to Computational Content Analysis
 
@@ -52,7 +52,7 @@ statements <- tibble(
 The function `unnest_tokens()` splits each text into individual words, converts them to lowercase, and strips punctuation:
 
 ```{r}
-tokens <- statements |> 
+tokens <- statements |>
   unnest_tokens(word, text)
 tokens
 ```
@@ -64,7 +64,7 @@ Many of the most frequent words in language are function words (e.g., "in", "and
 ```{r}
 data("stop_words")
 
-tidy_tokens <- tokens |> 
+tidy_tokens <- tokens |>
   anti_join(stop_words, by = "word")
 tidy_tokens
 ```
@@ -74,7 +74,7 @@ tidy_tokens
 Once in tidy format, we can use standard `dplyr` and `ggplot2` commands to inspect term frequencies:
 
 ```{r}
-tidy_tokens |> 
+tidy_tokens |>
   count(word, sort = TRUE)
 ```
 
@@ -83,7 +83,7 @@ tidy_tokens |>
 Depending on your research question, three main computational approaches are common:
 
 ## 1. Dictionary-Based Analysis
-A **sentiment dictionary** or substantive lexicon maps specific words to categories (e.g., positive vs. negative tone, moral values, emotional expressions). 
+A **sentiment dictionary** or substantive lexicon maps specific words to categories (e.g., positive vs. negative tone, moral values, emotional expressions).
 By joining tokens with a lexicon (such as `get_sentiments("bing")`), each document can be assigned a tone score. While transparent and fast, dictionaries can struggle with context, sarcasm, and domain-specific meanings.
 
 ## 2. Supervised Machine Learning
@@ -92,7 +92,7 @@ When labels are needed for nuanced concepts (such as framing, toxicity, or polic
 ## 3. Large Language Models (LLMs)
 Modern generative models (e.g., OpenAI GPT, local models via Ollama) can perform zero-shot and few-shot annotation by following natural language instructions. While highly capable of understanding context, researchers must rigorously validate LLM annotations against gold-standard human benchmarks.
 
-[Manual Coding](6.02-manual-coding.qmd), [Machine Learning](6.03-machine-learning.qmd), and [Text Classification](6.04-text-classification.qmd) each pick up one of these threads in more depth.
+[Manual Coding](7.02-manual-coding.qmd), [Machine Learning](7.03-machine-learning.qmd), and [Text Classification](7.04-text-classification.qmd) each pick up one of these threads in more depth.
 
 ## Further resources {.unnumbered}
 

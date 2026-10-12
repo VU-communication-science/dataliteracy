@@ -5,7 +5,7 @@ subtitle: "Fitting OLS regression lines with multiple predictors, interpreting s
 
 *You arrive here from [Simple Regression](5.03-linear-models.qmd), so you can already fit a line with a single predictor and read off its slope, p-value, and R². Here you'll extend that same model to several predictors at once, to categorical predictors, and to interactions (moderation), and learn how to report the results. Real outcomes rarely have just one cause, so being able to separate the effects of several predictors in one model — and control for the relations between them — is the workhorse skill of communication research.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=regre)
+→ [See this module in the skill tree](curriculum.html?module=regre)
 
 ```{r chunk-1, echo=F}
 ## convenience functions
@@ -115,7 +115,7 @@ What we're witnessing here is a form of **confounding**.
 There is a relation between the `news_consumption` and `trust_t1` variables, but a part of this relation is **spurious**.
 `age` has an effect on both `news_consumption` and `trust_t1`: older people consume more news, and have more trust in journalists.
 By controlling for `age`, we can see the real effect of `news_consumption` on `trust_t1` (though we can never be sure that we've controlled for all possible confounders).
-For a more detailed explanation of confounding, see the [statistical control module](5.07-statistical-control.qmd).
+For a more detailed explanation of confounding, see the [statistical control module](6.03-statistical-control.qmd).
 
 ### Standardized coefficients
 

@@ -3,9 +3,9 @@ title: "7.3 Machine Learning"
 subtitle: "Supervised and unsupervised machine learning methods."
 ---
 
-*Machine learning doesn't require prior modules in this section, but it builds on the modelling intuition from the Inferential Statistics section (especially [Multiple Regression](5.06-regression.qmd)). Here you'll learn the vocabulary that turns "fitting a model" into "machine learning": labelled training data, a train/test split, and the risk of overfitting. The same logic scales from a toy example like the one below to classifiers that code thousands of documents in [Text Classification](6.04-text-classification.qmd).*
+*Machine learning doesn't require prior modules in this section, but it builds on the modelling intuition from the Inferential Statistics section (especially [Multiple Regression](5.06-regression.qmd)). Here you'll learn the vocabulary that turns "fitting a model" into "machine learning": labelled training data, a train/test split, and the risk of overfitting. The same logic scales from a toy example like the one below to classifiers that code thousands of documents in [Text Classification](7.04-text-classification.qmd).*
 
-→ [See this module in the skill tree](curriculum.qmd?module=ma-le)
+→ [See this module in the skill tree](curriculum.html?module=ma-le)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
@@ -13,7 +13,7 @@ This content was drafted by an AI assistant and has not yet been manually checke
 
 ## Supervised vs. unsupervised learning
 
-Most machine learning used in content analysis is **supervised**: you start with examples that already have a known answer (a label), such as articles a human coder marked "political" or "not political" (see [Manual Coding](6.02-manual-coding.qmd)), and the algorithm learns a rule that maps the input (the text, or features of it) to that label. Once trained, the rule can be applied to new, unlabelled texts.
+Most machine learning used in content analysis is **supervised**: you start with examples that already have a known answer (a label), such as articles a human coder marked "political" or "not political" (see [Manual Coding](7.02-manual-coding.qmd)), and the algorithm learns a rule that maps the input (the text, or features of it) to that label. Once trained, the rule can be applied to new, unlabelled texts.
 
 **Unsupervised** learning has no labels at all — the algorithm instead finds structure in the data on its own, for example grouping documents into clusters of similar content (topic modelling is a common example in text analysis). It's exploratory: useful for discovering structure, but it doesn't give you a validated measurement the way supervised learning can.
 

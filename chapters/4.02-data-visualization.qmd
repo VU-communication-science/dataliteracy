@@ -5,7 +5,7 @@ subtitle: "Grammar of graphics with ggplot2: histograms, scatterplots, and theme
 
 *You arrive here from [Grouping and summarizing](2.02-grouping-and-summarizing.qmd), so you can already summarise data per group with `group_by()` and `summarise()`. Here you'll learn to turn data into plots with `ggplot2`: histograms, bar charts, boxplots, and scatterplots, styled with labels and themes. A good plot reveals patterns, outliers, and mistakes that a table of summary numbers hides, and it's often the clearest way to communicate what you found.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=visua)
+→ [See this module in the skill tree](curriculum.html?module=visua)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.

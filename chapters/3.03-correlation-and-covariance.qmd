@@ -5,7 +5,7 @@ subtitle: "Understanding linear relationships between variables."
 
 *You arrive here from [Means & Variance](3.01-means-and-variance.qmd), so you can already describe a single variable with its mean and variance. Here you'll learn covariance and correlation: ways to describe how two variables move together, and why correlation is the standardized, easier-to-interpret version of covariance. Most research questions in communication science are ultimately about relationships between variables, and this is the simplest way to quantify one — it comes back in regression, scale construction, and factor analysis.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=co-co)
+→ [See this module in the skill tree](curriculum.html?module=co-co)
 
 # What are covariance and correlation?
 

@@ -63,16 +63,16 @@ website:
           - chapters/5.09-power-analysis.qmd
       - section: "Causality"
         contents:
-          - chapters/3.06-causality.qmd
-          - chapters/5.05-experimental-control.qmd
-          - chapters/5.07-statistical-control.qmd
-          - chapters/5.10-mediation-analysis.qmd
+          - chapters/6.01-causality.qmd
+          - chapters/6.02-experimental-control.qmd
+          - chapters/6.03-statistical-control.qmd
+          - chapters/6.04-mediation-analysis.qmd
       - section: "Content Analysis"
         contents:
-          - chapters/6.01-text-as-data.qmd
-          - chapters/6.02-manual-coding.qmd
-          - chapters/6.03-machine-learning.qmd
-          - chapters/6.04-text-classification.qmd
+          - chapters/7.01-text-as-data.qmd
+          - chapters/7.02-manual-coding.qmd
+          - chapters/7.03-machine-learning.qmd
+          - chapters/7.04-text-classification.qmd
 
 bibliography: references/references.bib
 cls: references/apa7.cls

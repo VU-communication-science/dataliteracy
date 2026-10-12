@@ -5,7 +5,7 @@ subtitle: "One-way and factorial ANOVA for comparing three or more condition mea
 
 *You arrive here from [Simple Regression](5.03-linear-models.qmd), so you already understand the linear model: fitting a line, reading a coefficient as an effect, and judging fit with R². Here you'll use that same model to compare the means of three or more groups at once, including factorial designs with more than one manipulation. This matters because experiments often have more than two conditions, and running many separate t-tests to compare them would both be tedious and inflate your chance of a false positive — ANOVA tests them all in one model instead.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=anova)
+→ [See this module in the skill tree](curriculum.html?module=anova)
 
 ## What is an ANOVA?
 
@@ -64,7 +64,7 @@ To understand how ANOVA is *different* from *regular regression*, you need to un
 
 [^not_different]: We emphasize *different* and *regular regression*, because technically ANOVA is still just a type of regression. By different we here refer to how ANOVA and regression are most commonly used in our field.
 
-* **Contrast coding**. In regression we usually use **dummy coding** for categorical variables, which compares each group to a single reference group. But we can also use **effect coding** to compare each group to the *grand mean* (the mean of all groups). 
+* **Contrast coding**. In regression we usually use **dummy coding** for categorical variables, which compares each group to a single reference group. But we can also use **effect coding** to compare each group to the *grand mean* (the mean of all groups).
 * **Sum of squares**. In a linear model we use sum of squares to assess how much variance is explained by the model. ANOVA allows using different types of sum of squares (Type I, II, III) for different purposes. In most cases researchers use Type III sums of squares (which is the default in popular statistics software like SPSS).
 
 In the social sciences, when researchers use ANOVA, they usually use Type III sums of squares and effect coding. In popular statistics software like SPSS, this is also the default approach.
@@ -208,7 +208,7 @@ The `*` symbol is a shorthand for including both the main effects and the intera
 Note that we also again specify that `np_subscription` is an observed factor.
 
 ```{r two-way-anova-1, message=F}
-m = aov_car(trust_t2 ~ experiment_group*np_subscription + Error(id), 
+m = aov_car(trust_t2 ~ experiment_group*np_subscription + Error(id),
             observed='np_subscription', data=d)
 ```
 
@@ -316,7 +316,7 @@ In any case, it is always a good starting point to look at the sample size and v
 ```{r what-if-the-variance-is-not-equal-1, message=F}
 vars = d |>
   group_by(experiment_group, np_subscription) |>
-  summarize(n = n(), variance = var(trust_t2)) 
+  summarize(n = n(), variance = var(trust_t2))
 
 vars
 

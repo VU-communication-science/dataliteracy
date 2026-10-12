@@ -5,7 +5,7 @@ subtitle: "Sample size planning, Type I/II errors, effect sizes, and power calcu
 
 *You arrive here from [Simple Regression](5.03-linear-models.qmd), so you can already fit a linear model and interpret the size of an effect. Here you'll learn what statistical power actually is, and how to plan a sample size with the `pwr` package before you collect any data. A study that is too small can miss a real effect entirely — power analysis lets you justify your sample size up front, which is expected in theses and preregistrations.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=power)
+→ [See this module in the skill tree](curriculum.html?module=power)
 
 # Introduction to Statistical Power
 

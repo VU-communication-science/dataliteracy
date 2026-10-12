@@ -5,7 +5,7 @@ subtitle: "Formulating and testing hypotheses using statistical methods."
 
 *You arrive here from [Effects](3.04-effects.qmd), so you can already express how big an effect is and you know that results from a sample are never perfectly precise. Here you'll learn how to derive a testable hypothesis from a theory, and the logic that turns an uncertain sample result into a yes/no decision — the null hypothesis, the p-value, and the confidence interval — which is the reasoning every test in the rest of the book relies on.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=hy-te)
+→ [See this module in the skill tree](curriculum.html?module=hy-te)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
@@ -37,9 +37,9 @@ However, note that it does **not necessarily prove** the theory.
 
 For example, if we find that children who play violent video games are more aggressive, it does not yet prove that the games caused the aggression, because there are other possible explanations for finding this relation.
 Perhaps people who are already aggressive are more likely to play violent video games, or there could be a confounding variable that causes both aggression and video game playing (e.g., gender, socioeconomic status, or parental involvement).
-To build stronger evidence, we therefore need to design our studies in such a way that we can rule out these alternative explanations, for instanced by conducting **randomized controlled trials**, or by **statistically controlling** for confounders [Also see the tutorial on causality](3.06-causality.qmd).
-And more generally speaking, a theory is not proven by a single empirical test. 
-Sometimes results only occur in a specific context or sample, or are sheer coincidence. 
+To build stronger evidence, we therefore need to design our studies in such a way that we can rule out these alternative explanations, for instanced by conducting **randomized controlled trials**, or by **statistically controlling** for confounders [Also see the tutorial on causality](6.01-causality.qmd).
+And more generally speaking, a theory is not proven by a single empirical test.
+Sometimes results only occur in a specific context or sample, or are sheer coincidence.
 Studies therefore need to be replicated in other contexts or samples to gradually build a stronger case for a theory.
 
 Hypotheses are thus the bridge between theory and statistical methods, and are essential for conducting rigorous research in communication science. They need to be specific enough to be testable, but close enough to the theory they are derived from to allow for meaningful conclusions.

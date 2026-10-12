@@ -5,7 +5,7 @@ subtitle: "Probability theory, random sampling, and sampling variability."
 
 *You arrive here from [Means & Variance](3.01-means-and-variance.qmd), so you can already describe a single variable with its mean and spread. Here you'll learn the basics of probability, the difference between a population and a sample, what a sampling distribution is, and why a bigger sample gives you a more reliable estimate. This is the logic that explains why we can say anything at all about a population when we've only measured a sample of it — the foundation of every hypothesis test in the rest of the book.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=probs)
+→ [See this module in the skill tree](curriculum.html?module=probs)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.

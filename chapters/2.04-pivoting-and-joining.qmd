@@ -5,7 +5,7 @@ subtitle: "Pivoting and joining data frames."
 
 *You arrive here from [Grouping and summarizing](2.02-grouping-and-summarizing.qmd), so you can already group and summarise data frames. Here you'll reshape data between wide and long format with `pivot_longer()` and `pivot_wider()`, and combine separate data frames with the `*_join()` family. Survey, experiment, and platform data rarely arrive in exactly the shape you need, and long format is also required for many plots and models.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=dfs-2)
+→ [See this module in the skill tree](curriculum.html?module=dfs-2)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.

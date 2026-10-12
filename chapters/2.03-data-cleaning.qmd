@@ -9,7 +9,7 @@ format:
 
 *You arrive here from [Data Frames](2.01-data-frames.qmd), so you can already inspect a data frame and select or filter parts of it. Here you'll find and fix common problems like the one above: missing values, impossible values (nobody is 1987 years old), duplicates, and wrongly coded variables. Messy data silently ruins an analysis, so cleaning it first is what makes your later results trustworthy.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=clean)
+→ [See this module in the skill tree](curriculum.html?module=clean)
 
 We'll keep using the same practice dataset, plus `summarytools` for quick summaries:
 

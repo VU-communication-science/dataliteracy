@@ -1,100 +1,148 @@
 ---
 title: "1.1 Basic Computer Skills"
-subtitle: "Organizing files and installing software."
+subtitle: "The file system, paths, and general computer habits."
 ---
 
-*This is the very first module in the book, so we assume nothing: not that you've used a command line, not that you know what a "working directory" is, and not that you've installed R before. You'll learn how your computer organises files and folders, how to describe where a file lives with a path, and how to install and start using R and RStudio — the software you'll use for the rest of this course. Getting comfortable with these basics now will save you a lot of frustration later, because almost every early R problem ("file not found", "it says the package isn't installed", "nothing happens when I run this") is actually a computer-skills problem in disguise.*
+*Basic computer skills are the foundation everything else in this book builds on. Most of you will already have plenty of experience using a computer, but there can still be gaps in your understanding, especially around things like how the file system actually works. This chapter gives a quick overview of the key skills worth having. We highly recommend reading through it once to see where you stand.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=compu)
+→ [See this module in the skill tree](curriculum.html?module=compu)
 
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
+## Files and folders
 
-## Files, folders, and the command line
+Everything on your computer — documents, photos, programs, and (soon) your data files — is stored as a **file**,
+and files are organised into **folders** (also called **directories**).
+You are likely already familiar with this idea from using a file explorer (Finder on macOS, File Explorer on Windows).
+You click on a folder to open it, and inside you'll find more folders and files.
 
-Everything on your computer — documents, photos, programs, and (soon) your R scripts and data — is stored as a **file**, and files are organised into **folders** (also called **directories**). A folder can contain files and other folders, so the whole system forms a tree: your hard drive is the root, and everything else branches off from there.
+However, to **effectively** and **responsibly** work with data you'll need a more concrete understanding of how files and folders are organised on your computer.
+You need to understand how files are stored, so that your analysis scripts can find it, and so that you can delete it when you're done with it.
 
-Most of the time you interact with files through a graphical **file explorer** (Finder on macOS, File Explorer on Windows): you double-click folders to open them, and drag files around with your mouse. This is fine for everyday use, but as soon as you start programming, you'll also encounter the **command line** (also called the **terminal** or **console**): a window where, instead of clicking icons, you type text commands and press Enter to run them.
+### The File System
 
-You won't need to use the command line directly very often in this course — RStudio mostly hides it from you — but it's worth knowing that it exists, because:
+A folder can contain files and other folders, so the whole system forms a **tree**: one top-level folder (the *root*), with everything else branching off from it, folder inside folder inside folder.
+Here is a small example of what such a tree looks like.
+The highlighted branch traces one specific file, `survey_data.csv`, all the way from the root down to where it actually lives:
 
-- RStudio's own **console** (which you'll meet below) works on the same principle: you type a command, press Enter, and it runs immediately.
-- Some error messages and installation instructions you'll find online assume you know what a command line is.
-- Every command you type refers to files and folders using the same idea of **paths**, which is the next thing we'll cover.
-
-## Working directories and file paths
-
-Whenever a program (including R) reads or writes a file, it needs to know *where* that file is. There are two ways to describe a location:
-
-### Absolute paths
-
-An **absolute path** spells out the complete location of a file, starting from the very top of the file system. On Windows it typically starts with a drive letter, e.g.:
-
+```{r, echo=F}
+source("scripts/dag_helpers.R")
 ```
+
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        Root = dag_node("/", x = 2, y = 4, highlight = TRUE),
+        Users = dag_node("Users", x = 2, y = 3, highlight = TRUE),
+        You = dag_node("yourname", x = 2, y = 2, highlight = TRUE),
+        Documents = dag_node("Documents", x = 1, y = 1, highlight = TRUE),
+        Downloads = dag_node("Downloads", x = 3, y = 1),
+        Survey = dag_node("survey_data.csv", x = 0, y = 0, highlight = TRUE),
+        Notes = dag_node("notes.txt", x = 1.2, y = 0),
+        Zip = dag_node("data.zip", x = 2.3, y = 0),
+        Survey2 = dag_node("survey_data.csv", x = 3.5, y = 0)
+    ),
+    edges = list(
+        dag_edge("Root", "Users", highlight = TRUE),
+        dag_edge("Users", "You", highlight = TRUE),
+        dag_edge("You", "Documents", highlight = TRUE),
+        dag_edge("You", "Downloads"),
+        dag_edge("Documents", "Survey", highlight = TRUE),
+        dag_edge("Documents", "Notes"),
+        dag_edge("Downloads", "Zip"),
+        dag_edge("Downloads", "Survey2")
+    ),
+    fig_width = 4.6, fig_height = 4.4
+))
+```
+
+Because the tree only branches *downward*, every file has exactly **one** location.
+The files `survey_data.csv` in `/Documents` and `/Downloads` are two different files.
+They might be copies of the same data, but editing or deleting one file will not affect the other.
+This has two important implications:
+
+* You need to know how to **locate a file by its path**. This is covered in the next section.
+* You need to **organize your files system** to avoid unnecessary copies. Not only to avoid confusion, but also because you'll often be responsible for sensitive data that should be deleted when you're done with it.
+
+A habit worth building early on: **keep your research data and scripts organised in a sensible folder structure**.
+Create different folders for different projects (e.g., courses, studies), keeping all related files (and subfolders) together in one place.
+This makes it easier to find things, and it makes it easier to share your work with others.
+
+### What is a file path?
+
+Whenever a program reads or writes a file — including R, which you'll meet in the next module — it needs to know *where* that file is. There are two ways to describe a location.
+
+#### Absolute paths
+
+An **absolute path** spells out the complete location of a file, starting from the very top of the file system: the exact chain highlighted in the tree above. On Windows it typically starts with a drive letter, e.g.:
+
+```bash
 C:\Users\yourname\Documents\survey_data.csv
 ```
 
 On macOS or Linux it starts with a `/`, e.g.:
 
-```
+```bash
 /Users/yourname/Documents/survey_data.csv
 ```
 
 An absolute path always works, no matter what else is going on, because it doesn't depend on "where you currently are" — but it's long to type, and it's tied to one specific computer (a path like `C:\Users\yourname\...` will not exist on someone else's laptop).
 
-### Relative paths and the working directory
+#### Relative paths
+
+A **relative path** describes a file's location *relative to the current directory*.
+For example, if you are currently inside the `yourname` folder in the tree above, the relative path to `survey_data.csv` is:
+
+```bash
+Documents/survey_data.csv
+```
+
+
+
+### Workspaces
+
+
+
 
 This is where the **working directory** comes in. At any point in time, a program is "standing" in one particular folder — its working directory — and a **relative path** describes a file's location *starting from there*, instead of from the very top. For example, if your working directory is `Documents`, then the relative path `survey_data.csv` refers to the exact same file as the absolute path above.
 
-Relative paths are shorter, and — more importantly — they keep working even if you move your whole project folder to a different computer, as long as the files inside it stay in the same arrangement relative to each other. This is why, later in the course, you will almost always use relative paths rather than absolute ones. You'll see this in action properly once you start working with R itself; for now, just remember the core idea: *a relative path is read starting from wherever you currently are, an absolute path is read starting from the very top.*
+Relative paths are shorter, and — more importantly — they keep working even if you move your whole project folder to a different computer, as long as the files inside it stay in the same arrangement relative to each other. This is why, later in the course, you will almost always use relative paths rather than absolute ones. For now, just remember the core idea: *a relative path is read starting from wherever you currently are, an absolute path is read starting from the very top.*
 
-## Installing R and RStudio
+## File types and extensions
 
-To do any of the work in this course, you need two separate pieces of free software:
+The short suffix after the dot in a file name — the **file extension** — tells your computer (and you) what *kind* of file it is, and which program should open it. Many file explorers hide extensions by default; it's worth turning this setting on, since in this course the difference between file types genuinely matters.
 
-- **R**. This is the actual program that runs your code and does the calculations. You almost never open R directly.
-- **RStudio**. This is a much more user-friendly window around R, with a text editor, file browser, and helpful buttons. This is the program you'll actually open every time you work.
+Some of the extensions you'll run into most often in this book:
 
-Install them in this order (R first, then RStudio), both for free:
+| Extension | What it is |
+|---|---|
+| `.csv` | **Comma-separated values**: a plain-text table, one row per line, values separated by commas. The most common format for exchanging data. |
+| `.xlsx` / `.xls` | An Excel spreadsheet (a "workbook"). Looks similar to a `.csv` when opened, but is stored in a more complex, non-plain-text format that can also hold formulas, formatting, and multiple sheets. |
+| `.txt` | A plain-text file: just characters, no formatting. |
+| `.r` / `.R` | An R script: plain text containing R code. |
+| `.json` | A structured, plain-text format often used to exchange data between programs (you'll encounter this if you ever work with APIs). |
+| `.pdf` | A fixed-layout document, for reading, not editing. |
+| `.docx` | A Microsoft Word document. |
+| `.zip` | A compressed archive bundling multiple files together — covered next. |
 
-1. Download and install **R** from the [CRAN website](https://cran.r-project.org/). Don't be put off by the plain, old-fashioned look of the site — it's the official, trusted source. Pick the installer for your operating system (Windows, macOS, or Linux) and follow the default installation steps.
-2. Download and install **RStudio Desktop** from [posit.co](https://posit.co/download/rstudio-desktop/) (RStudio's developer). Again, pick the installer for your operating system and use the default settings.
+## Zip files
 
-Once both are installed, open **RStudio** (not R directly) — RStudio will automatically start R in the background for you. If RStudio opens without an error message, you're ready to go.
+A **zip file** (extension `.zip`) is an **archive**: a single file that contains, and compresses, a whole bundle of other files and folders. Zip files are everywhere once you start downloading course materials or datasets, for two reasons: they let you download many files in one go, and compression makes the download smaller.
 
-## Scripts versus the console
+A zip file is not usable "as is" — you need to **extract** (or "unzip") it first, which unpacks its contents back into ordinary files and folders on your computer. On both Windows and macOS, this is usually as simple as right-clicking the `.zip` file and choosing "Extract All..." or "Extract" (or just double-clicking it on macOS). Make sure you know *where* the extracted files end up — by default, they're often placed in the same folder as the zip file itself, right next to it.
 
-Inside RStudio you'll see a panel called the **console**. This is where you can type a line of R code, press Enter, and see the result immediately:
+## A few general habits worth having
 
-```{r trying-the-console, eval=FALSE}
-1 + 1
-```
-
-This runs the line and shows `[1] 2` right below it. The console is great for quick, one-off checks, but it has one big downside: once you close RStudio (or scroll past it), that line of code is gone. There's no record of what you did.
-
-This is why, for any real piece of work, you write your code in a **script** instead. A script is simply a text file (in R, it has the `.R` extension) where you write all your code in order, save it, and can reopen it, edit it, and rerun it at any time. Think of the console as a scratchpad for quick experiments, and the script as the actual, permanent record of your work — the thing you'll hand in for assignments.
-
-To create a new script in RStudio: go to the menu bar and select `File > New File > R Script`. A new, empty text editor panel will appear above the console, ready for you to start typing code.
-
-## Running and saving a script
-
-Once you've written a line (or several lines) of code in your script, you need to tell R to actually run it — writing code by itself does nothing until you execute it.
-
-- To run a **single line**, put your cursor on that line and press **Ctrl + Enter** (Windows/Linux) or **Cmd + Enter** (macOS). You'll see the line, and its result, appear in the console below.
-- To run **several selected lines** at once, select them with your mouse (or keyboard) first, then use the same shortcut.
-- To run the **entire script**, use **Ctrl/Cmd + Shift + Enter**, or click the `Source` button.
-
-Don't forget to **save** your script regularly, with **Ctrl + S** (Windows/Linux) or **Cmd + S** (macOS) — just like you would in any other program. The first time you save a new script, RStudio will ask you to choose a name and a folder; give it a short, descriptive name ending in `.R`, for instance `week1_exercises.R`.
-
-A few more keyboard shortcuts that are worth building into muscle memory early on:
+A handful of general-purpose keyboard shortcuts are worth building into muscle memory, since you'll use them constantly in almost any program you work with in this course:
 
 | Shortcut (Win/Linux) | Shortcut (macOS) | What it does |
 |---|---|---|
-| `Ctrl + Enter` | `Cmd + Enter` | Run the current line (or selection) |
 | `Ctrl + S` | `Cmd + S` | Save the current file |
 | `Ctrl + Z` | `Cmd + Z` | Undo your last change |
 | `Ctrl + C` / `Ctrl + V` | `Cmd + C` / `Cmd + V` | Copy / paste |
-| `Ctrl + F` | `Cmd + F` | Find (and replace) text in your script |
+| `Ctrl + F` | `Cmd + F` | Find (and replace) text in a document |
 
-You now have everything you need to open RStudio, write some code in a script, and run it. The next module shows you what that code actually looks like and how R thinks about data.
+Two more habits that will save you a lot of trouble down the line:
+
+- **Save your work often**, and give files short, descriptive names (e.g. `week1_notes.txt` rather than `Untitled2`).
+- **Know where your "Downloads" folder is**, and get into the habit of moving files out of it into the right course folder soon after downloading them — it's the single most common place where "lost" files end up.
+
+With these basics in place, you're ready to start exploring how specific tools — starting with R — organise and work with data.

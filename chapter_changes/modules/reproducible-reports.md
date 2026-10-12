@@ -21,3 +21,9 @@
 - Replaced the boxed "learning journey" callout with the new unboxed intro paragraph (keeping the existing self-referential hook about this very page being written in Quarto), plus the skill-tree deep link (`curriculum.qmd?module=quart`).
 - Added a "Try it yourself" webR box (`1 + 1`) illustrating a Quarto code chunk, since the chapter's only R content was previously illustrative markdown rather than a real chunk.
 - No "Further resources" added and body content untouched — pre-existing, human-authored material.
+
+### Follow-up pass: added a prominent `embed-resources: true` section
+- Added a new "⚠️ Before you submit: use `embed-resources: true`" subsection right after "Rendering the document", using a `callout-important` box (title: "This will cost you points if you forget it").
+- Explains that Quarto's default HTML render saves figures/plots into a separate `..._files/` folder next to the `.html`, so submitting only the `.html` to Canvas drops all visuals — and gives the exact YAML fix (`format: html: embed-resources: true`), plus a quick way to verify it worked (no `_files` folder appears next to the rendered `.html`).
+- Rationale: students frequently forget this and submit assignments with missing figures; made this as visually unmissable as possible per explicit instructor feedback.
+- Rendered clean, hashes re-blessed.

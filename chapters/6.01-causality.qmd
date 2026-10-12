@@ -1,9 +1,13 @@
 ---
-title: "5.2 Causality & Experiments"
+title: "6.1 Causality"
+subtitle: "Causal inference, experiments, DAGs, confounders, and spurious links."
 ---
 
-![xkcd: correlation](https://imgs.xkcd.com/comics/correlation.png)
+*You arrive here from [Hypothesis Testing](3.05-hypothesis-testing.qmd), so you can already test whether an effect is larger than chance would produce. Here you'll learn whether an effect is *causal*: why correlation is not causation, and what confounders, DAGs, and experiments are. A statistically significant effect does not tell you *why* it exists — understanding causality tells you which conclusions your study design actually supports.*
 
+→ [See this module in the skill tree](curriculum.html?module=causa)
+
+![xkcd: correlation](https://imgs.xkcd.com/comics/correlation.png)
 
 ## Testing causal relations
 
@@ -32,7 +36,7 @@ The cause does not need to be the *only* cause of the effect (there are many thi
 It is enough that the cause increases the likelihood of the effect.
 If we were to somehow manipulate the cause, we would expect the likelihood of the effect to change.
 
-[Correlation](7.1-covariance-and-correlation.qmd), on the other hand, only indicates an association or relationship between two variables.
+[Correlation](3.03-correlation-and-covariance.qmd), on the other hand, only indicates an association or relationship between two variables.
 It makes sense why people can confuse this for a causal relationship.
 If we see that people that that are often on their phone are overall less happy, it is easy to assume that the phone is the cause of their unhappiness.
 But in order to establish whether a correlation is due to a causal relationship, we need address two issues:
@@ -63,48 +67,118 @@ Here are three DAGs that show different reasons for a correlation between X and 
 X represents what we believe to be the cause (e.g., screen time), and Y the effect (e.g., well-being).
 Z represents a confounding variable (e.g., parental involvement).
 
-```{r visualizing-causation-1, echo=F, message=F, fig.height=4, warning=F}
-library(ggdag)
-library(gridExtra)
-library(tidyverse)
+**Causal relation**
 
-coords <- list(
-    x = c(x=1, z=2, y=3),
-    y = c(x=1, z=1, y=1)
-)
-labels <- c("x" = "Screen time", "y" = "Well-being", "z" = "Parental involvement")
+```{r, echo=F}
+source("scripts/dag_helpers.R")
+```
 
-d_cause <- dagify(y ~ x, coords = coords) |>
-    tidy_dagitty() |>
-    dag_label(labels) |>
-    ggdag() + theme_dag() + ggtitle("Causal relation")  +
-    geom_dag_label_repel(aes(label=label), box.padding=3, segment.color='transparent')
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Screen time", x = 0, y = 0),
+        Y = dag_node("Well-being", x = 3, y = 0)
+    ),
+    edges = list(
+        dag_edge("X", "Y")
+    ),
+    fig_width = 3.6, fig_height = 0.57
+))
+```
 
-d_cause_rev <- dagify(x ~ y, coords = coords) |>
-    tidy_dagitty() |>
-    dag_label(labels) |>
-    ggdag() + theme_dag() + ggtitle("Reversed causal relation") +
-    geom_dag_label_repel(aes(label=label), box.padding=3, segment.color='transparent')
+**Reversed causal relation**
 
-d_conf <- dagify(y ~ x, x ~ z, coords = coords) |>
-    tidy_dagitty() |>
-    dag_label(labels) |>
-    ggdag() + theme_dag() + ggtitle("Confounding") +
-    geom_dag_label_repel(aes(label=label), box.padding=3, segment.color='transparent')
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Screen time", x = 0, y = 0),
+        Y = dag_node("Well-being", x = 3, y = 0)
+    ),
+    edges = list(
+        dag_edge("Y", "X")
+    ),
+    fig_width = 3.6, fig_height = 0.57
+))
+```
 
-grid.arrange(d_cause, d_cause_rev, d_conf, ncol=1)
+**Confounding**
+
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Screen time", x = 0, y = 0),
+        Y = dag_node("Well-being", x = 3, y = 0),
+        Z = dag_node("Parental involvement", x = 1.5, y = 1.4)
+    ),
+    edges = list(
+        dag_edge("Z", "X"),
+        dag_edge("Z", "Y"),
+        dag_edge("X", "Y", dashed = TRUE)
+    ),
+    fig_width = 3.6, fig_height = 1.85
+))
 ```
 
 This shows why a correlation between X and Y is not enough to establish causation.
 Each of these DAGs shows a different reason for the correlation between X and Y, but only the first one supports our hypothesis that X causes Y.
 Our job as researchers is to figure out which of these DAGs is best supported by empirical evidence.
 
+::: {.callout-note title="Other reasons two variables can be correlated: mediation and collider bias" collapse="true"}
+**Mediation: if the causal effect is indirect**
+
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Screen time", x = 0, y = 0),
+        M = dag_node("Social comparison", x = 1.5, y = 1.1),
+        Y = dag_node("Well-being", x = 3, y = 0)
+    ),
+    edges = list(
+        dag_edge("X", "M"),
+        dag_edge("M", "Y")
+    ),
+    fig_width = 3.6, fig_height = 1.5
+))
+```
+
+Here, X still causes Y, but only *indirectly*, through M.
+This looks similar to confounding (another node sitting "in between" X and Y), but it is structurally different: M is a *consequence* of X, not a common cause of both.
+If you control for M here, you would wrongly remove part of the real causal effect of X on Y!
+This pattern is common enough that we dedicate the [Mediation Analysis](6.04-mediation-analysis.qmd) module to it.
+
+**Collider bias**
+
+```{r, echo=F, output='asis'}
+cat(dag_diagram(
+    nodes = list(
+        X = dag_node("Informativeness", x = 0, y = 0),
+        Y = dag_node("Emotional intensity", x = 3, y = 0),
+        Z = dag_node("Goes viral", x = 1.5, y = 1.4)
+    ),
+    edges = list(
+        dag_edge("X", "Z"),
+        dag_edge("Y", "Z")
+    ),
+    fig_width = 3.6, fig_height = 1.85
+))
+```
+
+A **collider** is a variable that is *caused by both* X and Y, rather than causing them.
+Here, X and Y are not related at all — but if you control for Z (or even just study a sample that is selected on Z), you can *create* a spurious association between X and Y that did not exist before!
+This counterintuitive pattern is known as **collider bias** or **endogenous selection bias** [@elwertwinship14].
+It is easy to fall into this trap through your choice of sample. Suppose you want to know whether a social media post's informativeness is related to how emotionally intense it is.
+To keep data collection manageable, you only scrape posts from a platform's "trending" page, reasoning that this still gives you a large, varied sample.
+But a post only becomes trending because it is highly informative, or highly emotional, or both — "goes viral" is a collider caused by both.
+Within your trending sample, you would likely find that informativeness and emotional intensity trade off: the few trending posts with low emotional intensity are mostly very informative, and vice versa.
+This looks like a real negative relationship, but among *all* posts (viral or not) informativeness and emotional intensity might be completely unrelated — the correlation was manufactured by sampling only posts that cleared the "trending" bar.
+Note that you don't need a biased sample to fall into this trap. Even with a perfectly random sample of tweets, if you added "went viral" as a control variable in a regression predicting emotional intensity from informativeness, you would still be conditioning on the collider, and induce the same spurious trade-off. Selecting on a collider and statistically controlling for it are two routes to the same bias.
+:::
+
 ## How to (better) establish causation
 
 Let's first acknowledge that establishing causation is hard (see @pearl09).
 But this should not deter us from doing our best to build evidence for causal relationships!
 Luckily, we have a number of strategies at our disposal to build evidence for causation.
-
 
 ### Theoretical foundation
 
@@ -124,7 +198,6 @@ A naive interpretation would be that this is because, as grandmaster Garry Kaspa
 To properly understand where this gap comes from, we need to build theory that takes alternative explanations into account.
 If you have time for a tangent, try reading [this Slate Magazine article](https://slate.com/technology/2020/12/why-are-the-best-chess-players-men.html) and see if you can identify some of the confounding variables that the author mentions.
  -->
-
 
 ### If possible, conduct an experiment
 
@@ -146,6 +219,9 @@ This ability to eliminate the influence of confounders makes experiments a power
 However, in the field of communication science it is often not possible (or ethical) to conduct valid experiments.
 For many of the causes that we are interested in, it is simply not possible to manipulate it in a controlled setting that is still sufficiently similar to the real world.
 
+Note that randomization only protects you against confounding, not against **collider bias**.
+If you recruit participants, or analyze your results, based on a variable that both the treatment and the outcome affect (e.g. only studying people who finished the full experiment, when drop-out is itself affected by both the treatment and the outcome), you can still end up with a spurious association, even in an otherwise well-designed experiment.
+
 ### For observational data, control for confounders
 
 If we cannot conduct an experiment, we can to some extend control for confounding variables using **statistical methods**.
@@ -156,11 +232,15 @@ Given that many communication science theories cannot be tested with experiments
 
 The trick behind statistically controlling for confounders lies in **multivariate analysis** (i.e. analyzing more than two variables at the same time).
 If we are worried that a correlation between a **dependent variable** and **independent variable** is due to a third variable, we can add this **confounding variable** to the analysis.
-Using techniques like [multiple regression](7.2-linear-regression.qmd), we can then measure the effect of the independent variable on the dependent variable while holding the confounding variable constant.
+Using techniques like [multiple regression](5.06-regression.qmd), we can then measure the effect of the independent variable on the dependent variable while holding the confounding variable constant.
 We also call this **controlling for** the confounder.
 
 The main limitation of this approach is that we can only control for the variables that we have measured.
 This puts an even greater burden on having a solid theoretical foundation for the relationships we test.
+
+This burden also runs the other way: controlling for a variable is not always safe, and can itself *cause* bias.
+If the variable you control for is actually a mediator (on the causal path between your two variables) or a collider (caused by both), adding it to your model can remove part of a real effect, or introduce a spurious one, rather than removing confounding.
+So before you control for a variable, make sure your theory tells you it is a genuine common cause, and not a mediator or a collider in disguise.
 
 ### Triangulation
 
@@ -175,8 +255,9 @@ So to build a stronger case for the causal relationship, they also discussed lit
 One study they mention is an experiment that showed that people that took a one week break from Facebook showed higher well-being than people that continued using Facebook [@tromholt16].
 By itself this experiment does not prove that the problem is screen time, but if multiple similar experiments show that manipulating different forms of screen time has a positive effect on well-being, it strengthens the argument that the correlation between screen time and well-being is due to a causal relationship.
 
+## Further resources {.unnumbered}
 
-
+- 📘 [DAGitty](https://www.dagitty.net) — a free browser tool for drawing DAGs and checking which variables you need to control for to estimate a causal effect.
 
 <!-- An an example, consider the *agenda-setting theory* [@mccombs72], which posits that the media influence the public's perception of the importance of issues.
 Initially, the primary evidence for this theory came from a study that showed a correlation between the amount of media coverage of an issue and the public's perception of its importance.

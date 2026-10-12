@@ -5,7 +5,7 @@ subtitle: "Model diagnostics, residuals, and assumptions."
 
 *You arrive here from [Simple Regression](5.03-linear-models.qmd), so you can already fit a linear model with one predictor. Here you'll learn the assumptions behind that model — linearity, normality of residuals, outliers, equal variance, independence, and multicollinearity — and how to check each of them. If assumptions are badly violated, your estimates and p-values may mislead you, so checking them tells you how much to trust your model.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=diagn)
+→ [See this module in the skill tree](curriculum.html?module=diagn)
 
 In the previous modules you fitted linear models. Here we show how to check whether the model you fitted is appropriate. We use the same (simulated) practice data as in [Simple Regression](5.03-linear-models.qmd) and [Multiple Regression](5.06-regression.qmd).
 

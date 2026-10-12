@@ -5,11 +5,11 @@ subtitle: "Independent and paired-samples t-tests."
 
 *You arrive here from [Hypothesis Testing](3.05-hypothesis-testing.qmd), so you already know how hypothesis testing works in general. Here you'll use the t-test (one-sample, independent, and paired) to test whether two means differ. Comparing two conditions is the simplest experimental question you can ask, and the t-test is the first full test you'll run yourself from start to finish.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=com-g)
+→ [See this module in the skill tree](curriculum.html?module=com-g)
 
 ## What is a t-test?
 
-A t-test is a statistical test used to determine if there is a significant difference between two means. 
+A t-test is a statistical test used to determine if there is a significant difference between two means.
 It is comparable to the z-test, but is more appropriate when population standard deviation is unknown, and has to be estimated from the sample.
 Where the z-test is based on the z-distribution (i.e. the normal distribution), the t-test is based on the t-distribution, which takes into account the uncertainty in the estimate of the standard deviation.
 If the sample size is small, the t-distribution has heavier tails than the z-distribution, which makes it less likely to make a Type I error (i.e., rejecting the null hypothesis when it is true).
@@ -26,13 +26,13 @@ library(gridExtra)
 
 x_values <- seq(-4, 4, length.out = 1000)
 
-normal_threshold <- qnorm(0.975)  
-t_threshold_df4 <- qt(0.975, df = 4) 
-t_threshold_df29 <- qt(0.975, df = 29) 
+normal_threshold <- qnorm(0.975)
+t_threshold_df4 <- qt(0.975, df = 4)
+t_threshold_df29 <- qt(0.975, df = 29)
 
 data_df4 <- data.frame(
   x = rep(x_values, 2),
-  y = c(dnorm(x_values), dt(x_values, df = 4)),  
+  y = c(dnorm(x_values), dt(x_values, df = 4)),
   Distribution = rep(c("z (normal)", "t (df = 4)"), each = length(x_values))
 )
 
@@ -82,16 +82,16 @@ In this tutorial we focus on the t-test as a standalone statistical test, but th
 ### One-sample t-test
   * **Purpose**. Compare the mean of a single sample to a known value (e.g., a population mean).
   * **Example**. You have a sample of students and you want to test if the average time they spend on social media is significantly different from the national average (which we would then need to know in advance).
-  
+
 #### Independent samples t-test
-  * **Purpose**. Compare the means *between* two independent groups. 
+  * **Purpose**. Compare the means *between* two independent groups.
   * **Example**. You conducted an experiment where you randomly assign participants to play either a *violent* or *non-violent* video game, and you want to test if the hearth rate in the *violent* group is significantly higher than in the *non-violent* group after playing the game.
 
 #### Paired samples t-test
   * **Purpose**. Compare the means *within subjects* (e.g., within a person) at two different time points or under two different conditions. In this case the samples are not independent, because the two observations are *paired*.
   * **Example**. You measured the hearth rate of the same participants before and after playing a video game, and you want to test if there is a significant increase.
 
-## How to use 
+## How to use
 
 The t-test is included in base R, but we'll also need the `car` package for the Levene's test (as you'll see later).
 
@@ -99,7 +99,7 @@ The t-test is included in base R, but we'll also need the `car` package for the 
 library(car)
 ```
 
-For the examples we'll use our [practice dataset](2.01-data-frames.qmd#practice-data). 
+For the examples we'll use our [practice dataset](2.01-data-frames.qmd#practice-data).
 We'll use the following variables:
 
 * **news_consumption**. A continuous variable measuring the number of hours per week that a person spends consuming news.
@@ -112,9 +112,9 @@ library(tidyverse)
 
 d <- read_csv("https://dev.dataliteracy.cc/practice_data.csv") |>
         select(news_consumption = `news consumption`,
-               np_subscription, 
-               experiment_group, 
-               trust_t1, 
+               np_subscription,
+               experiment_group,
+               trust_t1,
                trust_t2)
 d
 ```
@@ -127,12 +127,12 @@ In this example, we'll test if the average number of hours per week that people 
 First, let's look at the mean and standard deviation of `news_consumption`.
 
 ```{r one-sample-t-test-1}
-d |> 
+d |>
   summarise(M = mean(news_consumption),
             SD = sd(news_consumption))
 ```
 
-This shows that the mean number of hours spent consuming news per week is higher than 10. 
+This shows that the mean number of hours spent consuming news per week is higher than 10.
 With the one-sample t-test we can test if this difference is statistically significant.
 The formula for the one-sample t-test is `dependent_variable ~ 1`, where `1` indicates that there is no grouping variable (this will make sense when you see the formula for the independent samples t-test).
 
@@ -183,7 +183,7 @@ The Levene's test is significant (p < 0.001), which means that the variances are
 Now, we can perform the independent samples t-test with the argument `var.equal = FALSE`.[^var_equal]
 The formula for the independent samples t-test is `dependent_variable ~ grouping_variable`.
 
-[^var_equal]: 
+[^var_equal]:
 If the variances are equal, you set `var.equal = TRUE`.
 
 ```{r independent-samples-t-test-3}
@@ -210,7 +210,7 @@ In this example, we'll test if the trust in journalism (`trust_t1` and `trust_t2
 We focusing on the group that watched the *positive* movie, to see if this had a positive effect on trust.[^positive]:
 
 [^positive]:
-We focus on one group, because we expect trust to change in different directions depending on the movie (e.g., increase after watching a positive movie, decrease after watching a negative movie). 
+We focus on one group, because we expect trust to change in different directions depending on the movie (e.g., increase after watching a positive movie, decrease after watching a negative movie).
 Note that in reality, when you have both repeated measures and multiple groups, you might want to use a mixed design [ANOVA](5.04-anova.qmd) instead.
 
 ```{r paired-samples-t-test-1}
@@ -315,7 +315,7 @@ grid.arrange(plot_two_sided, plot_one_sided, ncol = 2)
 #### Word of caution
 
 Using a one-sided test is only valid if you have a strong, justifiable reason to expect that the difference will be in a specific direction.
-This expectation should be grounded in theory, and formulated a priori, before you look at the data. 
+This expectation should be grounded in theory, and formulated a priori, before you look at the data.
 
 Using a one-sided test after examining the data, or simply to achieve statistical significance, is a serious violation of research ethics. It artificially inflates the chances of rejecting the null hypothesis by ignoring potential effects in the other direction. This increases the risk of Type I error (a false positive) and can lead to misleading or exaggerated conclusions.
 In most cases, the more conservative two-sided test is recommended.
@@ -337,7 +337,7 @@ Note that in this case the use of a one-sided test is clearly not justified (see
 This is purely to demonstrate how using a one-sided test affects the p-value.
 
 Similarly, we could test whether the mean number of hours spent consuming news is significantly *less* than 14 hours by setting `alternative = "less"`.
-We'll skip the output here, but you can run it yourself to verify that this test is not significant. 
+We'll skip the output here, but you can run it yourself to verify that this test is not significant.
 
 ```{r how-to-use-a-one-sided-t-test-2}
 t.test(news_consumption ~ 1, mu = 14, data = d, alternative = "less")

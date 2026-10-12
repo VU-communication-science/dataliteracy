@@ -5,7 +5,7 @@ subtitle: "How do we measure effects and how do we interpret them?"
 
 *You arrive here from [Correlation & Covariance](3.03-correlation-and-covariance.qmd) and [Probability & Sampling](3.02-probability-and-sampling.qmd), so you can already quantify how two variables relate and you understand that samples vary by chance. Here you'll learn what an *effect* is, how to express its size on a standardized scale (Cohen's $d$, $r$), and why "how big is the effect?" is a different question from "how sure are we that it's not zero?". Confusing these two is one of the most common mistakes in reading (and reporting) research.*
 
-→ [See this module in the skill tree](curriculum.qmd?module=ef-si)
+→ [See this module in the skill tree](curriculum.html?module=ef-si)
 
 ::: {.callout-warning title="AI-assisted draft"}
 This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.

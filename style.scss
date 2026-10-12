@@ -116,6 +116,29 @@ li.sidebar-item-section > .sidebar-item-container > .sidebar-link {
     border-color: #f1c6c2;
 }
 
+/* Graphviz/dot diagrams set a fixed SVG size with max-width:none by
+   default, which can overflow the content column. Force it to scale
+   down to fit instead (mermaid diagrams are unaffected, they already
+   size responsively). */
+.cell-output-display svg {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Graphviz edge labels often sit directly on top of the arrow line they
+   describe. SVG <text> has no background-color, so instead give the
+   glyphs a thick white stroke (painted behind the fill) to punch a
+   readable "halo" through the line wherever it crosses the label. The
+   label is also nudged up slightly so a horizontal edge's line doesn't
+   run straight through the (semi-transparent) halo's vertical center. */
+g.edge text {
+    paint-order: stroke;
+    stroke: #ffffff88;
+    stroke-width: 6px;
+    stroke-linejoin: round;
+    transform: translateY(-3px);
+}
+
 
 /*-- scss:rules --*/
 .sidebar-section {
