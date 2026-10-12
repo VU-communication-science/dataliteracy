@@ -4,8 +4,8 @@
     "source_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "content_hash": "837ea451ae4a3edd526ba41d997293f509609b556d0e77a1d09737e7bff5d9de",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-12",
     "chunks": []
   },
   "chapters/curriculum.qmd": {
@@ -13,8 +13,8 @@
     "source_hash": "d9c7a4716579a4a9578da843ec2ed586dcdc0a02e24771ebc737f098d28826cb",
     "content_hash": "8312b7f60ba1544542bcd4354c8517994cd094dba95a7ecd15622d0d68271179",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-12",
     "chunks": []
   },
   "data/datasets.qmd": {
@@ -22,23 +22,30 @@
     "source_hash": "63005bf09ccf275b2068ebc3a89f47717ad3e8e6cd366ca5e1b93eb2dcdb7240",
     "content_hash": "6f91e16e7a722982df37ab5a565fb208227961e7f3ecfe3f1f9e2d274b80dc9c",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-12",
     "chunks": []
   },
   "chapters/1.01-basic-computer-skills.qmd": {
     "title": "1.1 Basic Computer Skills",
-    "source_hash": "12881e4ab9e47158f10f12bd86380d9cdf69eb943c1741507b4d54e414fac4da",
-    "content_hash": "5c2882c5b828404f82cab703583bc7a3cbb22f870b07994c8907b6205d9834c3",
+    "source_hash": "648172c168627dd0fbf7cea5fb46193ee8a81070ec95bbad07aee3dd69011f4e",
+    "content_hash": "4194266d42ff56b28ac6eca44d28335d660b5313b94702086ee4dcef9e50806d",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
-    "chunks": []
+    "chunks": [
+      {
+        "line": 26,
+        "label": "",
+        "output_hash": "0887480927dc2b59",
+        "preview": "Root/UsersUsersRoot->UsersYouyournameUsers->YouDocumentsDocumentsYou->Documen..."
+      }
+    ]
   },
   "chapters/1.02-r-language.qmd": {
     "title": "1.2 R language",
-    "source_hash": "f16c22ff6946d48fcc4bdeaa100d307e8edb556d8c257aaf8a297998280ddfd4",
-    "content_hash": "52280bc037f1193bb78d9a61c76c40b8af8b425353d379e0b700b8490eb5c7b4",
+    "source_hash": "07b37cd509f837a9a570b13bee7d1bf1e78765ccc908bec88d0019d8896f0b15",
+    "content_hash": "0d6f85984a3646c5e4e4b85c1c8bdf918caf8e818db3955b40286c019a0bbbd9",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -149,8 +156,8 @@
   },
   "chapters/1.03-reproducible-reports.qmd": {
     "title": "1.3 Reproducible Reports",
-    "source_hash": "15351ef5e00ef18045225afa66f8ab971541a7b3cca18a74e73cc6486f8bb6ec",
-    "content_hash": "8c0052bd3e1a3d1a90d7b0b7b34b116a8486427dfd497d8740cfdb4675c7e738",
+    "source_hash": "1cb2fcb760dc1ce4569993b6836b79bbfcf2db0ada629fb555caa4f95e237f40",
+    "content_hash": "1d741733ae78d7366095ed6385f89f90b5a2abceef956f61d16d1e3ceab410a1",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -158,8 +165,8 @@
   },
   "chapters/2.01-data-frames.qmd": {
     "title": "2.1 Data Frames",
-    "source_hash": "c8bfd7978ed5520b60a04445c746e76f1cfb67faeceae5989165b9b8744ff7d4",
-    "content_hash": "97295c55fb8ac5406b9065bf0547cd37ba2706319bfcd3dd82c69b2aa57092a1",
+    "source_hash": "921f0d56f0f9385c81209b314f34d0ec1f5074bb5657c4eac79a1cbc146e8be7",
+    "content_hash": "8bffb670b411cdefee3087c5bb4eb5f0d4f60d17a474dd6b3b9e1006d3ca0083",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -252,8 +259,8 @@
   },
   "chapters/2.02-grouping-and-summarizing.qmd": {
     "title": "2.2 Group and summarize",
-    "source_hash": "2ccd54bc33df8257adbc293635997c2e3d378528ef70e16c62544355b100ed4e",
-    "content_hash": "20842a207fac4c07139a97b3a18702c72cfbabd39e298d94c5278e33d064098e",
+    "source_hash": "1ae3646c02a704ed24100e383eeabe018c02c66c77301d6e87340411e14e45d5",
+    "content_hash": "21bd53d113c12b3667e15a5b38269ecc47ef7e3c728d933bf4d9134c447f49b0",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -304,8 +311,8 @@
   },
   "chapters/2.03-data-cleaning.qmd": {
     "title": "2.3 Data Cleaning",
-    "source_hash": "2100cc4b99cf6c6b576f257ec516606ec920ec702e9129fb78d8707e2e28e46f",
-    "content_hash": "6bad12b60a027f6b33e0fb5a54b9add1cf82e6780469acf5e410b8fcfb64a126",
+    "source_hash": "81f50b95580d9da493ef897998b6fbff7a6a7bd6d0d58980c321b1c0c0aa3381",
+    "content_hash": "b06218da22cf6e096d177c3da19450c414406bd92ac8f84497399c60c513e897",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -337,7 +344,7 @@
       {
         "line": 59,
         "label": "",
-        "output_hash": "d13b45a68f21c456",
+        "output_hash": "93a36c880a7b2c4e",
         "preview": "Warning in png(png_loc <- tempfile(fileext = \".png\"), width = 150 * graph.mag..."
       },
       {
@@ -355,15 +362,15 @@
       {
         "line": 221,
         "label": "removing-missing-values-2",
-        "output_hash": "d2673879042dbfca",
+        "output_hash": "47cfb4cbb11bf762",
         "preview": "Warning in png(png_loc <- tempfile(fileext = \".png\"), width = 150 * graph.mag..."
       }
     ]
   },
   "chapters/2.04-pivoting-and-joining.qmd": {
     "title": "2.4 Pivoting and joining",
-    "source_hash": "0c0fc18108134bfc0b437852d372f67fb7eef41798bb8a0cec6f64d4ae1f9bf6",
-    "content_hash": "9732ed88d6cafdc588df7c0d97e1360acd5f66da60d514f464351138a61f72ab",
+    "source_hash": "5aa6f6bb81c0d7db3872bc34214a8f41cd4bcccfed7620271ead4cc70edb2073",
+    "content_hash": "9dd494f12990cf19ddb29d4970cd997780db6cb222c8dd486a6536b692dcc683",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -432,8 +439,8 @@
   },
   "chapters/2.05-string-processing.qmd": {
     "title": "2.5 String processing",
-    "source_hash": "d38a55c845a774f9d23b06e0477508132165deb529d3cf6cbffd7a8e2be17ab5",
-    "content_hash": "5789c9e6bd5e51d2de1be184aca4d256d4542f6125aecf4e01da641a5896762e",
+    "source_hash": "85d130be0e4337b115c3c1f89e869b9d29640bae65b37f8eb6c04a2d1f140fdc",
+    "content_hash": "02e856f01195c6ad80e6ced27864f7ba23017ac6d82e34409d2ba8d9143d5a16",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -484,8 +491,8 @@
   },
   "chapters/3.01-means-and-variance.qmd": {
     "title": "3.1 Means & Variance",
-    "source_hash": "401b3be2166f24d9d4e32dff9504478af01d5bf0088f2284441c1e7b528e52ad",
-    "content_hash": "0e4be8ac89d5fd3a7319a4e8cfeedb3b3097f7a3118d10f9b3a9db872dbaa10c",
+    "source_hash": "35430662696c7edab535e410d1a4c73edc7ebc693a8e84ef194573195d7182d6",
+    "content_hash": "069d3115d1505501973a6078376959ab282ab0e0fd9f8583241cf62c271a6080",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -542,8 +549,8 @@
   },
   "chapters/3.02-probability-and-sampling.qmd": {
     "title": "3.2 Probability & Sampling",
-    "source_hash": "0ee8b84d91e83db733137d5997498c2592e757467b8a7b278385e8ad34722005",
-    "content_hash": "bf5d78f40af4f9d4ba21b2c3385e956ff964f7f8d42dd602ac4ddf212683acd2",
+    "source_hash": "6b7862f08c3a20f33ebe0a4016573f57833c4de0336f51a24a76698b039e10ac",
+    "content_hash": "2e79e0393214e4902db5e329ac75b3e2b4b942e8591523d4e741a1e55e2ef947",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -570,8 +577,8 @@
   },
   "chapters/3.03-correlation-and-covariance.qmd": {
     "title": "3.3 Covariance & Correlation",
-    "source_hash": "49e53d3c33dc04875d2ada8b454aadf7ad3f11f088950474328f7b1fb5c80948",
-    "content_hash": "5a5864582f208b9dcda338cfbca745cd34e63516c7e82a4d0312926e363ea2fc",
+    "source_hash": "9faf54c0d2600d3b80c9aee12a3507972b3f2ddb04fad38904b12bd9c197dec8",
+    "content_hash": "b625c8be866c357e3e22827448f597d173c3610f8180192bc90f8826e39cba5e",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -634,8 +641,8 @@
   },
   "chapters/3.04-effects.qmd": {
     "title": "3.4 Effects",
-    "source_hash": "01fd742e01f2f45bf8e61b0636c6ba9b608ec42bae16722480f5793ea97987b3",
-    "content_hash": "dc3f980f666ae20cb838e0b0e87b9006f5267203f3cf1e46af1f50aebb3b31c0",
+    "source_hash": "ae14b9e97bf1a8ae9d209e6638a09214d44020538b9170e5d06ea99204e2913a",
+    "content_hash": "14a31340d8b630fed794c915cb510a865af3e724bd4a5dec8b3df66a7a446935",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -656,8 +663,8 @@
   },
   "chapters/3.05-hypothesis-testing.qmd": {
     "title": "3.5 Hypothesis Testing",
-    "source_hash": "23bf7dd848f1ee675e6ade40c50ca4bd7f8bbc4c5db3c0eae86971b28e33fb80",
-    "content_hash": "92a1b63210b1740e0ac34177fc52cf322d987458f2ba3b49fd6d742441523436",
+    "source_hash": "5ac4b3e19b7127e1e662ad9d52e02b94558091c0897926e7e20c4d6620a9651d",
+    "content_hash": "7f88a999f7b0032e2114315dbba518d4a1d8f3d9b2e7562fee6e42f22dad3817",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -672,8 +679,8 @@
   },
   "chapters/4.01-descriptive-statistics.qmd": {
     "title": "4.1 Descriptive Statistics",
-    "source_hash": "c4c53b6884fe57120ae7440836b7106e8c13a41592b95665b6c99b0a8058c3f2",
-    "content_hash": "13b5ea9fce361485102ce623e99cd459eb66697ec3f98a379b527a8b09b2ea51",
+    "source_hash": "00285e3725d73fff1bbf44f36725eefe1b67acc9cd243846bd095d7dc29fc51f",
+    "content_hash": "d8b5ce6931801aad157372e412947c7f7dd2b51ea0cd28a2fc12dc5969570c2e",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -748,8 +755,8 @@
   },
   "chapters/4.02-data-visualization.qmd": {
     "title": "4.2 Data Visualization",
-    "source_hash": "22771d48e068ce653e69b88c7020d548a9590601b92b67760998abcb46ab21ec",
-    "content_hash": "d1c5e60533b512e08a2452bed19d081137b47ec30342d10394e3acd55ef8807b",
+    "source_hash": "97289be86640356723d66ac17c503eef0f96280c2a67aad4d1dbed69bedd4682",
+    "content_hash": "d7ac790c456e4c4cc782ccb0c0809b5a2c32a3aa3ea261eb33b050c45c700c65",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -806,8 +813,8 @@
   },
   "chapters/4.03-advanced-visualization.qmd": {
     "title": "4.3 Advanced Visualization",
-    "source_hash": "808d34e16a7e8a2594f6c251670cb22f73931b5464d761d3c5686bb6bca0d7af",
-    "content_hash": "8dbda2bd860566f03875d9ce06da0cd9db0123b0560bf1a106a87f0739cd6d70",
+    "source_hash": "44ee1cba78f5da928258641efc1d0a98516ef15ef09b83213c7b19cf7f84790f",
+    "content_hash": "ffb2eb22863f82dc7cc0bc29b64eb456da314e9c45445e5f221df49f0f9f7528",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -846,8 +853,8 @@
   },
   "chapters/4.04-factor-analysis.qmd": {
     "title": "4.4 Factor Analysis",
-    "source_hash": "b6d352be5a796d98aacacd12b7d58a34c51d5c668d6f02bfdf532d753136a2fe",
-    "content_hash": "8f98add9e0fbc2687f6a98706012d469a65844df99689c0e246b6985fa0cad7a",
+    "source_hash": "be21cfbb09f86526d934c202c9a032be3e84a10fd9a0be0edaf0196b3f7d13c7",
+    "content_hash": "933ad237462e0b45b9b37a991139035186989516850907139e68309aaab55b48",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -867,7 +874,7 @@
       {
         "line": 91,
         "label": "step-3-how-many-factors-1",
-        "output_hash": "683aab6d8b17bb4c",
+        "output_hash": "df16d17c48ba17d6",
         "preview": "Parallel analysis suggests that the number of factors = 3 and the number of c..."
       },
       {
@@ -904,8 +911,8 @@
   },
   "chapters/4.05-scale-construction.qmd": {
     "title": "4.5 Scale Construction",
-    "source_hash": "b2e44e1c9e75496a861a4843e747066b7fdf426ee73221786ac305f278b35096",
-    "content_hash": "7479024b9909c2cb4ef2e3884025b430ed04485dcf3522388a442243ed1a12b9",
+    "source_hash": "86df125de190af5a88ee29d4ad920b4903728864913b5889fce6878f2ba1a7c3",
+    "content_hash": "0415e35c56d63cc6ec370f031c14402d30c5fc3fcf36bc36bc2fdac9182c5bf9",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -932,8 +939,8 @@
   },
   "chapters/5.01-comparing-two-groups.qmd": {
     "title": "5.1 Comparing two Groups",
-    "source_hash": "0167e4b84b962fac900e3535e70ca339ffe7d77f66d229aed39e25c31a8ca1a3",
-    "content_hash": "11fb8f7f79dfa31cd18f6274e55bae32c60ab03e1898f893564f39244bc9ad2d",
+    "source_hash": "eac1e51e061b95182a91757f30d45510c31a2a0edb46cc9d206c67c819058460",
+    "content_hash": "76a7f6ccb7c8cfc5d7705c5e680da7dede6306ed11792e7b9837a6fe3ca420b7",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1014,8 +1021,8 @@
   },
   "chapters/5.02-testing-associations.qmd": {
     "title": "5.2 Testing Associations",
-    "source_hash": "c2690ca2f7baf6c075eee3e2ad3b40a0ffae31dc8a403cd4be33038ed76b7e51",
-    "content_hash": "9a8c4d82620bc0de6b7a9847a58360b99227f52290e5e0f046beef560ecf2aaf",
+    "source_hash": "de72af8f0bd55812bf6638cdb2ccd272a7352103ace8457f524d7070772998ac",
+    "content_hash": "5e4188ed2441e5f8cc90c434150b703618f247a0bc2d027810e8709ec9a02d9d",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1036,8 +1043,8 @@
   },
   "chapters/5.03-linear-models.qmd": {
     "title": "5.3 Simple Regression",
-    "source_hash": "0dea0a1510f928488516ac6fcb1ea09727ac4bf38a8acf2ab41ce4ab1874145a",
-    "content_hash": "80b5cb2a5e446d39240ced3d70c659f728eb8a186bcfe4239e576d932c6e634f",
+    "source_hash": "eb5dbaded573f4861a8e68ba9a974269182f37ceeb65d5a30cfc1864fc729f18",
+    "content_hash": "7fab7a2ece582553b347477bb8610092241ed134f93183ebe9b3d5572754129d",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1070,8 +1077,8 @@
   },
   "chapters/5.04-anova.qmd": {
     "title": "5.4 ANOVA",
-    "source_hash": "9b528e6c6a83487b62326556bd3c02694b3a8750f3089941b3a058c126a0a75b",
-    "content_hash": "4906a005e83823e99600bdab9e7298cb7d5d23b04544594fd83912b821d0a9e3",
+    "source_hash": "b0cb197b9cd2cffe19fcb3e1a8153893b3b20d0846cac54a5578db8ca3b52692",
+    "content_hash": "63b68fca40a4e97425e0c819f92c93047037e9e8b821ad8740ea1455822e58fe",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1146,8 +1153,8 @@
   },
   "chapters/5.06-regression.qmd": {
     "title": "5.5 Multiple Regression",
-    "source_hash": "2aad890b40968338e8e7d1dea2648ed416843cc908bb974d90a9ed45cdd7f576",
-    "content_hash": "9486e4a4a02cfea915df81be2c6973580f5bbd4554638deffe600805027f6b91",
+    "source_hash": "41ee1bedf98f0a08a3a8ece3375cd5c1d0ff7dcb2c75060509ce02ff7be103e5",
+    "content_hash": "fbeb1ae5d4aa016bd6b2894786fe7992817d7a91ee8cd3de32a2226916af13d9",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1192,8 +1199,8 @@
   },
   "chapters/5.08-linear-model-assumptions.qmd": {
     "title": "5.6 Linear Model Assumptions",
-    "source_hash": "0a46748806078db5604b1e20756e54523d6b77c241d2f071f51dbf015ab13ecb",
-    "content_hash": "6a4eadb959b8a47b59f844a6ebfd3b191bfe6872e530e2434b46488420e5ed1e",
+    "source_hash": "43673e7a39547ff31b3c34e6ebbcaae14303a7e5cd78bc6d9a03acb67770b7a7",
+    "content_hash": "ee49ad5b0c7b25d65deb3833140c1b7cf983e70f30a473fe9442bbb1a5e8b698",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1244,8 +1251,8 @@
   },
   "chapters/5.09-power-analysis.qmd": {
     "title": "5.7 Power Analysis",
-    "source_hash": "3c56ebf87e80f3b49ce1ea1d438b59df4cbe1829c50d2dd50bbac402b1f3e5cb",
-    "content_hash": "c98e58041e5cbb4e78e632ba9577122ace9c1d2c758258ad3c405b108dd4e3c6",
+    "source_hash": "feb075c25004f525c36243791f5845978b6942286fc18e5f5cbc12e857557bb3",
+    "content_hash": "05ca1ead861066775fe977633b6927e4c7343315f774f0d13b8b91fa2217d6f7",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1270,35 +1277,59 @@
       }
     ]
   },
-  "chapters/3.06-causality.qmd": {
+  "chapters/6.01-causality.qmd": {
     "title": "6.1 Causality",
-    "source_hash": "e26cf8774711feb6a1befacf293dd9ffbaa84f4697892969936391291b498226",
-    "content_hash": "1c1b2e49d549b903c98bb580de2bda556d278bae262cda2f1a5578da60c8530b",
+    "source_hash": "361705d518518a363ad731783eddcc254305cef49deaa191faf4b51922b6112b",
+    "content_hash": "d5977146d0be988ae47927fbd5ca586cc23410182e77e02e0a95999b01c29009",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
       {
-        "line": 70,
-        "label": "visualizing-causation-1",
-        "output_hash": "8a5e04869e0efdfe",
-        "preview": "[Plot: visualizing-causation-1-1.png]"
+        "line": 72,
+        "label": "",
+        "output_hash": "14ed49c425afbaa1",
+        "preview": "XScreen timeYWell-beingX->Y"
+      },
+      {
+        "line": 76,
+        "label": "",
+        "output_hash": "9c5117a69cac015c",
+        "preview": "XScreen timeYWell-beingY->X"
+      },
+      {
+        "line": 91,
+        "label": "",
+        "output_hash": "6600fa7df606afa9",
+        "preview": "XScreen timeYWell-beingX->YZParental involvementZ->XZ->Y"
+      },
+      {
+        "line": 106,
+        "label": "",
+        "output_hash": "fa016f1c8b8e835c",
+        "preview": "XScreen timeMSocial comparisonX->MYWell-beingM->Y"
+      },
+      {
+        "line": 129,
+        "label": "",
+        "output_hash": "8ac2127b5d575db6",
+        "preview": "XInformativenessZGoes viralX->ZYEmotional intensityY->Z"
       }
     ]
   },
-  "chapters/5.05-experimental-control.qmd": {
+  "chapters/6.02-experimental-control.qmd": {
     "title": "6.2 Experimental control",
-    "source_hash": "be786d6aff3d171c602fb992b7f2117c95868009c310c69e1b8c7ef7cf74eb7c",
-    "content_hash": "023fbdf0aca132121c7cf76a3ba25a4a8d3a30c36f9ea7477dac407be80daf54",
+    "source_hash": "ea851f1836423ed4f03a317fe8ccb907a68ce3ec03d39e78b61adb47e1cd424b",
+    "content_hash": "36464efe32e35c72f4abf472aad7ad1a05a62e201c39340f32ed76167391fdd7",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
     "chunks": []
   },
-  "chapters/5.07-statistical-control.qmd": {
+  "chapters/6.03-statistical-control.qmd": {
     "title": "6.3 Statistical control",
-    "source_hash": "2fdcf10e298a72410cd1c91b399a7082b2cd9eedaca90ac028bfa7571a4a2a25",
-    "content_hash": "8c0a3dd83cd23acf02fbcbde3ade3a02b437a73d5c4e1318e416eff7ab3891f2",
+    "source_hash": "5bbd47217f7740832ec6e94f5a4d9b480fcca9523d78e5511dccaab0f222635f",
+    "content_hash": "9f30b231e775777e01b98d19b248fe8b037de8530d813bfdaa7d43e8168953b5",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1318,85 +1349,109 @@
       {
         "line": 76,
         "label": "",
-        "output_hash": "0f9a7ee75b737678",
-        "preview": "[Plot: unnamed-chunk-4-1.png]"
+        "output_hash": "d51c0511be8fad38",
+        "preview": "XStorksYBirth rateX->Yβ = 0.62**"
+      },
+      {
+        "line": 95,
+        "label": "",
+        "output_hash": "5e7687aa547e9dcc",
+        "preview": "XStorksYBirth rateX->Yβ = 0.13ZArea km2Z->Xβ = 0.58*Z->Yβ = 0.85***"
       }
     ]
   },
-  "chapters/5.10-mediation-analysis.qmd": {
+  "chapters/6.04-mediation-analysis.qmd": {
     "title": "6.4 Mediation Analysis",
-    "source_hash": "bcd5b01c8271dc3329650a5a11471474804528d64968b123514068cff01478c7",
-    "content_hash": "096f3b2785f1fb9cd6f5b5bb3032047684b41bda1e31e73dde617841db0b9cf2",
+    "source_hash": "de38f6b28ba383975f9b503ecee55d6a04da1004e14fa0bf8a06d1ea2cab366e",
+    "content_hash": "e610d0f8cd03f1de3503d86bf0ecc25ea94106299904252108157ede45c9345d",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
       {
-        "line": 21,
+        "line": 22,
         "label": "",
-        "output_hash": "12c6cb0803034eea",
-        "preview": "[Plot: unnamed-chunk-1-1.png]"
+        "output_hash": "88435aa5a884c113",
+        "preview": "XXYYX->Ytotal effect (c)"
       },
       {
-        "line": 110,
+        "line": 26,
+        "label": "",
+        "output_hash": "41ecd7d7e59756e1",
+        "preview": "XXMMX->Mindirect (a)YYX->Ydirect effect (c')M->Yindirect (b)"
+      },
+      {
+        "line": 109,
         "label": "",
         "output_hash": "253d07ae59e8e25e",
         "preview": "  Y Predictors Estimates CI p (Intercept) -0.48 -1.32 – 0.36 0.263 X 1.06 0.8..."
       },
       {
-        "line": 118,
+        "line": 117,
         "label": "",
-        "output_hash": "e952ef5083068b98",
-        "preview": "[Plot: unnamed-chunk-5-1.png]"
+        "output_hash": "4fd7a2ae3c2abb47",
+        "preview": "XXYYX->Yc = 1.06***"
       },
       {
-        "line": 146,
+        "line": 171,
         "label": "",
         "output_hash": "2ac456ce252c4efb",
         "preview": "  Y M Predictors Estimates CI p Estimates CI p (Intercept) -0.48 -1.30 – 0.34..."
       },
       {
-        "line": 156,
+        "line": 181,
         "label": "",
-        "output_hash": "314935fb42771620",
-        "preview": "[Plot: unnamed-chunk-7-1.png]"
+        "output_hash": "4782797d68124ee2",
+        "preview": "XXMMX->Ma = 0.48***YYX->Yc' = 0.92***M->Yb = 0.30***"
       },
       {
-        "line": 228,
+        "line": 247,
         "label": "",
         "output_hash": "6009c91ccac0ba59",
         "preview": "Sobel z-score: 3.48 p-value: 0.000502"
       },
       {
-        "line": 262,
+        "line": 281,
         "label": "",
         "output_hash": "1527c409c987c5fd",
         "preview": "  Y ~ X M ~ X Y ~ X + M Predictors Estimates p Estimates p Estimates p (Inter..."
       },
       {
-        "line": 270,
+        "line": 289,
         "label": "",
-        "output_hash": "3317ac1c524a6fe5",
-        "preview": "[Plot: unnamed-chunk-14-1.png]"
+        "output_hash": "9902957b1a9c7b11",
+        "preview": "XXYYX->Yc = 0.71***"
       },
       {
-        "line": 306,
+        "line": 311,
+        "label": "",
+        "output_hash": "6833df4372ffeae9",
+        "preview": "XXMMX->Ma = 1.98***YYX->Yc' = 0.12M->Yb = 0.30***"
+      },
+      {
+        "line": 326,
         "label": "",
         "output_hash": "0863cead65944804",
         "preview": "  Y ~ X M ~ X Y ~ X + M Predictors Estimates p Estimates p Estimates p (Inter..."
       },
       {
-        "line": 321,
+        "line": null,
         "label": "",
-        "output_hash": "30fe21e003ab3e70",
-        "preview": "[Plot: unnamed-chunk-16-1.png]"
+        "output_hash": "69641d8d964ea371",
+        "preview": "XXYYX->Yc = 0.94***"
+      },
+      {
+        "line": null,
+        "label": "",
+        "output_hash": "0bbd00b64e85e730",
+        "preview": "XXMMX->Ma = 0.48***YYX->Yc' = 0.92***M->Yb = 0.05"
       }
     ]
   },
-  "chapters/6.01-text-as-data.qmd": {
+  "chapters/7.01-text-as-data.qmd": {
     "title": "7.1 Text as Data",
-    "source_hash": "a996bc36d1b7536b41af7888fc96d08da2220e7b91efe677d57d77ee1962dd23",
-    "content_hash": "0b6d4d79ddd7d96a8ea78d44faaa67dcfcabe2b80677b03e2724924457492cf8",
+    "source_hash": "a2424940bb766cb8bc58e3579f76336b4707a3ee25286cc2720e578d1c4d5c75",
+    "content_hash": "606c0de94aa192ff1d4dd9b7ebc3857074a963c68177a28fa081905ab5b0fd83",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1421,10 +1476,10 @@
       }
     ]
   },
-  "chapters/6.02-manual-coding.qmd": {
+  "chapters/7.02-manual-coding.qmd": {
     "title": "7.2 Manual Coding",
-    "source_hash": "c36425aa4bdd578df8cf2f39a2917b982bf0095f2a7dcba1b6b0910a0f7d0d09",
-    "content_hash": "e5f0e1233fd8821a56215f6b1f9ff40afd5cf9a2fc0fe5e26d8faafd3575ac26",
+    "source_hash": "4f470dc792d88a3e3be391903fd1e37c241a4d8cdc3e7790e6241ce82c46760f",
+    "content_hash": "b8c6e92435b16bbe4bf4b431e023ee31e8097e122ec2eead836afea9706c055c",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1437,10 +1492,10 @@
       }
     ]
   },
-  "chapters/6.03-machine-learning.qmd": {
+  "chapters/7.03-machine-learning.qmd": {
     "title": "7.3 Machine Learning",
-    "source_hash": "295bc57c30e7ff4be20dacd462d1896062e49f0fc518cab1bd66d6f685bb9f7f",
-    "content_hash": "59168afa31e7474ee37076750452466e066bae757df0cea963859e94a4629889",
+    "source_hash": "58d763f8481eda684bc0e4cd8ba88057d9ffe0e823e853e5e90b3ef88f5487c4",
+    "content_hash": "085f4529790f384d0fed420e5dba7a12eab59a572da0147437dc1936659d6ba3",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
@@ -1459,10 +1514,10 @@
       }
     ]
   },
-  "chapters/6.04-text-classification.qmd": {
+  "chapters/7.04-text-classification.qmd": {
     "title": "7.4 Text Classification",
-    "source_hash": "6860dab90333871760767025dd90fd82cf4e5af221fe5487dd810c6836e1afde",
-    "content_hash": "0dc66c71acbca9ad91c5e4f0212ecd2bc1c565fd4d60bdbdc4e0e93ab500738b",
+    "source_hash": "243da2c1efb1f466facec5f800cc4f3709c477271b89cf018f8c72c0a33079b8",
+    "content_hash": "ef4a38af931a6ce1dbfe33053d7558df5a60764d26ff863003283529f0005ee9",
     "last_modified": "2026-10-12",
     "status": "healthy",
     "drifted_date": "",
