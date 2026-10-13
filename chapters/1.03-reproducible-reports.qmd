@@ -5,7 +5,7 @@ subtitle: "Creating reproducible reports with Quarto."
 
 In fact, this very page is written this way: the text you're reading and the code it runs live in the same document, and if the underlying data changed, the numbers on this page would update automatically the next time it's rendered.
 
-*You arrive here from [R language](1.02-r-language.qmd), so you can already write and run R code in scripts and understand objects, functions, and packages. Here you'll learn Quarto, which combines your code, its output, and your explanation in one document. Your analysis becomes reproducible and easy to share: you (or your teacher) can re-run everything with one click, and your reports show real results instead of pasted screenshots.*
+*You arrive here from [Functions and Packages](1.06-functions-and-packages.qmd), so you can already write and run R code in scripts and understand objects, functions, and packages. Here you'll learn Quarto, which combines your code, its output, and your explanation in one document. Your analysis becomes reproducible and easy to share: you (or your teacher) can re-run everything with one click, and your reports show real results instead of pasted screenshots.*
 
 → [See this module in the skill tree](curriculum.html?module=quart)
 
@@ -119,7 +119,7 @@ Quarto forces you to write your code in a way that if you run the entire script 
 
 ### ⚠️ Before you submit: use `embed-resources: true`
 
-::: {.callout-important title="This will cost you points if you forget it"}
+::: {.callout-important title="This could cost you points if you forget it"}
 When Quarto renders an HTML file, it does **not** put everything into that one `.html` file by default.
 Figures, plots, and other generated content are saved as **separate files**, in a folder next to your HTML file (usually named something like `my-report_files/`).
 
@@ -137,7 +137,8 @@ format:
 ---
 ```
 
-Note that `embed-resources` is indented *under* `html`, which is indented under `format` — indentation matters in YAML headers.
+Note that you need to copy the `format` and `html` lines as well — just adding `embed-resources: true` by itself won't work.
+Also, make sure that `html:` and `embed-resources` is indented *exactly* like in the example above, with two spaces before `html:` and four spaces before `embed-resources`.
 :::
 
 Once this option is set, every time you render, you get **one single, self-contained `.html` file** that you can safely upload anywhere — Canvas, email, a USB stick — and it will look exactly the same for whoever opens it, with no extra folder required.
@@ -155,7 +156,7 @@ In the toolbar you can turn on `Render on Save`. This way, any time you save the
 
 #### The working directory is the folder where the Quarto file is located
 
-A Quarto file will always use it's own location as the [working directory](1.02-r-language.qmd#choosing-working-directory)
+A Quarto file will always use it's own location as the [working directory](1.02-installing-and-running-r.qmd#choosing-working-directory)
 This is actually quite convenient.
 Just make sure to put your Quarto file in the same directory as your data, and you're good to go.
 

@@ -13,6 +13,7 @@ Below is the **Methods Skill Tree**. Every module clearly defines its **prerequi
 - **Hover over any module** to inspect its prerequisites, description, and downstream applications.
 - **Click any module** to jump directly to its lesson.
 
+
 ---
 
 ## 🗺️ The Methods Skill Tree

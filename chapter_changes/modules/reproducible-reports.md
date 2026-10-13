@@ -23,7 +23,7 @@
 - No "Further resources" added and body content untouched — pre-existing, human-authored material.
 
 ### Follow-up pass: added a prominent `embed-resources: true` section
-- Added a new "⚠️ Before you submit: use `embed-resources: true`" subsection right after "Rendering the document", using a `callout-important` box (title: "This will cost you points if you forget it").
+- Added a new "⚠️ Before you submit: use `embed-resources: true`" subsection right after "Rendering the document", using a `callout-important` box (title: "This could cost you points if you forget it").
 - Explains that Quarto's default HTML render saves figures/plots into a separate `..._files/` folder next to the `.html`, so submitting only the `.html` to Canvas drops all visuals — and gives the exact YAML fix (`format: html: embed-resources: true`), plus a quick way to verify it worked (no `_files` folder appears next to the rendered `.html`).
 - Rationale: students frequently forget this and submit assignments with missing figures; made this as visually unmissable as possible per explicit instructor feedback.
 - Rendered clean, hashes re-blessed.

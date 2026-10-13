@@ -24,7 +24,9 @@ Each module's `chapter_changes/modules/<slug>.md` notes which hook/example was u
 | Section | Module (id) | File | Status |
 | :-- | :-- | :-- | :-- |
 | Computational Skills | Basic Computer Skills (`compu`) | `1.01-basic-computer-skills.qmd` | written (1.1) |
-| | R language (`rlang`) | `1.02-r-language.qmd` | merged old 1.1 + 1.2 |
+| | Installing and Running R (`rbas`) | `1.02-installing-and-running-r.qmd` | split from `rlang` (merged old 1.1 + 1.2) |
+| | Data in R (`rdata`) | `1.04-data-in-r.qmd` | split from `rlang`, rewritten dataframe-first |
+| | Functions and Packages (`rfunc`) | `1.06-functions-and-packages.qmd` | split from `rlang`, added package-install troubleshooting |
 | | Reproducible Reports (`quart`) | `1.03-reproducible-reports.qmd` | old 1.3 |
 | Data Management | Data Frames (`dfs-1`) | `2.01-data-frames.qmd` | old 2.1 |
 | | Grouping and summarizing (`summa`) | `2.02-grouping-and-summarizing.qmd` | old 2.2 |
@@ -61,8 +63,8 @@ Each module's `chapter_changes/modules/<slug>.md` notes which hook/example was u
 
 | Old chapter | Now |
 | :-- | :-- |
-| 1.1 Working with R | `r-language` |
-| 1.2 RStudio Projects | appended to `r-language` |
+| 1.1 Working with R | split into `installing-and-running-r` / `data-in-r` / `functions-and-packages` |
+| 1.2 RStudio Projects | folded into `installing-and-running-r` |
 | 1.3 Quarto Reports | `reproducible-reports` |
 | 1.4 Base R Fundamentals | **no module** (only in the backup). Optional; could become an optional module or an appendix |
 | 2.1 Data Frames | `data-frames` |
@@ -92,7 +94,7 @@ Material that is only in the backup: **1.4 Base R**, **3.1 Latent Variables**, *
 
 ## Big textual changes (details in the per-module notes)
 
-- `r-language`: merge of old 1.1 and 1.2, no text changes.
+- `installing-and-running-r` / `data-in-r` / `functions-and-packages`: the merged old 1.1+1.2 module (`r-language`) was itself split into three, per its own to-do list. `data-in-r` was rewritten to be dataframe-first (opens with a real data frame, extracts columns via `$`, teaches types/coercion using those columns); `functions-and-packages` gained a new "Troubleshooting: what if a package won't install?" subsection covering `pak` as an `install.packages()` alternative; the absolute-paths deep-dive was removed from `installing-and-running-r` since it's now covered in full (with an interactive file explorer) in `basic-computer-skills`.
 - `correlation-and-covariance` / `testing-associations`: old 7.1 split at the `cor.test()` section. New text in `testing-associations`: setup chunk and a subsection explaining that `cor.test()` is a t-test on *r*.
 - `linear-models` / `regression` / `linear-model-assumptions`: old 7.2 split in three. New text: rewritten intro paragraphs and step list, "What's next" section, "Setting up" section in `regression`, and an intro and data-loading chunk in `linear-model-assumptions`. Heading levels in `regression` were promoted one level.
 - `descriptive-statistics`: old 2.4 standardization text wrapped in new headings, plus a placeholder section.

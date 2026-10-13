@@ -11,17 +11,96 @@ subtitle: "The file system, paths, and general computer habits."
 
 Everything on your computer — documents, photos, programs, and (soon) your data files — is stored as a **file**,
 and files are organised into **folders** (also called **directories**).
-You are likely already familiar with this idea from using a file explorer (Finder on macOS, File Explorer on Windows).
-You click on a folder to open it, and inside you'll find more folders and files.
+This is called the **file system**, and most people navigate it using a file explorer.
+The following example is for MacOS, but it works the same on Windows and Linux.
 
-However, to **effectively** and **responsibly** work with data you'll need a more concrete understanding of how files and folders are organised on your computer.
-You need to understand how files are stored, so that your analysis scripts can find it, and so that you can delete it when you're done with it.
+```{r file-explorer-loader, echo=FALSE, results='asis'}
+fe_css <- paste(readLines("components/file-explorer/file-explorer.css", warn = FALSE), collapse = "\n")
+fe_js  <- paste(readLines("components/file-explorer/file-explorer.js", warn = FALSE), collapse = "\n")
+
+fe_tree <- '{
+      "name": "Users",
+      "type": "folder",
+      "open": true,
+      "children": [
+        {
+          "name": "Chris",
+          "type": "folder",
+          "open": true,
+          "children": [
+            {
+              "name": "Projects",
+              "type": "folder",
+              "open": false,
+              "children": [
+                {
+                  "name": "master_thesis",
+                  "type": "folder",
+                  "open": false,
+                  "children": [
+                    {"name": "survey_data.csv", "type": "file", "description": "Raw survey responses for this project. This is sensitive, human-subject data: keep it only where it needs to be, and delete it once you no longer need it."},
+                    {"name": "analysis.r", "type": "file"}
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Downloads",
+              "type": "folder",
+              "open": true,
+              "children": [
+                {"name": "data.zip", "type": "file"},
+                {
+                  "name": "data",
+                  "type": "folder",
+                  "open": false,
+                  "children": [
+                    {"name": "survey_data.csv", "type": "file"}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+}'
+
+cat(sprintf('
+<style>
+%s
+</style>
+
+<div id="file-explorer-demo"></div>
+
+<script>
+%s
+
+(function () {
+  function mount() {
+    if (window.initFileExplorer) {
+      window.initFileExplorer("file-explorer-demo", %s, { title: "Macintosh HD" });
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
+  } else {
+    mount();
+  }
+})();
+</script>
+', fe_css, fe_js, fe_tree))
+```
+
+You might already have a good intuition for how to use a file explorer.
+However, to **effectively** work with data, and **responsibly** handle sensitive information,
+you need a good understand how files and folders are stored on your computer,
+and develop good habits for keeping your file system organised.
 
 ### The File System
 
-A folder can contain files and other folders, so the whole system forms a **tree**: one top-level folder (the *root*), with everything else branching off from it, folder inside folder inside folder.
-Here is a small example of what such a tree looks like.
-The highlighted branch traces one specific file, `survey_data.csv`, all the way from the root down to where it actually lives:
+The structure of the file system is referred to as a **tree**.
+Starting with a **root** folder at the top, it branches downward into subfolders, which can contain more subfolders, and so on.
+Here is a tree representation of the same file system shown in the file explorer above.
 
 ```{r, echo=F}
 source("scripts/dag_helpers.R")
@@ -30,81 +109,112 @@ source("scripts/dag_helpers.R")
 ```{r, echo=F, output='asis'}
 cat(dag_diagram(
     nodes = list(
-        Root = dag_node("/", x = 2, y = 4, highlight = TRUE),
-        Users = dag_node("Users", x = 2, y = 3, highlight = TRUE),
-        You = dag_node("yourname", x = 2, y = 2, highlight = TRUE),
-        Documents = dag_node("Documents", x = 1, y = 1, highlight = TRUE),
-        Downloads = dag_node("Downloads", x = 3, y = 1),
-        Survey = dag_node("survey_data.csv", x = 0, y = 0, highlight = TRUE),
-        Notes = dag_node("notes.txt", x = 1.2, y = 0),
-        Zip = dag_node("data.zip", x = 2.3, y = 0),
-        Survey2 = dag_node("survey_data.csv", x = 3.5, y = 0)
+        Root = dag_node("(root)", x = 2, y = 5),
+        Users = dag_node("Users", x = 2, y = 4),
+        You = dag_node("Chris", x = 2, y = 3),
+        Projects = dag_node("Projects", x = 1, y = 2),
+        Project1 = dag_node("master_thesis", x = 0.6, y = 1),
+        Survey = dag_node("survey_data.csv", x = 0, y = 0, highlight=T),
+        Downloads = dag_node("Downloads", x = 3, y = 2),
+        Notes = dag_node("analysis.r", x = 1.2, y = 0, highlight=T),
+        Zip = dag_node("data.zip", x = 2.3, y = 1, highlight=T),
+        Data = dag_node("data", x = 3.7, y = 1),
+        Survey2 = dag_node("survey_data.csv", x = 4.2, y = 0, highlight=T)
     ),
     edges = list(
-        dag_edge("Root", "Users", highlight = TRUE),
-        dag_edge("Users", "You", highlight = TRUE),
-        dag_edge("You", "Documents", highlight = TRUE),
+        dag_edge("Root", "Users"),
+        dag_edge("Users", "You"),
+        dag_edge("You", "Projects"),
+        dag_edge("Projects", "Project1"),
+        dag_edge("Project1", "Survey"),
         dag_edge("You", "Downloads"),
-        dag_edge("Documents", "Survey", highlight = TRUE),
-        dag_edge("Documents", "Notes"),
+        dag_edge("Project1", "Notes"),
         dag_edge("Downloads", "Zip"),
-        dag_edge("Downloads", "Survey2")
+        dag_edge("Downloads", "Data"),
+        dag_edge("Data", "Survey2")
     ),
     fig_width = 4.6, fig_height = 4.4
 ))
 ```
 
-Because the tree only branches *downward*, every file has exactly **one** location.
-The files `survey_data.csv` in `/Documents` and `/Downloads` are two different files.
-They might be copies of the same data, but editing or deleting one file will not affect the other.
-This has two important implications:
+The most important thing to understand is that every file has a **unique location** in the file system.
+So while there are two files called `survey_data.csv` in the example above, they are not the same file!
+This has two important implications for data management.
 
-* You need to know how to **locate a file by its path**. This is covered in the next section.
-* You need to **organize your files system** to avoid unnecessary copies. Not only to avoid confusion, but also because you'll often be responsible for sensitive data that should be deleted when you're done with it.
+* Firstly, you need to understand how your computer refers to unique files and folders by their **path**.
+This enables you to write analysis scripts that can read and write files without relying on the file explorer,
+which improves reproducibility and makes it easier to work in teams. We cover this in the next section.
+* Secondly, you need to **organise your files system** properly, so that you don't lose track of where data is stored.
+This is especially important when working with sensitive data, which comes with legal and ethical responsibilities to keep it safe and delete it when you're done with it.
+In our example above, we show a common, sloppy procedure: someone downloads `survey_data.csv` into their `Downloads` folder, and then copies it into their project folder.
+This leaves a useless copy of sensitive data in the Downloads folder, where it's likely to be forgotten and left there indefinitely.
 
-A habit worth building early on: **keep your research data and scripts organised in a sensible folder structure**.
-Create different folders for different projects (e.g., courses, studies), keeping all related files (and subfolders) together in one place.
-This makes it easier to find things, and it makes it easier to share your work with others.
 
-### What is a file path?
+### Absolute file paths
 
-Whenever a program reads or writes a file — including R, which you'll meet in the next module — it needs to know *where* that file is. There are two ways to describe a location.
-
-#### Absolute paths
-
-An **absolute path** spells out the complete location of a file, starting from the very top of the file system: the exact chain highlighted in the tree above. On Windows it typically starts with a drive letter, e.g.:
-
-```bash
-C:\Users\yourname\Documents\survey_data.csv
-```
-
-On macOS or Linux it starts with a `/`, e.g.:
+The two versions of `survey_data.csv` above are in different locations, and your computer needs to know *which one* you mean when you refer to it.
+To uniquely identify these files, you can specify their **asbolute path**: the chain of folders you need to follow from the root of the tree to that file.
+The two files above have the following paths:
 
 ```bash
-/Users/yourname/Documents/survey_data.csv
+/Users/Chris/Projects/master_thesis/survey_data.csv
+/Users/Chris/Downloads/data/survey_data.csv
 ```
 
-An absolute path always works, no matter what else is going on, because it doesn't depend on "where you currently are" — but it's long to type, and it's tied to one specific computer (a path like `C:\Users\yourname\...` will not exist on someone else's laptop).
-
-#### Relative paths
-
-A **relative path** describes a file's location *relative to the current directory*.
-For example, if you are currently inside the `yourname` folder in the tree above, the relative path to `survey_data.csv` is:
+In Windows this works the same way, but the slashes are reversed and the root of the tree is a drive letter:
 
 ```bash
-Documents/survey_data.csv
+C:\Users\Chris\Projects\master_thesis\survey_data.csv
+C:\Users\Chris\Downloads\data\survey_data.csv
 ```
 
+::: {.callout-note collapse="true"}
+## How do I find a file's absolute path?
+You can use your file explorer to find a file's absolute path, and copy it into your analysis script.
+
+- **macOS (Finder)**: select the file, then press `Cmd + Option + C` to copy its path, or right-click while holding `Option` for a "Copy as Pathname" option.
+- **Windows (File Explorer)**: hold `Shift` and right-click the file, then choose "Copy as path".
+
+We'll also show a couple of handy RStudio-specific tricks for this later in the book.
+:::
 
 
-### Workspaces
 
+An absolute path specifies the EXACT location of the file.
+However, this has two drawbacks:
 
+* It's long to type, and easy to get wrong.
+* It's tied to one specific computer and user.
+If our example user `Chris` sends their analysis script to a colleague,
+the absolute path `C:\Users\Chris\Projects\master_thesis\survey_data.csv`
+will not exist on the colleague's computer, and the script will fail.
 
+This is why you should almost always use **relative paths** instead of absolute ones.
 
-This is where the **working directory** comes in. At any point in time, a program is "standing" in one particular folder — its working directory — and a **relative path** describes a file's location *starting from there*, instead of from the very top. For example, if your working directory is `Documents`, then the relative path `survey_data.csv` refers to the exact same file as the absolute path above.
+### Relative paths and working directories
 
-Relative paths are shorter, and — more importantly — they keep working even if you move your whole project folder to a different computer, as long as the files inside it stay in the same arrangement relative to each other. This is why, later in the course, you will almost always use relative paths rather than absolute ones. For now, just remember the core idea: *a relative path is read starting from wherever you currently are, an absolute path is read starting from the very top.*
+A **relative path** describes a file's location *relative to the current working directory*.
+For example, if the working directory is `/Users/Chris/Projects`, the relative path to `survey_data.csv` is:
+
+```bash
+master_thesis/survey_data.csv
+```
+
+To see how this works, scroll up to the tree diagram and imagine that your computer is "standing" in the `Projects` folder.
+From there, you simply follow the chain of folders down to the file you want.
+
+Analysis software like R allows you make any folder the **working directory**.
+We'll show you how to do this later when we introduce RStudio, which makes this very easy.
+The general recommendation is to set the working directory to the folder of a project you're working in, like `/Users/Chris/Projects/master_thesis`.
+This has two great benefits:
+
+* You can directly read and write files in that project folder, using only the file name.
+* You can move the whole project folder to a different computer. Since the paths are relative to that folder,
+all the scripts will still work. This is great for reproducibility and collaboration.
+
+### Key takeaways
+
+Make sure you understand
 
 ## File types and extensions
 
@@ -113,7 +223,7 @@ The short suffix after the dot in a file name — the **file extension** — tel
 Some of the extensions you'll run into most often in this book:
 
 | Extension | What it is |
-|---|---|
+|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `.csv` | **Comma-separated values**: a plain-text table, one row per line, values separated by commas. The most common format for exchanging data. |
 | `.xlsx` / `.xls` | An Excel spreadsheet (a "workbook"). Looks similar to a `.csv` when opened, but is stored in a more complex, non-plain-text format that can also hold formulas, formatting, and multiple sheets. |
 | `.txt` | A plain-text file: just characters, no formatting. |
@@ -125,9 +235,29 @@ Some of the extensions you'll run into most often in this book:
 
 ## Zip files
 
-A **zip file** (extension `.zip`) is an **archive**: a single file that contains, and compresses, a whole bundle of other files and folders. Zip files are everywhere once you start downloading course materials or datasets, for two reasons: they let you download many files in one go, and compression makes the download smaller.
+A **zip file** (extension `.zip`) is an **archive**: a single file that contains,
+and compresses, a whole bundle of other files and folders. Zip files are everywhere
+once you start downloading course materials or datasets, for two reasons: they let you
+download many files in one go, and compression makes the download smaller.
 
-A zip file is not usable "as is" — you need to **extract** (or "unzip") it first, which unpacks its contents back into ordinary files and folders on your computer. On both Windows and macOS, this is usually as simple as right-clicking the `.zip` file and choosing "Extract All..." or "Extract" (or just double-clicking it on macOS). Make sure you know *where* the extracted files end up — by default, they're often placed in the same folder as the zip file itself, right next to it.
+The reasons we single them out here, is that you need to know how to handle them properly.
+A common mistake is that people double click it like a normal folder.
+This will show you the contents, but the files inside are still "inside" the zip file,
+and most programs won't be able to read them until you **extract** (or "unzip") them.
+
+On both Windows and macOS, this is usually as simple as right-clicking the `.zip` file
+and choosing "Extract All..." or "Extract".
+Depending on what you choose, it either need to specify where to extract the files to,
+or it will extract them to the same folder as the zip file itself.
+
+An example of this is shown in the file tree above.
+Inside the `Downloads` folder, there is a zip file called `data.zip`,
+and the `data` folder represents the contents of that zip file after extraction.
+This also reveals another data sensitivity pitfall: if the `survey_data.csv` file
+came out of the zip file, it means that it's now actually stored in three places:
+the `data.zip` file, the extracted `data` folder, and the copy in the `master_thesis` folder.
+
+
 
 ## A few general habits worth having
 
@@ -135,10 +265,12 @@ A handful of general-purpose keyboard shortcuts are worth building into muscle m
 
 | Shortcut (Win/Linux) | Shortcut (macOS) | What it does |
 |---|---|---|
-| `Ctrl + S` | `Cmd + S` | Save the current file |
-| `Ctrl + Z` | `Cmd + Z` | Undo your last change |
+| `Ctrl + s` | `Cmd + s` | Save the current file |
 | `Ctrl + C` / `Ctrl + V` | `Cmd + C` / `Cmd + V` | Copy / paste |
 | `Ctrl + F` | `Cmd + F` | Find (and replace) text in a document |
+| `Ctrl + z` | `Cmd + z` | Undo your last change |
+| `Ctrl + y` | `Cmd + y` | Redo your last undone change |
+| `Ctrl + shift + z` | `Cmd + shift + z` | Redo your last undone change (alternative) |
 
 Two more habits that will save you a lot of trouble down the line:
 

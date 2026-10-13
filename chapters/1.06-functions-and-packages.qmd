@@ -1,0 +1,389 @@
+---
+title: "1.6 Functions and Packages"
+subtitle: "Using functions, installing and loading packages, and finding help without memorizing everything."
+---
+
+*You arrive here from [Data in R](1.04-data-in-r.qmd), so you can already work with data frames, extract columns, and recognize the common types of data they contain. Here you'll learn how functions let you *do* something with that data, and how packages give you access to thousands of ready-made functions beyond what R ships with by default. You'll also pick up a few essential tricks for working with functions and packages without having to memorize everything by heart. Together, functions and packages are the toolbox you'll reach for in every module from here on.*
+
+→ [See this module in the skill tree](curriculum.html?module=rfunc)
+
+## Functions
+
+### What is a function? {#what-is-a-function}
+99% of what you do in R will involve using functions.
+A function in R is like a mini-program that you can use to perform specific tasks.
+It takes *input*, processes it, and gives you an *output*.
+For example, there are functions for:
+
+* importing data
+* computing descriptive statistics
+* performing statistical tests
+* visualizing data
+
+A function in R has the form:
+
+```{r what-is-a-function-1, eval=F}
+output <- function_name(argument1, argument2, ...)`
+```
+
+* **function_name** is a name to indicate which function you want to use. It is followed by parentheses.
+* **arguments** are the input of the function, and are inserted within the parentheses.
+* **output** is anything that is returned by the function.
+
+For example, the function `c` *c*ombines multiple values into a *vector*.
+
+```{r what-is-a-function-2}
+x = c(1,2,3,4)
+```
+
+Now, we can use the `mean` function to calculate the mean of these numbers:
+
+```{r what-is-a-function-3}
+m <- mean(x)
+```
+
+The calculated mean, `2.5`, is now assigned to the name `m`:
+
+```{r what-is-a-function-4}
+m
+```
+
+#### Optional arguments {#optional-arguments}
+
+In the `c` and `mean` functions above, all the arguments were **required**.
+To **c**ombine numbers into a vector, we *needed* to provide a list of numbers.
+To calculate a **mean**, we *needed* to provide a numeric vector.
+
+In addition to the **required** arguments, a function can also have **optional** arguments, that give you more control over what a function does.
+For example, suppose we have a range of numbers that also contains a missing value. In R a missing value is called `NA`, which stands for `Not Available`:
+
+```{r optional-arguments-1}
+x_with_missing <- c(1, 2, 3, NA, 4)
+```
+
+Now, if we call the `mean` function, R will say that the mean is unknown, since the third value is unknown:
+
+```{r optional-arguments-2}
+mean(x_with_missing)
+```
+
+This is statistically a very correct answer.
+But often, if some values happen to be missing in your data, you want to be able to calculate the mean just for the numbers that are not missing.
+Fortunately, the mean function has an **optional argument** `na.rm` (remove NAs) that you can set to `TRUE` (or to `T`, which is short for `TRUE`) to ignore the NAs:
+
+```{r optional-arguments-3}
+mean(x, na.rm=TRUE)
+```
+
+Notice that for the **required** argument, we directly provide the input `x`, but for the **optional** argument we include the argument name `na.rm = TRUE`.
+The reason is simply that there are other optional arguments, so we need to specify which one we're using.
+(We'll come back to how you can look up which optional arguments a function has below, in [Working with functions and packages without memorizing everything](#without-memorizing).)
+
+#### Using the pipe syntax {#pipe-syntax}
+
+There is another common way to use functions in R using the **pipe** syntax.
+With the pipe syntax, you can *pipe* the first argument into the function, instead of putting it inside the parentheses.
+As you will see below, this allows you to create a pipeline of functions, which is often easier to read.
+<!-- The pipe syntax uses the `|>` operator, which is used as follows: -->
+
+```{r using-the-pipe-syntax-1, eval=F}
+argument1 |> function_name(argument2, ...)
+```
+
+For example, the following two lines of code give identical output:
+
+```{r using-the-pipe-syntax-2}
+mean(x_with_missing, na.rm=T)
+
+x_with_missing |> mean(na.rm=T)
+```
+
+Notice how our first argument, the **required** argument `x_with_missing`, is *piped* into the mean function.
+Inside the mean function, we only specify the second argument, the **optional** argument `na.rm`.
+
+So why do we need this alternative way of doing the same thing?
+The reason is that when writing code, you shouldn't just think about **what the code does**, but also about **how easy the code is to read**.
+This not only helps you prevent mistakes, but also makes your analysis **transparent**.
+As you'll see later, you'll encounter many cases where your analysis requires you to string together multiple functions.
+In these cases, pipes make your code much easier to read.
+
+For example, imagine we would want to round the result (`2.5`) up to a round number (`3`).
+With the pipe syntax we can just add the round function to our pipeline.
+
+```{r using-the-pipe-syntax-3, results=F}
+x_with_missing |>
+  mean(na.rm=T) |>
+  round()
+```
+
+You'll see how powerful this can be later on, especially in the [Data Management](2.01-data-frames.qmd) chapter.
+In order to prepare and clean up your data, you'll often need to perform a series of functions in a specific order.
+The pipe syntax allows you to do this in a very readable way.
+
+## Packages
+
+### What is a package? {#what-is-a-package}
+
+In R, a package is a collection of functions, data, and documentation that extends the capabilities of R.
+You can think of packages kind of like apps on your phone: they provide additional functionality that you can use to perform specific tasks.
+Also, like apps, you can install and uninstall packages as needed, directly from within R.
+
+There are thousands of R packages available, which enables you to use almost any existing data analysis technique.
+R is not just a tool for statistical analysis, but also for data visualization, data collection, articifial intelligence, and much more.
+If there is anything you need to do, there is a good chance that someone has already written a package for it.
+
+### How to install
+
+To use a package, you first need to install it. **Installing a package only needs to be done once** per system (unless you need to update it).
+
+#### 1. Install a package
+
+Most packages are available on the Comprehensive R Archive Network (CRAN), which is the main repository for R packages.
+To install these packages, all you need to know is their name.
+
+For example, there is a package called `lubridate` that makes it easier to work with dates and times in your data.
+To install this package, you can use the `install.packages()` function:
+
+```{r 1-install-a-package-1, eval=F}
+install.packages("lubridate")
+```
+
+::: {.callout-warning title="What if R asks tot 'install from source'?" collapse="true"}
+
+When running `install.packages()` You sometimes get the message that `There is a binary version available but the source version is later` (we're mainly seen this on Mac). You then get the question whether you want to `install from source` the package which needs compilation `(Yes/no)`.
+To answer this question, you have to type "yes" or "no" in your R console.
+
+It is then usually **best to say NO**.
+This will install a slightly older version of the package, but it will be much faster and easier to install.
+You often don't need the latest version, so it's not worth the extra hassle.
+
+In case you're curious, the reason for this is that the newest version has not been *prepared* for your system yet.
+They do have the **source code**, but it has not yet been compiled into a **binary** version that is ready to use.
+Think of the source code as a recipe, and the binary version as the ready-made dish.
+If you really want to have the newest version you can say "yes", but you'll have to cook it yourself!
+The main problem is that you will often need to install some extra software to do this, which can be a hassle.
+So unless you really need the newest version, it's usually best to say "no", and just install the older version that has already been prepared for your system.
+:::
+
+#### 2. Load a package
+
+Once you have installed a package, it is not yet loaded into your current R session.
+Similar to when you install a new app on your phone, you need to open it every time you want to use it.
+
+To use a package in your current R session, you can load it with the `library()` function:
+
+```{r 2-load-a-package-1, message=FALSE}
+library(lubridate)
+```
+
+### Package documentation
+
+Most packages come with good documentation that explains how to use the functions in the package.
+For individual functions you can use the `?` operator to open the help page for that function, as we explain below.
+But there is often also a more general documentation that explains the package as a whole.
+This is called a **vignette**, and if a package has one, you can open it with the `vignette()` function.
+
+```{r how-do-i-know-how-to-use-a-package-1, eval=F}
+vignette("lubridate")
+```
+
+You can look up vignettes and function documentation [online](https://www.rdocumentation.org/).
+This is also a good way to find new packages for whatever you're trying to do.
+
+## Working with functions and packages without memorizing everything {#without-memorizing}
+
+One of the things that new users in R can find overwhelming, is that they think they need to learn all functions (and all their arguments) by heart.
+**This is not the case!**
+Aside from a handful of functions that you will use all the time, you will often need to look up how to use a function, or run into a package that just won't install.
+Rather than learning everything by heart, you need to learn some tricks for how to quickly look up information, and how to troubleshoot when things go wrong.
+
+### How to Use the `?` Symbol
+
+One of the most important tricks is to use the built-in help system in R.
+You can quickly access documentation for any function using the `?` symbol.
+This is a powerful tool that can help you understand how to use functions, what arguments they require, and what they return.
+
+To view the documentation for a specific function, you simply need to type `?` followed by the function name. For example, if you want to learn more about the `mean()` function, you would type:
+
+```{r, eval=F}
+?mean
+```
+
+This will open the help page, often in the bottom right pane of RStudio.
+
+### How to read the help page
+
+The help page for a function is divided into several sections.
+The most important sections are:
+
+#### Description
+
+A brief description of what the function does.
+For the `mean()` function, the description is: *Generic Function for the (Arithmetic) Mean*.
+
+By generic function, they mean that the function can have multiple implementations.
+When you think of the mean, you are probably thinking of the mean of a vector of numbers.
+
+```{r}
+x = c(1,2,3,4)
+mean(x)
+```
+
+But you can do more!
+For example, you can also calculate the mean of a vector of `Date` values:
+
+```{r}
+dates = as.Date(c("2021-01-01", "2021-01-03"))
+mean(dates)
+```
+
+#### Usage
+
+The syntax of the function, including all the arguments it takes.
+For example, the `mean()` function has the following usage:
+
+```{r, eval=F}
+mean(x, ...)
+
+## Default S3 method:
+mean(x, trim = 0, na.rm = FALSE, ...)
+```
+
+The first part tells you that the most basic way to use the function is to provide an argument called `x`. What `x` is, is explained in the *arguments* section that we discuss below.
+
+The `...` at the end means that the function can take additional arguments.
+This is because the mean function is a *generic function*.
+Depending on the type of input you provide (e.g., numbers, dates), some arguments might not be relevant.
+
+The second part tells you that the default method for the mean function has two additional arguments in addition to `x`: `trim`, and `na.rm`.
+Note an important difference with the `x` argument: these arguments have default values (0 and FALSE, respectively).
+This means that these arguments are **optional**.
+If you don't specify them, the function will use these default values.
+
+For example, notice that the `na.rm` argument is set to `FALSE` by default.
+As we can see in the Arguments section, this means that the function will not remove missing values by default.
+(`NA` stands for `Not Available`, and is used in R to indicate missing values, so `na.rm` is short for `remove NAs`).
+
+```{r}
+x_with_missing <- c(1, 2, 3, NA, 4)
+mean(x_with_missing)
+```
+
+If we want to remove missing values, we can set `na.rm` to `TRUE`:
+
+```{r}
+mean(x_with_missing, na.rm=TRUE)
+```
+
+::: {.callout-note title="To name or not to name your arguments" collapse="true"}
+
+Notice how in the code above we specify the argument name `na.rm = TRUE` to indicate that we want to use this optional argument.
+For the `x` argument we don't need to specify the argument name, because it's the first argument and the function knows that the first argument is `x`.
+Generally speaking, if you don't specify the argument name, R will assume that you are providing the arguments in the order that they are listed in the usage section.
+Let's think a bit about when we should and should not use argument names!
+
+You *could* decide to always use argument names:
+
+```{r}
+mean(x=x_with_missing, na.rm=TRUE)
+```
+
+This is fine, and sometimes you might want to do this for sake of clarity.
+But it's also often unnecessary.
+For the `mean` function, it is obvious that the first argument is the input over which you want to calculate the mean, so you don't need to specify the argument name.
+
+On the opposite end of the spectrum, you could decide to never use argument names:
+
+```{r}
+mean(x_with_missing, 0, TRUE)
+```
+
+Here the three arguments follow the order in the usage section: `x`, `trim`, `na.rm`.
+
+This has two obvious downsides:
+
+* It is not obvious what the `0` and `TRUE` arguments are. The reader might thus have to look up the function documentation.
+* We now also need to specify the `trim` argument, because it comes before `na.rm` in the usage section.
+
+So in general, it is often good to use argument names for optional arguments, like `na.rm`.
+For required arguments, like `x`, it is often not necessary.
+Arguably the *best* way to use the `mean` function with `na.rm` is therefore:
+
+```{r}
+mean(x_with_missing, na.rm=TRUE)
+```
+
+:::
+
+#### Arguments
+
+A description of all the arguments that the function takes.
+This should cover all the arguments that are listed in the usage section.
+
+For example, the `mean()` function explains that the `x` argument is can be a numeric vector, but also something like a `logical` or `date` vector.
+For the `na.rm` argument it explains that if set to `TRUE`, missing values will be removed before calculating the mean.
+
+#### Value
+
+The value section explains what the function returns (i.e. the output).
+
+#### Examples
+
+The examples section shows you how to use the function.
+Honestly, this is often the most useful part of the help page.
+If you are not sure how to use a function, a great way to learn is to look at the examples.
+Usually, you can directly copy-paste these examples into your script and run them to see how the function works.
+
+### Using tab completion
+
+A very usefull trick in RStudio, and in programming in general, is to use tab completion.
+The tab key on your keyboard (the one above the caps lock key) can be used to complete the name of a function or variable.
+And if there are multiple ways in which the name can be completed, R will show you all the options.
+(On some devices you might need to press `Tab` twice, or it might not work at all).
+
+For example, type the following code in your R script:
+
+```{r, eval=F}
+mean()
+```
+
+Now place your cursor between the parentheses and press the `Tab` key.
+This should now list all the arguments for the `mean` function, including their descriptions!
+
+Since the mean function is empty, you should only have seen the `x` argument (and the `...` argument).
+But you can also use tab completion when adding additional arguments.
+Type the following code in your R script:
+
+```{r, eval=F}
+x = c(1,2,3,4)
+mean(x, )
+```
+
+Now place your cursor between the parentheses after the comma, and press the `Tab` key.
+Now you should see the `trim` and `na.rm` arguments, because RStudio knows that these arguments apply to a `mean` function with a numeric input!
+
+Tab completion works for file paths too, and not just for function arguments. If you use tab completion between quotes, RStudio will show you all the files in your working directory that match the characters you've typed so far.
+So you can use this inside functions like `read_csv` to quickly find the file you want to read.
+
+```{r, eval=F}
+library(tidyverse)
+read_csv("")
+```
+
+Try it out! It can even help you find a file path you've half-forgotten, right from your R script.
+
+### Troubleshooting: what if a package won't install?
+
+Sometimes `install.packages()` fails, with an error that looks intimidating. A few things are worth trying, roughly in order:
+
+* **Read the last few lines of the error, not the whole wall of text.** It usually names the actual problem (e.g. a missing system library, or "package ... is not available").
+* **Restart R** (menu: `Session` -> `Restart R`) and try again. Half of all package problems are solved by a clean R session.
+* **Update R and your packages.** An outdated R version is a common cause of install failures, since packages increasingly require a recent R.
+* **Try the `pak` package.** `pak` is a modern, drop-in alternative to `install.packages()` that gives much clearer error messages and is often better at resolving tricky installs:
+
+```{r troubleshooting-pak-1, eval=F}
+install.packages("pak")
+pak::pkg_install("lubridate")
+```
+
+If none of this works, don't spend hours on it alone: copy the error message and ask your teacher or a classmate. Package installation issues are extremely common, and are rarely about something you did wrong.

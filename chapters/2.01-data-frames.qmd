@@ -3,7 +3,7 @@ title: "2.1 Data Frames"
 subtitle: "Importing CSVs, inspecting tibbles, selecting columns, and filtering rows."
 ---
 
-*You arrive here from [R language](1.02-r-language.qmd), so you can already work with vectors, functions, and packages — but real research data rarely comes as a loose vector. Here you'll learn to load data into a data frame (tibble) and to select columns, filter rows, create new variables, and chain those steps together with the pipe. This is the single most-used skill in the entire book: almost every later module starts from a data frame you've shaped with these tools.*
+*You arrive here from [Functions and Packages](1.06-functions-and-packages.qmd), so you can already work with vectors, functions, and packages — but real research data rarely comes as a loose vector. Here you'll learn to load data into a data frame (tibble) and to select columns, filter rows, create new variables, and chain those steps together with the pipe. This is the single most-used skill in the entire book: almost every later module starts from a data frame you've shaped with these tools.*
 
 → [See this module in the skill tree](curriculum.html?module=dfs-1)
 
@@ -183,7 +183,7 @@ In the top menu bar you can also `filter` the data and `search` for specific val
 #### Writing data to a CSV file on your computer
 
 You can use the `write_csv` function to write a tibble to a CSV file on your computer.
-If you just provide a file name, it will be saved in your current [working directory](1.02-r-language.qmd#working-directory).
+If you just provide a file name, it will be saved in your current [working directory](1.02-installing-and-running-r.qmd#file-management).
 
 ```{r writing-data-to-a-csv-file-on-your-computer-1, eval=FALSE}
 write_csv(d, "my_practice_data.csv")

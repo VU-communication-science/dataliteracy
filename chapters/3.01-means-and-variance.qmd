@@ -3,7 +3,7 @@ title: "3.1 Means & Variance"
 subtitle: "Understanding the mean and variance of a variable."
 ---
 
-*You arrive here from [R language](1.02-r-language.qmd), so you can already compute things in R with vectors and functions. Here you'll learn what the mean, variance, and standard deviation of a variable actually tell you, and how to compute them, by hand once and then with `mean()`, `var()`, and `sd()`. This matters because nearly every statistic you'll meet later in the book — t-tests, correlations, regression coefficients — is built on top of these two numbers.*
+*You arrive here from [Functions and Packages](1.06-functions-and-packages.qmd), so you can already compute things in R with vectors and functions. Here you'll learn what the mean, variance, and standard deviation of a variable actually tell you, and how to compute them, by hand once and then with `mean()`, `var()`, and `sd()`. This matters because nearly every statistic you'll meet later in the book — t-tests, correlations, regression coefficients — is built on top of these two numbers.*
 
 → [See this module in the skill tree](curriculum.html?module=me-va)
 

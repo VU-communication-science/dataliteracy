@@ -1,0 +1,109 @@
+---
+title: "1.4 Data in R"
+subtitle: "Data frames, vectors, and object types in R."
+---
+
+*You arrive here from [Installing and Running R](1.02-installing-and-running-r.qmd), so you can already assign values to names and run code in a script. Here you'll meet the data frame — the table-shaped object you'll use to hold almost every data set in this book — learn how to pull a single column out of it, and see what types of data a column can hold. Nearly every later module starts by loading a data set into a data frame, so this is the shape of data you'll be working with from here on.*
+
+→ [See this module in the skill tree](curriculum.html?module=rdata)
+
+## A first look at a data frame
+
+In practice, you'll rarely work with single values alone. Most of the data you'll work with in this course looks like a table: rows of observations, and columns of variables. In R, this table is called a **data frame**.
+
+Here is a small data frame with two columns, built from ten people's country and height:
+
+```{r a-first-look-at-a-data-frame-1}
+d <- data.frame(
+  country = c("NL", "NL", "BE", "BE", "DE", "DE", "FR", "FR", "UK", "UK"),
+  height  = c(176 , 165 , 172 , 160 , 180 , 170 , 175 , 165 , 185 , 175)
+)
+d
+```
+
+Each row is a person, and each column is a variable: `country` and `height`. This is the shape that almost every data set in this book will take, whether it comes from a survey, an experiment, or a collection of tweets.
+
+::: {.callout-note collapse="true"}
+## Data frame or tibble?
+Throughout this book we will actually be using the `tibble` data structure from the `tidyverse` package, which is an improved version of the base R `data.frame`. They work the same way for everything we cover here, so for now you can treat the two names as interchangeable.
+:::
+
+## Extracting a column: from data frame to vector
+
+You'll often want to work with just one column of a data frame, for example to calculate the average height. You can pull out a single column using the `$` (dollar) notation: `data_frame_name$column_name`.
+
+```{r extracting-a-column-1}
+d$height
+```
+
+What you get back is a **vector**: a list of values of the same type, here all numeric. A data frame is, in fact, nothing more than a collection of vectors of equal length, lined up as columns. You can build one yourself the same way, by combining values with the `c()` (combine) function:
+
+```{r extracting-a-column-2}
+heights <- c(176, 165, 172, 160, 180)
+heights
+```
+
+Once you have a vector, you can perform calculations on all its values at once. For example, we can calculate the mean height across all ten people:
+
+```{r extracting-a-column-3}
+mean(d$height)
+```
+
+## Types of data
+
+Just like a single value, every vector (and so every column in a data frame) has a **type**. The type determines what you can and can't do with it. Look again at our two columns:
+
+```{r types-of-data-1}
+class(d$country)
+class(d$height)
+```
+
+Here are the types you'll encounter most often:
+
+- **Numeric**: Numbers, like `176`, `3.14`, or `-0.5`. You can do arithmetic with these, like calculating a `mean()`.
+- **Character**: Text, like `"NL"` or `"Hello, world!"`. You cannot do arithmetic with these.
+- **Factor**: Categorical data with a fixed set of possible values (*levels*), like `country` or `education_level`. Factors look like text, but R treats them as categories rather than free text, which matters for things like ordering groups in a plot or a table.
+
+We can turn our `country` column into a factor to see this in action:
+
+```{r types-of-data-2}
+d$country <- factor(d$country)
+levels(d$country)
+```
+
+### Types determine what you can do with an object
+
+For example, you can perform mathematical operations on the numeric `height` column, but not on the character or factor `country` column:
+
+```{r types-determine-what-you-can-do-with-an-object-1, eval=F}
+mean(d$height)   # returns a number
+mean(d$country)  # throws a warning, and returns NA: you can't average countries
+```
+
+### You can coerce objects to different types
+
+Sometimes a column ends up with the wrong type — for instance, numeric data that got read in as character, perhaps because of a stray symbol in the original file.
+
+```{r you-can-coerce-objects-to-different-types-1}
+height_as_text <- "176"
+```
+
+If you want to perform mathematical operations on `height_as_text`, you first need to convert it to a numeric object, using the `as.numeric()` function:
+
+```{r you-can-coerce-objects-to-different-types-2, results='hide'}
+height_as_number <- as.numeric(height_as_text)
+height_as_number
+class(height_as_number)    # numeric
+```
+
+Note that you cannot always convert objects to a different type. Just use your common sense here.
+
+```{r you-can-coerce-objects-to-different-types-3, results='hide', warning=FALSE}
+as.numeric("I am not a number")
+```
+
+When coercion is not possible, R will return `NA` (missing value) and give you a warning.
+
+## Why this matters
+
+Single vectors, and even single values, are still not very useful for data analysis on their own, since we're almost always interested in relations between variables — like whether average height differs between countries. That's exactly what a data frame lets us do: keep variables lined up together as columns, so we can compare, filter, and model them as a whole. As you've just seen, you do still need to pay attention to the type of each column — for instance, you can't correlate `height` with `country` directly, because `country` isn't numeric. The remaining chapters in this book build on exactly this idea: loading data into a data frame, and working with its columns.

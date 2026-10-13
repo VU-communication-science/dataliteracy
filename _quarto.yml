@@ -29,7 +29,9 @@ website:
       - section: "Computational Skills"
         contents:
           - chapters/1.01-basic-computer-skills.qmd
-          - chapters/1.02-r-language.qmd
+          - chapters/1.02-installing-and-running-r.qmd
+          - chapters/1.04-data-in-r.qmd
+          - chapters/1.06-functions-and-packages.qmd
           - chapters/1.03-reproducible-reports.qmd
       - section: "Data Management"
         contents:
