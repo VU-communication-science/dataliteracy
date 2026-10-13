@@ -10,11 +10,11 @@
   },
   "chapters/curriculum.qmd": {
     "title": "Curriculum & Learning Trajectories",
-    "source_hash": "d9c7a4716579a4a9578da843ec2ed586dcdc0a02e24771ebc737f098d28826cb",
-    "content_hash": "8312b7f60ba1544542bcd4354c8517994cd094dba95a7ecd15622d0d68271179",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-12",
+    "source_hash": "a38c1c54291876d28af2d1a47b4d0f44a7df5caa621d542058abb011c146d824",
+    "content_hash": "2426c85bc83e3964e0a388bf1d844c5247f69617db531726bc8d0ad1586d33e0",
+    "last_modified": "2026-10-13",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": []
   },
   "data/datasets.qmd": {
@@ -28,146 +28,196 @@
   },
   "chapters/1.01-basic-computer-skills.qmd": {
     "title": "1.1 Basic Computer Skills",
-    "source_hash": "648172c168627dd0fbf7cea5fb46193ee8a81070ec95bbad07aee3dd69011f4e",
-    "content_hash": "4194266d42ff56b28ac6eca44d28335d660b5313b94702086ee4dcef9e50806d",
-    "last_modified": "2026-10-12",
+    "source_hash": "00f5ab5dfc47f5c979f04c3989efa8aa92b2165bdbf3c93e5837149f6aa05778",
+    "content_hash": "d792ebd5adbae21da6b951f7e2d60cf26d29f0c86fefb9f655bd2ddced485943",
+    "last_modified": "2026-10-13",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
       {
-        "line": 26,
-        "label": "",
-        "output_hash": "0887480927dc2b59",
-        "preview": "Root/UsersUsersRoot->UsersYouyournameUsers->YouDocumentsDocumentsYou->Documen..."
+        "line": 17,
+        "label": "file-explorer-loader",
+        "output_hash": "717c9437ed23b4f1",
+        "preview": "Root(root)UsersUsersRoot->UsersYouChrisUsers->YouProjectsProjectsYou->Project..."
       }
     ]
   },
-  "chapters/1.02-r-language.qmd": {
-    "title": "1.2 R language",
-    "source_hash": "07b37cd509f837a9a570b13bee7d1bf1e78765ccc908bec88d0019d8896f0b15",
-    "content_hash": "0d6f85984a3646c5e4e4b85c1c8bdf918caf8e818db3955b40286c019a0bbbd9",
-    "last_modified": "2026-10-12",
+  "chapters/1.02-installing-and-running-r.qmd": {
+    "title": "1.2 Installing and Running R",
+    "source_hash": "41270b1bfc448910a3572f86460fb4a21192e0618af9c7aef69438c9c405272a",
+    "content_hash": "d4e0241436c91ee20f46845060ec05a45f230517ea3392f28f55612182c8d3f1",
+    "last_modified": "2026-10-13",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
       {
-        "line": 100,
+        "line": 89,
+        "label": "why-bother-naming-things-1",
+        "output_hash": "da63020a101227e6",
+        "preview": "[Plot: why-bother-naming-things-1-1.png]"
+      },
+      {
+        "line": 124,
         "label": "the-power-of-assignment-3",
         "output_hash": "8d1f6c1e2c6837b5",
         "preview": "[1] 10"
       },
       {
-        "line": 112,
+        "line": 136,
         "label": "the-power-of-assignment-4",
         "output_hash": "b168777f8685aab6",
         "preview": "[1] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 [26] 26..."
       },
       {
-        "line": 131,
-        "label": "assigning-versus-printing-2",
-        "output_hash": "f37e4ca3e65e90d4",
-        "preview": "[1] \"I will be printed\""
+        "line": 150,
+        "label": "assigning-results-1",
+        "output_hash": "1143e30a397118df",
+        "preview": "[1] 15 [1] 15"
       },
       {
-        "line": 231,
-        "label": "from-single-values-to-vectors-1",
-        "output_hash": "2399543947c509af",
-        "preview": "[1] \"numeric\""
+        "line": 168,
+        "label": "",
+        "output_hash": "3062159cebf8b466",
+        "preview": "[1] \"/Users/Chris/Projects/master_thesis\""
+      }
+    ]
+  },
+  "chapters/1.04-data-in-r.qmd": {
+    "title": "1.4 Data in R",
+    "source_hash": "c256724fda8c948acb4b52a590dbc331ec0a556cb17c2baed3cce3e738445140",
+    "content_hash": "508b9fea5939f1dacecc3f429d26cbd47c5add4401718f326942f731dce9b5b7",
+    "last_modified": "2026-10-13",
+    "status": "healthy",
+    "drifted_date": "",
+    "chunks": [
+      {
+        "line": 16,
+        "label": "a-first-look-at-a-data-frame-1",
+        "output_hash": "1d5bab3be819c0a3",
+        "preview": "{\"columns\":[{\"label\":[\"country\"],\"name\":[1],\"type\":[\"chr\"],\"align\":[\"left\"]},..."
       },
       {
-        "line": 238,
-        "label": "from-single-values-to-vectors-2",
-        "output_hash": "d322cef92a4de103",
-        "preview": "[1] 10 20 30 40 50 [1] 15"
+        "line": 35,
+        "label": "extracting-a-column-1",
+        "output_hash": "c352d5e1b95f25be",
+        "preview": "[1] 176 165 172 160 180 170 175 165 185 175"
       },
       {
-        "line": 254,
-        "label": "from-vectors-to-data-frames-1",
+        "line": 41,
+        "label": "extracting-a-column-2",
+        "output_hash": "758eba5b437e5d52",
+        "preview": "[1] 176 165 172 160 180"
+      },
+      {
+        "line": 48,
+        "label": "extracting-a-column-3",
+        "output_hash": "1d80e656a7e0ea5e",
+        "preview": "[1] 172.3"
+      },
+      {
+        "line": 56,
+        "label": "types-of-data-1",
+        "output_hash": "91f69a080e30762a",
+        "preview": "[1] \"character\" [1] \"numeric\""
+      },
+      {
+        "line": 69,
+        "label": "types-of-data-2",
+        "output_hash": "cace1b94f30754c7",
+        "preview": "[1] \"BE\" \"DE\" \"FR\" \"NL\" \"UK\""
+      }
+    ]
+  },
+  "chapters/1.06-functions-and-packages.qmd": {
+    "title": "1.6 Functions and Packages",
+    "source_hash": "fecd3abc9fba5292718f15776c7d7e3eb3eb7f7c61ec1762c4bc3c52f839e341",
+    "content_hash": "ded26dbb9954443ed75a74a891e47465a8375cce3b91ca9b9bda427efb36676b",
+    "last_modified": "2026-10-13",
+    "status": "healthy",
+    "drifted_date": "",
+    "chunks": [
+      {
+        "line": 25,
+        "label": "what-is-a-function-1",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
       },
       {
-        "line": 322,
+        "line": 66,
         "label": "optional-arguments-2",
         "output_hash": "5afe854bb6671922",
         "preview": "[1] NA"
       },
       {
-        "line": 330,
+        "line": 74,
         "label": "optional-arguments-3",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
       },
       {
-        "line": 365,
+        "line": 95,
         "label": "using-the-pipe-syntax-2",
         "output_hash": "b5fa36f6110d3bcd",
         "preview": "[1] 2.5 [1] 2.5"
       },
       {
-        "line": 503,
+        "line": 227,
         "label": "",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
       },
       {
-        "line": 511,
+        "line": 235,
         "label": "",
         "output_hash": "182b3935da333ed8",
         "preview": "[1] \"2021-01-02\""
       },
       {
-        "line": 543,
+        "line": 267,
         "label": "",
         "output_hash": "5afe854bb6671922",
         "preview": "[1] NA"
       },
       {
-        "line": 550,
+        "line": 274,
         "label": "",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
       },
       {
-        "line": 563,
+        "line": 287,
         "label": "",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
       },
       {
-        "line": 573,
+        "line": 297,
         "label": "",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
       },
       {
-        "line": 588,
+        "line": 312,
         "label": "",
         "output_hash": "924248fbc522e5f3",
         "preview": "[1] 2.5"
-      },
-      {
-        "line": 679,
-        "label": "recommended-approach-stick-to-your-working-directory-2",
-        "output_hash": "4f19ab90c8068cdb",
-        "preview": "[1] \"/home/kasper/projects\""
       }
     ]
   },
   "chapters/1.03-reproducible-reports.qmd": {
     "title": "1.3 Reproducible Reports",
-    "source_hash": "1cb2fcb760dc1ce4569993b6836b79bbfcf2db0ada629fb555caa4f95e237f40",
-    "content_hash": "1d741733ae78d7366095ed6385f89f90b5a2abceef956f61d16d1e3ceab410a1",
-    "last_modified": "2026-10-12",
+    "source_hash": "29cf75e2ea28bdc7924880bf0ca6a6807da04f2def7f52d1cb72e4b22b6b2cec",
+    "content_hash": "8240d3dc710288ed38a2c06e7546ccbe1553856c479fc6abc51838bded9ea8e2",
+    "last_modified": "2026-10-13",
     "status": "healthy",
     "drifted_date": "",
     "chunks": []
   },
   "chapters/2.01-data-frames.qmd": {
     "title": "2.1 Data Frames",
-    "source_hash": "921f0d56f0f9385c81209b314f34d0ec1f5074bb5657c4eac79a1cbc146e8be7",
-    "content_hash": "8bffb670b411cdefee3087c5bb4eb5f0d4f60d17a474dd6b3b9e1006d3ca0083",
-    "last_modified": "2026-10-12",
+    "source_hash": "a6be7e2bd0805751d2ec25d053044259a47fd21ca2057521fbd980a9be54ce89",
+    "content_hash": "d637baeec01fe3e3343163bc7663383f08d1c8ca010fb50093c2caa7cf40c2bd",
+    "last_modified": "2026-10-13",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
@@ -262,8 +312,8 @@
     "source_hash": "1ae3646c02a704ed24100e383eeabe018c02c66c77301d6e87340411e14e45d5",
     "content_hash": "21bd53d113c12b3667e15a5b38269ecc47ef7e3c728d933bf4d9134c447f49b0",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 19,
@@ -314,8 +364,8 @@
     "source_hash": "81f50b95580d9da493ef897998b6fbff7a6a7bd6d0d58980c321b1c0c0aa3381",
     "content_hash": "b06218da22cf6e096d177c3da19450c414406bd92ac8f84497399c60c513e897",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 16,
@@ -372,8 +422,8 @@
     "source_hash": "5aa6f6bb81c0d7db3872bc34214a8f41cd4bcccfed7620271ead4cc70edb2073",
     "content_hash": "9dd494f12990cf19ddb29d4970cd997780db6cb222c8dd486a6536b692dcc683",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 18,
@@ -442,8 +492,8 @@
     "source_hash": "85d130be0e4337b115c3c1f89e869b9d29640bae65b37f8eb6c04a2d1f140fdc",
     "content_hash": "02e856f01195c6ad80e6ced27864f7ba23017ac6d82e34409d2ba8d9143d5a16",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 21,
@@ -491,9 +541,9 @@
   },
   "chapters/3.01-means-and-variance.qmd": {
     "title": "3.1 Means & Variance",
-    "source_hash": "35430662696c7edab535e410d1a4c73edc7ebc693a8e84ef194573195d7182d6",
-    "content_hash": "069d3115d1505501973a6078376959ab282ab0e0fd9f8583241cf62c271a6080",
-    "last_modified": "2026-10-12",
+    "source_hash": "6f13b058f3dffd69462524625d2f3d31c1c66a18b2303a1a7ce8f84fad18f6ba",
+    "content_hash": "9be179f8c9d49d54fbc7c77443e7d9db3e7b024cd6ea04262302041238d634f4",
+    "last_modified": "2026-10-13",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
@@ -552,8 +602,8 @@
     "source_hash": "6b7862f08c3a20f33ebe0a4016573f57833c4de0336f51a24a76698b039e10ac",
     "content_hash": "2e79e0393214e4902db5e329ac75b3e2b4b942e8591523d4e741a1e55e2ef947",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 20,
@@ -580,8 +630,8 @@
     "source_hash": "9faf54c0d2600d3b80c9aee12a3507972b3f2ddb04fad38904b12bd9c197dec8",
     "content_hash": "b625c8be866c357e3e22827448f597d173c3610f8180192bc90f8826e39cba5e",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 41,
@@ -644,8 +694,8 @@
     "source_hash": "ae14b9e97bf1a8ae9d209e6638a09214d44020538b9170e5d06ea99204e2913a",
     "content_hash": "14a31340d8b630fed794c915cb510a865af3e724bd4a5dec8b3df66a7a446935",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 38,
@@ -666,8 +716,8 @@
     "source_hash": "5ac4b3e19b7127e1e662ad9d52e02b94558091c0897926e7e20c4d6620a9651d",
     "content_hash": "7f88a999f7b0032e2114315dbba518d4a1d8f3d9b2e7562fee6e42f22dad3817",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 64,
@@ -682,8 +732,8 @@
     "source_hash": "00285e3725d73fff1bbf44f36725eefe1b67acc9cd243846bd095d7dc29fc51f",
     "content_hash": "d8b5ce6931801aad157372e412947c7f7dd2b51ea0cd28a2fc12dc5969570c2e",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 25,
@@ -758,8 +808,8 @@
     "source_hash": "97289be86640356723d66ac17c503eef0f96280c2a67aad4d1dbed69bedd4682",
     "content_hash": "d7ac790c456e4c4cc782ccb0c0809b5a2c32a3aa3ea261eb33b050c45c700c65",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 31,
@@ -816,8 +866,8 @@
     "source_hash": "44ee1cba78f5da928258641efc1d0a98516ef15ef09b83213c7b19cf7f84790f",
     "content_hash": "ffb2eb22863f82dc7cc0bc29b64eb456da314e9c45445e5f221df49f0f9f7528",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 25,
@@ -856,8 +906,8 @@
     "source_hash": "be21cfbb09f86526d934c202c9a032be3e84a10fd9a0be0edaf0196b3f7d13c7",
     "content_hash": "933ad237462e0b45b9b37a991139035186989516850907139e68309aaab55b48",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 53,
@@ -914,8 +964,8 @@
     "source_hash": "86df125de190af5a88ee29d4ad920b4903728864913b5889fce6878f2ba1a7c3",
     "content_hash": "0415e35c56d63cc6ec370f031c14402d30c5fc3fcf36bc36bc2fdac9182c5bf9",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 67,
@@ -942,8 +992,8 @@
     "source_hash": "eac1e51e061b95182a91757f30d45510c31a2a0edb46cc9d206c67c819058460",
     "content_hash": "76a7f6ccb7c8cfc5d7705c5e680da7dede6306ed11792e7b9837a6fe3ca420b7",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 22,
@@ -1024,8 +1074,8 @@
     "source_hash": "de72af8f0bd55812bf6638cdb2ccd272a7352103ace8457f524d7070772998ac",
     "content_hash": "5e4188ed2441e5f8cc90c434150b703618f247a0bc2d027810e8709ec9a02d9d",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 14,
@@ -1046,8 +1096,8 @@
     "source_hash": "eb5dbaded573f4861a8e68ba9a974269182f37ceeb65d5a30cfc1864fc729f18",
     "content_hash": "7fab7a2ece582553b347477bb8610092241ed134f93183ebe9b3d5572754129d",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 45,
@@ -1080,8 +1130,8 @@
     "source_hash": "b0cb197b9cd2cffe19fcb3e1a8153893b3b20d0846cac54a5578db8ca3b52692",
     "content_hash": "63b68fca40a4e97425e0c819f92c93047037e9e8b821ad8740ea1455822e58fe",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 97,
@@ -1156,8 +1206,8 @@
     "source_hash": "41ee1bedf98f0a08a3a8ece3375cd5c1d0ff7dcb2c75060509ce02ff7be103e5",
     "content_hash": "fbeb1ae5d4aa016bd6b2894786fe7992817d7a91ee8cd3de32a2226916af13d9",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 88,
@@ -1202,8 +1252,8 @@
     "source_hash": "43673e7a39547ff31b3c34e6ebbcaae14303a7e5cd78bc6d9a03acb67770b7a7",
     "content_hash": "ee49ad5b0c7b25d65deb3833140c1b7cf983e70f30a473fe9442bbb1a5e8b698",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 63,
@@ -1254,8 +1304,8 @@
     "source_hash": "feb075c25004f525c36243791f5845978b6942286fc18e5f5cbc12e857557bb3",
     "content_hash": "05ca1ead861066775fe977633b6927e4c7343315f774f0d13b8b91fa2217d6f7",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 39,
@@ -1282,8 +1332,8 @@
     "source_hash": "361705d518518a363ad731783eddcc254305cef49deaa191faf4b51922b6112b",
     "content_hash": "d5977146d0be988ae47927fbd5ca586cc23410182e77e02e0a95999b01c29009",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 72,
@@ -1322,8 +1372,8 @@
     "source_hash": "ea851f1836423ed4f03a317fe8ccb907a68ce3ec03d39e78b61adb47e1cd424b",
     "content_hash": "36464efe32e35c72f4abf472aad7ad1a05a62e201c39340f32ed76167391fdd7",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": []
   },
   "chapters/6.03-statistical-control.qmd": {
@@ -1331,8 +1381,8 @@
     "source_hash": "5bbd47217f7740832ec6e94f5a4d9b480fcca9523d78e5511dccaab0f222635f",
     "content_hash": "9f30b231e775777e01b98d19b248fe8b037de8530d813bfdaa7d43e8168953b5",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 44,
@@ -1365,8 +1415,8 @@
     "source_hash": "de38f6b28ba383975f9b503ecee55d6a04da1004e14fa0bf8a06d1ea2cab366e",
     "content_hash": "e610d0f8cd03f1de3503d86bf0ecc25ea94106299904252108157ede45c9345d",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 22,
@@ -1435,13 +1485,13 @@
         "preview": "  Y ~ X M ~ X Y ~ X + M Predictors Estimates p Estimates p Estimates p (Inter..."
       },
       {
-        "line": null,
+        "line": {},
         "label": "",
         "output_hash": "69641d8d964ea371",
         "preview": "XXYYX->Yc = 0.94***"
       },
       {
-        "line": null,
+        "line": {},
         "label": "",
         "output_hash": "0bbd00b64e85e730",
         "preview": "XXMMX->Ma = 0.48***YYX->Yc' = 0.92***M->Yb = 0.05"
@@ -1453,8 +1503,8 @@
     "source_hash": "a2424940bb766cb8bc58e3579f76336b4707a3ee25286cc2720e578d1c4d5c75",
     "content_hash": "606c0de94aa192ff1d4dd9b7ebc3857074a963c68177a28fa081905ab5b0fd83",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 54,
@@ -1481,8 +1531,8 @@
     "source_hash": "4f470dc792d88a3e3be391903fd1e37c241a4d8cdc3e7790e6241ce82c46760f",
     "content_hash": "b8c6e92435b16bbe4bf4b431e023ee31e8097e122ec2eead836afea9706c055c",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 36,
@@ -1497,8 +1547,8 @@
     "source_hash": "58d763f8481eda684bc0e4cd8ba88057d9ffe0e823e853e5e90b3ef88f5487c4",
     "content_hash": "085f4529790f384d0fed420e5dba7a12eab59a572da0147437dc1936659d6ba3",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 24,
@@ -1519,8 +1569,8 @@
     "source_hash": "243da2c1efb1f466facec5f800cc4f3709c477271b89cf018f8c72c0a33079b8",
     "content_hash": "ef4a38af931a6ce1dbfe33053d7558df5a60764d26ff863003283529f0005ee9",
     "last_modified": "2026-10-12",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-13",
     "chunks": [
       {
         "line": 20,
