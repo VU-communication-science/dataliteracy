@@ -13,8 +13,8 @@
     "source_hash": "a38c1c54291876d28af2d1a47b4d0f44a7df5caa621d542058abb011c146d824",
     "content_hash": "2426c85bc83e3964e0a388bf1d844c5247f69617db531726bc8d0ad1586d33e0",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": []
   },
   "data/datasets.qmd": {
@@ -31,8 +31,8 @@
     "source_hash": "00f5ab5dfc47f5c979f04c3989efa8aa92b2165bdbf3c93e5837149f6aa05778",
     "content_hash": "d792ebd5adbae21da6b951f7e2d60cf26d29f0c86fefb9f655bd2ddced485943",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": [
       {
         "line": 17,
@@ -43,39 +43,39 @@
     ]
   },
   "chapters/1.02-installing-and-running-r.qmd": {
-    "title": "1.2 Installing and Running R",
-    "source_hash": "41270b1bfc448910a3572f86460fb4a21192e0618af9c7aef69438c9c405272a",
-    "content_hash": "d4e0241436c91ee20f46845060ec05a45f230517ea3392f28f55612182c8d3f1",
-    "last_modified": "2026-10-13",
+    "title": "1.02-installing-and-running-r.qmd",
+    "source_hash": "a061fb3078f0e3d0b97b2e1b013f20f0a8173fc80c568b53ea63c6b447ad7f27",
+    "content_hash": "bc7c622bd2aa64aa4bbb54b52c4b990a0d7529753fd5b9b1279c482de7a90602",
+    "last_modified": "2026-10-14",
     "status": "healthy",
     "drifted_date": "",
     "chunks": [
       {
-        "line": 89,
+        "line": 125,
         "label": "why-bother-naming-things-1",
         "output_hash": "da63020a101227e6",
         "preview": "[Plot: why-bother-naming-things-1-1.png]"
       },
       {
-        "line": 124,
+        "line": 160,
         "label": "the-power-of-assignment-3",
         "output_hash": "8d1f6c1e2c6837b5",
         "preview": "[1] 10"
       },
       {
-        "line": 136,
+        "line": 172,
         "label": "the-power-of-assignment-4",
         "output_hash": "b168777f8685aab6",
         "preview": "[1] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 [26] 26..."
       },
       {
-        "line": 150,
+        "line": 186,
         "label": "assigning-results-1",
         "output_hash": "1143e30a397118df",
         "preview": "[1] 15 [1] 15"
       },
       {
-        "line": 168,
+        "line": 204,
         "label": "",
         "output_hash": "3062159cebf8b466",
         "preview": "[1] \"/Users/Chris/Projects/master_thesis\""
@@ -87,8 +87,8 @@
     "source_hash": "c256724fda8c948acb4b52a590dbc331ec0a556cb17c2baed3cce3e738445140",
     "content_hash": "508b9fea5939f1dacecc3f429d26cbd47c5add4401718f326942f731dce9b5b7",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": [
       {
         "line": 16,
@@ -133,8 +133,8 @@
     "source_hash": "fecd3abc9fba5292718f15776c7d7e3eb3eb7f7c61ec1762c4bc3c52f839e341",
     "content_hash": "ded26dbb9954443ed75a74a891e47465a8375cce3b91ca9b9bda427efb36676b",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": [
       {
         "line": 25,
@@ -209,8 +209,8 @@
     "source_hash": "29cf75e2ea28bdc7924880bf0ca6a6807da04f2def7f52d1cb72e4b22b6b2cec",
     "content_hash": "8240d3dc710288ed38a2c06e7546ccbe1553856c479fc6abc51838bded9ea8e2",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": []
   },
   "chapters/2.01-data-frames.qmd": {
@@ -218,8 +218,8 @@
     "source_hash": "a6be7e2bd0805751d2ec25d053044259a47fd21ca2057521fbd980a9be54ce89",
     "content_hash": "d637baeec01fe3e3343163bc7663383f08d1c8ca010fb50093c2caa7cf40c2bd",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": [
       {
         "line": 19,
@@ -544,8 +544,8 @@
     "source_hash": "6f13b058f3dffd69462524625d2f3d31c1c66a18b2303a1a7ce8f84fad18f6ba",
     "content_hash": "9be179f8c9d49d54fbc7c77443e7d9db3e7b024cd6ea04262302041238d634f4",
     "last_modified": "2026-10-13",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-10-14",
     "chunks": [
       {
         "line": 18,
