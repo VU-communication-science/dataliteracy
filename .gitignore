@@ -1,6 +1,8 @@
 # Quarto internal debug files
 _quarto_internal_scss_error.scss
 
+/_extensions/
+
 # Runtime-generated directories (CI)
 /docs_old/
 

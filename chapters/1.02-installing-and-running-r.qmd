@@ -1,34 +1,70 @@
----
-title: "1.2 Installing and Running R"
-subtitle: "Setting up R and RStudio, running code, projects, and your working directory."
----
 
-*You arrive here from [Basic Computer Skills](1.01-basic-computer-skills.qmd), so you already know your way around files, folders, and installed software on your computer. Here you'll install R and RStudio, get comfortable running code and keeping it organised in scripts and projects, and learn how R finds the files you want to read or write. R is the tool we use for everything else in this course, so every later module assumes you are comfortable with these basics.*
 
-→ [See this module in the skill tree](curriculum.html?module=rbas)
+R is distributed through [CRAN (the Comprehensive R Archive Network)](https://cran.r-project.org/). Do not be alarmed by the website's 90's aesthetics. The website is legit.
+At the top of the page, choose the link for your operating system
+::: {.panel-tabset}
 
-## Installation
+## Windows
 
-To work with R, you will need to install two pieces of software.
+1. Click **Download R for Windows**.
+2. Click **base** (or **install R for the first time**).
+3. Click the big **Download R-4.x.x for Windows** link at the top (the exact version number will differ).
+4. Open the downloaded `.exe` file and follow the installer. You can keep all the default options, so just keep clicking **Next**.
 
-* **R**. This is the actual R software, that is used to run R code.
-* **RStudio**. This is a graphical user interface (GUI) that makes working with R much easier and prettier.
+You might see a link to **Rtools** on the CRAN website. You do *not* need this for this course.
 
-Both programs can be downloaded for free, and are available for all main operating systems (Windows, macOS and Linux).
+## macOS
 
-### Installing R
+1. Click **Download R for macOS**.
+2. Pick the right installer for your type of Mac. There are two versions, and you need the one that matches your processor:
+   * **Apple silicon** (M1, M2, M3, etc.): download the file ending in **`arm64.pkg`**.
+   * **Intel**: download the file ending in **`x86_64.pkg`**.
 
-To install R, you can download it from the [CRAN (comprehensive R Archive Network) website](https://cran.r-project.org/). Do not be alarmed by the website's 90's aesthetics. The website is legit.
+   Not sure which one you have? Click the Apple menu (the Apple logo) in the top-left corner of your screen and choose **About This Mac**. If it says **Chip: Apple M...**, you have Apple silicon. If it says **Processor: ... Intel ...**, you have an Intel Mac.
+3. Open the downloaded `.pkg` file and follow the installer, keeping the default options.
 
-### Installing RStudio
+## Linux
 
-RStudio can be downloaded from the [posit.co website](https://posit.co/download/rstudio-desktop), which is the developer of RStudio. Make sure to pick the latest version available for your operating system.
+R is available through the package manager of most Linux distributions, but the version there is often outdated.
+On the CRAN website, click **Download R for Linux** and pick your distribution (e.g., Ubuntu, Debian, Fedora) for instructions on how to install the latest version.
 
-Once you have installed R and RStudio, you can start by launching RStudio. If everything was installed correctly, RStudio will automatically launch R as well.
+:::
 
-The first time you open RStudio, you will likely see three separate windows. The first thing you want to do is **open an R Script (!!)** to work in. To do so, go to the toolbar and select **File -\> New File -\> R Script**.
+### Step 2: Install RStudio
 
-You will now see four windows split evenly over the four corners of your screen:
+RStudio is made by a company called Posit. Go to the [RStudio Desktop download page](https://posit.co/download/rstudio-desktop) on the Posit website.
+The page also tells you to install R (step 1 on their page), but you have already done that, so you can skip to **Install RStudio**.
+
+* The website will usually detect your operating system and show a download button for it. If not, scroll down to the table with all installers and pick the one for your system.
+* **Windows**: open the downloaded `.exe` file and follow the installer, keeping the default options.
+* **macOS**: open the downloaded `.dmg` file and **drag the RStudio icon into the Applications folder**. Afterwards, you can find RStudio in your Applications folder or via Spotlight (Command + Space, then type "RStudio").
+
+### Step 3: Check that everything works
+
+Now open **RStudio** (not R!). After installing, you will have both an *R* and an *RStudio* program on your computer, which is confusing. From now on, you only ever need to open RStudio, which will start R for you.
+
+If everything went well, RStudio opens with a window called the **Console**, which starts with a message like this:
+
+```
+R version 4.x.x (20xx-xx-xx) -- "Some Funny Name"
+Copyright (C) 20xx The R Foundation for Statistical Computing
+...
+```
+
+To make sure R actually works, click in the console, type `1 + 1` and press **Enter**. If R answers with `[1] 2`, you're all set!
+
+::: {.callout-warning title="Troubleshooting" collapse="true"}
+* **RStudio says it cannot find R, or asks you to choose an R installation.** This usually means R was not installed (correctly), or RStudio was installed before R. Install R (step 1), and then restart RStudio. If that doesn't help, reinstall RStudio as well.
+* **On a Mac, you downloaded the wrong R installer.** If you installed the Intel (`x86_64`) version on an Apple silicon Mac, R will still work but it is slower, and some packages can cause problems. Just download and install the `arm64` version, it will replace the old one.
+* **You are on a work or university computer and are not allowed to install software.** Ask your IT department, or use one of the alternatives below.
+* **Your computer cannot run R at all** (e.g., a Chromebook or tablet). You can use [Posit Cloud](https://posit.cloud), which runs RStudio in your web browser. You need to create a (free) account. The free plan has limited computing hours, so we recommend using it only if installing R on your own computer is not possible.
+:::
+
+## A first look at RStudio
+
+The first time you open RStudio, you will see three panels. The first thing you want to do is **open an R Script** to work in. To do so, go to the menu bar and select **File -\> New File -\> R Script**.
+
+You will now see four panels split evenly over the four corners of your screen:
 
 -   In the **top-left** you have the text editor for the file that you are working in. This will most of the time be an R script or RMarkdown file.
 -   In the **top-right** you can see the data and values that you are currently working with (environment) or view your history of input.
