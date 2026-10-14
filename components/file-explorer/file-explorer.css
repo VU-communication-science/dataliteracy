@@ -1,0 +1,197 @@
+/* components/file-explorer/file-explorer.css
+   A small, self-contained "file explorer" style tree widget, used to
+   mimic Finder/File Explorer when teaching the file system. */
+
+.fe-wrapper {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.92rem;
+  margin: 1.1rem 0;
+  user-select: none;
+  position: relative;
+}
+
+.fe-window {
+  border: 1px solid #d8dee9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.fe-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.fe-dots {
+  display: flex;
+  gap: 0.32rem;
+}
+
+.fe-dot {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.fe-dot.fe-dot-red { background: #ff5f57; }
+.fe-dot.fe-dot-yellow { background: #febc2e; }
+.fe-dot.fe-dot-green { background: #28c840; }
+
+.fe-titlebar-label {
+  font-size: 0.78rem;
+  color: #475569;
+  margin-left: 0.25rem;
+}
+
+.fe-hint {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.fe-tree {
+  padding: 0.6rem 0.4rem;
+  list-style: none;
+  margin: 0;
+}
+
+.fe-tree ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 1.3rem;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.22s ease;
+}
+
+.fe-node.fe-open > ul {
+  max-height: 60rem; /* large enough for our trees; animated via transition */
+}
+
+.fe-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.22rem 0.4rem;
+  border-radius: 6px;
+  cursor: default;
+  line-height: 1.35;
+}
+
+.fe-node.fe-folder > .fe-row {
+  cursor: pointer;
+}
+
+.fe-row:hover {
+  background: #eff6ff;
+}
+
+.fe-caret {
+  width: 0.9rem;
+  flex: 0 0 auto;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.7rem;
+  transition: transform 0.18s ease;
+}
+
+.fe-node.fe-open > .fe-row .fe-caret {
+  transform: rotate(90deg);
+}
+
+.fe-node.fe-file .fe-caret {
+  visibility: hidden;
+}
+
+.fe-icon {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.fe-name {
+  color: #1e293b;
+}
+
+.fe-node.fe-highlight > .fe-row .fe-name {
+  color: #2c5aa0;
+  font-weight: 600;
+}
+
+.fe-node.fe-highlight > .fe-row {
+  background: #eaf1fb;
+}
+
+.fe-node.fe-highlight > .fe-row:hover {
+  background: #dce9f8;
+}
+
+.fe-note {
+  margin-left: 0.4rem;
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
+.fe-row.fe-selected {
+  background: #dbeafe;
+}
+
+.fe-row.fe-selected:hover {
+  background: #dbeafe;
+}
+
+.fe-popup {
+  position: absolute;
+  z-index: 20;
+  background: #0f172a;
+  color: #f1f5f9;
+  padding: 0.5rem 0.7rem;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+  width: max-content;
+  max-width: min(22rem, calc(100% - 1rem));
+}
+
+.fe-popup-path {
+  word-break: break-all;
+}
+
+.fe-popup-description {
+  margin-top: 0.3rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(241, 245, 249, 0.15);
+  color: #cbd5e1;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.fe-popup::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 1.1rem;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #0f172a;
+}
+
+.fe-popup-label {
+  color: #94a3b8;
+  margin-right: 0.3rem;
+}
+
+.fe-popup code {
+  background: transparent;
+  color: #93c5fd;
+  padding: 0;
+}

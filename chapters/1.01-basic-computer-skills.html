@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1.1 Basic Computer Skills – Data Literacy</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-72db5d666b1b9b045408adc4e2bc6f06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/1.01-basic-computer-skills.html">Computational Skills</a></li><li class="breadcrumb-item"><a href="../chapters/1.01-basic-computer-skills.html">1.1 Basic Computer Skills</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Data Literacy</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/curriculum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Curriculum &amp; Skill Tree</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Computational Skills</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.01-basic-computer-skills.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1.1 Basic Computer Skills</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.02-installing-and-running-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.04-data-in-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.4 Data in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.06-functions-and-packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.6 Functions and Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.03-reproducible-reports.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.3 Reproducible Reports</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Management</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.01-data-frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.1 Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.02-grouping-and-summarizing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2 Group and summarize</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.03-data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.3 Data Cleaning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.04-pivoting-and-joining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.4 Pivoting and joining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.05-string-processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.5 String processing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.01-means-and-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Means &amp; Variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.02-probability-and-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Probability &amp; Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.03-correlation-and-covariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Covariance &amp; Correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.04-effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.05-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.5 Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploration and Measurement</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.01-descriptive-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.1 Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.02-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.2 Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.03-advanced-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.3 Advanced Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.04-factor-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.4 Factor Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.05-scale-construction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.5 Scale Construction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Inferential Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.01-comparing-two-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.1 Comparing two Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.02-testing-associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.2 Testing Associations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.03-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.3 Simple Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.04-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.4 ANOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.06-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.5 Multiple Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.08-linear-model-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.6 Linear Model Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.09-power-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.7 Power Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Causality</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.01-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.1 Causality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.02-experimental-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.2 Experimental control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.03-statistical-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.3 Statistical control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.04-mediation-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.4 Mediation Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Content Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.01-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.1 Text as Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.02-manual-coding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.2 Manual Coding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.03-machine-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.3 Machine Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.04-text-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.4 Text Classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#files-and-folders" id="toc-files-and-folders" class="nav-link active" data-scroll-target="#files-and-folders">1.1.1 Files and folders</a>
+  <ul class="collapse">
+  <li><a href="#the-file-system" id="toc-the-file-system" class="nav-link" data-scroll-target="#the-file-system">The File System</a></li>
+  <li><a href="#absolute-file-paths" id="toc-absolute-file-paths" class="nav-link" data-scroll-target="#absolute-file-paths">Absolute file paths</a></li>
+  <li><a href="#relative-paths-and-working-directories" id="toc-relative-paths-and-working-directories" class="nav-link" data-scroll-target="#relative-paths-and-working-directories">Relative paths and working directories</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  </ul></li>
+  <li><a href="#file-types-and-extensions" id="toc-file-types-and-extensions" class="nav-link" data-scroll-target="#file-types-and-extensions">1.1.2 File types and extensions</a></li>
+  <li><a href="#zip-files" id="toc-zip-files" class="nav-link" data-scroll-target="#zip-files">1.1.3 Zip files</a></li>
+  <li><a href="#a-few-general-habits-worth-having" id="toc-a-few-general-habits-worth-having" class="nav-link" data-scroll-target="#a-few-general-habits-worth-having">1.1.4 A few general habits worth having</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/1.01-basic-computer-skills.html">Computational Skills</a></li><li class="breadcrumb-item"><a href="../chapters/1.01-basic-computer-skills.html">1.1 Basic Computer Skills</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">1.1 Basic Computer Skills</h1>
+<p class="subtitle lead">The file system, paths, and general computer habits.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>Basic computer skills are the foundation everything else in this book builds on. Most of you will already have plenty of experience using a computer, but there can still be gaps in your understanding, especially around things like how the file system actually works. This chapter gives a quick overview of the key skills worth having. We highly recommend reading through it once to see where you stand.</em></p>
+<p>→ <a href="curriculum.html?module=compu">See this module in the skill tree</a></p>
+<section id="files-and-folders" class="level2">
+<h2 class="anchored" data-anchor-id="files-and-folders">1.1.1 Files and folders</h2>
+<p>Everything on your computer — documents, photos, programs, and (soon) your data files — is stored as a <strong>file</strong>, and files are organised into <strong>folders</strong> (also called <strong>directories</strong>). This is called the <strong>file system</strong>, and most people navigate it using a file explorer. The following example is for MacOS, but it works the same on Windows and Linux.</p>
+<style>
+/* components/file-explorer/file-explorer.css
+   A small, self-contained "file explorer" style tree widget, used to
+   mimic Finder/File Explorer when teaching the file system. */
+
+.fe-wrapper {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.92rem;
+  margin: 1.1rem 0;
+  user-select: none;
+  position: relative;
+}
+
+.fe-window {
+  border: 1px solid #d8dee9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.fe-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.fe-dots {
+  display: flex;
+  gap: 0.32rem;
+}
+
+.fe-dot {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.fe-dot.fe-dot-red { background: #ff5f57; }
+.fe-dot.fe-dot-yellow { background: #febc2e; }
+.fe-dot.fe-dot-green { background: #28c840; }
+
+.fe-titlebar-label {
+  font-size: 0.78rem;
+  color: #475569;
+  margin-left: 0.25rem;
+}
+
+.fe-hint {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.fe-tree {
+  padding: 0.6rem 0.4rem;
+  list-style: none;
+  margin: 0;
+}
+
+.fe-tree ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 1.3rem;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.22s ease;
+}
+
+.fe-node.fe-open > ul {
+  max-height: 60rem; /* large enough for our trees; animated via transition */
+}
+
+.fe-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.22rem 0.4rem;
+  border-radius: 6px;
+  cursor: default;
+  line-height: 1.35;
+}
+
+.fe-node.fe-folder > .fe-row {
+  cursor: pointer;
+}
+
+.fe-row:hover {
+  background: #eff6ff;
+}
+
+.fe-caret {
+  width: 0.9rem;
+  flex: 0 0 auto;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.7rem;
+  transition: transform 0.18s ease;
+}
+
+.fe-node.fe-open > .fe-row .fe-caret {
+  transform: rotate(90deg);
+}
+
+.fe-node.fe-file .fe-caret {
+  visibility: hidden;
+}
+
+.fe-icon {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.fe-name {
+  color: #1e293b;
+}
+
+.fe-node.fe-highlight > .fe-row .fe-name {
+  color: #2c5aa0;
+  font-weight: 600;
+}
+
+.fe-node.fe-highlight > .fe-row {
+  background: #eaf1fb;
+}
+
+.fe-node.fe-highlight > .fe-row:hover {
+  background: #dce9f8;
+}
+
+.fe-note {
+  margin-left: 0.4rem;
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
+.fe-row.fe-selected {
+  background: #dbeafe;
+}
+
+.fe-row.fe-selected:hover {
+  background: #dbeafe;
+}
+
+.fe-popup {
+  position: absolute;
+  z-index: 20;
+  background: #0f172a;
+  color: #f1f5f9;
+  padding: 0.5rem 0.7rem;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+  width: max-content;
+  max-width: min(22rem, calc(100% - 1rem));
+}
+
+.fe-popup-path {
+  word-break: break-all;
+}
+
+.fe-popup-description {
+  margin-top: 0.3rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(241, 245, 249, 0.15);
+  color: #cbd5e1;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.fe-popup::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 1.1rem;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #0f172a;
+}
+
+.fe-popup-label {
+  color: #94a3b8;
+  margin-right: 0.3rem;
+}
+
+.fe-popup code {
+  background: transparent;
+  color: #93c5fd;
+  padding: 0;
+}
+</style>
+<div id="file-explorer-demo">
+
+</div>
+<script>
+// components/file-explorer/file-explorer.js
+//
+// A tiny, dependency-free "file explorer" widget used to give students a
+// more realistic (and clickable) sense of what a Finder/File Explorer
+// window looks like, instead of a static bullet list.
+//
+// Usage:
+//   window.initFileExplorer("some-div-id", treeData, { title: "Macintosh HD" });
+//
+// `treeData` is a single node (the root), where a node looks like:
+//   {
+//     name: "Documents",
+//     type: "folder" | "file",      // defaults to "folder" if `children` is present, else "file"
+//     open: true,                   // whether a folder starts expanded (folders only)
+//     highlight: true,              // optional accent styling, e.g. to trace a path
+//     note: "a short note",         // optional grey annotation shown after the name
+//     icon: "\uD83D\uDCC1",         // optional custom icon override
+//     description: "a sentence",    // optional custom text shown in the path popup; falls back
+//                                    // to a generic explanation based on the file extension
+//     children: [ ... ]             // nested nodes (folders only)
+//   }
+
+(function () {
+  const DEFAULT_FOLDER_ICON = "\uD83D\uDCC1"; // 📁
+  const DEFAULT_OPEN_FOLDER_ICON = "\uD83D\uDCC2"; // 📂
+  const FILE_ICONS = {
+    csv: "\uD83D\uDCCA",
+    xlsx: "\uD83D\uDCCA",
+    xls: "\uD83D\uDCCA",
+    pdf: "\uD83D\uDCD5",
+    png: "\uD83D\uDDBC\uFE0F",
+    jpg: "\uD83D\uDDBC\uFE0F",
+    jpeg: "\uD83D\uDDBC\uFE0F",
+    zip: "\uD83D\uDDDC\uFE0F",
+    r: "\u2328\uFE0F",
+    docx: "\uD83D\uDCC4",
+    txt: "\uD83D\uDCC4",
+    json: "\uD83D\uDCC4",
+  };
+  const DEFAULT_FILE_ICON = "\uD83D\uDCC4"; // 📄
+
+  // Short, generic explanations shown in the path popup when a file has no
+  // custom `description` of its own, keyed by (lowercased) extension.
+  const EXTENSION_DESCRIPTIONS = {
+    csv: "A comma-separated values file: plain-text tabular data, often opened in R or Excel.",
+    tsv: "A tab-separated values file: plain-text tabular data, similar to a CSV.",
+    xlsx: "An Excel spreadsheet file.",
+    xls: "An older-format Excel spreadsheet file.",
+    txt: "A plain-text file with no special formatting.",
+    r: "An R script: plain-text code that R can run.",
+    rmd: "An R Markdown file: text and R code combined into one document.",
+    qmd: "A Quarto Markdown file: text and code combined into one document.",
+    py: "A Python script.",
+    json: "A JSON file: structured, machine-readable text data.",
+    pdf: "A PDF document: fixed-layout, for reading or printing.",
+    docx: "A Word document.",
+    doc: "An older-format Word document.",
+    pptx: "A PowerPoint presentation.",
+    png: "A PNG image file.",
+    jpg: "A JPEG image file.",
+    jpeg: "A JPEG image file.",
+    gif: "A GIF image file.",
+    svg: "An SVG image file: scalable, vector-based graphics.",
+    zip: "A ZIP archive: one or more files compressed and bundled together.",
+    html: "An HTML file: a web page.",
+  };
+  const DEFAULT_FILE_DESCRIPTION = "No further information is available for this file type.";
+
+  function extensionOf(name) {
+    return name.includes(".") ? name.split(".").pop().toLowerCase() : "";
+  }
+
+  function fileIcon(name) {
+    return FILE_ICONS[extensionOf(name)] || DEFAULT_FILE_ICON;
+  }
+
+  function fileDescription(name) {
+    return EXTENSION_DESCRIPTIONS[extensionOf(name)] || DEFAULT_FILE_DESCRIPTION;
+  }
+
+  function nodeType(node) {
+    if (node.type) return node.type;
+    return Array.isArray(node.children) ? "folder" : "file";
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function joinPath(parentPath, name) {
+    if (!parentPath) return name;
+    return parentPath.endsWith("/") ? parentPath + name : parentPath + "/" + name;
+  }
+
+  function renderNode(node, parentPath) {
+    const type = nodeType(node);
+    const isFolder = type === "folder";
+    const open = isFolder && node.open !== false;
+    const path = joinPath(parentPath || "", node.name);
+    const classes = ["fe-node", isFolder ? "fe-folder" : "fe-file"];
+    if (open) classes.push("fe-open");
+    if (node.highlight) classes.push("fe-highlight");
+
+    const icon = node.icon || (isFolder ? (open ? DEFAULT_OPEN_FOLDER_ICON : DEFAULT_FOLDER_ICON) : fileIcon(node.name));
+    const caret = isFolder ? '<span class="fe-caret">\u25B6</span>' : '<span class="fe-caret"></span>';
+    const note = node.note ? `<span class="fe-note">${escapeHtml(node.note)}</span>` : "";
+    const description = node.description || (isFolder ? "" : fileDescription(node.name));
+
+    let childrenHtml = "";
+    if (isFolder && Array.isArray(node.children) && node.children.length) {
+      childrenHtml = `<ul>${node.children.map((child) => renderNode(child, path)).join("")}</ul>`;
+    }
+
+    return `
+      <li class="${classes.join(" ")}">
+        <div class="fe-row" data-path="${escapeHtml(path)}" data-description="${escapeHtml(description)}">
+          ${caret}
+          <span class="fe-icon">${icon}</span>
+          <span class="fe-name">${escapeHtml(node.name)}</span>
+          ${note}
+        </div>
+        ${childrenHtml}
+      </li>
+    `;
+  }
+
+  function initFileExplorer(containerId, treeData, options) {
+    const opts = options || {};
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const title = opts.title || "File Explorer";
+    const hint = opts.hint !== undefined ? opts.hint : "Click a folder to expand or collapse it, or a file to see its path";
+
+    container.innerHTML = `
+      <div class="fe-wrapper">
+        <div class="fe-window">
+          <div class="fe-titlebar">
+            <span class="fe-dots">
+              <span class="fe-dot fe-dot-red"></span>
+              <span class="fe-dot fe-dot-yellow"></span>
+              <span class="fe-dot fe-dot-green"></span>
+            </span>
+            <span class="fe-titlebar-label">${escapeHtml(title)}</span>
+            ${hint ? `<span class="fe-hint">${escapeHtml(hint)}</span>` : ""}
+          </div>
+          <ul class="fe-tree">${renderNode(treeData, "")}</ul>
+        </div>
+        <div class="fe-popup" hidden></div>
+      </div>
+    `;
+
+    const wrapperEl = container.querySelector(".fe-wrapper");
+    const popup = container.querySelector(".fe-popup");
+
+    function hidePopup() {
+      popup.hidden = true;
+      container.querySelectorAll(".fe-row.fe-selected").forEach((el) => el.classList.remove("fe-selected"));
+    }
+
+    function showPopup(row) {
+      container.querySelectorAll(".fe-row.fe-selected").forEach((el) => el.classList.remove("fe-selected"));
+      row.classList.add("fe-selected");
+
+      const description = row.dataset.description
+        ? `<div class="fe-popup-description">${escapeHtml(row.dataset.description)}</div>`
+        : "";
+      popup.innerHTML = `
+        <div class="fe-popup-path"><span class="fe-popup-label">Path:</span> <code>${escapeHtml(row.dataset.path)}</code></div>
+        ${description}
+      `;
+      popup.hidden = false;
+
+      const wrapperRect = wrapperEl.getBoundingClientRect();
+      const rowRect = row.getBoundingClientRect();
+      popup.style.left = `${Math.max(rowRect.left - wrapperRect.left, 0)}px`;
+      popup.style.top = `${rowRect.bottom - wrapperRect.top + 4}px`;
+    }
+
+    container.addEventListener("click", function (event) {
+      const row = event.target.closest(".fe-row");
+      if (!row) {
+        hidePopup();
+        return;
+      }
+      const node = row.parentElement;
+      if (node.classList.contains("fe-folder")) {
+        node.classList.toggle("fe-open");
+        hidePopup();
+        return;
+      }
+      if (node.classList.contains("fe-file")) {
+        if (row.classList.contains("fe-selected")) {
+          hidePopup();
+        } else {
+          showPopup(row);
+        }
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!container.contains(event.target)) hidePopup();
+    });
+  }
+
+  window.initFileExplorer = initFileExplorer;
+})();
+
+(function () {
+  function mount() {
+    if (window.initFileExplorer) {
+      window.initFileExplorer("file-explorer-demo", {
+      "name": "Users",
+      "type": "folder",
+      "open": true,
+      "children": [
+        {
+          "name": "Chris",
+          "type": "folder",
+          "open": true,
+          "children": [
+            {
+              "name": "Projects",
+              "type": "folder",
+              "open": false,
+              "children": [
+                {
+                  "name": "master_thesis",
+                  "type": "folder",
+                  "open": false,
+                  "children": [
+                    {"name": "survey_data.csv", "type": "file", "description": "Raw survey responses for this project. This is sensitive, human-subject data: keep it only where it needs to be, and delete it once you no longer need it."},
+                    {"name": "analysis.r", "type": "file"}
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Downloads",
+              "type": "folder",
+              "open": true,
+              "children": [
+                {"name": "data.zip", "type": "file"},
+                {
+                  "name": "data",
+                  "type": "folder",
+                  "open": false,
+                  "children": [
+                    {"name": "survey_data.csv", "type": "file"}
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+}, { title: "Macintosh HD" });
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
+  } else {
+    mount();
+  }
+})();
+</script>
+<p>You might already have a good intuition for how to use a file explorer. However, to <strong>effectively</strong> work with data, and <strong>responsibly</strong> handle sensitive information, you need a good understand how files and folders are stored on your computer, and develop good habits for keeping your file system organised.</p>
+<section id="the-file-system" class="level3">
+<h3 class="anchored" data-anchor-id="the-file-system">The File System</h3>
+<p>The structure of the file system is referred to as a <strong>tree</strong>. Starting with a <strong>root</strong> folder at the top, it branches downward into subfolders, which can contain more subfolders, and so on. Here is a tree representation of the same file system shown in the file explorer above.</p>
+<div class="cell" data-fig-width="4.6" data-fig-height="4.4" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="442" height="422" viewbox="0.00 0.00 407.88 404.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 400)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-400 403.88,-400 403.88,4 -4,4"></polygon>
+<!-- Root -->
+<g id="node1" class="node">
+<title>Root</title>
+<polygon fill="#eaf2fb" stroke="black" points="219.74,-396 165.74,-396 165.74,-360 219.74,-360 219.74,-396"></polygon>
+<text text-anchor="middle" x="192.74" y="-374.7" font-family="Helvetica,sans-Serif" font-size="11.00">(root)</text>
+</g>
+<!-- Users -->
+<g id="node2" class="node">
+<title>Users</title>
+<polygon fill="#eaf2fb" stroke="black" points="219.74,-324 165.74,-324 165.74,-288 219.74,-288 219.74,-324"></polygon>
+<text text-anchor="middle" x="192.74" y="-302.7" font-family="Helvetica,sans-Serif" font-size="11.00">Users</text>
+</g>
+<!-- Root&#45;&gt;Users -->
+<g id="edge1" class="edge">
+<title>Root-&gt;Users</title>
+<path fill="none" stroke="black" d="M192.74,-359.83C192.74,-352.13 192.74,-342.97 192.74,-334.42"></path>
+<polygon fill="black" stroke="black" points="196.24,-334.41 192.74,-324.41 189.24,-334.41 196.24,-334.41"></polygon>
+</g>
+<!-- You -->
+<g id="node3" class="node">
+<title>You</title>
+<polygon fill="#eaf2fb" stroke="black" points="219.74,-252 165.74,-252 165.74,-216 219.74,-216 219.74,-252"></polygon>
+<text text-anchor="middle" x="192.74" y="-230.7" font-family="Helvetica,sans-Serif" font-size="11.00">Chris</text>
+</g>
+<!-- Users&#45;&gt;You -->
+<g id="edge2" class="edge">
+<title>Users-&gt;You</title>
+<path fill="none" stroke="black" d="M192.74,-287.83C192.74,-280.13 192.74,-270.97 192.74,-262.42"></path>
+<polygon fill="black" stroke="black" points="196.24,-262.41 192.74,-252.41 189.24,-262.41 196.24,-262.41"></polygon>
+</g>
+<!-- Projects -->
+<g id="node4" class="node">
+<title>Projects</title>
+<polygon fill="#eaf2fb" stroke="black" points="149.48,-180 92,-180 92,-144 149.48,-144 149.48,-180"></polygon>
+<text text-anchor="middle" x="120.74" y="-158.7" font-family="Helvetica,sans-Serif" font-size="11.00">Projects</text>
+</g>
+<!-- You&#45;&gt;Projects -->
+<g id="edge3" class="edge">
+<title>You-&gt;Projects</title>
+<path fill="none" stroke="black" d="M174.57,-215.83C166.03,-207.28 155.69,-196.94 146.36,-187.62"></path>
+<polygon fill="black" stroke="black" points="148.7,-185.01 139.15,-180.41 143.75,-189.96 148.7,-185.01"></polygon>
+</g>
+<!-- Downloads -->
+<g id="node7" class="node">
+<title>Downloads</title>
+<polygon fill="#eaf2fb" stroke="black" points="301.16,-180 228.32,-180 228.32,-144 301.16,-144 301.16,-180"></polygon>
+<text text-anchor="middle" x="264.74" y="-158.7" font-family="Helvetica,sans-Serif" font-size="11.00">Downloads</text>
+</g>
+<!-- You&#45;&gt;Downloads -->
+<g id="edge6" class="edge">
+<title>You-&gt;Downloads</title>
+<path fill="none" stroke="black" d="M210.91,-215.83C219.46,-207.28 229.8,-196.94 239.12,-187.62"></path>
+<polygon fill="black" stroke="black" points="241.73,-189.96 246.33,-180.41 236.78,-185.01 241.73,-189.96"></polygon>
+</g>
+<!-- Project1 -->
+<g id="node5" class="node">
+<title>Project1</title>
+<polygon fill="#eaf2fb" stroke="black" points="135.41,-108 48.47,-108 48.47,-72 135.41,-72 135.41,-108"></polygon>
+<text text-anchor="middle" x="91.94" y="-86.7" font-family="Helvetica,sans-Serif" font-size="11.00">master_thesis</text>
+</g>
+<!-- Projects&#45;&gt;Project1 -->
+<g id="edge4" class="edge">
+<title>Projects-&gt;Project1</title>
+<path fill="none" stroke="black" d="M113.47,-143.83C110.33,-135.96 106.57,-126.57 103.08,-117.85"></path>
+<polygon fill="black" stroke="black" points="106.27,-116.4 99.31,-108.41 99.77,-119 106.27,-116.4"></polygon>
+</g>
+<!-- Survey -->
+<g id="node6" class="node">
+<title>Survey</title>
+<polygon fill="#2c5aa0" stroke="black" points="97.72,-36 -0.24,-36 -0.24,0 97.72,0 97.72,-36"></polygon>
+<text text-anchor="middle" x="48.74" y="-14.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="white">survey_data.csv</text>
+</g>
+<!-- Project1&#45;&gt;Survey -->
+<g id="edge5" class="edge">
+<title>Project1-&gt;Survey</title>
+<path fill="none" stroke="black" d="M81.04,-71.83C76.17,-63.71 70.32,-53.96 64.95,-45.01"></path>
+<polygon fill="black" stroke="black" points="67.93,-43.19 59.79,-36.41 61.93,-46.79 67.93,-43.19"></polygon>
+</g>
+<!-- Notes -->
+<g id="node8" class="node">
+<title>Notes</title>
+<polygon fill="#2c5aa0" stroke="black" points="167.6,-36 102.68,-36 102.68,0 167.6,0 167.6,-36"></polygon>
+<text text-anchor="middle" x="135.14" y="-14.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="white">analysis.r</text>
+</g>
+<!-- Project1&#45;&gt;Notes -->
+<g id="edge7" class="edge">
+<title>Project1-&gt;Notes</title>
+<path fill="none" stroke="black" d="M102.84,-71.83C107.72,-63.71 113.56,-53.96 118.93,-45.01"></path>
+<polygon fill="black" stroke="black" points="121.95,-46.79 124.09,-36.41 115.95,-43.19 121.95,-46.79"></polygon>
+</g>
+<!-- Zip -->
+<g id="node9" class="node">
+<title>Zip</title>
+<polygon fill="#2c5aa0" stroke="black" points="242.37,-108 186.31,-108 186.31,-72 242.37,-72 242.37,-108"></polygon>
+<text text-anchor="middle" x="214.34" y="-86.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="white">data.zip</text>
+</g>
+<!-- Downloads&#45;&gt;Zip -->
+<g id="edge8" class="edge">
+<title>Downloads-&gt;Zip</title>
+<path fill="none" stroke="black" d="M252.02,-143.83C246.28,-135.62 239.37,-125.76 233.05,-116.73"></path>
+<polygon fill="black" stroke="black" points="235.83,-114.6 227.23,-108.41 230.1,-118.61 235.83,-114.6"></polygon>
+</g>
+<!-- Data -->
+<g id="node10" class="node">
+<title>Data</title>
+<polygon fill="#eaf2fb" stroke="black" points="342.14,-108 288.14,-108 288.14,-72 342.14,-72 342.14,-108"></polygon>
+<text text-anchor="middle" x="315.14" y="-86.7" font-family="Helvetica,sans-Serif" font-size="11.00">data</text>
+</g>
+<!-- Downloads&#45;&gt;Data -->
+<g id="edge9" class="edge">
+<title>Downloads-&gt;Data</title>
+<path fill="none" stroke="black" d="M277.46,-143.83C283.2,-135.62 290.11,-125.76 296.43,-116.73"></path>
+<polygon fill="black" stroke="black" points="299.38,-118.61 302.25,-108.41 293.65,-114.6 299.38,-118.61"></polygon>
+</g>
+<!-- Survey2 -->
+<g id="node11" class="node">
+<title>Survey2</title>
+<polygon fill="#2c5aa0" stroke="black" points="400.12,-36 302.16,-36 302.16,0 400.12,0 400.12,-36"></polygon>
+<text text-anchor="middle" x="351.14" y="-14.7" font-family="Helvetica,sans-Serif" font-size="11.00" fill="white">survey_data.csv</text>
+</g>
+<!-- Data&#45;&gt;Survey2 -->
+<g id="edge10" class="edge">
+<title>Data-&gt;Survey2</title>
+<path fill="none" stroke="black" d="M324.23,-71.83C328.2,-63.88 332.96,-54.37 337.35,-45.57"></path>
+<polygon fill="black" stroke="black" points="340.59,-46.92 341.93,-36.41 334.33,-43.79 340.59,-46.92"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The most important thing to understand is that every file has a <strong>unique location</strong> in the file system. So while there are two files called <code>survey_data.csv</code> in the example above, they are not the same file! This has two important implications for data management.</p>
+<ul>
+<li>Firstly, you need to understand how your computer refers to unique files and folders by their <strong>path</strong>. This enables you to write analysis scripts that can read and write files without relying on the file explorer, which improves reproducibility and makes it easier to work in teams. We cover this in the next section.</li>
+<li>Secondly, you need to <strong>organise your files system</strong> properly, so that you don’t lose track of where data is stored. This is especially important when working with sensitive data, which comes with legal and ethical responsibilities to keep it safe and delete it when you’re done with it. In our example above, we show a common, sloppy procedure: someone downloads <code>survey_data.csv</code> into their <code>Downloads</code> folder, and then copies it into their project folder. This leaves a useless copy of sensitive data in the Downloads folder, where it’s likely to be forgotten and left there indefinitely.</li>
+</ul>
+</section>
+<section id="absolute-file-paths" class="level3">
+<h3 class="anchored" data-anchor-id="absolute-file-paths">Absolute file paths</h3>
+<p>The two versions of <code>survey_data.csv</code> above are in different locations, and your computer needs to know <em>which one</em> you mean when you refer to it. To uniquely identify these files, you can specify their <strong>asbolute path</strong>: the chain of folders you need to follow from the root of the tree to that file. The two files above have the following paths:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/Users/Chris/Projects/master_thesis/survey_data.csv</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/Users/Chris/Downloads/data/survey_data.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In Windows this works the same way, but the slashes are reversed and the root of the tree is a drive letter:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">C:\Users\Chris\Projects\master_thesis\survey_data.csv</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">C:\Users\Chris\Downloads\data\survey_data.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How do I find a file’s absolute path?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You can use your file explorer to find a file’s absolute path, and copy it into your analysis script.</p>
+<ul>
+<li><strong>macOS (Finder)</strong>: select the file, then press <code>Cmd + Option + C</code> to copy its path, or right-click while holding <code>Option</code> for a “Copy as Pathname” option.</li>
+<li><strong>Windows (File Explorer)</strong>: hold <code>Shift</code> and right-click the file, then choose “Copy as path”.</li>
+</ul>
+<p>We’ll also show a couple of handy RStudio-specific tricks for this later in the book.</p>
+</div>
+</div>
+</div>
+<p>An absolute path specifies the EXACT location of the file. However, this has two drawbacks:</p>
+<ul>
+<li>It’s long to type, and easy to get wrong.</li>
+<li>It’s tied to one specific computer and user. If our example user <code>Chris</code> sends their analysis script to a colleague, the absolute path <code>C:\Users\Chris\Projects\master_thesis\survey_data.csv</code> will not exist on the colleague’s computer, and the script will fail.</li>
+</ul>
+<p>This is why you should almost always use <strong>relative paths</strong> instead of absolute ones.</p>
+</section>
+<section id="relative-paths-and-working-directories" class="level3">
+<h3 class="anchored" data-anchor-id="relative-paths-and-working-directories">Relative paths and working directories</h3>
+<p>A <strong>relative path</strong> describes a file’s location <em>relative to the current working directory</em>. For example, if the working directory is <code>/Users/Chris/Projects</code>, the relative path to <code>survey_data.csv</code> is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">master_thesis/survey_data.csv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To see how this works, scroll up to the tree diagram and imagine that your computer is “standing” in the <code>Projects</code> folder. From there, you simply follow the chain of folders down to the file you want.</p>
+<p>Analysis software like R allows you make any folder the <strong>working directory</strong>. We’ll show you how to do this later when we introduce RStudio, which makes this very easy. The general recommendation is to set the working directory to the folder of a project you’re working in, like <code>/Users/Chris/Projects/master_thesis</code>. This has two great benefits:</p>
+<ul>
+<li>You can directly read and write files in that project folder, using only the file name.</li>
+<li>You can move the whole project folder to a different computer. Since the paths are relative to that folder, all the scripts will still work. This is great for reproducibility and collaboration.</li>
+</ul>
+</section>
+<section id="key-takeaways" class="level3">
+<h3 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h3>
+<p>Make sure you understand</p>
+</section>
+</section>
+<section id="file-types-and-extensions" class="level2">
+<h2 class="anchored" data-anchor-id="file-types-and-extensions">1.1.2 File types and extensions</h2>
+<p>The short suffix after the dot in a file name — the <strong>file extension</strong> — tells your computer (and you) what <em>kind</em> of file it is, and which program should open it. Many file explorers hide extensions by default; it’s worth turning this setting on, since in this course the difference between file types genuinely matters.</p>
+<p>Some of the extensions you’ll run into most often in this book:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 94%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Extension</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.csv</code></td>
+<td><strong>Comma-separated values</strong>: a plain-text table, one row per line, values separated by commas. The most common format for exchanging data.</td>
+</tr>
+<tr class="even">
+<td><code>.xlsx</code> / <code>.xls</code></td>
+<td>An Excel spreadsheet (a “workbook”). Looks similar to a <code>.csv</code> when opened, but is stored in a more complex, non-plain-text format that can also hold formulas, formatting, and multiple sheets.</td>
+</tr>
+<tr class="odd">
+<td><code>.txt</code></td>
+<td>A plain-text file: just characters, no formatting.</td>
+</tr>
+<tr class="even">
+<td><code>.r</code> / <code>.R</code></td>
+<td>An R script: plain text containing R code.</td>
+</tr>
+<tr class="odd">
+<td><code>.json</code></td>
+<td>A structured, plain-text format often used to exchange data between programs (you’ll encounter this if you ever work with APIs).</td>
+</tr>
+<tr class="even">
+<td><code>.pdf</code></td>
+<td>A fixed-layout document, for reading, not editing.</td>
+</tr>
+<tr class="odd">
+<td><code>.docx</code></td>
+<td>A Microsoft Word document.</td>
+</tr>
+<tr class="even">
+<td><code>.zip</code></td>
+<td>A compressed archive bundling multiple files together — covered next.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="zip-files" class="level2">
+<h2 class="anchored" data-anchor-id="zip-files">1.1.3 Zip files</h2>
+<p>A <strong>zip file</strong> (extension <code>.zip</code>) is an <strong>archive</strong>: a single file that contains, and compresses, a whole bundle of other files and folders. Zip files are everywhere once you start downloading course materials or datasets, for two reasons: they let you download many files in one go, and compression makes the download smaller.</p>
+<p>The reasons we single them out here, is that you need to know how to handle them properly. A common mistake is that people double click it like a normal folder. This will show you the contents, but the files inside are still “inside” the zip file, and most programs won’t be able to read them until you <strong>extract</strong> (or “unzip”) them.</p>
+<p>On both Windows and macOS, this is usually as simple as right-clicking the <code>.zip</code> file and choosing “Extract All…” or “Extract”. Depending on what you choose, it either need to specify where to extract the files to, or it will extract them to the same folder as the zip file itself.</p>
+<p>An example of this is shown in the file tree above. Inside the <code>Downloads</code> folder, there is a zip file called <code>data.zip</code>, and the <code>data</code> folder represents the contents of that zip file after extraction. This also reveals another data sensitivity pitfall: if the <code>survey_data.csv</code> file came out of the zip file, it means that it’s now actually stored in three places: the <code>data.zip</code> file, the extracted <code>data</code> folder, and the copy in the <code>master_thesis</code> folder.</p>
+</section>
+<section id="a-few-general-habits-worth-having" class="level2">
+<h2 class="anchored" data-anchor-id="a-few-general-habits-worth-having">1.1.4 A few general habits worth having</h2>
+<p>A handful of general-purpose keyboard shortcuts are worth building into muscle memory, since you’ll use them constantly in almost any program you work with in this course:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcut (Win/Linux)</th>
+<th>Shortcut (macOS)</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Ctrl + s</code></td>
+<td><code>Cmd + s</code></td>
+<td>Save the current file</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl + C</code> / <code>Ctrl + V</code></td>
+<td><code>Cmd + C</code> / <code>Cmd + V</code></td>
+<td>Copy / paste</td>
+</tr>
+<tr class="odd">
+<td><code>Ctrl + F</code></td>
+<td><code>Cmd + F</code></td>
+<td>Find (and replace) text in a document</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl + z</code></td>
+<td><code>Cmd + z</code></td>
+<td>Undo your last change</td>
+</tr>
+<tr class="odd">
+<td><code>Ctrl + y</code></td>
+<td><code>Cmd + y</code></td>
+<td>Redo your last undone change</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl + shift + z</code></td>
+<td><code>Cmd + shift + z</code></td>
+<td>Redo your last undone change (alternative)</td>
+</tr>
+</tbody>
+</table>
+<p>Two more habits that will save you a lot of trouble down the line:</p>
+<ul>
+<li><strong>Save your work often</strong>, and give files short, descriptive names (e.g.&nbsp;<code>week1_notes.txt</code> rather than <code>Untitled2</code>).</li>
+<li><strong>Know where your “Downloads” folder is</strong>, and get into the habit of moving files out of it into the right course folder soon after downloading them — it’s the single most common place where “lost” files end up.</li>
+</ul>
+<p>With these basics in place, you’re ready to start exploring how specific tools — starting with R — organise and work with data.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dev\.dataliteracy\.cc");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
