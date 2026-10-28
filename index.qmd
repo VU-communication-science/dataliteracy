@@ -1,0 +1,240 @@
+---
+title: "Data Literacy"
+subtitle: "Connecting Data and Stories"
+toc: false
+---
+
+## Why Learn Research Methods?
+
+Research methods are a critical foundation of the social sciences. They are the key to building reliable knowledge about how people, organizations, and societies work. Whenever we want to **move beyond gut feelings and assumptions**—whether to understand complex social problems, build convincing arguments, or make effective decisions—research methods provide the critical tools we need to **gather evidence and test our ideas against reality**.
+
+Learning how to do research can be a lot of fun. It is exciting to see how data can be used to answer questions about the world, and it is satisfying to learn how to design a study, collect data, and run analyses yourself. But it also requires dedication.
+Over the course of several years, you will gradually build up your knowledge and skills.
+And at times, you will feel frustrated, confused, or even overwhelmed.
+That's the price of learning hard things, and it is a price worth paying.
+
+However, you might be wondering: is all that effort also **worth it for me personally?**
+You might be here to build a career in public policy, journalism, communication, or consultancy, or to more effectively fight for causes you believe in. If you are not planning to become a researcher, why do you need to learn how to design studies, collect data, and run analyses?
+
+The answer is that **studying how to properly do research is about so much more than being a researcher**.
+You are not just learning tricks you can use to collect data and run analyses.
+You learn how to think critically about how data can be used and misused to tell stories.
+In short, you are learning how to be **data literate**.
+And the most effective way to train this literacy, is to speak, read, and write the language of data yourself.
+
+Data literacy is essential in today's data-driven society.
+Whether you go on to work in academia, step into a professional role in government, media, or business, or simply navigate the news and debates in your personal life, you are constantly surrounded by data. Claims in science, politics, organizations, and everyday media are routinely justified with numbers, graphs, and analyses. To function effectively as a professional, a scholar, and an informed citizen, you need to understand how data is used to build arguments, and where that process can go wrong.
+
+
+## 2. What Is Data Literacy?
+
+**Data literacy is the ability to understand, construct, and evaluate the relationship between data and stories.**
+
+When scientists, organizations, governments, or citizens act, they do not act on raw spreadsheets. Data by itself does not tell you what to do. People act on *stories*: narratives about what is happening in the world, how people behave, what caused a problem, or what the consequences of an intervention will be.
+
+In academia, professional life, and public debate, these stories are rarely accepted on their own. They need to be backed up by empirical evidence—by data.
+
+```{mermaid}
+flowchart LR
+    subgraph DataCol ["Data"]
+        D1["Observations & Measurements"]
+        D2["Survey Results"]
+        D3["Digital Trace Data"]
+    end
+
+    subgraph StoryCol ["Stories"]
+        S1["How a problem works"]
+        S2["How people will behave"]
+        S3["Expected consequences"]
+    end
+
+    D1 --> S1
+    D2 --> S2
+    D3 --> S3
+```
+
+Every research method you learn in this program—whether it is phrasing a survey question, sampling respondents, running a regression, or training a text classifier—is about how we draw the arrows between the data column on the left and the story column on the right.
+
+---
+
+## 3. Four Perspectives on Data and Stories
+
+If we think of methods courses only as training for "the researcher," it is easy to miss how broadly relevant these skills are. In practice, there are four different ways you can look at the relationship between data and stories.
+
+We call these the four **perspectives** of data literacy:
+1. The **Strategic** perspective
+2. The **Advocacy** perspective
+3. The **Critical** perspective
+4. The **Research** perspective
+
+Across all four perspectives, we look at the exact same two columns: Data and Stories. The difference is where the question mark is—what problem are you trying to solve?
+
+---
+
+### 1. The Strategic Perspective: Weighing Stories to Make a Choice
+
+From the strategic perspective, you have to make a decision—often a simple *yes* or *no*, and often without the time or budget to collect new data.
+
+
+Around any major choice, you are confronted with multiple stories backed by different kinds of existing data—for example, a story about public health, a story about human behavior, and a story about mental well-being. Multiple distinct stories can point toward the same "yes" decision, while other stories point toward "no." Your task is to compare and weigh these stories against each other to decide which ones should guide your choice.
+
+* **The core task:** Using existing data to compare and weigh different stories in order to make a decision.
+* **Where the question mark is:** On the **stories**—which of these data-backed stories are strong enough and important enough to base our decision on?
+
+```{mermaid}
+flowchart LR
+    subgraph DataCol ["Existing Data"]
+        D1["Data source 1"]
+        D2["Data source 2"]
+        D3["Data source 3"]
+    end
+
+    subgraph StoryCol ["Competing Stories"]
+        S1["<b>?</b> Story A (Yes)"]
+        S2["<b>?</b> Story B (Yes)"]
+        S3["<b>?</b> Story C (No)"]
+    end
+
+    D1 --> S1
+    D2 --> S2
+    D2 --> S3
+    D3 --> S3
+
+    classDef question fill:#e8f8f5,stroke:#18bc9c,stroke-width:2px
+    class S1,S2,S3 question
+```
+
+When you work in management, policy advice, research leadership, or strategy—or when you have to make an informed choice in your own life based on competing evidence—this is your main perspective. You have to look at the available evidence behind each story, decide how much weight each story deserves, and commit to a course of action.
+
+---
+
+### 2. The Advocacy Perspective: Defending or Challenging a Story
+
+Sometimes the decision has already been made, or you are representing a specific cause, organization, or theoretical position. Here, the story you want to tell is fixed: you want to convince others of a specific narrative (or dismantle a competing one).
+
+From the advocacy perspective, your goal is to use data to make a convincing case for that story, often by comparing it favorably to alternative stories.
+
+* **The core task:** Selecting, framing, and connecting data to argue for (or against) a specific story.
+* **Where the question mark is:** On the **arrows** connecting multiple data sources to the stories—how do we connect the available data to build the strongest case for our story?
+
+```{mermaid}
+flowchart LR
+    subgraph DataCol ["Available Data"]
+        D1["Data source 1"]
+        D2["Data source 2"]
+        D3["Data source 3"]
+    end
+
+    subgraph StoryCol ["Stories"]
+        S1["Chosen Story"]
+        S2["Competing Story"]
+    end
+
+    D1 == "<b>?</b>" ==> S1
+    D2 == "<b>?</b>" ==> S1
+    D3 -. "<b>?</b>" .-> S2
+
+    linkStyle 0 stroke:#18bc9c,stroke-width:2px;
+    linkStyle 1 stroke:#18bc9c,stroke-width:2px;
+    linkStyle 2 stroke:#95a5a6,stroke-dasharray: 5 5;
+```
+
+You use this perspective in communication, campaigning, NGO advocacy, politics, consultancy, or when arguing for the societal relevance of a research project. To advocate a position effectively and responsibly, you need to understand which data points genuinely support your story, how they compare to competing narratives, and how to present them clearly without making false claims.
+
+---
+
+### 3. The Critical Perspective: Evaluating a Story
+
+From the critical perspective, someone else presents you with a story and claims that it is supported by data. Your task is not to sell the story or make the initial policy choice, but to evaluate whether the story actually holds up against the evidence.
+
+* **The core task:** Assessing how well a given story is corroborated by the data, and asking which other data or stories are being left out.
+* **Where the question mark is:** On the **validity of the connection** between the data and the presented story.
+
+```{mermaid}
+flowchart LR
+    subgraph DataCol ["Data"]
+        D1["Presented Data"]
+        D2["Ignored / Missing Data"]
+    end
+
+    subgraph StoryCol ["Story"]
+        S1["Presented Story"]
+    end
+
+    D1 -- "<b>?</b> Valid link?" --> S1
+    D2 -. "<b>?</b> Why left out?" .-> S1
+
+    linkStyle 0 stroke:#e67e22,stroke-width:2px;
+    linkStyle 1 stroke:#95a5a6,stroke-dasharray: 5 5;
+```
+
+This is the classic perspective of a scientist conducting peer review, a journalist checking claims, an auditor, or an inquiry committee—as well as your own perspective in daily life whenever you critically read the news or evaluate claims on social media. When an organization, government, or study claims a conclusion is inevitable based on "the numbers," the critical perspective asks whether the data is reliable, whether the interpretation makes sense, and how other relevant data was weighed or ignored.
+
+---
+
+### 4. The Research Perspective: Creating the Data
+
+Finally, there is the research perspective. Often we realize that we cannot properly weigh, defend, or evaluate a story because we simply do not have the right evidence yet. We need new or better data to find out if a story is actually true.
+
+* **The core task:** Designing and executing data collection and analysis to corroborate or test stories.
+* **Where the question mark is:** On the **data node** itself—what data do we need, and how do we create it reliably?
+
+```{mermaid}
+flowchart LR
+    subgraph DataCol ["Data"]
+        D1["<b>?</b> New data<br/>(design & measurement)"]
+    end
+
+    subgraph StoryCol ["Story"]
+        S1["Story / Conclusion"]
+    end
+
+    D1 ==> S1
+
+    classDef question fill:#e8f8f5,stroke:#18bc9c,stroke-width:2px
+    class D1 question
+```
+
+This is the core perspective of academic researchers and applied data scientists. From this perspective, you are thinking about research design: how to operationalize concepts, who to include in a sample, how to annotate text, or which statistical model fits best.
+
+---
+
+## 4. One Case, Four Perspectives: The Nighttime Curfew
+
+To see how these four perspectives come together in practice—and why social science is central to all of them—consider the decision to introduce a nighttime curfew (*avondklok*) during the COVID-19 pandemic.
+
+At first glance, a pandemic measure might seem like a purely medical or epidemiological issue. In reality, a curfew is entirely about **social science**:
+* **Human behavior:** A curfew only reduces infections if people actually change their behavior. Will citizens comply, or will they visit friends earlier in the day, stay the night, or lose trust in authorities?
+* **Mental health and social well-being:** Restricting movement has direct psychological consequences, such as loneliness and stress, especially among young people.
+* **Democratic values and legitimacy:** A curfew restricts fundamental freedoms. How do we weigh public health gains against democratic norms and social cohesion?
+
+Around this single decision ("Do we introduce the curfew: yes or no?"), there are several distinct stories—a story about viral transmission, a story about behavioral compliance, a story about youth mental health, and a story about fundamental rights. Now look at how different people approach this exact same situation from our four perspectives:
+
+* **Strategic perspective (e.g., a politician or policy advisor):** Has to decide *yes* or *no* on the curfew tonight. There is no time for new research. They have to look at existing data behind multiple stories—epidemiological models pointing to "yes," behavioral surveys questioning compliance, and mental health warnings pointing to "no"—and decide how to weigh those stories against each other.
+* **Advocacy perspective (e.g., a government spokesperson or an interest group):** Once the government decides "yes," the spokesperson has to sell the story that the curfew is necessary and effective using the available data. Conversely, an advocacy group for youth welfare uses data on mental health to champion the competing story and challenge the government's argument.
+* **Critical perspective (e.g., a journalist, an academic peer reviewer, or a critical citizen):** Listens to the press conference or reads the underlying reports and critically tests the government's story against the data. How reliable are the model projections from other countries? And notice how the government's story relies almost entirely on infection data, while data on psychological consequences and democratic support received very little weight.
+* **Research perspective (e.g., university researchers, social scientists at the Netherlands Institute for Social Research (SCP), or a parliamentary inquiry committee):** Looks at what is missing. What data did we lack when making this choice? How do we design a rigorous study now to measure the actual behavioral and psychological impact, so we can build scientific knowledge and make better decisions in the future?
+
+Whenever you step into any of these perspectives, four fundamental questions help you navigate the link between data and stories:
+1. **What data do we have?**
+2. **Which data are we looking at, and how are we weighing it?** (Why does one story get priority while another—such as psychological impact—gets ignored?)
+3. **What data is missing?**
+4. **How do we interpret the data, and how reliable is it?**
+
+---
+
+## 5. How Your Curriculum Builds Data Literacy (And Why AI Cannot Think for You)
+
+Throughout your study program, you will spend a lot of time working from the **Research perspective**. You will collect data yourself, clean it, write code, and run statistical analyses.
+
+Again, the primary reason for this is not that we expect everyone to become a full-time academic researcher, although some of you will. Rather, **practicing the research perspective is what gives you the intuition needed to master the other three perspectives.**
+
+It is very hard to evaluate how reliable a dataset is (Critical perspective), weigh conflicting stories before a big decision (Strategic perspective), or build a solid data-driven argument (Advocacy perspective) if you have never built a dataset or run an analysis yourself. When you only see finished graphs in a paper or policy report, data looks neat and objective. Once you have designed a survey, coded text, or run a regression model yourself, you develop an intuition for how many choices, assumptions, and limitations are hidden behind a single number.
+
+This is also why learning research methods remains essential in an age of Artificial Intelligence. AI can perform data analysis, and when you use it responsibly, it is a powerful tool to help you learn and execute data analysis. What AI cannot do, however, is think for you. To use AI effectively without being misled by it, you need your own methodological intuition. More importantly, even when AI can point out in what ways a story is or is not supported by data, *you* have to understand what those limitations actually mean in context—and how to weigh them against a complex, holistic story that also involves normative perspectives, democratic values, and human emotion.
+
+As you move through the methods curriculum, keep these four perspectives in mind:
+* In your early methods courses, you will focus on the building blocks: how data is created, measured, and analyzed (**Research perspective**).
+* As you progress—and especially in project courses later in your studies—you will increasingly apply this knowledge across all four perspectives: using existing data to weigh stories and advise on decisions (**Strategic**), defending or challenging a narrative with empirical evidence (**Advocacy**), and critically evaluating the data stories of others (**Critical**).
+
+Every technical skill in the chapters that follow is a piece of that larger puzzle.

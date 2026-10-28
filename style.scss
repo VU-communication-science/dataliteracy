@@ -118,9 +118,10 @@ li.sidebar-item-section > .sidebar-item-container > .sidebar-link {
 
 /* Graphviz/dot diagrams set a fixed SVG size with max-width:none by
    default, which can overflow the content column. Force it to scale
-   down to fit instead (mermaid diagrams are unaffected, they already
-   size responsively). */
-.cell-output-display svg {
+   down to fit instead. Mermaid SVGs are excluded: they already carry a
+   max-width equal to their natural size, and overriding it stretches
+   small diagrams (and their text) to the full column width. */
+.cell-output-display svg:not(.mermaid-js) {
     max-width: 100% !important;
     height: auto !important;
 }
@@ -148,3 +149,37 @@ g.edge text {
 // .sidebar-item-container {
 //     padding-bottom: 0.3rem;
 // }
+
+/* Mermaid colours: Quarto derives these from Flatly, which gives dark
+   grey subgraph fills and tinted nodes. Use light panels with white,
+   navy-outlined boxes instead. */
+:root {
+    --mermaid-fg-color--lightest: #f4f6f8;
+    --mermaid-fg-color--lighter: #d5dbe0;
+    --mermaid-node-bg-color: #ffffff;
+    --mermaid-node-fg-color: #2c3e50;
+    --mermaid-edge-color: #7b8a97;
+}
+
+/* Mermaid uses 16px text by default, larger than the body text. The
+   labels are measured in the live DOM (inside pre.mermaid-js) while
+   rendering, so boxes size to the smaller font. !important is needed
+   to beat mermaid's own id-scoped styles. */
+pre.mermaid-js svg,
+svg.mermaid-js {
+    font-size: 0.8rem !important;
+}
+
+pre.mermaid-js .nodeLabel,
+pre.mermaid-js .edgeLabel,
+pre.mermaid-js .cluster-label,
+svg.mermaid-js .nodeLabel,
+svg.mermaid-js .edgeLabel,
+svg.mermaid-js .cluster-label {
+    font-size: 0.8rem !important;
+}
+
+svg.mermaid-js {
+    display: block;
+    margin: 1rem auto;
+}
