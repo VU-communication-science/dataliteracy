@@ -1,12 +1,43 @@
 {
   "index.qmd": {
-    "title": "index.qmd",
-    "source_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_hash": "837ea451ae4a3edd526ba41d997293f509609b556d0e77a1d09737e7bff5d9de",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-12",
-    "chunks": []
+    "title": "Data Literacy",
+    "source_hash": "8a5718642e6d2a4ac825a2290d6275191d83540963d8567ffbccdbc11a6e9d07",
+    "content_hash": "397ef10d8460d0ffe01dcc7e20636611e966a6fbd9ab5e55e7856f3f2714b76d",
+    "last_modified": "2026-10-28",
+    "status": "healthy",
+    "drifted_date": "",
+    "chunks": [
+      {
+        "line": 37,
+        "label": "",
+        "output_hash": "cd6e4f19458f0da5",
+        "preview": "flowchart LR subgraph DataCol [\"Data\"] D1[\"Observations & Measurements\"] D2[\"..."
+      },
+      {
+        "line": 84,
+        "label": "",
+        "output_hash": "13594aed465b6790",
+        "preview": "flowchart LR subgraph DataCol [\"Existing Data\"] D1[\"Data source 1\"] D2[\"Data ..."
+      },
+      {
+        "line": 120,
+        "label": "",
+        "output_hash": "a09bf0e00f6713c8",
+        "preview": "flowchart LR subgraph DataCol [\"Available Data\"] D1[\"Data source 1\"] D2[\"Data..."
+      },
+      {
+        "line": 153,
+        "label": "",
+        "output_hash": "9b2c779b655a04c0",
+        "preview": "flowchart LR subgraph DataCol [\"Data\"] D1[\"Presented Data\"] D2[\"Ignored / Mis..."
+      },
+      {
+        "line": 182,
+        "label": "",
+        "output_hash": "3291f40f412ab810",
+        "preview": "flowchart LR subgraph DataCol [\"Data\"] D1[\"<b>?<\/b> New data<br/>(design & me..."
+      }
+    ]
   },
   "chapters/curriculum.qmd": {
     "title": "Curriculum & Learning Trajectories",
@@ -84,47 +115,167 @@
   },
   "chapters/1.04-data-in-r.qmd": {
     "title": "1.4 Data in R",
-    "source_hash": "c256724fda8c948acb4b52a590dbc331ec0a556cb17c2baed3cce3e738445140",
-    "content_hash": "508b9fea5939f1dacecc3f429d26cbd47c5add4401718f326942f731dce9b5b7",
-    "last_modified": "2026-10-13",
-    "status": "drifted",
-    "drifted_date": "2026-10-14",
+    "source_hash": "4adc1a8a515d19b3f9ba96bdd1f383c6fd13b9e91a6cb391a25a1ed56bdcd2d4",
+    "content_hash": "1a3e62bfae8cc97eb9d706e4ef0c99a13a5633fcd72b482b5b301556c0d135c2",
+    "last_modified": "2026-10-28",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
         "line": 16,
-        "label": "a-first-look-at-a-data-frame-1",
-        "output_hash": "1d5bab3be819c0a3",
+        "label": "",
+        "output_hash": "43b2c764ed5a139f",
         "preview": "{\"columns\":[{\"label\":[\"country\"],\"name\":[1],\"type\":[\"chr\"],\"align\":[\"left\"]},..."
       },
       {
-        "line": 35,
-        "label": "extracting-a-column-1",
-        "output_hash": "c352d5e1b95f25be",
-        "preview": "[1] 176 165 172 160 180 170 175 165 185 175"
+        "line": 36,
+        "label": "",
+        "output_hash": "b35c8e764773cbe9",
+        "preview": "[1] 176 165 180 175 185"
       },
       {
-        "line": 41,
-        "label": "extracting-a-column-2",
-        "output_hash": "758eba5b437e5d52",
-        "preview": "[1] 176 165 172 160 180"
+        "line": 42,
+        "label": "",
+        "output_hash": "a9e0e084b56043cd",
+        "preview": "{\"columns\":[{\"label\":[\"country\"],\"name\":[1],\"type\":[\"chr\"],\"align\":[\"left\"]},..."
       },
       {
-        "line": 48,
-        "label": "extracting-a-column-3",
-        "output_hash": "1d80e656a7e0ea5e",
-        "preview": "[1] 172.3"
+        "line": 61,
+        "label": "",
+        "output_hash": "aec24994ce039327",
+        "preview": "{\"columns\":[{\"label\":[\"\"],\"name\":[\"_rn_\"],\"type\":[\"\"],\"align\":[\"left\"]},{\"lab..."
       },
       {
-        "line": 56,
-        "label": "types-of-data-1",
+        "line": 84,
+        "label": "",
+        "output_hash": "8b64d36a7d3975d5",
+        "preview": "block-beta columns 3 block:c1:1 columns 1 h1[\"<b>country<\/b><br/>(character)\"..."
+      },
+      {
+        "line": 120,
+        "label": "",
+        "output_hash": "eac334c171f0de47",
+        "preview": "[1] 22.6"
+      },
+      {
+        "line": 127,
+        "label": "",
+        "output_hash": "8b8224406acc6584",
+        "preview": "Warning in mean.default(ages_but_sloppy): argument is not numeric or logical:..."
+      },
+      {
+        "line": 148,
+        "label": "",
         "output_hash": "91f69a080e30762a",
         "preview": "[1] \"character\" [1] \"numeric\""
       },
       {
-        "line": 69,
-        "label": "types-of-data-2",
-        "output_hash": "cace1b94f30754c7",
-        "preview": "[1] \"BE\" \"DE\" \"FR\" \"NL\" \"UK\""
+        "line": 157,
+        "label": "",
+        "output_hash": "c0743e8a453ea18a",
+        "preview": "[1] 21 25 20 29 23 [1] 22.6 [1] 3.577709"
+      },
+      {
+        "line": 167,
+        "label": "",
+        "output_hash": "8606108d629d3180",
+        "preview": "BE DE FR NL UK 1 1 1 1 1"
+      },
+      {
+        "line": 177,
+        "label": "",
+        "output_hash": "4b098330a78eee28",
+        "preview": "[1] FALSE TRUE FALSE TRUE TRUE"
+      },
+      {
+        "line": 183,
+        "label": "",
+        "output_hash": "d79c567ec52eda44",
+        "preview": "[1] 2 4 5"
+      },
+      {
+        "line": 198,
+        "label": "",
+        "output_hash": "a1f4aaf7e46fda3c",
+        "preview": "[Plot: unnamed-chunk-15-1.png]"
+      },
+      {
+        "line": 217,
+        "label": "",
+        "output_hash": "5afe854bb6671922",
+        "preview": "[1] NA"
+      },
+      {
+        "line": 223,
+        "label": "",
+        "output_hash": "ffa1619e11e42a89",
+        "preview": "[1] 7.5"
+      },
+      {
+        "line": 231,
+        "label": "",
+        "output_hash": "7fe12863cde73f2a",
+        "preview": "Warning in mean.default(age_text): argument is not numeric or logical: return..."
+      },
+      {
+        "line": 239,
+        "label": "",
+        "output_hash": "9b5c1e5bf2ab1b15",
+        "preview": "[1] 21"
+      },
+      {
+        "line": 246,
+        "label": "",
+        "output_hash": "c4656f32f09c974d",
+        "preview": "Warning: NAs introduced by coercion [1] 20 NA 19"
+      },
+      {
+        "line": 253,
+        "label": "",
+        "output_hash": "2a41b849895ef1c3",
+        "preview": "[1] \"20\" \"24\" \"NL\""
+      },
+      {
+        "line": 259,
+        "label": "",
+        "output_hash": "cdc1f0a131eb9d57",
+        "preview": "[1] 3 [1] 0.6"
+      },
+      {
+        "line": 272,
+        "label": "",
+        "output_hash": "fdca1dd51d3b78fb",
+        "preview": "[1] \"NL\" \"BE\" \"DE\" \"FR\" \"UK\""
+      },
+      {
+        "line": 284,
+        "label": "",
+        "output_hash": "b8aec18a9147f81f",
+        "preview": "cor -0.3835901 [1] 0.5238546"
+      },
+      {
+        "line": 294,
+        "label": "",
+        "output_hash": "32b26bcf0c3209a1",
+        "preview": "[,1] [,2] [1,] 1 4 [2,] 2 5 [3,] 3 6"
+      },
+      {
+        "line": 303,
+        "label": "",
+        "output_hash": "65288d8c44e175f0",
+        "preview": "age height age 1.0000000 -0.3835901 height -0.3835901 1.0000000"
+      },
+      {
+        "line": 311,
+        "label": "",
+        "output_hash": "cf822a986c801e62",
+        "preview": "flowchart LR A((User A)) -->|follows| B((User B)) C((User C)) -->|follows| B ..."
+      },
+      {
+        "line": 332,
+        "label": "",
+        "output_hash": "aea4e64ab6f48790",
+        "preview": "flowchart LR X[Smoking] --> M[Tar in Lungs] M --> Y[Lung Cancer] Z[Age] --> X..."
       }
     ]
   },
