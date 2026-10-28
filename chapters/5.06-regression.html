@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5.5 Multiple Regression – Data Literacy</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fe5b6b1ecdd339c87ccbdcad87c2d5a1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/5.01-comparing-two-groups.html">Inferential Statistics</a></li><li class="breadcrumb-item"><a href="../chapters/5.06-regression.html">5.5 Multiple Regression</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Data Literacy</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/curriculum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Curriculum &amp; Skill Tree</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datasets</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Computational Skills</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.01-basic-computer-skills.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1 Basic Computer Skills</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.02-installing-and-running-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Windows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.04-data-in-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.4 Data in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.06-functions-and-packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.6 Functions and Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/1.03-reproducible-reports.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.3 Reproducible Reports</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Management</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.01-data-frames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.1 Data Frames</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.02-grouping-and-summarizing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2 Group and summarize</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.03-data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.3 Data Cleaning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.04-pivoting-and-joining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.4 Pivoting and joining</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/2.05-string-processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.5 String processing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.01-means-and-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Means &amp; Variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.02-probability-and-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Probability &amp; Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.03-correlation-and-covariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Covariance &amp; Correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.04-effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/3.05-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.5 Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploration and Measurement</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.01-descriptive-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.1 Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.02-data-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.2 Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.03-advanced-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.3 Advanced Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.04-factor-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.4 Factor Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/4.05-scale-construction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.5 Scale Construction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Inferential Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.01-comparing-two-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.1 Comparing two Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.02-testing-associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.2 Testing Associations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.03-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.3 Simple Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.04-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.4 ANOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.06-regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">5.5 Multiple Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.08-linear-model-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.6 Linear Model Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/5.09-power-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.7 Power Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Causality</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.01-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.1 Causality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.02-experimental-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.2 Experimental control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.03-statistical-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.3 Statistical control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/6.04-mediation-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.4 Mediation Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Content Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.01-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.1 Text as Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.02-manual-coding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.2 Manual Coding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.03-machine-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.3 Machine Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/7.04-text-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.4 Text Classification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setting-up" id="toc-setting-up" class="nav-link active" data-scroll-target="#setting-up">5.5.1 Setting up</a></li>
+  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression">5.5.2 Multiple regression</a>
+  <ul class="collapse">
+  <li><a href="#standardized-coefficients" id="toc-standardized-coefficients" class="nav-link" data-scroll-target="#standardized-coefficients">Standardized coefficients</a></li>
+  </ul></li>
+  <li><a href="#categorical-ivs" id="toc-categorical-ivs" class="nav-link" data-scroll-target="#categorical-ivs">5.5.3 Categorical IVs</a>
+  <ul class="collapse">
+  <li><a href="#categories-with-more-than-two-levels" id="toc-categories-with-more-than-two-levels" class="nav-link" data-scroll-target="#categories-with-more-than-two-levels">Categories with more than two levels</a></li>
+  </ul></li>
+  <li><a href="#interaction-effects" id="toc-interaction-effects" class="nav-link" data-scroll-target="#interaction-effects">5.5.4 Interaction effects</a></li>
+  <li><a href="#how-to-report" id="toc-how-to-report" class="nav-link" data-scroll-target="#how-to-report">5.5.5 How to report</a>
+  <ul class="collapse">
+  <li><a href="#reporting-the-coefficients" id="toc-reporting-the-coefficients" class="nav-link" data-scroll-target="#reporting-the-coefficients">Reporting the coefficients</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/5.01-comparing-two-groups.html">Inferential Statistics</a></li><li class="breadcrumb-item"><a href="../chapters/5.06-regression.html">5.5 Multiple Regression</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">5.5 Multiple Regression</h1>
+<p class="subtitle lead">Fitting OLS regression lines with multiple predictors, interpreting slopes, residuals, and R-squared.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>You arrive here from <a href="../chapters/5.03-linear-models.html">Simple Regression</a>, so you can already fit a line with a single predictor and read off its slope, p-value, and R². Here you’ll extend that same model to several predictors at once, to categorical predictors, and to interactions (moderation), and learn how to report the results. Real outcomes rarely have just one cause, so being able to separate the effects of several predictors in one model — and control for the relations between them — is the workhorse skill of communication research.</em></p>
+<p>→ <a href="curriculum.html?module=regre">See this module in the skill tree</a></p>
+<section id="setting-up" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up">5.5.1 Setting up</h2>
+<p>In <a href="../chapters/5.03-linear-models.html">Simple Regression</a> you fitted a regression with a single predictor. Here we extend this to multiple predictors. We use the same (simulated) practice data and the <code>sjPlot</code> package to create nice tables and plots of regression models.</p>
+<p>We’ll cover:</p>
+<ul>
+<li><strong>Multiple regression</strong> with two numeric independent variables, and how this allows you to <strong>control</strong> for the relations between the independent variables.</li>
+<li>A <strong>categorical independent variable</strong> in the model.</li>
+<li><strong>Interaction effects</strong>, and how to use these to test <strong>moderation</strong>.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://dev.dataliteracy.cc/practice_data.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">if_else</span>(age <span class="sc">&gt;</span> <span class="dv">100</span>, <span class="dv">2024</span> <span class="sc">-</span> age, age)) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(age, political_orientation, political_interest, trust_t1,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">news_consumption =</span> <span class="st">`</span><span class="at">news consumption</span><span class="st">`</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>d</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the simple model from the Simple Regression module (used below to illustrate standardization)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> age, <span class="at">data =</span> d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="multiple-regression" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression">5.5.2 Multiple regression</h2>
+<p>In the previous example we used a single independent variable (<code>age</code>) to predict the dependent variable. Now we’ll add a second numeric independent variable (<code>news_consumption</code>) to the model. This is called <strong>multiple regression</strong>, and it allows us to test the effect of multiple variables on the dependent variable at the same time. The formula for using multiple independent variables is: <code>dependent ~ independent1 + independent2 + ...</code>.</p>
+<p>As we mentioned earlier, by including both variables in the model we can test the effect of <code>news_consumption</code> on <code>trust</code> while <em>controlling</em> for <code>age</code>, and vice versa. To better investigate the effects of controlling, it is good practise to show multiple versions of the model side by side, which we can do by passing multiple models to the <code>tab_model()</code> function. To better compare effect sizes, we also include the <strong>standardized coefficients</strong>, which we can do with <code>show.std = T</code> in the <code>tab_model()</code> function. To keep the table simple, we won’t show the confidence intervalls this time (<code>show.ci = F</code>).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Standardized coefficients">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Standardized coefficients
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <strong>standardized coefficients</strong> are the coefficients of the model if all variables are standardized. This means that the variables are transformed to have a mean of 0 and a standard deviation of 1. This makes the coefficients comparable, because they are now in terms of standard deviations.</p>
+<p>Think for a second why this makes sense. If you have a variable that goes from 0 to 100, and another variable that goes from 0 to 1, then the coefficients of these variables will be on completely different scales. Recall that the coefficient tells us how much the dependent variable changes for every <strong>unit increase</strong> in the independent variable. A <strong>unit increase</strong> of 1 on a scale from 0 to 100 is very different from a <strong>unit increase</strong> of 1 on a scale from 0 to 1. And even if two variables are both on a scale from 0 to 1, the effect of a unit increase can still be different if the variables have a different standard deviation. By standardizing the variables, a <strong>unit increase</strong> is now an increase of one <strong>standard deviation</strong>, which is the same for all variables.</p>
+<p>You can request the standardized coefficients with the <code>show.std = T</code> argument in the <code>tab_model()</code> function. This will report the standardized coefficients (<code>std. Beta</code>) next to the regular coefficients (<code>Estimates</code>).</p>
+<p>Alternatively, you can also use the <code>rockchalk</code> package to standardize the entire model. This will give you a new model with standardized coefficients, which you can then use to interpret the effect sizes. Using <code>show.std = T</code> in the <code>tab_model()</code> function actually does the same thing behind the scenes, so in practice this is often easier. But when first learning about regression analysis, it can be helpful to perform this step yourself to better understand what’s going on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rockchalk)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m_std <span class="ot">&lt;-</span> <span class="fu">standardize</span>(m)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m_std)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> news_consumption, <span class="at">data =</span> d)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> news_consumption <span class="sc">+</span> age, <span class="at">data =</span> d)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m1, m2, <span class="at">show.std =</span> T, <span class="at">show.ci=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.35</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.96</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">news consumption</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.23</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.03</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>0.040</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">age</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.29</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">595</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.055 / 0.053</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.120 / 0.117</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>If we look at the first model (on the left), we see a significant effect of <code>news_consumption</code> on <code>trust_t1</code> (<span class="math inline">\(b = 0.07\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>). However, when we include the <code>age</code> variable in the model, we see that the effect of <code>news_consumption</code> becomes much smaller (<span class="math inline">\(b = 0.03\)</span>, <span class="math inline">\(p &lt; 0.05\)</span>). This suggests that the effect of <code>news_consumption</code> on <code>trust_t1</code> we saw in the first model is for a large part <em>explained</em> by <code>age</code>.</p>
+<p>What we’re witnessing here is a form of <strong>confounding</strong>. There is a relation between the <code>news_consumption</code> and <code>trust_t1</code> variables, but a part of this relation is <strong>spurious</strong>. <code>age</code> has an effect on both <code>news_consumption</code> and <code>trust_t1</code>: older people consume more news, and have more trust in journalists. By controlling for <code>age</code>, we can see the real effect of <code>news_consumption</code> on <code>trust_t1</code> (though we can never be sure that we’ve controlled for all possible confounders). For a more detailed explanation of confounding, see the <a href="../chapters/6.03-statistical-control.html">statistical control module</a>.</p>
+<section id="standardized-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="standardized-coefficients">Standardized coefficients</h3>
+<p>In the second model we now have two significant effects: <code>age</code> and <code>news_consumption</code>. So how can we tell which effect is stronger? If we look at the regular coefficients, we see that <code>age</code> (0.02) is quite similar to <code>news_consumption</code> (0.03). However, this is not a good way to compare the effects, because the variables are on different scales. A 1 unit increase in <code>age</code> is not the same as a 1 unit increase in <code>news_consumption</code>. By standardizing the variables, we can compare the effects in terms of standard deviations instead. For every standard deviation increase in <code>age</code>, <code>trust_t1</code> increases by 0.29 standard deviations. For every standard deviation increase in <code>news_consumption</code>, <code>trust_t1</code> increases by 0.09 standard deviations. So this suggests that the effect of <code>age</code> is stronger.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<section id="adjusted-r2" class="level4">
+<h4 class="anchored" data-anchor-id="adjusted-r2">Adjusted <span class="math inline">\(R^2\)</span></h4>
+<p>This is also a good time to talk about the <strong><span class="math inline">\(R^2\)</span> adjusted</strong> value. This is the <span class="math inline">\(R^2\)</span> value, but corrected for the number of independent variables in the model. This is important, because the <span class="math inline">\(R^2\)</span> value will always increase when you add more independent variables (i.e.&nbsp;more information) to the model. The <span class="math inline">\(R^2\)</span> adjusted value corrects for this, which is why it’s slightly lower. So when you’re adding more independent variables to the model, you can use the <span class="math inline">\(R^2\)</span> adjusted value to see if you’re not just adding noise.</p>
+</section>
+</section>
+</section>
+<section id="categorical-ivs" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-ivs">5.5.3 Categorical IVs</h2>
+<p>The <strong>independent variable</strong> in a regression model can also be categorical. This allows us to include categorical variables in the model, similar to the t-test and ANOVA. Let’s see what this looks like when we predict <code>trust_t1</code> based on the <code>political_orientation</code> variable, which has the values <code>left</code>, <code>right</code> and <code>center</code>.</p>
+<p>We cannot directly use the values “left”, “right” and “center” in the regression equation, but we create so-called <strong>dummy variables</strong>. A dummy variable is a <em>binary</em> variable (i.e., it can only take the values <code>0</code> and <code>1</code>) that represents whether something is the case or not. So if we want to test whether people that lean to the left have more trust in journalists, we can create a dummy variable that is <code>1</code> for people with orientation <code>left</code>, and <code>0</code> for all other people (i.e., <code>right</code> and <code>center</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">mutate</span>(d, <span class="at">political_left =</span> <span class="fu">if_else</span>(political_orientation <span class="sc">==</span> <span class="st">"left"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(d, political_orientation, political_left) <span class="do">## check the result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can use this variable in the regression model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> political_left, <span class="at">data =</span> d)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.10</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.00&nbsp;–&nbsp;4.19</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political left</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.83</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.65&nbsp;–&nbsp;1.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.120 / 0.119</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>The interpretation of the results is almost identical to the previous example with the <code>age</code> variable. The only thing we need to keep in mind is that the <code>political_left</code> variable is binary, so it can only take the values <code>0</code> and <code>1</code>. Accordingly, we don’t say that the trust in journalists increases by 0.83 points for every unit increase in <code>political_left</code>. Instead, we just say that people on the political left (<code>political_left = 1</code>) have on average a trust score that is 0.83 points higher than people that are not on the political left (<code>political_left = 0</code>).</p>
+<!-- Note that in this case we can actually interpret the **intercept**.
+The intercept is the predicted value of the dependent variable when the independent variable is zero.
+So in this case, the intercept (`3.83`) is the predicted trust in journalists for people that are NOT `political_left`. -->
+<section id="categories-with-more-than-two-levels" class="level3">
+<h3 class="anchored" data-anchor-id="categories-with-more-than-two-levels">Categories with more than two levels</h3>
+<p>In the previous example we created the dummy variable ourselves, but we can also let R do this for us. This is especially convenient if we have more than two categories. In addition, this also has the benefit that <code>lm</code> <em>knows</em> that the variable is categorical, which enables us (among other things) to visualize the model propertly.</p>
+<p>We first need to make sure that our variable is of the <code>factor</code> type<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. The difference between a <code>character</code> and a <code>factor</code> is that in a <code>factor</code> we explicitly tell R what the categories are, and what the <em>order</em> of the categories is. The order is important, because the first category will be the <strong>reference category</strong> (more on this later) in the regression model. To transform our <code>political_orientation</code> variable to a <code>factor</code> we can use the <code>factor()</code> function, and provide the <code>levels</code> argument to specify the order of the categories.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">mutate</span>(d, <span class="at">political_orientation =</span> <span class="fu">factor</span>(political_orientation, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">'center'</span>,<span class="st">'left'</span>,<span class="st">'right'</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now, when we use the <code>political_orientation</code> variable in the regression model, R will automatically create the dummy variables for us.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> political_orientation, <span class="at">data =</span> d)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.42</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.30&nbsp;–&nbsp;4.54</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[left]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.31&nbsp;–&nbsp;0.69</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[right]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.71</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.89&nbsp;–&nbsp;-0.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.198 / 0.196</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>Notice that there are now two coefficients for the <code>political_orientation</code> variable: one for <code>left</code> and one for <code>right</code>. Why 2, and not 3? This is because we only need two dummy variables to represent three categories. You can see how this works in the following table:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>political_orientation</th>
+<th>is_left</th>
+<th>is_right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>left</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>right</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>center</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>center</code> category is now the <strong>reference category</strong>. Recall that the intercept is the predicted value of the dependent variable when the independent variables are zero. In this model, the intercept therefore represents the predicted value of <code>trust_t1</code> for people in the <code>center</code> category.</p>
+<p>The effects of the <code>left</code> and <code>right</code> categories only tell us how much the trust in journalists changes for people in these categories <strong>compared to people in the reference category</strong>. So the <code>political_orientation [left]</code> coefficient tells us that <code>trust</code> is for people in the <code>left</code> category is 0.5 points higher than for people in the <code>center</code> category. The <code>political_orientation [right]</code> coefficient tells us that <code>trust</code> is for people in the <code>right</code> category is -0.71 points lower than for people in the <code>center</code> category. Based on this model, we cannot directly compare the <code>left</code> and <code>right</code> categories, because the <code>center</code> category is the reference category.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Determining what reference category to use">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Determining what reference category to use
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Depending on your hypotheses, you might want to use a specific category as the reference category. You can do this by changing the order of the levels in the <code>factor()</code> function. The first level will always be the reference category. So in the following example, the <code>left</code> category is the reference category.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(d, <span class="at">political_orientation =</span> <span class="fu">factor</span>(political_orientation, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">'left'</span>,<span class="st">'center'</span>,<span class="st">'right'</span>)))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(trust_t1 <span class="sc">~</span> political_orientation, <span class="at">data =</span> d2) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tab_model</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.92</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.78&nbsp;–&nbsp;5.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[center]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.69&nbsp;–&nbsp;-0.31</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">political orientation<br>[right]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-1.21</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-1.41&nbsp;–&nbsp;-1.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.198 / 0.196</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interaction-effects" class="level2">
+<h2 class="anchored" data-anchor-id="interaction-effects">5.5.4 Interaction effects</h2>
+<p>One of the strengths of regression analysis is that it allows you to test <strong>interaction effects</strong>. This is when the effect of one independent variable depends on the value of another independent variable.</p>
+<p>For example, in the previous model we saw that <code>political_orientation</code> has an effect on <code>trust_t1</code>. But we might theorize that this effect depends on a person’s overall <code>political_interest</code>. If people are not really interested in politics, then their political orientation might not have a big effect on their trust in journalists. In other words, we expect that <code>political_interest</code> <strong>moderates</strong> the effect of <code>political_orientation</code> on <code>trust_t1</code>.</p>
+<p>To test this, we can include an <strong>interaction term</strong> in the regression model. That is, we add an extra term to the formula in which we <strong>multiply</strong> the two independent variables. Here we fit two models: one without the interaction term, and one with the interaction term. To keep the table readable, we’ll first rename the variables to shorter names.</p>
+<div class="cell" data-tab.width="100%">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> <span class="fu">rename</span>(d, <span class="at">pol_ori =</span> political_orientation,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">pol_int =</span> political_interest)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> pol_ori <span class="sc">+</span> pol_int, <span class="at">data =</span> ds)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trust_t1 <span class="sc">~</span> pol_ori <span class="sc">+</span> pol_int <span class="sc">+</span> pol_ori<span class="sc">*</span>pol_int, <span class="at">data =</span> ds)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(m1, m2, <span class="at">show.std=</span>T, <span class="at">show.ci=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+<th colspan="4" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">trust_t1</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">std. Beta</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8">std. p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.71</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.108</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [left]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.47</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.14</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.47</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.692</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [right]</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.73</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.68</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.55</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.66</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.122</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol int</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.11</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.11</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>0.004</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.19</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.18</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>0.002</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>0.002</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [left] × pol int</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.299</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.299</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">pol ori [right] × pol int</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.33</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.32</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">600</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="4">600</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.209 / 0.205</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="4">0.238 / 0.232</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>In the first model we see roughly the same effects as before for <code>political_orientation</code>. We also see that <code>political_interest</code> has a significant effect on <code>trust_t1</code> (<span class="math inline">\(b = 0.11\)</span>, <span class="math inline">\(p &lt; 0.01\)</span>).</p>
+<p>In the second model we added the interaction terms. One important thing to note is that this changes the interpretation of the main effects. When you add an interaction term, the main effects of the variables are now the effect of the variable <strong>when the other variable is zero</strong>. This doesn’t always make sense. For instance, the effect of <code>pol ori [left]</code> now tells us the effect of <code>political_orientation</code> when <code>political_interest</code> is zero, but this is impossible because <code>political_interest</code> is measured on a scale from 1 to 7. Often, we therefore don’t report the main effects when we have an interaction term. We’ll also skip this for now (but see the optional block if you’re interested)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpreting main effects with interaction terms">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpreting main effects with interaction terms
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When you add an interaction term, the main effects of the variables used in this term are now the effect of the variable <strong>when the other variable is zero</strong>. As we mentioned, sometimes this doesn’t make sense. However, we can <strong>make it make sense</strong>, if we rescale the variables so that the value zero is meaningful. We could for instance <strong>center</strong> the variables. This way, zero is the mean of the variable, and the main effects are the effect of the variable at the mean of the other variable.</p>
+<p>This is also why in the model we see very different results for the <strong>unstandardized</strong> and <strong>standardized</strong> coefficients. Standardized coefficients are centered, so they are the effect of the variable at the mean of the other variable. This is also why we now get an additional <code>std. p</code> column, which gives us the p-value of the standardized coefficients. In our model, the unstandardized coefficients are not significant, but the standardized coefficients are. Let’s separately interpret the unstandardized and standardized coefficients for the <code>political_orientation</code> effects.</p>
+<ul>
+<li>Unstandardized coefficients:
+<ul>
+<li><code>pol_ori [left]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> when <code>political_interest</code> is zero is not significant.</li>
+<li><code>pol_ori [right]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> when <code>political_interest</code> is zero is not significant.</li>
+</ul></li>
+</ul>
+<p>These effects should not be interpreted, because <code>political_interest</code> is a scale from 1 to 7, so a value of zero is not meaningful. It just <em>happens</em> to be the case that as you extrapolate to a <code>political_interest</code> of zero (i.e.&nbsp;go to the left on the plot below) there is no expected difference in <code>trust_t1</code> between people with different <code>political_orientation</code>.</p>
+<ul>
+<li>Standardized coefficients:
+<ul>
+<li><code>pol_ori [left]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> at the mean of <code>political_interest</code> is significant.</li>
+<li><code>pol_ori [right]</code>: The effect of <code>political_orientation</code> on <code>trust_t1</code> at the mean of <code>political_interest</code> is not significant.</li>
+</ul></li>
+</ul>
+<p>These coefficients do have a meaningful interpretation. Based on our analysis we can see that for people with low <code>political_interest</code>, there is no significant effect of <code>political_orientation</code> on <code>trust_t1</code>. If you look at the plot below, you see that the lines overlap at the left. As <code>political_interest</code> increases (towards the right), the lines start diverging, indicating that the effect becomes significant at some point. The main effect simply tells us that for the average value of <code>political_interest</code>, the effect is already significant.</p>
+</div>
+</div>
+</div>
+<p>Our main interest is in the interaction terms. The <code>pol ori [left] x pol int</code> coefficient tells us how much the <strong>effect</strong> of <code>political_orientation</code> on <code>trust_t1</code> changes for every unit increase in <code>political_interest</code>. This is positive, which means that the effect of <code>political_orientation</code> on <code>trust_t1</code> becomes stronger as <code>political_interest</code> increases. We see the opposite effect for the <code>pol ori [right] x pol int</code> coefficient, which is negative.</p>
+<p>This is notoriously difficult to interpret, so a good technique for interpreting interaction effects is to <strong>plot</strong> the interaction. The <code>sjPlot</code> package has the <code>plot_model()</code> function, which can plot the predicted values (<code>type = "pred"</code>) for a selection of terms (<code>terms = c('pol_int','pol_ori')</code>). This will show you how the effect of <code>political_orientation</code> on <code>trust_t1</code> changes as <code>political_interest</code> increases.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(m2, <span class="at">type=</span><span class="st">'pred'</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">'pol_int'</span>,<span class="st">'pol_ori'</span>),</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.data =</span> T, <span class="at">jitter =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="5.06-regression_files/figure-html/interaction-effects-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On the left side of the plot, where political interest is low, we see that there is not yet a significant effect of political orientation on trust in journalists. This makes sense: if you’re not interested in politics, then your political orientation might not matter that much. However, as political interest increases, we see that the line diverge, indicating an increasingly large effect of political orientation. We can thus conclude that <strong>the effect of political orientation on trust in journalists is <em>moderated</em> by (i.e.&nbsp;depends on) political interest</strong>.</p>
+</section>
+<section id="how-to-report" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-report">5.5.5 How to report</h2>
+<p>For APA style reporting of regression analysis, we generally report two things:</p>
+<ul>
+<li>The <strong>coefficients</strong> that we’re interested in</li>
+<li>The <strong>model fit</strong></li>
+</ul>
+<section id="reporting-the-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="reporting-the-coefficients">Reporting the coefficients</h3>
+<ol type="1">
+<li>The <strong>coefficients</strong> of the model, which tell us the effect of the independent variables on the dependent variable.</li>
+<li>The <strong>model fit</strong>, which tells us how well the model fits the data.</li>
+</ol>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Note that we have not tested if the difference between the two coefficients is significant. We will not go into this here, but note that the confidence intervalls of the standardized coefficients can provide more confidence in this comparison.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>You <em>can</em> also use a <code>character</code> variable directly, but the <code>factor</code> type is more appropriate for categorical variables. It also let’s you specify the order of the categories, which is important for regression analysis because it let’s you specify the reference category.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dev\.dataliteracy\.cc");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
