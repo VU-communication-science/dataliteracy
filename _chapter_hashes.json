@@ -4,8 +4,8 @@
     "source_hash": "8a5718642e6d2a4ac825a2290d6275191d83540963d8567ffbccdbc11a6e9d07",
     "content_hash": "397ef10d8460d0ffe01dcc7e20636611e966a6fbd9ab5e55e7856f3f2714b76d",
     "last_modified": "2026-10-28",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-11-03",
     "chunks": [
       {
         "line": 37,
@@ -78,8 +78,8 @@
     "source_hash": "a061fb3078f0e3d0b97b2e1b013f20f0a8173fc80c568b53ea63c6b447ad7f27",
     "content_hash": "bc7c622bd2aa64aa4bbb54b52c4b990a0d7529753fd5b9b1279c482de7a90602",
     "last_modified": "2026-10-14",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-11-03",
     "chunks": [
       {
         "line": 125,
@@ -118,8 +118,8 @@
     "source_hash": "4adc1a8a515d19b3f9ba96bdd1f383c6fd13b9e91a6cb391a25a1ed56bdcd2d4",
     "content_hash": "1a3e62bfae8cc97eb9d706e4ef0c99a13a5633fcd72b482b5b301556c0d135c2",
     "last_modified": "2026-10-28",
-    "status": "healthy",
-    "drifted_date": "",
+    "status": "drifted",
+    "drifted_date": "2026-11-03",
     "chunks": [
       {
         "line": 16,
