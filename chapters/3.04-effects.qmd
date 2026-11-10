@@ -7,9 +7,6 @@ subtitle: "How do we measure effects and how do we interpret them?"
 
 → [See this module in the skill tree](curriculum.html?module=ef-si)
 
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
 
 ## What is an "effect"?
 

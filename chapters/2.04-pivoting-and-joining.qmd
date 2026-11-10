@@ -7,9 +7,6 @@ subtitle: "Pivoting and joining data frames."
 
 → [See this module in the skill tree](curriculum.html?module=dfs-2)
 
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
 
 ## Wide vs. long data
 

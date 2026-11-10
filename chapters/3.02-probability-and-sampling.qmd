@@ -7,9 +7,6 @@ subtitle: "Probability theory, random sampling, and sampling variability."
 
 → [See this module in the skill tree](curriculum.html?module=probs)
 
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
 
 ## Probability, briefly
 

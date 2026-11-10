@@ -144,15 +144,3 @@ To avoid confusing students with competing packages, each domain has an official
 ## 5. Numbering
 
 Modules carry a **local, per-section number** of the form `{section}.{index}`, e.g. `1.1 Basic Computer Skills`, `5.5 Multiple Regression`. The section number follows the sidebar order in `_quarto.yml` (1 Computational Skills, 2 Data Management, 3 Statistical Foundations, 4 Exploration and Measurement, 5 Inferential Statistics, 6 Causality, 7 Content Analysis); the index is the module's position within that section's list. These numbers are stored in `curriculum.json`'s `number` field (also shown on the skill-tree popover badge) and are prefixed onto each `.qmd`'s frontmatter `title` (see Part 1). They are a navigation aid, not a strict teaching order — treat them as stable only within a section, and expect them to be recomputed if modules are added, removed, or reordered. Note that this display number is independent of the `.qmd` filename's leading number, which is a stable file identifier and never changes.
-
----
-
-## 6. AI-assisted content notice
-
-Where a module's content (or a substantial addition to it) was drafted by an AI assistant and has not yet been manually checked by a course instructor, mark it with a short warning instead of writing "has not been written yet":
-```markdown
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
-```
-Remove this callout once a human has reviewed the module's accuracy and style.

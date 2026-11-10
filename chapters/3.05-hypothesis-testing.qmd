@@ -7,9 +7,6 @@ subtitle: "Formulating and testing hypotheses using statistical methods."
 
 → [See this module in the skill tree](curriculum.html?module=hy-te)
 
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
 
 ## Deriving hypotheses from theories
 

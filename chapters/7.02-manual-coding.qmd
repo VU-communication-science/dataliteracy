@@ -10,7 +10,7 @@ Imagine two research assistants independently read the same 50 news articles and
 → [See this module in the skill tree](curriculum.html?module=ma-co)
 
 ::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
+This is a placeholder draft generated with the help of AI. So still needs to be properly written.
 :::
 
 ## What is manual coding?

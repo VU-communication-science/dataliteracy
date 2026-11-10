@@ -7,9 +7,6 @@ subtitle: "Supervised text classification with bag-of-words and embeddings."
 
 → [See this module in the skill tree](curriculum.html?module=class)
 
-::: {.callout-warning title="AI-assisted draft"}
-This content was drafted by an AI assistant and has not yet been manually checked by course staff. Treat it as a starting point, not a verified source.
-:::
 
 ## Three ways to classify text
 
