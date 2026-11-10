@@ -570,68 +570,68 @@
   },
   "chapters/2.04-pivoting-and-joining.qmd": {
     "title": "2.4 Pivoting and joining",
-    "source_hash": "5aa6f6bb81c0d7db3872bc34214a8f41cd4bcccfed7620271ead4cc70edb2073",
-    "content_hash": "9dd494f12990cf19ddb29d4970cd997780db6cb222c8dd486a6536b692dcc683",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "02cf1626aa335f407289be1f92302902b03c2760e1428e78423ab51ed85353c2",
+    "content_hash": "0c555e8527e2595aaaad4660b022f9b73caf2341edb8892b393f90855d839c6d",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 18,
+        "line": 15,
         "label": "setup",
         "output_hash": "08db1b3842ba9b37",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 34,
+        "line": 31,
         "label": "",
         "output_hash": "e2051a093bc2cf56",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 50,
+        "line": 47,
         "label": "",
         "output_hash": "e2051a093bc2cf56",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 57,
+        "line": 54,
         "label": "",
         "output_hash": "d9061bfa1b967f66",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 70,
+        "line": 67,
         "label": "",
         "output_hash": "e1aadf4696cf4103",
         "preview": "{\"columns\":[{\"label\":[\"wave\"],\"name\":[1],\"type\":[\"chr\"],\"align\":[\"left\"]},{\"l..."
       },
       {
-        "line": 80,
+        "line": 77,
         "label": "",
         "output_hash": "1029b0431dbd8901",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 111,
+        "line": 108,
         "label": "",
         "output_hash": "ca1a25d29399f2d3",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 122,
+        "line": 119,
         "label": "",
         "output_hash": "60c465703781e7eb",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 133,
+        "line": 130,
         "label": "",
         "output_hash": "d9661373253236b7",
         "preview": "{\"columns\":[{\"label\":[\"id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},{\"la..."
       },
       {
-        "line": 147,
+        "line": 144,
         "label": "",
         "output_hash": "81a48b34489b4086",
         "preview": "{\"columns\":[{\"label\":[\"outlet_id\"],\"name\":[1],\"type\":[\"chr\"],\"align\":[\"left\"]..."
@@ -692,56 +692,56 @@
   },
   "chapters/3.01-means-and-variance.qmd": {
     "title": "3.1 Means & Variance",
-    "source_hash": "6f13b058f3dffd69462524625d2f3d31c1c66a18b2303a1a7ce8f84fad18f6ba",
-    "content_hash": "9be179f8c9d49d54fbc7c77443e7d9db3e7b024cd6ea04262302041238d634f4",
-    "last_modified": "2026-10-13",
-    "status": "drifted",
-    "drifted_date": "2026-10-14",
+    "source_hash": "2bf9ba8373f7534af4afb6d576c89786535e0c98c66c0f33f7f763457f038136",
+    "content_hash": "ab9c2bb0c9c22bd2b1155dbca8e010ea1f138ce01c472322229b665c85096e27",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 18,
+        "line": 15,
         "label": "",
         "output_hash": "96a34ad4a5e5e60b",
         "preview": "── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0..."
       },
       {
-        "line": 28,
+        "line": 25,
         "label": "",
         "output_hash": "15c9425ed106b02c",
         "preview": "[1] 5.2"
       },
       {
-        "line": 34,
+        "line": 31,
         "label": "",
         "output_hash": "15c9425ed106b02c",
         "preview": "[1] 5.2"
       },
       {
-        "line": 42,
+        "line": 39,
         "label": "",
         "output_hash": "811fd1769f44d5e9",
         "preview": "{\"columns\":[{\"label\":[\"political_interest\"],\"name\":[1],\"type\":[\"dbl\"],\"align\"..."
       },
       {
-        "line": 51,
+        "line": 48,
         "label": "",
         "output_hash": "d7c92e0735ab7a54",
         "preview": "[1] -1.776357e-15"
       },
       {
-        "line": 65,
+        "line": 62,
         "label": "",
         "output_hash": "748a7fcf87b59b8b",
         "preview": "{\"columns\":[{\"label\":[\"political_interest\"],\"name\":[1],\"type\":[\"dbl\"],\"align\"..."
       },
       {
-        "line": 74,
+        "line": 71,
         "label": "",
         "output_hash": "f8d1d8f665f9aff0",
         "preview": "[1] 5.288889"
       },
       {
-        "line": 90,
+        "line": 87,
         "label": "",
         "output_hash": "cc2461320b3cb25d",
         "preview": "[1] 2.299758 [1] 2.299758"
@@ -750,26 +750,26 @@
   },
   "chapters/3.02-probability-and-sampling.qmd": {
     "title": "3.2 Probability & Sampling",
-    "source_hash": "6b7862f08c3a20f33ebe0a4016573f57833c4de0336f51a24a76698b039e10ac",
-    "content_hash": "2e79e0393214e4902db5e329ac75b3e2b4b942e8591523d4e741a1e55e2ef947",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "9ca7a7ab23f1f5607a34fcc5a6d8e9172b41bd2e2ad0821a9c8354be34ae7697",
+    "content_hash": "c12defdb3ac3f06ea9816cf97dfa12789b76f328cc8f5f18fe49805b32d0d6c1",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 20,
+        "line": 17,
         "label": "",
         "output_hash": "688fd3733eb91c20",
         "preview": "[1] \"heads\" \"heads\" \"heads\" \"heads\" \"tails\" \"tails\" \"tails\" \"tails\" \"heads\" [..."
       },
       {
-        "line": 26,
+        "line": 23,
         "label": "",
         "output_hash": "f77b7cb17e13f5c9",
         "preview": "[1] -0.10612452 1.51152200 -0.09465904 2.01842371 -0.06271410"
       },
       {
-        "line": 45,
+        "line": 42,
         "label": "sampling-distribution-plot",
         "output_hash": "67f56c646c276840",
         "preview": "[Plot: sampling-distribution-plot-1.png]"
@@ -842,20 +842,20 @@
   },
   "chapters/3.04-effects.qmd": {
     "title": "3.4 Effects",
-    "source_hash": "ae14b9e97bf1a8ae9d209e6638a09214d44020538b9170e5d06ea99204e2913a",
-    "content_hash": "14a31340d8b630fed794c915cb510a865af3e724bd4a5dec8b3df66a7a446935",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "ce2c873e384bac8c1ad5b6d46167c780fefe0f6295018db04b28c96aec329b28",
+    "content_hash": "72dae1d0594add8a8e6f678c2f1a215c9024cfcd897f8e5362fedc265a65b60d",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 38,
+        "line": 35,
         "label": "",
         "output_hash": "f7b6ffd3feceea52",
         "preview": "── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0..."
       },
       {
-        "line": 53,
+        "line": 50,
         "label": "",
         "output_hash": "a38af17acd0b1ea7",
         "preview": "[1] 7.787857"
@@ -864,14 +864,14 @@
   },
   "chapters/3.05-hypothesis-testing.qmd": {
     "title": "3.5 Hypothesis Testing",
-    "source_hash": "5ac4b3e19b7127e1e662ad9d52e02b94558091c0897926e7e20c4d6620a9651d",
-    "content_hash": "7f88a999f7b0032e2114315dbba518d4a1d8f3d9b2e7562fee6e42f22dad3817",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "aa5564f8fc5f385d8179c230fe805747ce68d596c9cbb92ca948ab9dae27a3f5",
+    "content_hash": "3208a58400cff40a902b18d72b098cebaee5ce2aaa495c78f46b291ac4446fbe",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 64,
+        "line": 61,
         "label": "hypothesis-testing-ttest-1",
         "output_hash": "b5c9af8a105605b5",
         "preview": "Welch Two Sample t-test data: violent and non_violent t = 1.8112, df = 16.469..."
@@ -956,56 +956,56 @@
   },
   "chapters/4.02-data-visualization.qmd": {
     "title": "4.2 Data Visualization",
-    "source_hash": "97289be86640356723d66ac17c503eef0f96280c2a67aad4d1dbed69bedd4682",
-    "content_hash": "d7ac790c456e4c4cc782ccb0c0809b5a2c32a3aa3ea261eb33b050c45c700c65",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "c85a97f81af3c78faaf6d92d8ff06b9c535c33f7c5a4482ab4652ac89339113e",
+    "content_hash": "0ab61a3e1085545ddc270f9d6d429ce3e43a030dd1633c45aa0431b663d1f9cb",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 31,
+        "line": 28,
         "label": "grammar-1",
         "output_hash": "648cead4a8b00b74",
         "preview": "`stat_bin()` using `bins = 30`. Pick better value `binwidth`."
       },
       {
-        "line": 38,
+        "line": 35,
         "label": "grammar-2",
         "output_hash": "7451cf98d0ecf21e",
         "preview": "[Plot: grammar-2-1.png]"
       },
       {
-        "line": 53,
+        "line": 50,
         "label": "one-numeric-1",
         "output_hash": "a9a7bbb29018d7a3",
         "preview": "[Plot: one-numeric-1-1.png]"
       },
       {
-        "line": 64,
+        "line": 61,
         "label": "one-categorical-1",
         "output_hash": "a5f62c8fc332809a",
         "preview": "[Plot: one-categorical-1-1.png]"
       },
       {
-        "line": 73,
+        "line": 70,
         "label": "two-numeric-1",
         "output_hash": "b9adf4203dfc9317",
         "preview": "Warning: Removed 5 rows containing missing values or values outside the scale..."
       },
       {
-        "line": 84,
+        "line": 81,
         "label": "mixed-1",
         "output_hash": "6303abd092b8588f",
         "preview": "[Plot: mixed-1-1.png]"
       },
       {
-        "line": 95,
+        "line": 92,
         "label": "labels-1",
         "output_hash": "2516f44018271918",
         "preview": "[Plot: labels-1-1.png]"
       },
       {
-        "line": 107,
+        "line": 104,
         "label": "themes-1",
         "output_hash": "69a72342ba2f8eb7",
         "preview": "[Plot: themes-1-1.png]"
@@ -1014,38 +1014,38 @@
   },
   "chapters/4.03-advanced-visualization.qmd": {
     "title": "4.3 Advanced Visualization",
-    "source_hash": "44ee1cba78f5da928258641efc1d0a98516ef15ef09b83213c7b19cf7f84790f",
-    "content_hash": "ffb2eb22863f82dc7cc0bc29b64eb456da314e9c45445e5f221df49f0f9f7528",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "10075e7957ee6ba90f7ae04f357d6cd170e632fc7a9c7203f478e2002b025cd3",
+    "content_hash": "51b8a7bf00973c157b836ce70baf48c6fbbe63d2bb93b76095ad5c53beebceb1",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 25,
+        "line": 22,
         "label": "facet-1",
         "output_hash": "d45724282e5cb300",
         "preview": "[Plot: facet-1-1.png]"
       },
       {
-        "line": 35,
+        "line": 32,
         "label": "facet-2",
         "output_hash": "00851ef51a587f42",
         "preview": "[Plot: facet-2-1.png]"
       },
       {
-        "line": 48,
+        "line": 45,
         "label": "combine-1",
         "output_hash": "c5c041187e9ae07a",
         "preview": "Warning: Removed 5 rows containing non-finite outside the scale range (`stat_..."
       },
       {
-        "line": 56,
+        "line": 53,
         "label": "combine-2",
         "output_hash": "e132768d70062aef",
         "preview": "[Plot: combine-2-1.png]"
       },
       {
-        "line": 75,
+        "line": 72,
         "label": "accessibility-1",
         "output_hash": "ede487c2bc18d25b",
         "preview": "[Plot: accessibility-1-1.png]"
@@ -1520,11 +1520,11 @@
   },
   "chapters/6.02-experimental-control.qmd": {
     "title": "6.2 Experimental control",
-    "source_hash": "ea851f1836423ed4f03a317fe8ccb907a68ce3ec03d39e78b61adb47e1cd424b",
-    "content_hash": "36464efe32e35c72f4abf472aad7ad1a05a62e201c39340f32ed76167391fdd7",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "23ee19c905876fdd12f4ac54f676e47bfc9adc3c893a5f06b5edd4653169ca49",
+    "content_hash": "5dbf68fb2d420e5926775b800d5a714c78169099dcfccb703725658afc9e1214",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": []
   },
   "chapters/6.03-statistical-control.qmd": {
@@ -1679,11 +1679,11 @@
   },
   "chapters/7.02-manual-coding.qmd": {
     "title": "7.2 Manual Coding",
-    "source_hash": "4f470dc792d88a3e3be391903fd1e37c241a4d8cdc3e7790e6241ce82c46760f",
-    "content_hash": "b8c6e92435b16bbe4bf4b431e023ee31e8097e122ec2eead836afea9706c055c",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "e8f451bea5e97f4d4f8e7231994647a854705295c030445597801667ec6d078c",
+    "content_hash": "fb78fb0124cc391efe4d7ee36aabdd0392b8ace7b06588214a27c7c912729b8d",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
         "line": 36,
@@ -1695,20 +1695,20 @@
   },
   "chapters/7.03-machine-learning.qmd": {
     "title": "7.3 Machine Learning",
-    "source_hash": "58d763f8481eda684bc0e4cd8ba88057d9ffe0e823e853e5e90b3ef88f5487c4",
-    "content_hash": "085f4529790f384d0fed420e5dba7a12eab59a572da0147437dc1936659d6ba3",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "7830e379e1a8ea60f4ac8a1708011e6651d13a17c0581816613b8346bea99b79",
+    "content_hash": "e0ccc836018a3026907692f657127b9952cc168c3e01cfa3cd93d744b032dd85",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 24,
+        "line": 21,
         "label": "",
         "output_hash": "0a2c30a2d1a29794",
         "preview": "{\"columns\":[{\"label\":[\"n_policy_words\"],\"name\":[1],\"type\":[\"dbl\"],\"align\":[\"r..."
       },
       {
-        "line": 46,
+        "line": 43,
         "label": "",
         "output_hash": "99f0c6fbc36f11f9",
         "preview": "Warning: predict.naive_bayes(): more features in the newdata are provided as ..."
@@ -1717,20 +1717,20 @@
   },
   "chapters/7.04-text-classification.qmd": {
     "title": "7.4 Text Classification",
-    "source_hash": "243da2c1efb1f466facec5f800cc4f3709c477271b89cf018f8c72c0a33079b8",
-    "content_hash": "ef4a38af931a6ce1dbfe33053d7558df5a60764d26ff863003283529f0005ee9",
-    "last_modified": "2026-10-12",
-    "status": "drifted",
-    "drifted_date": "2026-10-13",
+    "source_hash": "6abaf11010dfad560201cf74740a0c1cea2b4a1f2ff7b079a64cdf3a43af3576",
+    "content_hash": "01177b85511e3b03cc7fc6ec1807acf0efbbbae575cf3f57fa67dfbca123e9b3",
+    "last_modified": "2026-11-10",
+    "status": "healthy",
+    "drifted_date": "",
     "chunks": [
       {
-        "line": 20,
+        "line": 17,
         "label": "",
         "output_hash": "4e428caef3d52864",
         "preview": "{\"columns\":[{\"label\":[\"doc_id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},..."
       },
       {
-        "line": 53,
+        "line": 50,
         "label": "",
         "output_hash": "83cc1800b8afa6f3",
         "preview": "{\"columns\":[{\"label\":[\"doc_id\"],\"name\":[1],\"type\":[\"int\"],\"align\":[\"right\"]},..."
